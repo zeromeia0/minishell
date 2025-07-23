@@ -24,3 +24,18 @@ ls -l | grep joao > out.txt
  - create pipes
  - fork [fork -l] redirect (dup2) -> joao
  - final (>) out.txt
+
+
+_____
+###Final main function concept###
+
+while (1)
+{
+	char *line = readline("minishell$);
+	if (!line)
+		break;
+	create_history(line);
+	t_cmd *cmd_table = parse (line);
+	executor (cmd_table);
+	super_dper_hiper_free();
+}
