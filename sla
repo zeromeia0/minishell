@@ -1,0 +1,26 @@
+Lexer = ls -l | grep joao
+
+[ls] [-l] [|] [grep] ...
+
+Parser - Command Table -> subcomand, redirection
+pips with flags
+
+> COmmands in pipelins
+Where input & output happens
+ Take tokens, check grammar, add command to 
+data strucutre (command table)
+
+Exec = exec each process fork, redirect w/ dup2
+
+Signal = ctll z, crt c ctrl \
+
+Mains = while (1)
+	user input
+	if (ctld-d) exit
+
+Parsing -> binary tree
+
+ls -l | grep joao > out.txt
+ - create pipes
+ - fork [fork -l] redirect (dup2) -> joao
+ - final (>) out.txt
