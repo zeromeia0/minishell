@@ -17,17 +17,17 @@ FLAGS= -Wall -Wextra -Werror
 all: ${NAME}
 
 ${NAME}: ${OBJ_FILES}
-	ar rcs $@ $?
+	@ar rcs $@ $?
 
 %.o: %.c ${HDR_FILE}
-	${CC} ${FLAGS} -c $< -o ${<:.c=.o}
+	@${CC} ${FLAGS} -c $< -o ${<:.c=.o}
 
 clean: 
-	rm -f $(OBJ_BONUS) $(OBJ_FILES) 
+	@rm -f $(OBJ_BONUS) $(OBJ_FILES) 
 	@rm -f .bonus
 
 fclean: clean 
-	rm -f ${NAME}
+	@rm -f ${NAME}
 
 re: fclean all
 
