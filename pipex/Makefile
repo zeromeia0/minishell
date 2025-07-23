@@ -53,31 +53,31 @@ CFLAGS= -Wall -Wextra -Werror
 all: ${PROJ}
 
 ${NAME}: ${OBJ_FILES}
-	${AR} ${NAME} $?
+	@${AR} ${NAME} $?
 
 ${LIBFT}: ${OBJ_LIB}
-	cd my_libft && make
+	@cd my_libft && make
 
 #${BONUS_ARQ}: ${OBJ_BONUS}
 #	${AR} ${BONUS_ARQ} $?
 
 ${PROJ}: ${NAME} ${LIBFT} ${PROJ}.c
-	${CC} ${CFLAGS} ${PROJ}.c ${NAME} ${LIBFT} -o ${PROJ}
+	@${CC} ${CFLAGS} ${PROJ}.c ${NAME} ${LIBFT} -o ${PROJ}
 
 ${PROJ_BONUS}: ${NAME} ${LIBFT} ${PROJ_BONUS}.c
-	${CC} ${CFLAGS} ${PROJ_BONUS}.c ${NAME} ${LIBFT} -o ${PROJ_BONUS}
+	@${CC} ${CFLAGS} ${PROJ_BONUS}.c ${NAME} ${LIBFT} -o ${PROJ_BONUS}
 
-%o: %c
-	${CC} ${CFLAGS} $@ $<
+%.o: %.c
+	@${CC} ${CFLAGS} -c $< -o $@
 
 bonus: ${PROJ_BONUS}
 	@touch bonus
 
 clean:
-	rm -f ${OBJ_FILES} ${OBJ_BONUS} ${OBJ_LIB} ${BONUS_ARQ} ${NAME} ${LIBFT} bonus
+	@rm -f ${OBJ_FILES} ${OBJ_BONUS} ${OBJ_LIB} ${BONUS_ARQ} ${NAME} ${LIBFT} bonus
 
 fclean: clean
-	rm -f ${NAME} ${LIBFT} ${PROJ} ${PROJ_BONUS}
+	@rm -f ${NAME} ${LIBFT} ${PROJ} ${PROJ_BONUS}
 
 re: fclean all
 
