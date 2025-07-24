@@ -12,6 +12,12 @@
 #include <readline/history.h>
 
 
+typedef enum e_type{
+    CMD,
+    AND,
+    OR
+}   t_type;
+
 typedef struct s_binary {
     t_type          type;
     struct s_binary *left;
