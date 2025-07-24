@@ -95,3 +95,40 @@ while (1)
 	
 
 
+Fella
+Como que tua binary tree will look like?
+Tava a ver uns exemplos na net
+VI umas cenas tipo:
+
+typedef struct s_binary {
+    t_type          type;
+    struct s_node  left;
+    struct s_noderight;
+} t_binary;
+Vai ser algo assim? AInda nao fiz uma binary tree 😢
+sim so que em vez de struct s_node vai ser struct s_binary
+e vai ter mais dq um valor la dentro
+um vai ser o token sendo & ou | e o outro vai ser o return value q vai ser o resultado da execuções de left e right
+dependendo do valor do token
+Aight
+ok
+ja comecaste a trabalhar?
+e q eu vou comecar agr, pra evitar estarmos a editar coisas no futurooq achas de ir adicionando coisas na main branch como o header
+dps so precisamos de dar git merge master pra atualizarmos qual versao da master estamos a ver
+falamos por aqui qnd formos fzr isso oq achas?
+e ofc so damos push com a aprovacao um do outro
+entretanto vou so adicionando coisas na minha branch 
+so consigo pensar em signals e headers como coisas q precisariam de ir pra master
+btw cada node da command table tem de ter ter 
+int ret
+char **cmds
+char *in
+char *out
+char *err 
+ja q podes fzr redirecionamentos de stderr
+se algo estiver a null ignoras
+aind ns se cmds vai ser ** ou *** 
+Pq seria ***?
+o cmd por exemplo 
+ls al | grep me > file1
+se fosse so **

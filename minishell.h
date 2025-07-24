@@ -12,12 +12,17 @@
 #include <readline/history.h>
 
 
+typedef struct s_binary {
+    t_type          type;
+    struct s_binary *left;
+    struct s_binary *right;
+} t_binary;
 
 typedef struct s_cmd{
-    char **args;
+    char **cmds;
     char *infile;
     char *outfile;
-    char *append;
+    char *err;
     int ret;
 }   t_cmd;
 
