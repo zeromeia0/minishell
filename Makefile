@@ -7,6 +7,7 @@ LIBFT_DIR	= $(PIPEX_DIR)/my_libft
 
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror
+LDFLAGS     = -L/usr/local/opt/readline/lib -lreadline
 RM			= rm -f
 
 GREEN		= \033[0;32m
@@ -21,7 +22,7 @@ $(NAME): executor.c
 	@echo -e "$(BLUE)Building pipex...$(RESET)"
 	@$(MAKE) --no-print-directory -C $(PIPEX_DIR)
 	@echo -e "$(BLUE)Building minishell...$(RESET)"
-	@$(CC) $(CFLAGS) executor.c $(PIPEX_DIR)/$(PIPEX).a $(PIPEX_DIR)/libft.a -o $(NAME)
+	@$(CC) $(CFLAGS) executor.c $(PIPEX_DIR)/$(PIPEX).a $(PIPEX_DIR)/libft.a -o $(NAME) $(LDFLAGS)
 	@echo -e "$(GREEN)Minishell built successfully!$(RESET)"
 
 bonus:
