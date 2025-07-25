@@ -6,7 +6,7 @@
 #    By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/24 18:53:42 by jlima-so          #+#    #+#              #
-#    Updated: 2025/07/24 20:31:47 by jlima-so         ###   ########.fr        #
+#    Updated: 2025/07/25 15:13:22 by jlima-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ CFLAGS=		-Wall -Wextra -Werror
 all: parse_rule $(PROJ) #$(EXEC)
 
 $(PROJ): $(PROJ).c
-	$(CC) -lreadline -lncurses $(PROJ).c $(PARSER_DIR)/*.a -o $(PROJ) -lreadline
+	$(CC) -lreadline -lncurses $(PROJ).c $(PARSER) $(PARSER_DIR)/jojo_libft.a -o $(PROJ) -lncurses -lreadline
 # $(EXEC)
 
 parse_rule:
@@ -41,17 +41,17 @@ parse_rule:
 #	 $(MAKE) -C $(EXEC_DIR)
 
 clean:
-	rm -f ${OBJ_FILES} ${NAME} ${LIBFT}
+	rm -f ${OBJ_FILES} ${NAME}
 	$(MAKE) -C $(PARSER_DIR) clean
 #	$(MAKE) -C $(EXEC_DIR) clean
 
 fclean: clean
-	rm -f ${NAME} ${LIBFT}
-	$(MAKE) -C $(LIBFT_DIR) fclean
+	rm -f $(PROJ)
+	$(MAKE) -C $(PARSER_DIR) fcleanlocal
 #	$(MAKE) -C $(EXEC_DIR) fclean
 
 re: fclean all
-	$(MAKE) -C $(LIBFT_DIR)
+	$(MAKE) -C $(PARSER_DIR)
 #	$(MAKE) -C $(EXEC_DIR)
 
 .PHONY: re fclean clean all

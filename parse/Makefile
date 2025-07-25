@@ -6,7 +6,7 @@
 #    By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/12 13:07:24 by jlima-so          #+#    #+#              #
-#    Updated: 2025/07/24 20:13:11 by jlima-so         ###   ########.fr        #
+#    Updated: 2025/07/25 15:17:29 by jlima-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,12 +26,12 @@ AR=			ar rcs
 
 CFLAGS=		-Wall -Wextra -Werror -lreadline -lncurses
 
-all: ${NAME} ${LIBFT}
+all: lib ${NAME}
 
 ${NAME}: ${OBJ_FILES}
 	${AR} ${NAME} $?
 
-${LIBFT}:
+lib:
 	$(MAKE) -C $(LIBFT_DIR)
 
 %o: %c
@@ -44,6 +44,10 @@ clean:
 fclean: clean
 	rm -f ${NAME} ${LIBFT}
 	$(MAKE) -C $(LIBFT_DIR) fclean
+
+fcleanlocal:
+	rm -f ${NAME} ${LIBFT}
+	$(MAKE) -C $(LIBFT_DIR) fcleanlocal
 
 re: fclean all
 	$(MAKE) -C $(LIBFT_DIR)

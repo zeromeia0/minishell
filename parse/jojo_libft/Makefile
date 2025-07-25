@@ -29,6 +29,9 @@ clean:
 fclean: clean 
 	rm -f ${NAME}
 
+fcleanlocal:
+	rm -f ${NAME}
+
 re: fclean all
 
 .PHONY: re fclean clean all

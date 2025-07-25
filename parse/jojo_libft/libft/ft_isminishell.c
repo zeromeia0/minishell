@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_isminishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 08:19:15 by jlima-so          #+#    #+#             */
-/*   Updated: 2025/07/25 15:21:56 by jlima-so         ###   ########.fr       */
+/*   Created: 2025/03/24 13:44:33 by jlima-so          #+#    #+#             */
+/*   Updated: 2025/07/25 16:53:23 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../libft.h"
 
-int main(void)
+int	ft_isminishell(int c)
 {
-	char	**mat;
-	char	*str;
-
-
-	while (1)
-	{
-		mat = parsing();
-		ft_putstr_fd(*mat, 1);
-		// ft_print_matrix(mat);
-		write(1, "\n", 1);
-	}
+	if (ft_isalpha(c) || c == 33 || c == 35 || c == 37 || (c >= 42 && c <= 59) || c == 63 || c == 64) 
+		return (8);
+	return (0);
 }
