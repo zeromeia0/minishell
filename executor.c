@@ -1,4 +1,5 @@
 #include "minishell.h"
+#include <readline/history.h>
 #include <stdlib.h>
 
 int exec_tree(t_binary *tree)
@@ -8,7 +9,7 @@ int exec_tree(t_binary *tree)
     if (!tree)
         return (0);
     if (tree->type == CMD)
-        printf("This is a command\n");
+         printf("CMD detected\n");
     left = exec_tree(tree->left);
     if (tree->type == AND)
     {
@@ -29,6 +30,7 @@ int exec_tree(t_binary *tree)
     return (1);
 }
 
+
 int main(int argc, char *argv[])
 {
     t_binary *tree;
@@ -38,12 +40,13 @@ int main(int argc, char *argv[])
         return (1);
     (void)argc;
     (void)argv;
-    exec_tree(tree);
+    // exec_tree(tree);
     while(1)
     {
         char *line = readline("minishell$ ");
         if (!line)
             break;
+        add_history(line);
     }
     return(printf("Closing Minishell\n"), 0);
 }

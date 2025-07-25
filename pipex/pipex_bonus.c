@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "my_libft/libft.h"
+#include "../my_libft/libft.h"
 
 char	*get_here_doc(char *limiter)
 {
