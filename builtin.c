@@ -1,5 +1,6 @@
 #include "minishell.h"
 #include "my_libft/libft.h"
+#include <stdio.h>
 #include <unistd.h>
 
 int is_builtin(char *cmd)
@@ -49,10 +50,23 @@ void    builtin_env(void)
     }
 }
 
-// void builtin_echo(char *str)
-// {
-//     printf("")
-// }
+void builtin_echo(char **args)
+{
+    int i;
+
+    i = 1;
+    if (args[1] && ft_strncmp(args[1], "-n", 2) == 0)
+        i++;
+    while (args[i])
+    {
+        printf("%s", args[i]);
+        if (args[i + 1] != NULL)
+            printf(" ");
+        i++;
+    }
+    if (!(args[1] && ft_strncmp(args[1], "-n", 2) == 0))
+        printf(("\n"));
+}
 
 int    builtin_exit(char **args)
 {
@@ -81,8 +95,8 @@ int exec_builtin(char *cmd, char **args)
         builtin_pwd();
     else if (ft_strncmp(cmd, "env", 3) == 0)
         builtin_env();
-    // else if (ft_strncmp(cmd, "echo", 4))
-    //     bu
+    else if (ft_strncmp(cmd, "echo", 4) == 0)
+        builtin_echo(args);
     else if (ft_strncmp(cmd, "exit", 4) == 0)
         builtin_exit(args);
     return (0);
