@@ -44,7 +44,7 @@ void    builtin_env(void)
     i = 0;
     while (environ[i] != NULL)
     {
-        printf("%s", environ[i]);
+        printf("%s\n", environ[i]);
         i++;
     }
 }
@@ -61,6 +61,7 @@ int    builtin_exit(char **args)
     status = 0;
     if (args[1])
         status = ft_atoi(args[1]);
+    // printf("status: %d\n", status);
     return (status);
 }
 
@@ -78,11 +79,11 @@ int exec_builtin(char *cmd, char **args)
     }
     else if (ft_strncmp(cmd, "pwd", 3) == 0)
         builtin_pwd();
-    else if (ft_strncmp(cmd, "env", 3))
+    else if (ft_strncmp(cmd, "env", 3) == 0)
         builtin_env();
     // else if (ft_strncmp(cmd, "echo", 4))
     //     bu
-    else if (ft_strncmp(cmd, "exit", 4))
+    else if (ft_strncmp(cmd, "exit", 4) == 0)
         builtin_exit(args);
     return (0);
 }
