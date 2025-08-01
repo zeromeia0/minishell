@@ -43,10 +43,17 @@ int main(int argc, char *argv[])
     // exec_tree(tree);
     while(1)
     {
-        char *line = readline("minishell$ ");
-        if (!line)
+        char *input = readline("minishell$ ");
+        if (!input)
             break;
-        add_history(line);
+        add_history(input);
+        char **args = ft_split(input, ' ');  // You need a function like `ft_split` or `strtok` to tokenize the input
+        char *cmd = args[0];  // The first token is the command itself
+
+        if (is_builtin(cmd))  // Check if it's a built-in command
+        {
+            exec_builtin(cmd, args);  // Execute the corresponding built-in command
+        }
     }
     return(printf("Closing Minishell\n"), 0);
 }
