@@ -47,13 +47,11 @@ int main(int argc, char *argv[])
         if (!input)
             break;
         add_history(input);
-        char **args = ft_split(input, ' ');  // You need a function like `ft_split` or `strtok` to tokenize the input
-        char *cmd = args[0];  // The first token is the command itself
-
-        if (is_builtin(cmd))  // Check if it's a built-in command
-        {
-            exec_builtin(cmd, args);  // Execute the corresponding built-in command
-        }
+        
+        char **args = ft_split(input, ' '); 
+        char *cmd = args[0];  
+        if (is_builtin(cmd))  
+            exec_builtin(cmd, args);
     }
     return(printf("Closing Minishell\n"), 0);
 }
