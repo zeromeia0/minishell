@@ -4,19 +4,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void aspas(char *str, int *count)
-{
-    int i;
-
-    i = 0;
-    while (str[i])
-    {
-        if (str[i] == '"')
-            (*count)++;
-        i++;
-    }
-}
-
 int is_builtin(char *cmd)
 {
     if (ft_strncmp(cmd, "cd", 2) == 0)
@@ -64,49 +51,38 @@ void    builtin_env(void)
     }
 }
 
-// void builtin_echo(char **args)
-// {
-//     int i;
-//     int count_aspas = 0;
-//     int skip_newline = 0;
+void builtin_echo(char **args)
+{
+    int i;
+    int skip_newline = 0;
 
-//     i = 1;
-//     if (args[1] && ft_strncmp(args[1], "-n", 2) == 0)
-//     {
-//         skip_newline = 1;
-//         i++;
-//     }
-//     while (args[i])
-//     {
-//         aspas(args[i], &count_aspas);
-//         i++;
-//     }
-
-//     while (count_aspas % 2 != 0)
-//     {
-//         printf("> ");
-//         return ;
-//     }
-//     i = skip_newline ? 2 : 1;
-//     while (args[i])
-//     {
-//         char *arg = args[i];
-//         int j = 0;
+    i = 1;
+    if (args[1] && ft_strncmp(args[1], "-n", 2) == 0)
+    {
+        skip_newline = 1;
+        i++;
+    }
+    i = skip_newline ? 2 : 1;
+    while (args[i])
+    {
+        aspas(args[i]);
+        char *arg = args[i];
+        int j = 0;
         
-//         while (arg[j])
-//         {
-//             if (arg[j] != '"')
-//                 printf("%c", arg[j]);
-//             j++;
-//         }
+        while (arg[j])
+        {
+            if (arg[j] != '"')
+                printf("%c", arg[j]);
+            j++;
+        }
         
-//         if (args[i + 1] != NULL)
-//             printf(" ");
-//         i++;
-//     }
-//     if (!skip_newline)
-//         printf("\n");
-// }
+        if (args[i + 1] != NULL)
+            printf(" ");
+        i++;
+    }
+    if (!skip_newline)
+        printf("\n");
+}
 
 void    builtin_exit(char **args)
 {
@@ -120,6 +96,9 @@ void    builtin_exit(char **args)
 
 int builtin_export(char *name, char *value)
 {
+    name = aspas(name);
+    value = aspas(value);
+
     if (setenv(name, value, 1) != 0)
         return (perror("setenv failed"), 1);
     return (0);
@@ -141,11 +120,13 @@ int exec_builtin(char *cmd, char **args)
         builtin_pwd();
     else if (ft_strncmp(cmd, "env", 3) == 0)
         builtin_env();
-    // else if (ft_strncmp(cmd, "echo", 4) == 0)
-    //     builtin_echo(args);
+    else if (ft_strncmp(cmd, "echo", 4) == 0)
+        builtin_echo(args);
     else if (ft_strncmp(cmd, "exit", 4) == 0)
         builtin_exit(args);
     else if (ft_strncmp(cmd, "export", 6) == 0)
         builtin_export(args[1], args[3]);
+    else
+        return (0);
     return (0);
 }

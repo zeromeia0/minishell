@@ -48,7 +48,13 @@ int main(int argc, char *argv[])
             break;
         add_history(input);
         
-        char **args = ft_split(input, ' '); 
+        char **args = ft_split(input, ' ');
+        if (!args || !args[0])
+        {
+            free (input);
+            free(args);
+            continue;
+        }
         char *cmd = args[0];  
         if (is_builtin(cmd))  
             exec_builtin(cmd, args);

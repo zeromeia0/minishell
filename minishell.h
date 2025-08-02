@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <stdbool.h>
 
 
 typedef enum e_type{
@@ -38,5 +39,6 @@ void builtin_pwd(void);
 void    builtin_env(void);
 void    builtin_exit(char **args);
 int exec_builtin(char *cmd, char **args);
+char *aspas(char *str);
 
 #endif
