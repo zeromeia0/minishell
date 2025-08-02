@@ -1,6 +1,7 @@
 #include "minishell.h"
 #include "my_libft/libft.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 
 void aspas(char *str, int *count)
@@ -117,6 +118,13 @@ void    builtin_exit(char **args)
     exit (status);
 }
 
+int builtin_export(char *name, char *value)
+{
+    if (setenv(name, value, 1) != 0)
+        return (perror("setenv failed"), 1);
+    return (0);
+}
+
 int exec_builtin(char *cmd, char **args)
 {
     if (ft_strncmp(cmd, "cd", 2) == 0)
@@ -137,5 +145,7 @@ int exec_builtin(char *cmd, char **args)
     //     builtin_echo(args);
     else if (ft_strncmp(cmd, "exit", 4) == 0)
         builtin_exit(args);
+    else if (ft_strncmp(cmd, "export", 6) == 0)
+        builtin_export(args[1], args[3]);
     return (0);
 }
