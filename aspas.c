@@ -17,9 +17,10 @@ bool even_odd_aspas(char *str)
 
 char *aspas(char *str)
 {
+    if (!str || str[0] == '\0')
+        return (NULL);
     char *new_str = str;
     char *tmp;
-
     while (!even_odd_aspas(new_str))
     {
         tmp = readline("> ");
@@ -31,7 +32,7 @@ char *aspas(char *str)
             free(tmp);
             break;
         }
-        new_str = ft_strjoin_free(new_str, "\n", 1);  // Add newline between parts
+        new_str = ft_strjoin_free(new_str, "\n", 1);
         new_str = ft_strjoin_free(new_str, tmp, 1);
         free(tmp);
     }

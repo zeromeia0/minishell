@@ -23,9 +23,14 @@ int is_builtin(char *cmd)
     return (0);
 }
 
-void builtin_cd(char *path)
+void builtin_cd(char *path) 
 {
-    if (chdir(path) != 0)
+    if (path == NULL || path[0] == '\0') 
+    {
+        if (chdir(getenv("HOME")) != 0) 
+            perror("cd");
+    }
+    else if (chdir(path) != 0) 
         perror("cd");
 }
 
@@ -96,9 +101,10 @@ void    builtin_exit(char **args)
 
 int builtin_export(char *name, char *value)
 {
+    if (!name)
+        return (0);
     name = aspas(name);
     value = aspas(value);
-
     if (setenv(name, value, 1) != 0)
         return (perror("setenv failed"), 1);
     return (0);
@@ -107,15 +113,7 @@ int builtin_export(char *name, char *value)
 int exec_builtin(char *cmd, char **args)
 {
     if (ft_strncmp(cmd, "cd", 2) == 0)
-    {
-        if (args[1] == NULL)
-            {
-                printf("cd: missing path\n");
-                return (0);
-            }
-        else
             builtin_cd(args[1]);
-    }
     else if (ft_strncmp(cmd, "pwd", 3) == 0)
         builtin_pwd();
     else if (ft_strncmp(cmd, "env", 3) == 0)
