@@ -60,6 +60,7 @@
 	"libft.h": "c",
 	"readline.h": "c",
 	"minishell.h": "c",
-	"stdio.h": "c"
+	"stdio.h": "c",
+	"algorithm": "c"
 }
 }
