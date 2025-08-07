@@ -6,7 +6,7 @@
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 08:19:15 by jlima-so          #+#    #+#             */
-/*   Updated: 2025/08/07 17:39:12 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/08/07 21:01:05 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -356,8 +356,8 @@ t_table *parsing(void)
 	char 	*str;
 	// char 	**mat;
 	char	*sep[] = {"'", "\"", "`", NULL};
-	char	*stokens[] = {">", "<", "&", "|", NULL};
-	char	*mtokens[] = {"<>", ">>", "<<", "&>", ">&", NULL};
+	char	*stokens[] = {"&", "|", ">", "<", NULL};
+	char	*mtokens[] = {"<>", ">>", "<<",/*  "&>", ">&", */ NULL};
 	// t_table	*table;
 
 	str = readline("------------------------------------\nminishell$ ");
