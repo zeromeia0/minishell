@@ -61,6 +61,7 @@
 	"readline.h": "c",
 	"minishell.h": "c",
 	"stdio.h": "c",
-	"algorithm": "c"
+	"algorithm": "c",
+	"history.h": "c"
 }
 }

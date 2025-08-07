@@ -6,7 +6,7 @@
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:21:36 by jlima-so          #+#    #+#             */
-/*   Updated: 2025/06/11 09:07:14 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/08/05 22:11:54 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,5 @@ void	ft_print_matrix(char **matrix)
 			write(2, &matrix[indv][indh], 1);
 		write(2, "\n", 1);
 	}
-	write(2, "\n", 1);
+	// write(2, "\n", 1);
 }
