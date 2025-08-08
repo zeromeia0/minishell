@@ -49,10 +49,6 @@ void    builtin_env(void)
     }
 }
 
-// void builtin_echo(char *str)
-// {
-//     printf("")
-// }
 
 int    builtin_exit(char **args)
 {
