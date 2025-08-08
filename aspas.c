@@ -9,7 +9,6 @@ char *aspas(char *str)
 
 	i = 0;
 	count = 0;
-	j = 0;
 	while (str[i])
 	{
 		if (ft_strchr(str, '"'))
@@ -19,11 +18,14 @@ char *aspas(char *str)
 	new_str = malloc(i + 1);
 	if (!new_str)
 		return (NULL);
-	if (count % 2 == 1)
+	j = 0;
+		if (count % 2 == 1)
 	{
 		while (j < i)
 		{
-			
+			if (str[j] == '"')
+				j++;
+
 		}
 	}
 }
