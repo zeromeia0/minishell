@@ -1,0 +1,92 @@
+Lexer = ls -l | grep joao
+
+[ls] [-l] [|] [grep] ...
+
+Parser - Command Table -> subcomand, redirection
+pips with flags
+
+> COmmands in pipelins
+Where input & output happens
+ Take tokens, check grammar, add command to 
+data strucutre (command table)
+
+Exec = exec each process fork, redirect w/ dup2
+
+Signal = ctll z, crt c ctrl \
+
+Mains = while (1)
+	user input
+	if (ctld-d) exit
+
+Parsing -> binary tree
+
+ls -l | grep joao > out.txt
+ - create pipes
+ - fork [fork -l] redirect (dup2) -> joao
+ - final (>) out.txt
+
+
+_____
+###Final main function concept###
+
+while (1)
+{
+	char *line = readline("minishell$);
+	if (!line)
+		break;
+	create_history(line);
+	t_cmd *cmd_table = parse (line);
+	executor (cmd_table);
+	super_dper_hiper_free();
+}
+
+
+##1) Setup logic##
+	executor.c -> deals with binary tree recursively + bonus
+		if (cmd) then exec (t_cmd *cmd)
+		if && -> check left
+			if 0 -> run right
+		 if || -> check left
+			if != 0 -> run right
+	pipex
+		executes a full pipeline ls | grep
+			count_cmd
+			create needed pipes
+			loop and fork each process
+				in child: redirect input/output, handle wildcards, exec or built-in
+				in parent: close unused fd
+			wait all children
+			return exit status of last command
+	wildcards
+		replaces '*' arguments with matching filenames in current dir
+		check cmd->args
+		if contains '*', open . with opendir() + readdir()
+		match using fnmatch() (or custom match)
+		replace arg with matches
+	redirect
+		for < > >>
+			open filenames
+			use dup2 (fd, STDIN_FILENO) or dup2(fd, STDOUT_FILENO)
+	built-in
+		is built-in?
+			handle: cd, exit, export, unset, echo, pwd, env
+		if inside pipeline, fork for built-ins
+		else (no pipe)
+			run directly in parent (needed for cd, exit, export, unset)
+	signals
+		sigint, sigquit, sigterm
+		ctrl-c -> prompt on new line (interactive)
+		ctrl-d -> exit shell (on empty input)
+		ctrl-\ -> ignored (interactive mode)
+		in child: reset signals to default behavior
+	env handling
+		use char **envp (copy from main)
+		handle $VAR and $? expansion (partner's job in parser)
+		export / unset must modify your envp
+	exit status
+		track and return correct exit code
+		last command in pipeline determines $?
+		last command in binary tree (bonus) also sets $?
+	super_duper_hiper_free
+		free all malloc'd memory after each command
+		free cmd list, args, envp copy if needed, wildcard-expanded arrays
