@@ -6,6 +6,8 @@ int count_it(char *str, int c)
 {
 	int i = 0;
 	int count = 0;
+	if (!str)
+		return (0);
 	while (str[i])
 	{
 		if (str[i] == c)
@@ -17,36 +19,32 @@ int count_it(char *str, int c)
 
 char *remove_it(char *str, int c)
 {
-	int i = 0;
-	int count = count_it(str, c);
-	char *removed = malloc(ft_strlen(str) + 1 - count);
-	if (!removed)
+    int i = 0;
+    int j = 0;
+	if (!str)
 		return (NULL);
-	while (str[i])
-	{
-		if (str[i] == c)
-			{
-				str[i] = str[i + 1];
-				i++;
-			}
-		removed[i] = str[i];
-		i++;
-	}
-	return (removed);
+    int count = count_it(str, c);
+    char *removed = malloc(ft_strlen(str) + 1 - count);
+    if (!removed)
+        return (NULL);
+
+    while (str[i])
+    {
+        if (str[i] != c)
+        {
+            removed[j] = str[i];
+            j++;
+        }
+        i++;
+    }
+    removed[j] = '\0';
+    return (removed);
 }
 
 char *aspas(char *str)
 {
-	char *new_str = malloc(ft_strlen(str) + 1 - count_it(str, '"'));
-	remove_it(str, '"');
-	ft_strcpy(new_str, str);
-	return (new_str);
-}
-
-int main(void)
-{
-	char str[] = "sal\"ve r\"apaze\"ada\n";
-	aspas(str);
-	printf("%s", str);
-	return (0);
+	if (!str)
+		return (NULL);
+	char *final_str = remove_it(str, '"');
+	return (final_str);
 }

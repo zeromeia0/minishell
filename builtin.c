@@ -57,8 +57,8 @@ int builtin_export(char *name, char *value)
 {
     if (!name)
         return (0);
-    // name = aspas(name);
-    // value = aspas(value);
+    name = aspas(name);
+    value = aspas(value);
     if (setenv(name, value, 1) != 0)
         return (perror("setenv failed"), 1);
     return (0);
