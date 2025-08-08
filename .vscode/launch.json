@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/joao/42home/ms3/minishell_colab/parse",
-      "program": "/home/joao/42home/ms3/minishell_colab/parse/build/Debug/outDebug",
+      "cwd": "/home/joao/42home/ms3/minishell_colab",
+      "program": "/home/joao/42home/ms3/minishell_colab/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
