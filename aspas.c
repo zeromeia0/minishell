@@ -1,52 +1,29 @@
-#include "minishell.h"
-<<<<<<< HEAD
-#include "my_libft/libft.h"
-
-bool even_odd_aspas(char *str)
-{
-    int i = 0;
-    int count = 0;
-
-    while (str[i])
-    {
-        if (str[i] == '"')
-            count++;
-        i++;
-    }
-    return (count % 2 == 0);
-}
+#include "sigma_minishell.h"
 
 char *aspas(char *str)
 {
-    if (!str || str[0] == '\0')
-        return (NULL);
-    char *new_str = str;
-    char *tmp;
-    while (!even_odd_aspas(new_str))
-    {
-        tmp = readline("> ");
-        if (!tmp)
-            break;
-        if (tmp[0] == '"')
-        {
-            new_str = ft_strjoin_free(new_str, tmp + 1, 1);
-            free(tmp);
-            break;
-        }
-        new_str = ft_strjoin_free(new_str, "\n", 1);
-        new_str = ft_strjoin_free(new_str, tmp, 1);
-        free(tmp);
-    }
-    return (new_str);
-=======
+	int i;
+	int j;
+	int	count;
+	char *new_str;
 
-char *ignore_aspas(char *str)
-{
-	int i = 0;
+	i = 0;
+	count = 0;
+	j = 0;
 	while (str[i])
 	{
-		if (ft_strchr(str, '\n'))
-			
+		if (ft_strchr(str, '"'))
+			count++;
+		i++;
 	}
->>>>>>> main
+	new_str = malloc(i + 1);
+	if (!new_str)
+		return (NULL);
+	if (count % 2 == 1)
+	{
+		while (j < i)
+		{
+			
+		}
+	}
 }

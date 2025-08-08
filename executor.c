@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "sigma_minishell.h"
 #include <readline/history.h>
 #include <stdlib.h>
 
