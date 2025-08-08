@@ -9,18 +9,18 @@
 // << = 256
 // >> = 255
 
-typedef struct s_outfile
+typedef struct s_file
 {
 	int		fd;
 	int		token;
 	char	*file;
-}	t_outfile;
+}	t_file;
 
 typedef struct s_cmds
 {
-	char		**comd;
-	t_outfile	*outfile;
-	t_cmds		*next;
+	char			**comd;
+	t_file			*outfiles;
+	struct s_cmds	*next;
 }	t_cmds;
 
 typedef struct s_table
@@ -31,14 +31,14 @@ typedef struct s_table
 
 typedef struct s_binary
 {
-	char          	logic;
+	char			logic; // & |
 	int				left_ret;
 	int				right_ret;
+	t_table			*table;
 	struct s_binary	*up;
 	struct s_binary	*left;
 	struct s_binary	*right;
 	struct s_binary	*subshell;
-	t_table			*table;
 }	t_binary;
 
 t_table *parsing(void);
