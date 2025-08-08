@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 08:19:15 by jlima-so          #+#    #+#             */
-/*   Updated: 2025/08/07 21:01:05 by jlima-so         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 /*
 while (str[ind] == '\t' || str[ind] == ' ' || str[ind] == '\n')
 			ind++;
@@ -149,7 +137,7 @@ while (str[ind] == '\t' || str[ind] == ' ' || str[ind] == '\n')
 
 #include "../minishell.h"
 
-int	find_fd_red(char *str)
+/* int	find_fd_red(char *str)
 {
 	int	ind;
 
@@ -158,14 +146,19 @@ int	find_fd_red(char *str)
 		ind++;
 	if (str[ind] == '\0')
 		return (0);
+	if (str[ind] == '&')
+	{
+		
+		ind++;
+	}
 	if (str[ind] == '>' && str[ind + 1] == '>')
 		return (ind + 2);
 	if (str[ind] == '>')
 		return (ind + 1);
 	return (0);
-}
+} */
 
-int	word_count(char *str, char **stokens, char **mtokens, char **sep)
+int	word_count(char *str, char **stokens, char **dtokens, char **sep)
 {
 	int		ind;
 	int		count;
@@ -180,33 +173,39 @@ int	word_count(char *str, char **stokens, char **mtokens, char **sep)
 			ind++;
 		if (str[ind] == '\0')
 			return (count);
-		if (str[ind] >= '0' && str[ind] <= '9')
+		if (ft_strnmat(dtokens, str + ind, 4))
 		{
-			fdcount = find_fd_red(str + ind);
-			count += (fdcount != 0);
-			write(1, str + ind, fdcount);
+			count++;
+			write(1, str + ind, 4);
 			write(1, "\n", 1);
-			ind += fdcount;
+			ind += 4;
 		}
-		if (ft_strnmat(mtokens, str + ind, 2))
+		if (ft_strnmat(dtokens, str + ind, 3))
+		{
+			count++;
+			write(1, str + ind, 3);
+			write(1, "\n", 1);
+			ind += 3;
+		}
+		if (ft_strnmat(dtokens, str + ind, 2))
 		{
 			count++;
 			write(1, str + ind, 2);
 			write(1, "\n", 1);
 			ind += 2;
 		}
-		else if (ft_strnmat(stokens, str + ind, 1))
+		if (ft_strnmat(stokens, str + ind, 1))
 		{
 			count++;
 			write(1, str + ind, 1);
 			write(1, "\n", 1);
 			ind++;
 		}
-		if ((ft_strnmat(mtokens, str + ind, 2) == NULL && ft_strnmat(stokens, str + ind, 1) == NULL) \
+		if ((ft_strnmat(dtokens, str + ind, 2) == NULL && ft_strnmat(stokens, str + ind, 1) == NULL) \
 			&& str[ind] && (str[ind] != ' ' && str[ind] != '\t' && str[ind] != '\n'))
 		{
 			count++;
-			while ((ft_strnmat(mtokens, str + ind, 2) == NULL && ft_strnmat(stokens, str + ind, 1) == NULL) \
+			while ((ft_strnmat(dtokens, str + ind, 2) == NULL && ft_strnmat(stokens, str + ind, 1) == NULL) \
 				&& str[ind] && (str[ind] != ' ' && str[ind] != '\t' && str[ind] != '\n'))
 			{
 				sep_found = ft_strnmat(sep, str + ind, 1);
@@ -236,7 +235,7 @@ int	word_count(char *str, char **stokens, char **mtokens, char **sep)
 	return (count);
 }
 
-static int	parsing_strlen(char *str, char **stokens, char **mtokens, char **sep)
+static int	parsing_strlen(char *str, char **stokens, char **dtokens, char **sep)
 {
 	int		ind;
 	int		fdcount;
@@ -245,20 +244,18 @@ static int	parsing_strlen(char *str, char **stokens, char **mtokens, char **sep)
 	ind  = 0;
 	// if (*str >= '0' && *str <= '9' && find_fd(*str))
 			// return
-	if (str[ind] >= '0' && str[ind] <= '9')
-	{
-		fdcount = find_fd_red(str + ind);
-		if (fdcount)
-			return (fdcount);
-	}
-	if (ft_strnmat(mtokens, str + ind, 2))
+	// if (ft_strnmat(dtokens, str + ind, 4))
+		// return (4);
+	// if (ft_strnmat(dtokens, str + ind, 3))
+		// return (3);
+	if (ft_strnmat(dtokens, str + ind, 2))
 		return (2);
 	else if (ft_strnmat(stokens, str + ind, 1))
 		return (1);
-	if ((ft_strnmat(mtokens, str + ind, 2) == NULL && ft_strnmat(stokens, str + ind, 1) == NULL) \
+	if ((ft_strnmat(dtokens, str + ind, 2) == NULL && ft_strnmat(stokens, str + ind, 1) == NULL) \
 		&& str[ind] && (str[ind] != ' ' && str[ind] != '\t' && str[ind] != '\n'))
 	{
-		while ((ft_strnmat(mtokens, str + ind, 2) == NULL && ft_strnmat(stokens, str + ind, 1) == NULL) \
+		while ((ft_strnmat(dtokens, str + ind, 2) == NULL && ft_strnmat(stokens, str + ind, 1) == NULL) \
 			&& str[ind] && (str[ind] != ' ' && str[ind] != '\t' && str[ind] != '\n'))
 		{
 			sep_found = ft_strnmat(sep, str + ind, 1);
@@ -279,14 +276,14 @@ static int	parsing_strlen(char *str, char **stokens, char **mtokens, char **sep)
 	return (0);
 }
 
-char **tokenization(char *str, char **stokens, char **mtokens, char **sep)
+char **tokenization(char *str, char **stokens, char **dtokens, char **sep)
 {
 	int		wc;
 	int		ind;
 	int		strcount;
 	char	**ret;
 
-	wc = word_count(str, stokens, mtokens, sep);
+	wc = word_count(str, stokens, dtokens, sep);
 	if (wc < 0)
 	{
 		printf("\nUnclosed |%c|\n", -wc);
@@ -304,7 +301,7 @@ char **tokenization(char *str, char **stokens, char **mtokens, char **sep)
 			str++;
 		if (*str == '\0')
 			break ;
-		strcount = parsing_strlen(str, stokens, mtokens, sep);
+		strcount = parsing_strlen(str, stokens, dtokens, sep);
 		ret[ind] = ft_strndup(str, strcount);
 		str += strcount;
 	}
@@ -318,8 +315,6 @@ void	init_table(t_table *table)
 {
 	table->cmds = NULL;
 	table->infiles = NULL;
-	table->outfiles = NULL;
-	table->fd_outfiles = NULL;
 }
 /* 
 char	*get_infile(char **mat)
@@ -354,16 +349,17 @@ t_table	*tableization(char **mat)
 t_table *parsing(void)
 {
 	char 	*str;
-	// char 	**mat;
+	char 	**mat;
 	char	*sep[] = {"'", "\"", "`", NULL};
 	char	*stokens[] = {"&", "|", ">", "<", NULL};
-	char	*mtokens[] = {"<>", ">>", "<<",/*  "&>", ">&", */ NULL};
-	// t_table	*table;
+	char	*dtokens[] = {/* "<>", */ ">>", "<<", "&>", ">&", "0>", "1>", "2>", NULL};
+	char	*ttokens[] = {"&>>", "0>>", "1>>", "2>>", NULL};
+	char	*qtokens[] = {"0>&1", "1>&0", "0>&2", "2>&0", "1>&2", "2>&1", NULL};
+	t_table	*table;
 
 	str = readline("------------------------------------\nminishell$ ");
 	// create_binary_tree(str);
-	/* mat =  */tokenization(str, stokens, mtokens, sep);
-	// table = tableization(mat);
-	// (void *)mat;
-	return (NULL);
+	mat = tokenization(str, stokens, dtokens, sep);
+	table = tableization(mat);
+	return (table);
 }
