@@ -56,10 +56,13 @@ void    builtin_env(void)
     }
 }
 
+<<<<<<< HEAD
 void builtin_echo(char **args)
 {
     int i;
     int skip_newline = 0;
+=======
+>>>>>>> main
 
     i = 1;
     if (args[1] && ft_strncmp(args[1], "-n", 2) == 0)

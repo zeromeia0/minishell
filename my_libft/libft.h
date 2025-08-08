@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlima-so <jlima-so@student.42lisba.com>    +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:02:51 by jlima-so          #+#    #+#             */
-/*   Updated: 2025/06/24 11:42:47 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/08/08 13:02:58 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <limits.h>
 # include <ctype.h>
 # include <string.h>
-# include <bsd/string.h>
+// # include <bsd/string.h>
 # include <errno.h>
 # include <fcntl.h>
 # include <sys/wait.h>

@@ -1,4 +1,5 @@
 #include "minishell.h"
+<<<<<<< HEAD
 #include "my_libft/libft.h"
 
 bool even_odd_aspas(char *str)
@@ -37,4 +38,15 @@ char *aspas(char *str)
         free(tmp);
     }
     return (new_str);
+=======
+
+char *ignore_aspas(char *str)
+{
+	int i = 0;
+	while (str[i])
+	{
+		if (ft_strchr(str, '\n'))
+			
+	}
+>>>>>>> main
 }
