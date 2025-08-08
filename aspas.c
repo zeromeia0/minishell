@@ -1,5 +1,6 @@
 #include "my_libft/libft.h"
 #include "sigma_minishell.h"
+#include <readline/readline.h>
 
 
 int count_it(char *str, int c)
@@ -41,10 +42,28 @@ char *remove_it(char *str, int c)
     return (removed);
 }
 
+void odd_aspas(char *str)
+{
+	int count;
+	count = count_it(str, '"');
+	if (count % 2 == 1)
+	{
+		while (1)
+		{
+			char *input = readline(">");
+			if (!input)
+				continue ;
+			else if (ft_strncmp(input, (char *)'"', 1) == 0)
+				break ;
+		}
+	}
+}
+
 char *aspas(char *str)
 {
 	if (!str)
 		return (NULL);
 	char *final_str = remove_it(str, '"');
+	odd_aspas(str);
 	return (final_str);
 }

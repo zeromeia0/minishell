@@ -43,6 +43,27 @@ void builtin_pwd(void)
         printf("%s\n", buf);
 }
 
+void builtin_echo(char **args)
+{
+    int i;
+    char *cleaned;
+
+    i = 1;
+    if (args[1] && ft_strncmp(args[1], "-n", 2) == 0)
+        i++;
+    while (args[i])
+    {
+        cleaned = aspas(args[i]);
+        printf("%s", cleaned);
+        free(cleaned);
+        if (args[i + 1] != NULL)
+            printf(" ");
+        i++;
+    }
+    if (!(args[1] && ft_strncmp(args[1], "-n", 2) == 0))
+        printf(("\n"));
+}
+
 void    builtin_exit(char **args)
 {
     int status;
@@ -72,8 +93,8 @@ int exec_builtin(char *cmd, char **args)
         builtin_pwd();
     // else if (ft_strncmp(cmd, "env", 3) == 0)
     //     builtin_env();
-    // else if (ft_strncmp(cmd, "echo", 4) == 0)
-    //     builtin_echo(args);
+    else if (ft_strncmp(cmd, "echo", 4) == 0)
+        builtin_echo(args);
     else if (ft_strncmp(cmd, "exit", 4) == 0)
         builtin_exit(args);
     else if (ft_strncmp(cmd, "export", 6) == 0)
