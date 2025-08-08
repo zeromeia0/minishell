@@ -25,7 +25,17 @@ char *aspas(char *str)
 		{
 			if (str[j] == '"')
 				j++;
-
+			new_str[j] = str[j];
+			j++;
 		}
 	}
+	new_str[j] = '\0';
+	return (new_str);
+}
+
+int main(void)
+{
+	char str[] = "salve rapazeada";
+	printf("%s", str);
+	return (0);
 }
