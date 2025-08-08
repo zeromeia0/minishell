@@ -162,7 +162,6 @@ int	word_count(char *str, char **stokens, char **dtokens, char **sep)
 {
 	int		ind;
 	int		count;
-	int		fdcount;
 	char	*sep_found;
 
 	ind  = 0;
@@ -238,7 +237,6 @@ int	word_count(char *str, char **stokens, char **dtokens, char **sep)
 static int	parsing_strlen(char *str, char **stokens, char **dtokens, char **sep)
 {
 	int		ind;
-	int		fdcount;
 	char	*sep_found;
 
 	ind  = 0;
@@ -346,18 +344,16 @@ t_table	*tableization(char **mat)
 	return (table);
 }
 
-t_table *parsing(void)
+t_table *parsing(char *str)
 {
-	char 	*str;
 	char 	**mat;
 	char	*sep[] = {"'", "\"", "`", NULL};
 	char	*stokens[] = {"&", "|", ">", "<", NULL};
 	char	*dtokens[] = {/* "<>", */ ">>", "<<", "&>", ">&", "0>", "1>", "2>", NULL};
-	char	*ttokens[] = {"&>>", "0>>", "1>>", "2>>", NULL};
-	char	*qtokens[] = {"0>&1", "1>&0", "0>&2", "2>&0", "1>&2", "2>&1", NULL};
+	// char	*ttokens[] = {"&>>", "0>>", "1>>", "2>>", NULL};
+	// char	*qtokens[] = {"0>&1", "1>&0", "0>&2", "2>&0", "1>&2", "2>&1", NULL};
 	t_table	*table;
 
-	str = readline("------------------------------------\nminishell$ ");
 	// create_binary_tree(str);
 	mat = tokenization(str, stokens, dtokens, sep);
 	table = tableization(mat);

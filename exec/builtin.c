@@ -1,6 +1,4 @@
 #include "minishell.h"
-#include "my_libft/libft.h"
-#include <unistd.h>
 
 int is_builtin(char *cmd)
 {
