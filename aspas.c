@@ -53,8 +53,12 @@ void odd_aspas(char *str)
 			char *input = readline(">");
 			if (!input)
 				continue ;
-			else if (ft_strncmp(input, (char *)'"', 1) == 0)
+			if (input[0] == '"')
+			{
+				free(input);
 				break ;
+			}
+			free(input);
 		}
 	}
 }
