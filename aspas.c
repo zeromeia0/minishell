@@ -1,41 +1,52 @@
+#include "my_libft/libft.h"
 #include "sigma_minishell.h"
 
-char *aspas(char *str)
-{
-	int i;
-	int j;
-	int	count;
-	char *new_str;
 
-	i = 0;
-	count = 0;
+int count_it(char *str, int c)
+{
+	int i = 0;
+	int count = 0;
 	while (str[i])
 	{
-		if (ft_strchr(str, '"'))
+		if (str[i] == c)
 			count++;
 		i++;
 	}
-	new_str = malloc(i + 1);
-	if (!new_str)
+	return (count);
+}
+
+char *remove_it(char *str, int c)
+{
+	int i = 0;
+	int count = count_it(str, c);
+	char *removed = malloc(ft_strlen(str) + 1 - count);
+	if (!removed)
 		return (NULL);
-	j = 0;
-		if (count % 2 == 1)
+	while (str[i])
 	{
-		while (j < i)
-		{
-			if (str[j] == '"')
-				j++;
-			new_str[j] = str[j];
-			j++;
-		}
+		if (str[i] == c)
+			{
+				str[i] = str[i + 1];
+				i++;
+			}
+		removed[i] = str[i];
+		i++;
 	}
-	new_str[j] = '\0';
+	return (removed);
+}
+
+char *aspas(char *str)
+{
+	char *new_str = malloc(ft_strlen(str) + 1 - count_it(str, '"'));
+	remove_it(str, '"');
+	ft_strcpy(new_str, str);
 	return (new_str);
 }
 
 int main(void)
 {
-	char str[] = "salve rapazeada";
+	char str[] = "sal\"ve r\"apaze\"ada\n";
+	aspas(str);
 	printf("%s", str);
 	return (0);
 }
