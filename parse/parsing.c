@@ -172,20 +172,20 @@ int	word_count(char *str, char **stokens, char **dtokens, char **sep)
 			ind++;
 		if (str[ind] == '\0')
 			return (count);
-		if (ft_strnmat(dtokens, str + ind, 4))
-		{
-			count++;
-			write(1, str + ind, 4);
-			write(1, "\n", 1);
-			ind += 4;
-		}
-		if (ft_strnmat(dtokens, str + ind, 3))
-		{
-			count++;
-			write(1, str + ind, 3);
-			write(1, "\n", 1);
-			ind += 3;
-		}
+		// if (ft_strnmat(dtokens, str + ind, 4))
+		// {
+		// 	count++;
+		// 	write(1, str + ind, 4);
+		// 	write(1, "\n", 1);
+		// 	ind += 4;
+		// }
+		// if (ft_strnmat(dtokens, str + ind, 3))
+		// {
+		// 	count++;
+		// 	write(1, str + ind, 3);
+		// 	write(1, "\n", 1);
+		// 	ind += 3;
+		// }
 		if (ft_strnmat(dtokens, str + ind, 2))
 		{
 			count++;
@@ -193,14 +193,14 @@ int	word_count(char *str, char **stokens, char **dtokens, char **sep)
 			write(1, "\n", 1);
 			ind += 2;
 		}
-		if (ft_strnmat(stokens, str + ind, 1))
+		else if (ft_strnmat(stokens, str + ind, 1))
 		{
 			count++;
 			write(1, str + ind, 1);
 			write(1, "\n", 1);
 			ind++;
 		}
-		if ((ft_strnmat(dtokens, str + ind, 2) == NULL && ft_strnmat(stokens, str + ind, 1) == NULL) \
+		else if ((ft_strnmat(dtokens, str + ind, 2) == NULL && ft_strnmat(stokens, str + ind, 1) == NULL) \
 			&& str[ind] && (str[ind] != ' ' && str[ind] != '\t' && str[ind] != '\n'))
 		{
 			count++;
@@ -250,7 +250,7 @@ static int	parsing_strlen(char *str, char **stokens, char **dtokens, char **sep)
 		return (2);
 	else if (ft_strnmat(stokens, str + ind, 1))
 		return (1);
-	if ((ft_strnmat(dtokens, str + ind, 2) == NULL && ft_strnmat(stokens, str + ind, 1) == NULL) \
+	else if ((ft_strnmat(dtokens, str + ind, 2) == NULL && ft_strnmat(stokens, str + ind, 1) == NULL) \
 		&& str[ind] && (str[ind] != ' ' && str[ind] != '\t' && str[ind] != '\n'))
 	{
 		while ((ft_strnmat(dtokens, str + ind, 2) == NULL && ft_strnmat(stokens, str + ind, 1) == NULL) \

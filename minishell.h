@@ -3,6 +3,7 @@
 
 #include "parse/jojo_libft/libft.h"
 #include "exec/minishell.h"
+#include "exec/minishell.h"
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -10,17 +11,26 @@
 // << = 256
 // >> = 255
 
-typedef struct s_file
+typedef struct s_outfile
 {
-	int		fd;
-	int		token;
-	char	*file;
-}	t_file;
+	int					fd;
+	int					token;
+	char				*file;
+	struct s_outfile	*next_file;
+}	t_outfile;
+
+typedef struct s_infile
+{
+	int				token;
+	char			*file;
+	struct s_infile	*next_file;
+}	t_infile;
+
 
 typedef struct s_cmds
 {
 	char			**comd;
-	t_file			*outfiles;
+	t_outfile			*outfiles;
 	struct s_cmds	*next;
 }	t_cmds;
 
