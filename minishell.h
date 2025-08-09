@@ -11,38 +11,46 @@
 // << = 256
 // >> = 255
 
+typedef struct s_token
+{
+	char	**stokens;
+	char	**dtokens;
+	char	**ttokens;
+	char	**qtokens;
+}	t_token;
+
 typedef struct s_outfile
 {
 	int					fd;
-	int					token;
+	char				*token;
 	char				*file;
-	struct s_outfile	*next_file;
+	struct s_outfile	*next;
 }	t_outfile;
 
 typedef struct s_infile
 {
-	int				token;
+	char 			*token;
 	char			*file;
-	struct s_infile	*next_file;
+	struct s_infile	*next;
 }	t_infile;
 
 
 typedef struct s_cmds
 {
-	char			**comd;
-	t_outfile			*outfiles;
+	char			**cmd;
+	t_outfile		*outfiles;
 	struct s_cmds	*next;
 }	t_cmds;
 
 typedef struct s_table
 {
-	char	**infiles;
-	t_cmds	*cmds;
+	t_infile	*infiles;
+	t_cmds		*cmds;
 }	t_table;
 
 typedef struct s_binary
 {
-    t_type          type;
+	t_type			type;
 	char			logic; // & |
 	int				left_ret;
 	int				right_ret;
@@ -53,7 +61,25 @@ typedef struct s_binary
 	struct s_binary	*subshell;
 }	t_binary;
 
-t_table *parsing(char *str);
+t_table		*parsing(char *str);
+t_binary	*btree(void);
+int			create_binary_tree(char **mat);
+
+// clear everything inside the data struct
+void		binary_clear(t_binary *binary);
+void		table_clear(t_table *table);
+void		cmds_clear(t_cmds *cmds);
+void		outfile_clear(t_outfile *outfile);
+void		infile_clear(t_infile *infile);
+
+// create the data struct with the information needed (use NULL where available if needed)
+t_binary	*binary_new(t_type type, t_table *up, t_table *table);
+t_table		*table_new(t_cmds *cmds, t_infile *infile);
+t_cmds		*cmds_new(char **cmd, t_outfile *outfile);
+t_outfile	*outfile_new(int fd, char *file, char *token);
+t_infile	*infile_new(char *file, char *token);
+
+
 
 #endif
 

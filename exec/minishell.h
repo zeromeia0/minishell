@@ -14,7 +14,9 @@
 typedef enum e_type{
     CMD,
     AND,
-    OR
+    OR,
+	EMPTY,
+	ERROR
 }   t_type;
 
 typedef struct s_cmd{

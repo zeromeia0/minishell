@@ -3,6 +3,14 @@
 #include <readline/history.h>
 #include <stdlib.h>
 
+// < in cat Makefile > out | cat Makefile > out1
+t_binary *btree(void)
+{
+	static t_binary	tree;
+
+	return (&tree);
+}
+
 int exec_tree(t_binary *tree)
 {
 	int left;
@@ -18,7 +26,7 @@ int exec_tree(t_binary *tree)
 		if (left == 0)
 			return (exec_tree(tree->right));
 		else
-			return (left);	  
+			return (left);
 	}
 	if (tree->type == OR)
 	{
@@ -39,12 +47,12 @@ int main(int argc, char *argv[])
 	tree = malloc(sizeof(t_binary));
 	if (!tree)
 		return (1);
-	(void)argc;
-	(void)argv;
+	(void) argc;
+	(void) argv;
 	// exec_tree(tree);
 	while(1)
 	{
-		char *input = readline("minishell$ ");
+		char *input = readline("-------------------------------------------------\nminishell$ ");
 		if (!input)
 			break;
 		add_history(input);
@@ -55,6 +63,5 @@ int main(int argc, char *argv[])
 		if (is_builtin(cmd))  // Check if it's a built-in command
 			exec_builtin(cmd, args);  // Execute the corresponding built-in command
 	}
-	return(printf("Closing Minishell\n"), 0);
+	return (printf("Closing Minishell\n"), 0);
 }
-

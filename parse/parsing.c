@@ -1,140 +1,3 @@
-/*
-while (str[ind] == '\t' || str[ind] == ' ' || str[ind] == '\n')
-			ind++;
-		if (ft_isminishell(str[ind]))
-		{
-			count++;
-			while (ft_isminishell(str[ind]))
-			{
-				printf("%c", str[ind]);
-				ind++;
-			}
-			printf(" is a word\n\n");
-		}
-		else if (str[ind] == '\'')
-		{
-			count++;
-			ind++;
-			while (str[ind] != '\'' && str[ind])
-			{
-				printf("%c", str[ind]);
-				ind++;
-			}
-			if (str[ind] == '\'')
-				ind++;
-			else
-				return (-1 * '\'');
-			printf(" is '\n\n");
-		}
-		else if (str[ind] == '\"')
-		{
-			count++;
-			ind++;
-			while (str[ind] != '\"' && str[ind])
-			{
-				printf("%c", str[ind]);
-				ind++;
-			}
-			if (str[ind] == '\"')
-				ind++;
-			else
-				return (-1 * '\"');
-			printf(" is \"\n\n");
-		}
-		else if (str[ind] == '`')
-		{
-			count++;
-			ind++;
-			while (str[ind] != '`' && str[ind])
-			{
-				printf("%c", str[ind]);
-				ind++;
-			}
-			if (str[ind] == '`')
-				ind++;
-			else
-				return (-1 * '`');
-			printf("is `\n\n");
-		}
-		else if (str[ind] == '[')
-		{
-			count++;
-			ind++;
-			while (str[ind] != ']' && str[ind])
-			{
-				printf("%c", str[ind]);
-				ind++;
-			}
-			if (str[ind] == ']')
-				ind++;
-			else
-				return (-1 * ']');
-			printf(" is '\n\n");
-		}
-		else if (str[ind] == '{')
-		{
-			count++;
-			ind++;
-			while (str[ind] != '}' && str[ind])
-			{
-				printf("%c", str[ind]);
-				ind++;
-			}
-			if (str[ind] == '}')
-				ind++;
-			else
-				return (-1 * '}');
-			printf(" is '\n\n");
-		}
-		else if (str[ind] == '$')
-		{
-			count++;
-			if (str[ind + 1] == '{')
-			{
-				while (str[ind] != '}' && str[ind])
-				{
-					printf("%c", str[ind]);
-					ind++;
-				}
-				if (str[ind] == '}')
-				{
-					printf("%c is a variable\n\n", str[ind]);
-					ind++;
-				}
-				else
-					return (-1 * '}');
-			}
-			else
-			{
-				while ((str[ind] != ' ' && str[ind] != '\t') && str[ind])
-				{
-					printf("%c", str[ind]);
-					ind++;
-				}
-				printf("%c is a variable\n\n", str[ind]);
-				while ((str[ind] == ' ' || str[ind] == '\t') && str[ind])
-					ind++;
-			}
-		}
-		else
-		{
-			tokind = 0;
-			while (tokens[tokind] && ft_strnstr(str + ind, tokens[tokind], 2) == NULL)
-				tokind++;
-			if (ft_strnstr(str + ind, tokens[tokind], 2))
-			{
-				write(1, str + ind, ft_strlen(tokens[tokind]));
-				printf(" is %s\n\n", tokens[tokind]);
-				ind += ft_strlen(tokens[tokind]);
-				count++;
-			}
-			else if (str[ind])
-				ind++;
-		}
-	if (str[ind] == '\0')
-		return (count);
-*/
-
 #include "../minishell.h"
 
 /* int	find_fd_red(char *str)
@@ -158,10 +21,24 @@ while (str[ind] == '\t' || str[ind] == ' ' || str[ind] == '\n')
 	return (0);
 } */
 
-int	word_count(char *str, char **stokens, char **dtokens, char **sep)
+int	find_tokens(char *str, t_token tokens)
+{
+	if (ft_strnmat(tokens.qtokens, str, 4))
+		return (4);
+	if (ft_strnmat(tokens.ttokens, str, 3))
+		return (3);
+	if (ft_strnmat(tokens.dtokens, str, 2))
+		return (2);
+	if (ft_strnmat(tokens.stokens, str, 1))
+		return (1);
+	return (0);
+}
+
+int	word_count(char *str, t_token tokens, char **sep)
 {
 	int		ind;
 	int		count;
+	int		token_found;
 	char	*sep_found;
 
 	ind  = 0;
@@ -172,39 +49,19 @@ int	word_count(char *str, char **stokens, char **dtokens, char **sep)
 			ind++;
 		if (str[ind] == '\0')
 			return (count);
-		// if (ft_strnmat(dtokens, str + ind, 4))
-		// {
-		// 	count++;
-		// 	write(1, str + ind, 4);
-		// 	write(1, "\n", 1);
-		// 	ind += 4;
-		// }
-		// if (ft_strnmat(dtokens, str + ind, 3))
-		// {
-		// 	count++;
-		// 	write(1, str + ind, 3);
-		// 	write(1, "\n", 1);
-		// 	ind += 3;
-		// }
-		if (ft_strnmat(dtokens, str + ind, 2))
+		token_found = find_tokens(str + ind, tokens);
+		if (token_found)
 		{
-			count++;
-			write(1, str + ind, 2);
+			write(1, str + ind, token_found);
 			write(1, "\n", 1);
-			ind += 2;
-		}
-		else if (ft_strnmat(stokens, str + ind, 1))
-		{
 			count++;
-			write(1, str + ind, 1);
-			write(1, "\n", 1);
-			ind++;
+			ind += token_found;
 		}
-		else if ((ft_strnmat(dtokens, str + ind, 2) == NULL && ft_strnmat(stokens, str + ind, 1) == NULL) \
+		else if (find_tokens(str + ind, tokens) == 0 \
 			&& str[ind] && (str[ind] != ' ' && str[ind] != '\t' && str[ind] != '\n'))
 		{
 			count++;
-			while ((ft_strnmat(dtokens, str + ind, 2) == NULL && ft_strnmat(stokens, str + ind, 1) == NULL) \
+			while (find_tokens(str + ind, tokens) == 0 \
 				&& str[ind] && (str[ind] != ' ' && str[ind] != '\t' && str[ind] != '\n'))
 			{
 				sep_found = ft_strnmat(sep, str + ind, 1);
@@ -234,26 +91,20 @@ int	word_count(char *str, char **stokens, char **dtokens, char **sep)
 	return (count);
 }
 
-static int	parsing_strlen(char *str, char **stokens, char **dtokens, char **sep)
+static int	parsing_strlen(char *str, t_token tokens, char **sep)
 {
 	int		ind;
+	int		token_found;
 	char	*sep_found;
 
 	ind  = 0;
-	// if (*str >= '0' && *str <= '9' && find_fd(*str))
-			// return
-	// if (ft_strnmat(dtokens, str + ind, 4))
-		// return (4);
-	// if (ft_strnmat(dtokens, str + ind, 3))
-		// return (3);
-	if (ft_strnmat(dtokens, str + ind, 2))
-		return (2);
-	else if (ft_strnmat(stokens, str + ind, 1))
-		return (1);
-	else if ((ft_strnmat(dtokens, str + ind, 2) == NULL && ft_strnmat(stokens, str + ind, 1) == NULL) \
+	token_found = find_tokens(str + ind, tokens);
+	if (token_found)
+		return (token_found);
+	else if (find_tokens(str + ind, tokens) == 0 \
 		&& str[ind] && (str[ind] != ' ' && str[ind] != '\t' && str[ind] != '\n'))
 	{
-		while ((ft_strnmat(dtokens, str + ind, 2) == NULL && ft_strnmat(stokens, str + ind, 1) == NULL) \
+		while (find_tokens(str + ind, tokens) == 0 \
 			&& str[ind] && (str[ind] != ' ' && str[ind] != '\t' && str[ind] != '\n'))
 		{
 			sep_found = ft_strnmat(sep, str + ind, 1);
@@ -274,23 +125,23 @@ static int	parsing_strlen(char *str, char **stokens, char **dtokens, char **sep)
 	return (0);
 }
 
-char **tokenization(char *str, char **stokens, char **dtokens, char **sep)
+char **tokenization(char *str, t_token tokens, char **sep)
 {
 	int		wc;
 	int		ind;
 	int		strcount;
 	char	**ret;
 
-	wc = word_count(str, stokens, dtokens, sep);
-	if (wc < 0)
-	{
-		printf("\nUnclosed |%c|\n", -wc);
-
+	if (str == NULL || *str == '\0')
 		return (NULL);
-	}
+	wc = word_count(str, tokens, sep);
+	if (wc < 0)
+		return (printf("\nUnclosed |%c|\n", -wc), NULL);
 	printf("\nwords in the input ->|%d|\n", wc);
  	return (NULL);
 	ret = malloc(sizeof(char *) * (wc + 1));
+	if (ret == NULL)
+		return (NULL); // CLOSE PROGRAM INSTEAD OF RETURN NULL WHEN WE FIND MEMORY ERRORS?
 	ret[wc] = NULL;
 	ind = -1;
 	while (++ind < wc)
@@ -299,14 +150,16 @@ char **tokenization(char *str, char **stokens, char **dtokens, char **sep)
 			str++;
 		if (*str == '\0')
 			break ;
-		strcount = parsing_strlen(str, stokens, dtokens, sep);
+		strcount = parsing_strlen(str, tokens, sep);
 		ret[ind] = ft_strndup(str, strcount);
+		if (ret[ind] == NULL)
+			return (ft_free_matrix(ret), NULL); // CLOSE PROGRAM INSTEAD OF RETURN NULL WHEN WE FIND MEMORY ERRORS?
 		str += strcount;
 	}
-	printf("matrix starts here\n");
+	printf("=========================================================================================\n");
 	ft_print_matrix(ret);
-	printf("matrix ends here\n");
- 	return (NULL);
+	printf("=========================================================================================\n");
+ 	return (ret);
 }
 
 void	init_table(t_table *table)
@@ -314,6 +167,7 @@ void	init_table(t_table *table)
 	table->cmds = NULL;
 	table->infiles = NULL;
 }
+
 /* 
 char	*get_infile(char **mat)
 {
@@ -329,33 +183,59 @@ char	*get_infile(char **mat)
 	return (NULL);
 } */
 
-t_table	*tableization(char **mat)
-{
-	t_table	*table;
+// t_table	*tableization(char **mat)
+// {
+// 	t_table		*table;
+// 	t_binary	*head;
 
-	if (mat == NULL)
-		return (NULL);
-	table = malloc(sizeof(t_table));
-	init_table(table);
-	// table->infiles = get_infile(mat);
+// 	if (mat == NULL)
+// 		return (NULL);
+// 	head->table = malloc(sizeof(t_table));
+// 	if (head->table == NULL)
+// 		return (NULL);
+// 	init_table(table);
+// 	get_infile(mat);
 	// table->outfiles = get_errfile(mat);
 	// table->fd_outfiles = get_outfile(mat);
 	// table->cmds = get_cmds(mat);
-	return (table);
+	// return (table);
+// }
+
+void init_tree(void)
+{
+	btree()->type = EMPTY;
+	btree()->left_ret = -1;
+	btree()->right_ret = -1;
+	btree()->table = NULL;
+	btree()->up = NULL;
+	btree()->left = NULL;
+	btree()->right = NULL;
+	btree()->subshell = NULL;
 }
 
 t_table *parsing(char *str)
 {
 	char 	**mat;
-	char	*sep[] = {"'", "\"", "`", NULL};
-	char	*stokens[] = {"&", "|", ">", "<", NULL};
-	char	*dtokens[] = {/* "<>", */ ">>", "<<", "&>", ">&", "0>", "1>", "2>", NULL};
-	// char	*ttokens[] = {"&>>", "0>>", "1>>", "2>>", NULL};
-	// char	*qtokens[] = {"0>&1", "1>&0", "0>&2", "2>&0", "1>&2", "2>&1", NULL};
-	t_table	*table;
+	// t_table	*table;
+	t_token	tokens;
+	char	*stokens[] = {"(", ")", "&", "|", ">", "<", NULL};
+	char	*dtokens[] = {/* "<>", */"||", "&&", ">>", "<<", "&>", ">&", "0>", "1>", "2>", NULL};
+	char	*ttokens[] = {"&>>", "0>>", "1>>", "2>>", NULL};
+	char	*qtokens[] = {"0>&1", "1>&0", "0>&2", "2>&0", "1>&2", "2>&1", NULL};
+	char		*sep[] = {"'", "\"", "`", NULL};
 
-	// create_binary_tree(str);
-	mat = tokenization(str, stokens, dtokens, sep);
-	table = tableization(mat);
-	return (table);
+	tokens.stokens = stokens;
+	tokens.dtokens = dtokens;
+	tokens.ttokens = ttokens;
+	tokens.qtokens = qtokens;
+
+	mat = tokenization(str, tokens, sep);
+	if (mat == NULL)
+		return (NULL);
+	init_tree();
+	if (create_binary_tree(mat))
+		return (NULL);
+	// table = tableization(mat);
+	// return (table);
+	return (NULL);
 }
