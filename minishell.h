@@ -51,9 +51,10 @@ typedef struct s_table
 typedef struct s_binary
 {
 	t_type			type;
-	char			logic; // & |
+	int				sublvl;
 	int				left_ret;
 	int				right_ret;
+	int				subshell_ret;
 	t_table			*table;
 	struct s_binary	*up;
 	struct s_binary	*left;
@@ -61,9 +62,8 @@ typedef struct s_binary
 	struct s_binary	*subshell;
 }	t_binary;
 
-t_table		*parsing(char *str);
+int			parsing(char *str);
 t_binary	*btree(void);
-int			create_binary_tree(char **mat);
 
 // clear everything inside the data struct
 void		binary_clear(t_binary *binary);
@@ -73,16 +73,18 @@ void		outfile_clear(t_outfile *outfile);
 void		infile_clear(t_infile *infile);
 
 // create the data struct with the information needed (use NULL where available if needed)
-t_binary	*binary_new(t_type type, t_table *up, t_table *table);
+t_binary	*binary_new(int shlvl, t_type type, t_table *up, t_table *table);
 t_table		*table_new(t_cmds *cmds, t_infile *infile);
 t_cmds		*cmds_new(char **cmd, t_outfile *outfile);
 t_outfile	*outfile_new(int fd, char *file, char *token);
 t_infile	*infile_new(char *file, char *token);
 
-
+void	create_binary_tree(char **mat, int	shlvl, t_binary *tree)
 
 #endif
 
 /* cat in > out in in in in in in in in in */
 
 /* cat Makefile > o1 | cat Makefile > o2 | cat Makefile > o3 */
+
+// < in cat Makefile > out | cat Makefile > out1

@@ -19,14 +19,6 @@ typedef enum e_type{
 	ERROR
 }   t_type;
 
-typedef struct s_cmd{
-    char **cmds;
-    char *infile;
-    char *outfile;
-    char *err;
-    int ret;
-}   t_cmd;
-
 int is_builtin(char *cmd);
 void builtin_cd(char *path);
 void builtin_pwd(void);

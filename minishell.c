@@ -3,7 +3,6 @@
 #include <readline/history.h>
 #include <stdlib.h>
 
-// < in cat Makefile > out | cat Makefile > out1
 t_binary *btree(void)
 {
 	static t_binary	tree;
@@ -56,7 +55,8 @@ int main(int argc, char *argv[])
 		if (!input)
 			break;
 		add_history(input);
-		parsing(input);
+		if (parsing(input))
+			
 		char **args = ft_split(input, ' ');  // You need a function like `ft_split` or `strtok` to tokenize the input
 		char *cmd = args[0];  // The first token is the command itself
 

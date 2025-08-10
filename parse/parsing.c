@@ -213,16 +213,16 @@ void init_tree(void)
 	btree()->subshell = NULL;
 }
 
-t_table *parsing(char *str)
+int	parsing(char *str)
 {
-	char 	**mat;
-	// t_table	*table;
-	t_token	tokens;
+	int		level_count;
 	char	*stokens[] = {"(", ")", "&", "|", ">", "<", NULL};
 	char	*dtokens[] = {/* "<>", */"||", "&&", ">>", "<<", "&>", ">&", "0>", "1>", "2>", NULL};
 	char	*ttokens[] = {"&>>", "0>>", "1>>", "2>>", NULL};
 	char	*qtokens[] = {"0>&1", "1>&0", "0>&2", "2>&0", "1>&2", "2>&1", NULL};
-	char		*sep[] = {"'", "\"", "`", NULL};
+	char	*sep[] = {"'", "\"", "`", NULL};
+	char 	**mat;
+	t_token	tokens;
 
 	tokens.stokens = stokens;
 	tokens.dtokens = dtokens;
@@ -231,11 +231,16 @@ t_table *parsing(char *str)
 
 	mat = tokenization(str, tokens, sep);
 	if (mat == NULL)
-		return (NULL);
+		return (0);
+	if (check_syntax(mat))
+		return (0);
 	init_tree();
-	if (create_binary_tree(mat))
-		return (NULL);
+	level_count = separator_count(mat);
+	level_count += (level_count != 0);
+	create_binary_tree(mat, level_count, btree());
+	if (btree()->type = ERROR)
+		return (binary_clear(btree()), 0);
 	// table = tableization(mat);
 	// return (table);
-	return (NULL);
+	return (0);
 }

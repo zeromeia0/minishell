@@ -45,12 +45,13 @@ t_table	*table_new(t_cmds *cmds, t_infile *infile)
 	return (new);
 }
 
-t_binary	*binary_new(t_type type, t_table *up, t_table *table)
+t_binary	*binary_new(int shlvl, t_type type, t_table *up, t_table *table)
 {
 	t_binary	*new;
 
 	new = malloc(sizeof(t_table));
 	new->type = EMPTY;
+	new->sublvl = shlvl;
 	new->left_ret = -1;
 	new->right_ret = -1;
 	new->table = table;
