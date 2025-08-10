@@ -42,10 +42,10 @@ char *remove_it(char *str, int c)
     return (removed);
 }
 
-void odd_aspas(char *str)
+void odd_aspas(char *str, char c)
 {
 	int count;
-	count = count_it(str, '"');
+	count = count_it(str, c);
 	if (count % 2 == 1)
 	{
 		while (1)
@@ -53,7 +53,7 @@ void odd_aspas(char *str)
 			char *input = readline(">");
 			if (!input)
 				continue ;
-			if (input[0] == '"')
+			if (input[0] == c)
 			{
 				free(input);
 				break ;
@@ -68,6 +68,6 @@ char *aspas(char *str)
 	if (!str)
 		return (NULL);
 	char *final_str = remove_it(str, '"');
-	odd_aspas(str);
+	odd_aspas(str, '"');
 	return (final_str);
 }
