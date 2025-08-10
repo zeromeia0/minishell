@@ -223,7 +223,7 @@ int	parsing(char *str)
 	char	*stokens[] = {"(", ")", "&", "|", ">", "<", NULL};
 	char	*dtokens[] = {"<>", "||", "&&", ">>", "<<", "&>", ">&", "0>", "1>", "2>", NULL};
 	char	*ttokens[] = {"0<>", "1<>", "2<>", "&>>", "0>>", "1>>", "2>>", NULL};
-	char	*qtokens[] = {"0>&1", "1>&0", "0>&2", "2>&0", "1>&2", "2>&1", NULL};
+	char	*qtokens[] = {"0>&1", "1>&0", /* ignore left? */"0>&2", "2>&0", "1>&2", "2>&1", NULL};
 	char	*sep[] = {"'", "\"", "`", NULL};
 	char 	**mat;
 	t_token	tokens;

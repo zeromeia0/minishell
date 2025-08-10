@@ -33,7 +33,6 @@ typedef struct s_infile
 	struct s_infile	*next;
 }	t_infile;
 
-
 typedef struct s_cmds
 {
 	char			**cmd;
@@ -78,7 +77,7 @@ t_cmds		*cmds_new(char **cmd, t_outfile *outfile);
 t_outfile	*outfile_new(char *file, char *token);
 t_infile	*infile_new(char *file, char *token);
 
-void	create_binary_tree(char **mat, int	shlvl, t_binary *tree)
+void	create_binary_tree(char **mat, int	shlvl, t_binary *tree);
 
 #endif
 

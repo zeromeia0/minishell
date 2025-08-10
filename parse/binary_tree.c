@@ -1,7 +1,7 @@
 
 #include "../minishell.h"
 
-int	find_separator(char **mat, int flag)
+int	separator_comp(char **mat, int flag)
 {
 	int	ind;
 
@@ -47,12 +47,11 @@ int	find_separator(char **mat, int flag)
 // 	return (infile);
 // }
 
-int	find_input(char *str)
+int	input_comp(char *str)
 {
-	if (strncmp(str, "<<", 3) && strncmp(str, "<", 2))
-		if (strncmp(str, "<>", 3))
-			return (0);
-	return (1);
+	if (strncmp(str, "<<", 3) && strncmp(str, "<>", 3) && strncmp(str, "<", 2))
+		return (1);
+	return (0);
 }
 
 t_infile	*get_infile(char **mat)
@@ -63,7 +62,7 @@ t_infile	*get_infile(char **mat)
 	ind = 0;
 	if (mat == NULL)
 		return (NULL);
-	while (mat[ind] && find_input(mat[ind]))
+	while (mat[ind] && input_comp(mat[ind]))
 		ind++;
 	if (mat[ind] == NULL)
 		return (NULL);
@@ -77,43 +76,64 @@ t_infile	*get_infile(char **mat)
 	return (infile);
 }
 
-int	find_output(char *str)
+int	output_comp(char *str)
 {
-	if (strncmp(str, "<<", 3) && strncmp(str, "<", 2) && strncmp(str, "<>", 3))
-		if (strncmp(str, "<>", 3))
-			return (0);
+	if (strncmp(str, ">>", 3) == 0 || strncmp(str, "&>", 3) == 0\
+		|| strncmp(str, "0>", 3) == 0 || strncmp(str, "1>", 3) == 0\
+			|| strncmp(str, "2>", 3) == 0 || strncmp(str, ">&", 3) == 0)
+					return (0);
+	if (strncmp(str, "0<>", 4) == 0 || strncmp(str, "1<>", 4) == 0 \
+		|| strncmp(str, "&>>", 4) == 0 || strncmp(str, "0>>", 4) == 0\
+			|| strncmp(str, "1>>", 4) == 0 || strncmp(str, "2>>", 4) == 0\
+				|| strncmp(str, "2<>", 4) == 0)\
+						return (0);
 	return (1);
 }
 
+int redirect_comp(char *str)
+{
+	if (strncmp(str, "0>&1", 5) == 0 || strncmp(str, "1>&0", 5) == 0\
+		|| strncmp(str, "2>&0", 5) == 0 || strncmp(str, "1>&2", 5) == 0\
+			|| strncmp(str, "2>&1", 5) == 0 || strncmp(str, "0>&2", 5) == 0)
+					return (0);
+	return (1);
+}
+
+// output is:
+	// ">>", "&>", ">&", "0>", "1>", "2>"
+	// "0<>", "1<>", "2<>", "&>>", "0>>", "1>>", "2>>"
+	// "0>&1", "1>&0", "0>&2", "2>&0", "1>&2", "2>&1"
+
+// input is:
+// 	"<<", "<", "<>"
 t_outfile	*get_outfile(char **mat)
 {
 	t_outfile	*outfile;
-	int			ind; 
+	int			flag;
+	int			ind;
 
 	ind = 0;
 	if (mat == NULL)
 		return (NULL);
-	while (mat[ind] && find_output(mat[ind]))
+	while (mat[ind] && ft_strncmp(mat[ind], "|", 2)
+		&& (output_comp(mat[ind]) && redirect_comp(mat[ind])))
 		ind++;
-	if (mat[ind] == NULL)
+	if (mat[ind] == NULL || ft_strncmp(mat[ind], "|", 2) == 0)
 		return (NULL);
-	outfile = outfile_new(mat[ind + 1], mat[ind]);
+	flag = redirect_comp(mat[ind]);
+	if (flag)
+		outfile = outfile_new(mat[ind + 1], mat[ind]);
+	else
+		outfile = outfile_new(NULL, mat[ind]);
 	if (outfile == NULL)
 		return (NULL);
 	mat[ind] = NULL;
-	mat[ind + 1] = NULL;
-	ft_matrix_unify(mat + ind, mat + ind + 2);
+	if (flag)
+		mat[ind + 1] = NULL;
+	ft_matrix_unify(mat + ind, mat + ind + 1 + flag);
 	outfile->next = get_outfile (mat + ind);
 	return (outfile);
 }
-
-// output is:
-// 	">>", "&>", ">&", "0>", "1>", "2>"
-//	"0<>", "1<>", "2<>", "&>>", "0>>", "1>>", "2>>"
-//	"0>&1", "1>&0", "0>&2", "2>&0", "1>&2", "2>&1"
-
-// input is:
-// 	"<<", "<", "<>"
 
 void	create_table(char **mat, t_binary *tree)
 {
@@ -122,8 +142,9 @@ void	create_table(char **mat, t_binary *tree)
 	t_infile	*infile;
 
 	infile = get_infile(mat);
+	// missing comands and liking the outfile to the commands
 	outfile = get_outfile(mat);
-	// cmds	= cmds_new();
+	cmds = cmds_new();
 }
 // in < cat | cat & echo done & echo ola
 // in < cat | cat & echo done &
@@ -132,7 +153,7 @@ void	create_binary_tree(char **mat, int	shlvl, t_binary *tree)
 {
 	int	sub;
 
-	sub = find_separator(mat, 0);
+	sub = separator_comp(mat, 0);
 	if (sub)
 	{
 		free(mat[sub]);
@@ -150,7 +171,7 @@ void	create_binary_lvl(char **mat, int id, t_binary *tree)
 	t_binary	*tree_node;
 	t_table		*table;
 
-	sep = find_separator(mat, 1);
+	sep = separator_comp(mat, 1);
 	if (sep == 0)
 		return (create_table(mat, tree));
 	tree->left = binary_new(id ,EMPTY, tree, NULL);
