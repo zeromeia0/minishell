@@ -47,6 +47,14 @@ int	find_separator(char **mat, int flag)
 // 	return (infile);
 // }
 
+int	find_input(char *str)
+{
+	if (strncmp(str, "<<", 3) && strncmp(str, "<", 2))
+		if (strncmp(str, "<>", 3))
+			return (0);
+	return (1);
+}
+
 t_infile	*get_infile(char **mat)
 {
 	t_infile	*infile;
@@ -55,8 +63,7 @@ t_infile	*get_infile(char **mat)
 	ind = 0;
 	if (mat == NULL)
 		return (NULL);
-	while (mat[ind] && strncmp(mat[ind], "<<", 3) && strncmp(mat[ind], "<", 2)
-		&& strncmp(mat[ind], "<>", 3))
+	while (mat[ind] && find_input(mat[ind]))
 		ind++;
 	if (mat[ind] == NULL)
 		return (NULL);
@@ -69,6 +76,37 @@ t_infile	*get_infile(char **mat)
 	infile->next = get_infile (mat + ind);
 	return (infile);
 }
+
+int	find_output(char *str)
+{
+	if (strncmp(str, "<<", 3) && strncmp(str, "<", 2) && strncmp(str, "<>", 3))
+		if (strncmp(str, "<>", 3))
+			return (0);
+	return (1);
+}
+
+t_outfile	*get_outfile(char **mat)
+{
+	t_outfile	*outfile;
+	int			ind; 
+
+	ind = 0;
+	if (mat == NULL)
+		return (NULL);
+	while (mat[ind] && find_output(mat[ind]))
+		ind++;
+	if (mat[ind] == NULL)
+		return (NULL);
+	outfile = outfile_new(mat[ind + 1], mat[ind]);
+	if (outfile == NULL)
+		return (NULL);
+	mat[ind] = NULL;
+	mat[ind + 1] = NULL;
+	ft_matrix_unify(mat + ind, mat + ind + 2);
+	outfile->next = get_outfile (mat + ind);
+	return (outfile);
+}
+
 // output is:
 // 	">>", "&>", ">&", "0>", "1>", "2>"
 //	"0<>", "1<>", "2<>", "&>>", "0>>", "1>>", "2>>"
@@ -85,8 +123,7 @@ void	create_table(char **mat, t_binary *tree)
 
 	infile = get_infile(mat);
 	outfile = get_outfile(mat);
-	cmds	= cmds_new();
-
+	// cmds	= cmds_new();
 }
 // in < cat | cat & echo done & echo ola
 // in < cat | cat & echo done &

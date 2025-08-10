@@ -1,12 +1,11 @@
 
 #include "../minishell.h"
 
-t_outfile	*outfile_new(int fd, char *file, char *token)
+t_outfile	*outfile_new(char *file, char *token)
 {
 	t_outfile	*new;
 
 	new = malloc(sizeof(t_outfile));
-	new->fd = fd;
 	new->file = file;
 	new->token = token;
 	new->next = NULL;

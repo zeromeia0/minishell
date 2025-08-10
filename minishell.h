@@ -21,7 +21,6 @@ typedef struct s_token
 
 typedef struct s_outfile
 {
-	int					fd;
 	char				*token;
 	char				*file;
 	struct s_outfile	*next;
@@ -76,7 +75,7 @@ void		infile_clear(t_infile *infile);
 t_binary	*binary_new(int shlvl, t_type type, t_table *up, t_table *table);
 t_table		*table_new(t_cmds *cmds, t_infile *infile);
 t_cmds		*cmds_new(char **cmd, t_outfile *outfile);
-t_outfile	*outfile_new(int fd, char *file, char *token);
+t_outfile	*outfile_new(char *file, char *token);
 t_infile	*infile_new(char *file, char *token);
 
 void	create_binary_tree(char **mat, int	shlvl, t_binary *tree)
