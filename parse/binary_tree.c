@@ -21,27 +21,27 @@ int	find_separator(char **mat, int flag)
 	return (0);
 }
 
-void	create_table(char **mat, t_binary *tree)
-{
-	int			sub;
-	t_cmds		*cmds;
-	t_outfile	*outfile;
-
-	cmds = NULL;
-	outfile = NULL;
-	sub = find_separator(mat, 0);
-	if (sub)
-	{
-		free (mat[sub]);
-		mat[sub] = NULL;
-		create_binary_tree (mat, 1, tree->subshell);
-		tree->subshell = binary_new(EMPTY, tree, NULL);
-		create_binary_tree(mat, 1, tree->subshell);
-
+// void	create_table(char **mat, t_binary *tree)
+// {
+	// int			sub;
+	// t_cmds		*cmds;
+	// t_outfile	*outfile;
+// 
+	// cmds = NULL;
+	// outfile = NULL;
+	// sub = find_separator(mat, 0);
+	// if (sub)
+	// {
+		// free (mat[sub]);
+		// mat[sub] = NULL;
+		// create_binary_tree (mat, 1, tree->subshell);
+		// tree->subshell = binary_new(EMPTY, tree, NULL);
+		// create_binary_tree(mat, 1, tree->subshell);
+// 
 		// outfile = find_outfile(mat + sub + 1);
 		// cmds_new(mat + sub + 1, );
-	}
-}
+	// }
+// }
 // in < cat | cat & echo done & echo ola
 // in < cat | cat & echo done &
 void	create_binary_tree(char **mat, int	shlvl, t_binary *tree)

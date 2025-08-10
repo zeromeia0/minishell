@@ -203,9 +203,11 @@ char	*get_infile(char **mat)
 
 void init_tree(void)
 {
+	btree()->sublvl = 0;
 	btree()->type = EMPTY;
 	btree()->left_ret = -1;
 	btree()->right_ret = -1;
+	btree()->subshell_ret = -1;
 	btree()->table = NULL;
 	btree()->up = NULL;
 	btree()->left = NULL;
@@ -228,19 +230,16 @@ int	parsing(char *str)
 	tokens.dtokens = dtokens;
 	tokens.ttokens = ttokens;
 	tokens.qtokens = qtokens;
-
 	mat = tokenization(str, tokens, sep);
 	if (mat == NULL)
-		return (0);
+		return (1);
 	if (check_syntax(mat))
-		return (0);
+		return (ft_free_matrix(mat), 1);
 	init_tree();
-	level_count = separator_count(mat);
-	level_count += (level_count != 0);
+	level_count = separator_count(mat) + 1;
 	create_binary_tree(mat, level_count, btree());
+	free(mat);
 	if (btree()->type = ERROR)
-		return (binary_clear(btree()), 0);
-	// table = tableization(mat);
-	// return (table);
+		return (binary_clear(btree()), 1);
 	return (0);
 }
