@@ -162,12 +162,6 @@ char **tokenization(char *str, t_token tokens, char **sep)
  	return (ret);
 }
 
-void	init_table(t_table *table)
-{
-	table->cmds = NULL;
-	table->infiles = NULL;
-}
-
 /* 
 char	*get_infile(char **mat)
 {
@@ -215,12 +209,20 @@ void init_tree(void)
 	btree()->subshell = NULL;
 }
 
+// output is:
+// 	">>", "&>", ">&", "0>", "1>", "2>"
+//	"0<>", "1<>", "2<>", "&>>", "0>>", "1>>", "2>>"
+//	"0>&1", "1>&0", "0>&2", "2>&0", "1>&2", "2>&1"
+
+// input is:
+// 	"<<", "<", "<>" 
+
 int	parsing(char *str)
 {
 	int		level_count;
 	char	*stokens[] = {"(", ")", "&", "|", ">", "<", NULL};
-	char	*dtokens[] = {/* "<>", */"||", "&&", ">>", "<<", "&>", ">&", "0>", "1>", "2>", NULL};
-	char	*ttokens[] = {"&>>", "0>>", "1>>", "2>>", NULL};
+	char	*dtokens[] = {"<>", "||", "&&", ">>", "<<", "&>", ">&", "0>", "1>", "2>", NULL};
+	char	*ttokens[] = {"0<>", "1<>", "2<>", "&>>", "0>>", "1>>", "2>>", NULL};
 	char	*qtokens[] = {"0>&1", "1>&0", "0>&2", "2>&0", "1>&2", "2>&1", NULL};
 	char	*sep[] = {"'", "\"", "`", NULL};
 	char 	**mat;
