@@ -34,7 +34,7 @@ t_cmds	*cmds_new(char **cmd, t_outfile *outfile)
 	return (new);
 }
 
-t_table	*table_new(t_cmds *cmds, t_infile *infile)
+t_table	*table_new(t_infile *infile, t_cmds *cmds)
 {
 	t_table	*new;
 

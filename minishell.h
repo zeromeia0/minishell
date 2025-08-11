@@ -72,7 +72,7 @@ void		infile_clear(t_infile *infile);
 
 // create the data struct with the information needed (use NULL where available if needed)
 t_binary	*binary_new(int shlvl, t_type type, t_table *up, t_table *table);
-t_table		*table_new(t_cmds *cmds, t_infile *infile);
+t_table		*table_new(t_infile *infile, t_cmds *cmds);
 t_cmds		*cmds_new(char **cmd, t_outfile *outfile);
 t_outfile	*outfile_new(char *file, char *token);
 t_infile	*infile_new(char *file, char *token);

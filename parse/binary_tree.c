@@ -49,10 +49,37 @@ int	separator_comp(char **mat, int flag)
 
 int	input_comp(char *str)
 {
-	if (strncmp(str, "<<", 3) && strncmp(str, "<>", 3) && strncmp(str, "<", 2))
+	if (strncmp(str, "<<", 3) && strncmp(str, "<", 2))
 		return (1);
 	return (0);
 }
+
+int	output_comp(char *str)
+{
+	if (strncmp(str, ">>", 3) && strncmp(str, ">", 2))
+		return (1);
+	return (0);
+}
+
+// int	output_comp(char *str)
+// {
+	// if (strncmp(str, ">>", 3) == 0 || strncmp(str, "&>", 3) == 0\
+		// || strncmp(str, "0>", 3) == 0 || strncmp(str, "1>", 3) == 0\
+			// || strncmp(str, "2>", 3) == 0 || strncmp(str, ">&", 3) == 0)
+					// return (0);
+	// if (strncmp(str, "0<>", 4) == 0 || strncmp(str, "1<>", 4) == 0 \
+		// || strncmp(str, "&>>", 4) == 0 || strncmp(str, "0>>", 4) == 0\
+			// || strncmp(str, "1>>", 4) == 0 || strncmp(str, "2>>", 4) == 0\
+				// || strncmp(str, "2<>", 4) == 0)\
+						// return (0);
+	// return (1);
+// }
+// int	input_comp(char *str)
+// {
+	// if (strncmp(str, "<<", 3) && strncmp(str, "<>", 3) && strncmp(str, "<", 2))
+		// return (1);
+	// return (0);
+// }
 
 t_infile	*get_infile(char **mat)
 {
@@ -74,20 +101,6 @@ t_infile	*get_infile(char **mat)
 	ft_matrix_unify(mat + ind, mat + ind + 2);
 	infile->next = get_infile (mat + ind);
 	return (infile);
-}
-
-int	output_comp(char *str)
-{
-	if (strncmp(str, ">>", 3) == 0 || strncmp(str, "&>", 3) == 0\
-		|| strncmp(str, "0>", 3) == 0 || strncmp(str, "1>", 3) == 0\
-			|| strncmp(str, "2>", 3) == 0 || strncmp(str, ">&", 3) == 0)
-					return (0);
-	if (strncmp(str, "0<>", 4) == 0 || strncmp(str, "1<>", 4) == 0 \
-		|| strncmp(str, "&>>", 4) == 0 || strncmp(str, "0>>", 4) == 0\
-			|| strncmp(str, "1>>", 4) == 0 || strncmp(str, "2>>", 4) == 0\
-				|| strncmp(str, "2<>", 4) == 0)\
-						return (0);
-	return (1);
 }
 
 int redirect_comp(char *str)
@@ -135,16 +148,35 @@ t_outfile	*get_outfile(char **mat)
 	return (outfile);
 }
 
-void	create_table(char **mat, t_binary *tree)
+int	find_pipe(char **mat)
 {
-	t_cmds		*cmds;
-	t_outfile	*outfile;
-	t_infile	*infile;
+	int ind;
 
-	infile = get_infile(mat);
-	// missing comands and liking the outfile to the commands
-	outfile = get_outfile(mat);
-	cmds = cmds_new();
+	ind = 0;
+	while (mat[ind] && ft_strncmp(mat[ind], "&", 2))
+		ind++;
+	return ((mat[ind] == NULL) * -1 + (mat[ind] != NULL) * ind);
+}
+
+t_cmds	*get_cmds(char **mat)
+{
+	t_cmds	*cmds;
+	int		sep;
+	int		ind;
+	int		flag;
+
+	if (mat == NULL || *mat == NULL)
+		return (NULL);
+	sep = find_pipe(mat);
+	if (sep != -1)
+	{
+		free(mat[sep]);
+		mat[sep] = NULL;
+	}
+	cmds = cmds_new(mat, get_outfile(mat));
+	if (sep != -1)
+		cmds->next = get_cmds(mat + sep + 1);
+	return (cmds);
 }
 // in < cat | cat & echo done & echo ola
 // in < cat | cat & echo done &
@@ -173,7 +205,11 @@ void	create_binary_lvl(char **mat, int id, t_binary *tree)
 
 	sep = separator_comp(mat, 1);
 	if (sep == 0)
-		return (create_table(mat, tree));
+	{
+		tree->table = table_new(get_infile(mat), get_cmds(mat));
+		// return (get_cmds(mat, tree));
+		return ;
+	}
 	tree->left = binary_new(id ,EMPTY, tree, NULL);
 	if (tree->left == NULL)
 		return (btree()->type = ERROR, NULL);
