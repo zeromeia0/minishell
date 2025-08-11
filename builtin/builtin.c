@@ -91,6 +91,8 @@ int exec_builtin(char *cmd, char **args)
         builtin_echo(args);
     else if (ft_strncmp(cmd, "exit", 4) == 0)
         builtin_exit(args);
+    else if (ft_strncmp(cmd, "unset", 5) == 0)
+        builtin_unset(args);
     else if (ft_strncmp(cmd, "export", 6) == 0)
         builtin_export(args);
     else
