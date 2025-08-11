@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "../sigma_minishell.h"
 
 /* int	find_fd_red(char *str)
 {

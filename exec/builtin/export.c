@@ -1,7 +1,4 @@
-#include "../sigma_minishell.h"
-#include <stdlib.h>
-#include <string.h>
-#include <strings.h>
+#include "../../sigma_minishell.h"
 
 static int make_update_env(const char *str)
 {

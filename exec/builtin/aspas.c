@@ -1,5 +1,4 @@
-#include "../my_libft/libft.h"
-#include "../sigma_minishell.h"
+#include "../../sigma_minishell.h"
 #include <readline/readline.h>
 
 
