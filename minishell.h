@@ -71,13 +71,18 @@ void		outfile_clear(t_outfile *outfile);
 void		infile_clear(t_infile *infile);
 
 // create the data struct with the information needed (use NULL where available if needed)
-t_binary	*binary_new(int shlvl, t_type type, t_table *up, t_table *table);
+t_binary	*binary_new(int shlvl, t_type type, t_binary *up, t_table *table);
 t_table		*table_new(t_infile *infile, t_cmds *cmds);
 t_cmds		*cmds_new(char **cmd, t_outfile *outfile);
 t_outfile	*outfile_new(char *file, char *token);
 t_infile	*infile_new(char *file, char *token);
 
 void	create_binary_tree(char **mat, int	shlvl, t_binary *tree);
+t_outfile	*get_outfile(char **mat);
+int	find_pipe(char **mat);
+t_cmds	*get_cmds(char **mat);
+void	create_binary_tree(char **mat, int	shlvl, t_binary *tree);
+void	create_binary_lvl(char **mat, int id, t_binary *tree);
 
 #endif
 

@@ -60,26 +60,27 @@ int	output_comp(char *str)
 		return (1);
 	return (0);
 }
-
-// int	output_comp(char *str)
-// {
-	// if (strncmp(str, ">>", 3) == 0 || strncmp(str, "&>", 3) == 0\
-		// || strncmp(str, "0>", 3) == 0 || strncmp(str, "1>", 3) == 0\
-			// || strncmp(str, "2>", 3) == 0 || strncmp(str, ">&", 3) == 0)
-					// return (0);
-	// if (strncmp(str, "0<>", 4) == 0 || strncmp(str, "1<>", 4) == 0 \
-		// || strncmp(str, "&>>", 4) == 0 || strncmp(str, "0>>", 4) == 0\
-			// || strncmp(str, "1>>", 4) == 0 || strncmp(str, "2>>", 4) == 0\
-				// || strncmp(str, "2<>", 4) == 0)\
-						// return (0);
-	// return (1);
-// }
-// int	input_comp(char *str)
-// {
-	// if (strncmp(str, "<<", 3) && strncmp(str, "<>", 3) && strncmp(str, "<", 2))
-		// return (1);
-	// return (0);
-// }
+/*
+int	output_comp(char *str)
+{
+	if (strncmp(str, ">>", 3) == 0 || strncmp(str, "&>", 3) == 0\
+		|| strncmp(str, "0>", 3) == 0 || strncmp(str, "1>", 3) == 0\
+			|| strncmp(str, "2>", 3) == 0 || strncmp(str, ">&", 3) == 0)
+					return (0);
+	if (strncmp(str, "0<>", 4) == 0 || strncmp(str, "1<>", 4) == 0 \
+		|| strncmp(str, "&>>", 4) == 0 || strncmp(str, "0>>", 4) == 0\
+			|| strncmp(str, "1>>", 4) == 0 || strncmp(str, "2>>", 4) == 0\
+				|| strncmp(str, "2<>", 4) == 0)\
+						return (0);
+	return (1);
+}
+int	input_comp(char *str)
+{
+	if (strncmp(str, "<<", 3) && strncmp(str, "<>", 3) && strncmp(str, "<", 2))
+		return (1);
+	return (0);
+}
+*/
 
 t_infile	*get_infile(char **mat)
 {
@@ -162,8 +163,6 @@ t_cmds	*get_cmds(char **mat)
 {
 	t_cmds	*cmds;
 	int		sep;
-	int		ind;
-	int		flag;
 
 	if (mat == NULL || *mat == NULL)
 		return (NULL);
@@ -200,8 +199,6 @@ void	create_binary_tree(char **mat, int	shlvl, t_binary *tree)
 void	create_binary_lvl(char **mat, int id, t_binary *tree)
 {
 	int			sep;
-	t_binary	*tree_node;
-	t_table		*table;
 
 	sep = separator_comp(mat, 1);
 	if (sep == 0)
@@ -212,10 +209,16 @@ void	create_binary_lvl(char **mat, int id, t_binary *tree)
 	}
 	tree->left = binary_new(id ,EMPTY, tree, NULL);
 	if (tree->left == NULL)
-		return (btree()->type = ERROR, NULL);
+	{
+		btree()->type = ERROR;
+		return ;
+	}
 	tree->right = binary_new(id ,EMPTY, tree, NULL);
 	if (tree->right == NULL)
-		return (btree()->type = ERROR, NULL);
+	{
+		btree()->type = ERROR;
+		return ;
+	}
 	free (mat[sep]);
 	mat[sep] = NULL;
 	create_binary_lvl (mat + sep + 1, 1, tree->right);

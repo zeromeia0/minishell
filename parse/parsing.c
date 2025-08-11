@@ -23,10 +23,10 @@
 
 int	find_tokens(char *str, t_token tokens)
 {
-	if (ft_strnmat(tokens.qtokens, str, 4))
-		return (4);
-	if (ft_strnmat(tokens.ttokens, str, 3))
-		return (3);
+	// if (ft_strnmat(tokens.qtokens, str, 4))
+		// return (4);
+	// if (ft_strnmat(tokens.ttokens, str, 3))
+		// return (3);
 	if (ft_strnmat(tokens.dtokens, str, 2))
 		return (2);
 	if (ft_strnmat(tokens.stokens, str, 1))
@@ -217,31 +217,102 @@ void init_tree(void)
 // input is:
 // 	"<<", "<", "<>" 
 
+
+
+int	find_syntax(char *str, t_token tokens)
+{
+	if (ft_strnmat(tokens.dtokens, str, 2))
+		return (2);
+	if (ft_strnmat(tokens.stokens, str, 1))
+		return (1);
+	return (0);
+}
+
+
+int	check_syntax(char **mat, t_token tokens)
+{
+	int		ind;
+	char	*token_found;
+	char *str;
+	char	*stokens[] = {"&", "|", NULL};
+	char	*dtokens[] = {"||", "&&", ">>", NULL};
+
+	remove ()
+	ind = 0;
+	token_found = find_tokens(mat + ind, tokens);
+	if (token_found)
+		;
+	while (mat[ind])
+	{
+		if (token_found)
+		{
+			write(1, mat + ind, token_found);
+			write(1, "\n", 1);
+			count++;
+			ind += token_found;
+		}
+		else if (find_tokens(mat + ind, tokens) == 0 \
+			&& mat[ind] && (mat[ind] != ' ' && mat[ind] != '\t' && mat[ind] != '\n'))
+		{
+			count++;
+			while (find_tokens(mat + ind, tokens) == 0 \
+				&& mat[ind] && (mat[ind] != ' ' && mat[ind] != '\t' && mat[ind] != '\n'))
+			{
+				sep_found = ft_strnmat(sep, mat + ind, 1);
+				if (sep_found)
+				{
+					write(1, mat + ind, 1);
+					ind++;
+					while (mat[ind] != *sep_found && mat[ind])
+					{
+						write(1, mat + ind, 1);
+						ind++;
+					}
+					if (mat[ind] == '\0')
+						return (-(*sep_found));
+					write(1, mat + ind, 1);
+					ind++;
+				}
+				else
+				{
+					write(1, mat + ind, 1);
+					ind++;
+				}
+			}
+			write(1, "\n", 1);
+		}
+	}
+}
+
 int	parsing(char *str)
 {
 	int		level_count;
 	char	*stokens[] = {"(", ")", "&", "|", ">", "<", NULL};
-	char	*dtokens[] = {"<>", "||", "&&", ">>", "<<", "&>", ">&", "0>", "1>", "2>", NULL};
-	char	*ttokens[] = {"0<>", "1<>", "2<>", "&>>", "0>>", "1>>", "2>>", NULL};
-	char	*qtokens[] = {"0>&1", "1>&0", /* ignore left? */"0>&2", "2>&0", "1>&2", "2>&1", NULL};
+	char	*dtokens[] = {"||", "&&", ">>", "<<", NULL};
+	// char	*dtokens[] = {"<>", "||", "&&", ">>", "<<", "&>", ">&", "0>", "1>", "2>", NULL};
+	// char	*ttokens[] = {"0<>", "1<>", "2<>", "&>>", "0>>", "1>>", "2>>", NULL};
+	// char	*qtokens[] = {"0>&1", "1>&0", /* ignore left? */"0>&2", "2>&0", "1>&2", "2>&1", NULL};
 	char	*sep[] = {"'", "\"", "`", NULL};
 	char 	**mat;
 	t_token	tokens;
 
 	tokens.stokens = stokens;
 	tokens.dtokens = dtokens;
-	tokens.ttokens = ttokens;
-	tokens.qtokens = qtokens;
+	// tokens.ttokens = ttokens;
+	// tokens.qtokens = qtokens;
 	mat = tokenization(str, tokens, sep);
 	if (mat == NULL)
 		return (1);
-	if (check_syntax(mat))
-		return (ft_free_matrix(mat), 1);
-	init_tree();
-	level_count = separator_count(mat) + 1;
-	create_binary_tree(mat, level_count, btree());
-	free(mat);
-	if (btree()->type = ERROR)
-		return (binary_clear(btree()), 1);
-	return (0);
+	if (check_syntax(mat, tokens))
+		printf("wrongggggggg\n");
+	else 
+		printf("rightttttttttt\n");
+		// return (ft_free_matrix(mat), 1);
+	// init_tree();
+	// level_count = separator_count(mat) + 1;
+	// create_binary_tree(mat, level_count, btree());
+	// free(mat);
+	// if (btree()->type = ERROR)
+		// return (binary_clear(btree()), 1);
+	// return (0);
 }
