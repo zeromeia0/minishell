@@ -1,9 +1,8 @@
 #ifndef JOJOMINISHELL_H
 # define JOJOMINISHELL_H
 
-#include "parse/jojo_libft/libft.h"
 #include "exec/minishell.h"
-#include "exec/minishell.h"
+#include "exec/my_libft/libft.h"
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -39,6 +38,7 @@ typedef struct s_os_envs{
     struct s_os_envs *next;
 }   t_os_envs;
 
+<<<<<<< HEAD
 int is_builtin(char *cmd);
 void builtin_cd(char *path);
 void builtin_pwd(void);
@@ -50,6 +50,8 @@ t_os_envs **get_env_list(void);
 void builtin_export(char **args);
 void builtin_unset(char **args);
 char *aspas(char *str);
+=======
+>>>>>>> main
 
 typedef struct s_cmds
 {
@@ -81,14 +83,25 @@ typedef struct s_binary
 int			parsing(char *str);
 t_binary	*btree(void);
 
-// clear everything inside the data struct
+char *aspas(char *str);
+int is_builtin(char *cmd);
+void builtin_cd(char *path);
+void builtin_pwd(void);
+void builtin_echo(char **args);
+void    builtin_exit(char **args);
+void builtin_unset(char **args);
+int exec_builtin(char *cmd, char **args);
+void builtin_export(char **args);
+void print_env_list(void);
+t_os_envs **get_env_list(void);
+void builtin_env(void);
+
 void		binary_clear(t_binary *binary);
 void		table_clear(t_table *table);
 void		cmds_clear(t_cmds *cmds);
 void		outfile_clear(t_outfile *outfile);
 void		infile_clear(t_infile *infile);
 
-// create the data struct with the information needed (use NULL where available if needed)
 t_binary	*binary_new(int shlvl, t_type type, t_binary *up, t_table *table);
 t_table		*table_new(t_infile *infile, t_cmds *cmds);
 t_cmds		*cmds_new(char **cmd, t_outfile *outfile);
@@ -104,8 +117,4 @@ void	create_binary_lvl(char **mat, int id, t_binary *tree);
 
 #endif
 
-/* cat in > out in in in in in in in in in */
 
-/* cat Makefile > o1 | cat Makefile > o2 | cat Makefile > o3 */
-
-// < in cat Makefile > out | cat Makefile > out1

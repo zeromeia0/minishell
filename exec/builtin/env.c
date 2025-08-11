@@ -1,5 +1,5 @@
-#include "../sigma_minishell.h"
-#include <stdlib.h>
+#include "../../sigma_minishell.h"
+
 
 t_os_envs **get_env_list(void)
 {

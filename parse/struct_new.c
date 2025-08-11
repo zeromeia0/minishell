@@ -1,5 +1,5 @@
 
-#include "../minishell.h"
+#include "../sigma_minishell.h"
 
 t_outfile	*outfile_new(char *file, char *token)
 {

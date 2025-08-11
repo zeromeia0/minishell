@@ -1,12 +1,5 @@
-<<<<<<<< HEAD:builtin/builtin.c
-#include "../sigma_minishell.h"
-#include "../my_libft/libft.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-========
-#include "minishell.h"
->>>>>>>> jojo:exec/builtin.c
+#include "../../sigma_minishell.h"
+
 
 int is_builtin(char *cmd)
 {

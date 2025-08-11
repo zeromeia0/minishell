@@ -1,5 +1,5 @@
 
-#include "../minishell.h"
+#include "../sigma_minishell.h"
 
 int	separator_comp(char **mat, int flag)
 {
