@@ -163,18 +163,18 @@ char **tokenization(char *str, t_token tokens, char **sep)
  	return (ret);
 }
 
-void init_tree(void)
+void init_tree(t_binary	*tree)
 {
-	btree()->sublvl = 0;
-	btree()->type = EMPTY;
-	btree()->left_ret = -1;
-	btree()->right_ret = -1;
-	btree()->subshell_ret = -1;
-	btree()->table = NULL;
-	btree()->up = NULL;
-	btree()->left = NULL;
-	btree()->right = NULL;
-	btree()->subshell = NULL;
+	tree->sublvl = 0;
+	tree->type = EMPTY;
+	tree->left_ret = -1;
+	tree->right_ret = -1;
+	tree->subshell_ret = -1;
+	tree->table = NULL;
+	tree->up = NULL;
+	tree->left = NULL;
+	tree->right = NULL;
+	tree->subshell = NULL;
 }
 
 // output is:
@@ -257,8 +257,8 @@ int	parsing(char *str)
 	char	*sep[] = {"'", "\"", "`", NULL};
 	char 	**mat;
 	t_token	tokens;
-	t_binary	*tree;
-	int			subcount;
+	// t_binary	*tree;
+	// int			subcount;
 
 	if (str == NULL || *str == '\0')
 		return (1);
@@ -267,18 +267,18 @@ int	parsing(char *str)
 	mat = tokenization(str, tokens, sep);
 	if (mat == NULL)
 		return (1);
-	init_tree();
-	subcount = sep_count(mat);
-	printf("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa%d\n", subcount);
-	fflush(stdout);
-	tree = binary_new(0, EMPTY, NULL, NULL);
-	while (subcount--)
-	{
-		printf("loop\n");
-		tree->subshell = binary_new(0, EMPTY, NULL, NULL);
-		tree = tree->subshell;
-	}
-	create_binary_tree(mat, separator_count(mat) + 1, tree);
+	init_tree(btree());
+	// subcount = sep_count(mat);
+	// printf("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa%d\n", subcount);
+	// fflush(stdout);
+	// tree = binary_new(0, EMPTY, NULL, NULL);
+	// while (subcount--)
+	// {
+		// printf("loop\n");
+		// tree->subshell = binary_new(0, EMPTY, NULL, NULL);
+		// tree = tree->subshell;
+	// }
+	create_binary_tree(mat, separator_count(mat) + 1, btree());
 	free(mat);
 	if (btree()->type == ERROR)
 		return (binary_clear(btree()), 1);

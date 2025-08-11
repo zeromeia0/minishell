@@ -78,7 +78,7 @@ typedef struct s_binary
 
 t_binary	*btree(void);
 int			parsing(char *str);
-void		init_tree(void);
+void 		init_tree(t_binary	*tree);
 
 char *aspas(char *str);
 int is_builtin(char *cmd);

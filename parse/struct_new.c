@@ -50,6 +50,8 @@ t_binary	*binary_new(int shlvl, t_type type, t_binary *up, t_table *table)
 	t_binary	*new;
 
 	new = malloc(sizeof(t_table));
+	if (new == NULL)
+		return (NULL);
 	new->type = type;
 	new->sublvl = shlvl;
 	new->left_ret = -1;
