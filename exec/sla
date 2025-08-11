@@ -90,3 +90,17 @@ while (1)
 	super_duper_hiper_free
 		free all malloc'd memory after each command
 		free cmd list, args, envp copy if needed, wildcard-expanded arrays
+
+
+echo "testing"
+echo "testing
+>
+>
+"
+
+echo 'testing'
+echo 'testing
+>
+>
+'
+
