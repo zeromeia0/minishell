@@ -8,14 +8,18 @@
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 08:19:15 by jlima-so          #+#    #+#             */
-/*   Updated: 2025/07/24 20:51:07 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/07/24 20:59:15 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 >>>>>>> 0c31409 (msg)
 #include "../minishell.h"
 
+<<<<<<< HEAD
 /* int	find_fd_red(char *str)
+=======
+/* char **tokenization(char *str)
+>>>>>>> fe72b3b (msg)
 {
 	int	ind;
 
@@ -297,7 +301,7 @@ int	check_syntax(char **mat, t_token tokens)
 			write(1, "\n", 1);
 		}
 	}
-}
+} */
 
 int	parsing(char *str)
 {
@@ -338,6 +342,7 @@ int	parsing(char *str)
 	
 	str = readline("minishell$ ");
 	// mat = tokenization(str);
+	mat = &str;
 	return (mat);
 }
 >>>>>>> 0c31409 (msg)
