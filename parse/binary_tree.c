@@ -6,16 +6,22 @@ int	separator_comp(char **mat, int flag)
 {
 	int	ind;
 
-	ind = ft_matlen(mat);
+	ind = ft_matlen(mat) - 1;
 	if (flag == 1)
 	{
-		while (--ind >= 0)
-			if (ft_strncmp(mat[ind], "&&", 3) == 0|| ft_strncmp(mat[ind], "||", 3) == 0)
+		while (ind >= 0)
+		{
+			if (ft_strncmp(mat[ind], ")", 2) == 0)
+				while (ind >= 0 && ft_strncmp(mat[ind], "(", 2) == 0)
+					ind--;
+			if (ind >= 0 && ft_strncmp(mat[ind], "&&", 3) == 0|| ft_strncmp(mat[ind], "||", 3) == 0)
 				return (ind);
+			ind--;
+		}
 	}
 	else
 	{
-		while (--ind >= 0)
+		while (ind-- > 0)
 			if (ft_strncmp(mat[ind], "&", 2) == 0)
 				return (ind);
 	}
