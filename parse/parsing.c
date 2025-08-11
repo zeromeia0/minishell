@@ -157,24 +157,24 @@ char **tokenization(char *str, t_token tokens, char **sep)
 			return (ft_free_matrix(ret), NULL); // CLOSE PROGRAM INSTEAD OF RETURN NULL WHEN WE FIND MEMORY ERRORS?
 		str += strcount;
 	}
-	printf("start\n");
+	printf("========================================================\n");
 	ft_print_matrix(ret);
-	printf("end\n");
+	printf("========================================================\n");
  	return (ret);
 }
 
-void init_tree(t_binary	*tree)
+void init_tree(void)
 {
-	tree->sublvl = 0;
-	tree->type = EMPTY;
-	tree->left_ret = -1;
-	tree->right_ret = -1;
-	tree->subshell_ret = -1;
-	tree->table = NULL;
-	tree->up = NULL;
-	tree->left = NULL;
-	tree->right = NULL;
-	tree->subshell = NULL;
+	btree()->sublvl = 0;
+	btree()->type = EMPTY;
+	btree()->left_ret = -1;
+	btree()->right_ret = -1;
+	btree()->subshell_ret = -1;
+	btree()->table = NULL;
+	btree()->up = NULL;
+	btree()->left = NULL;
+	btree()->right = NULL;
+	btree()->subshell = NULL;
 }
 
 // output is:
@@ -258,7 +258,7 @@ int	parsing(char *str)
 	char 	**mat;
 	t_token	tokens;
 	// t_binary	*tree;
-	// int			subcount;
+	// int		subcount;
 
 	if (str == NULL || *str == '\0')
 		return (1);
@@ -267,7 +267,7 @@ int	parsing(char *str)
 	mat = tokenization(str, tokens, sep);
 	if (mat == NULL)
 		return (1);
-	init_tree(btree());
+	init_tree();
 	// subcount = sep_count(mat);
 	// printf("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa%d\n", subcount);
 	// fflush(stdout);

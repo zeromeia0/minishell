@@ -49,6 +49,8 @@ int	output_comp(char *str)
 						return (0);
 	return (1);
 }
+*/
+
 int	input_comp(char *str)
 {
 	if (strncmp(str, "<<", 3) && strncmp(str, "<>", 3) && strncmp(str, "<", 2))
@@ -78,6 +80,7 @@ t_infile	*get_infile(char **mat)
 	return (infile);
 }
 
+/*
 int redirect_comp(char *str)
 {
 	if (strncmp(str, "0>&1", 5) == 0 || strncmp(str, "1>&0", 5) == 0\
@@ -155,7 +158,17 @@ t_cmds	*get_cmds(char **mat)
 }
 // in < cat | cat & echo done & echo ola
 // in < cat | cat & echo done &
- */
+*/
+
+void	print_files(t_infile	*file)
+{
+	while (file)
+	{
+		printf("red is | file is\n");
+		printf("%s       %s\n", file->token, file->file);
+		file = file->next;
+	}
+}
 
 void	create_binary_tree(char **mat, int	shlvl, t_binary *tree)
 {
@@ -174,25 +187,28 @@ void	create_binary_tree(char **mat, int	shlvl, t_binary *tree)
 			btree()->type = ERROR;
 			return ;
 		}
-		create_binary_tree (mat, shlvl - 1, tree/* ->subshell */);
+		create_binary_tree (mat, shlvl - 1, tree->subshell);
 		if (btree()->type == ERROR)
 			return ;
 		mat += sub + 1;
 	}
-	ft_print_matrix(mat);
-	printf("^===============================================================^\n");
-	// create_binary_lvl(mat, shlvl, tree);
+	// ft_print_matrix(mat);
+	// printf("^===============================================================^\n");
+	create_binary_lvl(mat, shlvl, tree);
 }
-/* 
+
 void	create_binary_lvl(char **mat, int id, t_binary *tree)
 {
 	int			sep;
 
+	if (btree()->type == ERROR)
+		return ;
 	sep = separator_comp(mat, 1);
 	if (sep == 0)
 	{
-		tree->table = table_new(get_infile(mat), get_cmds(mat));
-		// return (get_cmds(mat, tree));
+		print_files(get_infile(mat));
+		printf("^===============================================================^\n");
+		// tree->table = table_new(get_infile(mat), get_cmds(mat));
 		return ;
 	}
 	tree->left = binary_new(id ,EMPTY, tree, NULL);
@@ -209,7 +225,10 @@ void	create_binary_lvl(char **mat, int id, t_binary *tree)
 	}
 	free (mat[sep]);
 	mat[sep] = NULL;
-	create_binary_lvl (mat + sep + 1, 1, tree->right);
 	create_binary_lvl (mat, 1, tree->left);
-}
- */
+	// ft_print_matrix(mat);
+	// printf("^left===============================================================^\n");
+	create_binary_lvl (mat + sep + 1, 1, tree->right);
+	// ft_print_matrix(mat + sep + 1);
+	// printf("^right==============================================================^\n");
+} 

@@ -49,7 +49,7 @@ t_binary	*binary_new(int shlvl, t_type type, t_binary *up, t_table *table)
 {
 	t_binary	*new;
 
-	new = malloc(sizeof(t_table));
+	new = malloc(sizeof(t_binary));
 	if (new == NULL)
 		return (NULL);
 	new->type = type;

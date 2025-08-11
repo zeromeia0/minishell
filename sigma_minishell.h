@@ -33,15 +33,15 @@ typedef struct s_infile
 }	t_infile;
 
 typedef struct s_os_envs{
-    char **linux_envs;
-    struct s_os_envs *next;
+	char **linux_envs;
+	struct s_os_envs *next;
 }   t_os_envs;
 
-int is_builtin(char *cmd);
-void builtin_cd(char *path);
-void builtin_pwd(void);
-void    builtin_env(void);
-void    builtin_exit(char **args);
+int		is_builtin(char *cmd);
+void	builtin_cd(char *path);
+void	builtin_pwd(void);
+void	builtin_env(void);
+void	builtin_exit(char **args);
 int exec_builtin(char *cmd, char **args);
 void print_env_list(void);
 t_os_envs **get_env_list(void);
@@ -78,14 +78,14 @@ typedef struct s_binary
 
 t_binary	*btree(void);
 int			parsing(char *str);
-void 		init_tree(t_binary	*tree);
+void		init_tree(void);
 
 char *aspas(char *str);
 int is_builtin(char *cmd);
 void builtin_cd(char *path);
 void builtin_pwd(void);
 void builtin_echo(char **args);
-void    builtin_exit(char **args);
+void	builtin_exit(char **args);
 void builtin_unset(char **args);
 int exec_builtin(char *cmd, char **args);
 void builtin_export(char **args);
