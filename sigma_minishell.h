@@ -34,7 +34,6 @@ typedef struct s_infile
 	struct s_infile	*next;
 }	t_infile;
 
-<<<<<<< HEAD:sigma_minishell.h
 typedef struct s_os_envs{
     char **linux_envs;
     struct s_os_envs *next;
@@ -51,14 +50,13 @@ t_os_envs **get_env_list(void);
 void builtin_export(char **args);
 void builtin_unset(char **args);
 char *aspas(char *str);
-=======
+
 typedef struct s_cmds
 {
 	char			**cmd;
 	t_outfile		*outfiles;
 	struct s_cmds	*next;
 }	t_cmds;
->>>>>>> jojo:minishell.h
 
 typedef struct s_table
 {
