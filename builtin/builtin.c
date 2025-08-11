@@ -1,5 +1,5 @@
-#include "sigma_minishell.h"
-#include "my_libft/libft.h"
+#include "../sigma_minishell.h"
+#include "../my_libft/libft.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -74,16 +74,21 @@ void    builtin_exit(char **args)
     exit (status);
 }
 
-int builtin_export(char *name, char *value)
-{
-    if (!name)
-        return (0);
-    name = aspas(name);
-    value = aspas(value);
-    if (setenv(name, value, 1) != 0)
-        return (perror("setenv failed"), 1);
-    return (0);
-}
+// void builtin_unset(char *name)
+// {
+
+// }
+
+// int builtin_export(char *name, char *value)
+// {
+//     if (!name)
+//         return (0);
+//     name = aspas(name);
+//     value = aspas(value);
+//     if (setenv(name, value, 1) != 0)
+//         return (perror("setenv failed"), 1);
+//     return (0);
+// }
 
 int exec_builtin(char *cmd, char **args)
 {
@@ -91,14 +96,14 @@ int exec_builtin(char *cmd, char **args)
             builtin_cd(args[1]);
     else if (ft_strncmp(cmd, "pwd", 3) == 0)
         builtin_pwd();
-    // else if (ft_strncmp(cmd, "env", 3) == 0)
-    //     builtin_env();
+    else if (ft_strncmp(cmd, "env", 3) == 0)
+        builtin_env(), print_env_list();
     else if (ft_strncmp(cmd, "echo", 4) == 0)
         builtin_echo(args);
     else if (ft_strncmp(cmd, "exit", 4) == 0)
         builtin_exit(args);
-    else if (ft_strncmp(cmd, "export", 6) == 0)
-        builtin_export(args[1], args[3]);
+    // else if (ft_strncmp(cmd, "export", 6) == 0)
+    //     builtin_export(args[1], args[3]);
     else
         return (0);
     return (0);

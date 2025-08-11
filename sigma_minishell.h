@@ -33,12 +33,18 @@ typedef struct s_cmd{
     int ret;
 }   t_cmd;
 
+typedef struct s_os_envs{
+    char **linux_envs;
+    struct s_os_envs *next;
+}   t_os_envs;
+
 int is_builtin(char *cmd);
 void builtin_cd(char *path);
 void builtin_pwd(void);
 void    builtin_env(void);
 void    builtin_exit(char **args);
 int exec_builtin(char *cmd, char **args);
+void print_env_list(void);
 char *aspas(char *str);
 
 #endif
