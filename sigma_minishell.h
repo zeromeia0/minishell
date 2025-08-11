@@ -45,6 +45,8 @@ void    builtin_env(void);
 void    builtin_exit(char **args);
 int exec_builtin(char *cmd, char **args);
 void print_env_list(void);
+t_os_envs **get_env_list(void);
+void builtin_export(char **args);
 char *aspas(char *str);
 
 #endif

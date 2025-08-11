@@ -35,6 +35,7 @@ int main(int argc, char *argv[])
 {
     t_binary *tree;
 
+    builtin_env();
     tree = malloc(sizeof(t_binary));
     if (!tree)
         return (1);

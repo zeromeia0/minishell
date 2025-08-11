@@ -23,7 +23,7 @@ $(NAME):
 	@$(MAKE) --no-print-directory -C $(PIPEX_DIR)
 	@echo -e "$(BLUE)Building minishell...$(RESET)"
 	
-	@$(CC) $(CFLAGS) executor.c signal_handler.c builtin/aspas.c builtin/builtin.c builtin/env.c $(PIPEX_DIR)/$(PIPEX).a $(LIBFT_DIR)/libft.a -o $(NAME) $(LDFLAGS)
+	@$(CC) $(CFLAGS) executor.c signal_handler.c builtin/aspas.c builtin/builtin.c builtin/env.c builtin/export.c $(PIPEX_DIR)/$(PIPEX).a $(LIBFT_DIR)/libft.a -o $(NAME) $(LDFLAGS)
 	
 	@echo -e "$(GREEN)Minishell built successfully!$(RESET)"
 
