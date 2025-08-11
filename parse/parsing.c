@@ -1,3 +1,18 @@
+<<<<<<< HEAD
+=======
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/05 08:19:15 by jlima-so          #+#    #+#             */
+/*   Updated: 2025/07/24 20:51:07 by jlima-so         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+>>>>>>> 0c31409 (msg)
 #include "../minishell.h"
 
 /* int	find_fd_red(char *str)
@@ -286,6 +301,7 @@ int	check_syntax(char **mat, t_token tokens)
 
 int	parsing(char *str)
 {
+<<<<<<< HEAD
 	int		level_count;
 	char	*stokens[] = {"(", ")", "&", "|", ">", "<", NULL};
 	char	*dtokens[] = {"||", "&&", ">>", "<<", NULL};
@@ -316,3 +332,12 @@ int	parsing(char *str)
 		// return (binary_clear(btree()), 1);
 	// return (0);
 }
+=======
+	char *str;
+	char **mat;
+	
+	str = readline("minishell$ ");
+	// mat = tokenization(str);
+	return (mat);
+}
+>>>>>>> 0c31409 (msg)
