@@ -1,29 +1,8 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 08:19:15 by jlima-so          #+#    #+#             */
-/*   Updated: 2025/07/24 20:59:15 by jlima-so         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
->>>>>>> 0c31409 (msg)
-#include "../minishell.h"
-=======
 #include "../sigma_minishell.h"
->>>>>>> main
+#include "jojo_libft/libft.h"
 
-<<<<<<< HEAD
 /* int	find_fd_red(char *str)
-=======
-/* char **tokenization(char *str)
->>>>>>> fe72b3b (msg)
+char **tokenization(char *str)
 {
 	int	ind;
 
@@ -75,8 +54,8 @@ int	word_count(char *str, t_token tokens, char **sep)
 		token_found = find_tokens(str + ind, tokens);
 		if (token_found)
 		{
-			write(1, str + ind, token_found);
-			write(1, "\n", 1);
+			// write(1, str + ind, token_found);
+			// write(1, "\n", 1);
 			count++;
 			ind += token_found;
 		}
@@ -90,25 +69,25 @@ int	word_count(char *str, t_token tokens, char **sep)
 				sep_found = ft_strnmat(sep, str + ind, 1);
 				if (sep_found)
 				{
-					write(1, str + ind, 1);
+					// write(1, str + ind, 1);
 					ind++;
 					while (str[ind] != *sep_found && str[ind])
 					{
-						write(1, str + ind, 1);
+						// write(1, str + ind, 1);
 						ind++;
 					}
 					if (str[ind] == '\0')
 						return (-(*sep_found));
-					write(1, str + ind, 1);
+					// write(1, str + ind, 1);
 					ind++;
 				}
 				else
 				{
-					write(1, str + ind, 1);
+					// write(1, str + ind, 1);
 					ind++;
 				}
 			}
-			write(1, "\n", 1);
+			// write(1, "\n", 1);
 		}
 	}
 	return (count);
@@ -185,39 +164,6 @@ char **tokenization(char *str, t_token tokens, char **sep)
  	return (ret);
 }
 
-/* 
-char	*get_infile(char **mat)
-{
-	int	ind;
-
-	if (mat == NULL || *mat == NULL)
-		return (NULL);
-	ind = ft_matlen(mat);
-	while (--ind >= 0)
-		if (*(mat[ind]) == '<' && )
-			if (mat[ind + 1] != NULL)
-				return (mat[ind]);
-	return (NULL);
-} */
-
-// t_table	*tableization(char **mat)
-// {
-// 	t_table		*table;
-// 	t_binary	*head;
-
-// 	if (mat == NULL)
-// 		return (NULL);
-// 	head->table = malloc(sizeof(t_table));
-// 	if (head->table == NULL)
-// 		return (NULL);
-// 	init_table(table);
-// 	get_infile(mat);
-	// table->outfiles = get_errfile(mat);
-	// table->fd_outfiles = get_outfile(mat);
-	// table->cmds = get_cmds(mat);
-	// return (table);
-// }
-
 void init_tree(void)
 {
 	btree()->sublvl = 0;
@@ -252,65 +198,35 @@ int	find_syntax(char *str, t_token tokens)
 }
 
 
-int	check_syntax(char **mat, t_token tokens)
+/* int	check_syntax(char **mat, t_token tokens)
 {
 	int		ind;
 	char	*token_found;
-	char *str;
+	char	*str;
 	char	*stokens[] = {"&", "|", NULL};
 	char	*dtokens[] = {"||", "&&", ">>", NULL};
 
-	remove ()
 	ind = 0;
 	token_found = find_tokens(mat + ind, tokens);
-	if (token_found)
-		;
-	while (mat[ind])
-	{
-		if (token_found)
-		{
-			write(1, mat + ind, token_found);
-			write(1, "\n", 1);
-			count++;
-			ind += token_found;
-		}
-		else if (find_tokens(mat + ind, tokens) == 0 \
-			&& mat[ind] && (mat[ind] != ' ' && mat[ind] != '\t' && mat[ind] != '\n'))
-		{
-			count++;
-			while (find_tokens(mat + ind, tokens) == 0 \
-				&& mat[ind] && (mat[ind] != ' ' && mat[ind] != '\t' && mat[ind] != '\n'))
-			{
-				sep_found = ft_strnmat(sep, mat + ind, 1);
-				if (sep_found)
-				{
-					write(1, mat + ind, 1);
-					ind++;
-					while (mat[ind] != *sep_found && mat[ind])
-					{
-						write(1, mat + ind, 1);
-						ind++;
-					}
-					if (mat[ind] == '\0')
-						return (-(*sep_found));
-					write(1, mat + ind, 1);
-					ind++;
-				}
-				else
-				{
-					write(1, mat + ind, 1);
-					ind++;
-				}
-			}
-			write(1, "\n", 1);
-		}
-	}
+	
 } */
+
+int	separator_count(char **mat)
+{
+	int	count;
+
+	count = 0;
+	while (*mat)
+	{
+		if (strncmp(*mat, "&", 2))
+			count++;
+		mat++;
+	}
+	return (count);
+}
 
 int	parsing(char *str)
 {
-<<<<<<< HEAD
-	int		level_count;
 	char	*stokens[] = {"(", ")", "&", "|", ">", "<", NULL};
 	char	*dtokens[] = {"||", "&&", ">>", "<<", NULL};
 	// char	*dtokens[] = {"<>", "||", "&&", ">>", "<<", "&>", ">&", "0>", "1>", "2>", NULL};
@@ -327,26 +243,15 @@ int	parsing(char *str)
 	mat = tokenization(str, tokens, sep);
 	if (mat == NULL)
 		return (1);
-	if (check_syntax(mat, tokens))
-		printf("wrongggggggg\n");
-	else 
-		printf("rightttttttttt\n");
+	// if (check_syntax(mat, tokens))
+		// printf("wrongggggggg\n");
+	// else 
+		// printf("rightttttttttt\n");
 		// return (ft_free_matrix(mat), 1);
-	// init_tree();
-	// level_count = separator_count(mat) + 1;
-	// create_binary_tree(mat, level_count, btree());
-	// free(mat);
-	// if (btree()->type = ERROR)
-		// return (binary_clear(btree()), 1);
-	// return (0);
+	init_tree();
+	create_binary_tree(mat, separator_count(mat) + 1, btree());
+	free(mat);
+	if (btree()->type == ERROR)
+		return (binary_clear(btree()), 1);
+	return (0);
 }
-=======
-	char *str;
-	char **mat;
-	
-	str = readline("minishell$ ");
-	// mat = tokenization(str);
-	mat = &str;
-	return (mat);
-}
->>>>>>> 0c31409 (msg)

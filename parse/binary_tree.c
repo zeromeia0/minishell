@@ -1,5 +1,6 @@
 
 #include "../sigma_minishell.h"
+#include "jojo_libft/libft.h"
 
 int	separator_comp(char **mat, int flag)
 {
@@ -19,33 +20,8 @@ int	separator_comp(char **mat, int flag)
 				return (ind);
 	}
 	return (0);
-}
-// < in < in2 < in3
-// < in < in2 <
-
-// t_infile	*get_infile(char **mat)
-// {
-// 	t_infile	*infile;
-// 	int			ind; 
-
-// 	if (mat == NULL || *mat == NULL)
-// 		return (NULL);
-// 	ind = -1;
-// 	while (mat[++ind])
-// 	{
-// 		if (strncmp(mat[ind], "<<", 3) == 0 || strncmp(mat[ind], "<", 2) == 0 )
-// 		{
-// 			infile = infile_new(mat[ind + 1], mat[ind]);
-// 			if (infile == NULL)
-// 				return (NULL);
-// 			break;
-// 		}
-// 	}
-// 	if (*mat == NULL)
-// 		return (NULL);
-// 	infile->next = get_infile (mat + ind);
-// 	return (infile);
-// }
+} 
+/* 
 
 int	input_comp(char *str)
 {
@@ -60,7 +36,6 @@ int	output_comp(char *str)
 		return (1);
 	return (0);
 }
-/*
 int	output_comp(char *str)
 {
 	if (strncmp(str, ">>", 3) == 0 || strncmp(str, "&>", 3) == 0\
@@ -80,7 +55,6 @@ int	input_comp(char *str)
 		return (1);
 	return (0);
 }
-*/
 
 t_infile	*get_infile(char **mat)
 {
@@ -99,7 +73,7 @@ t_infile	*get_infile(char **mat)
 		return (NULL);
 	mat[ind] = NULL;
 	mat[ind + 1] = NULL;
-	ft_matrix_unify(mat + ind, mat + ind + 2);
+	ft_matrix_uni(mat + ind, mat + ind + 2);
 	infile->next = get_infile (mat + ind);
 	return (infile);
 }
@@ -113,13 +87,15 @@ int redirect_comp(char *str)
 	return (1);
 }
 
-// output is:
-	// ">>", "&>", ">&", "0>", "1>", "2>"
-	// "0<>", "1<>", "2<>", "&>>", "0>>", "1>>", "2>>"
-	// "0>&1", "1>&0", "0>&2", "2>&0", "1>&2", "2>&1"
+ output is:
+	">>", "&>", ">&", "0>", "1>", "2>"
+	"0<>", "1<>", "2<>", "&>>", "0>>", "1>>", "2>>"
+	"0>&1", "1>&0", "0>&2", "2>&0", "1>&2", "2>&1"
 
-// input is:
-// 	"<<", "<", "<>"
+input is:
+	"<<", "<", "<>"
+
+
 t_outfile	*get_outfile(char **mat)
 {
 	t_outfile	*outfile;
@@ -144,7 +120,7 @@ t_outfile	*get_outfile(char **mat)
 	mat[ind] = NULL;
 	if (flag)
 		mat[ind + 1] = NULL;
-	ft_matrix_unify(mat + ind, mat + ind + 1 + flag);
+	ft_matrix_uni(mat + ind, mat + ind + 1 + flag);
 	outfile->next = get_outfile (mat + ind);
 	return (outfile);
 }
@@ -179,6 +155,7 @@ t_cmds	*get_cmds(char **mat)
 }
 // in < cat | cat & echo done & echo ola
 // in < cat | cat & echo done &
+ */
 
 void	create_binary_tree(char **mat, int	shlvl, t_binary *tree)
 {
@@ -193,9 +170,12 @@ void	create_binary_tree(char **mat, int	shlvl, t_binary *tree)
 		create_binary_tree (mat, shlvl - 1, tree->subshell);
 		mat += sub + 1;
 	}
-	create_binary_lvl(mat, shlvl, tree);
+	printf("start\n");
+	ft_print_matrix(mat);
+	printf("end\n");
+	// create_binary_lvl(mat, shlvl, tree);
 }
-
+/* 
 void	create_binary_lvl(char **mat, int id, t_binary *tree)
 {
 	int			sep;
@@ -224,3 +204,4 @@ void	create_binary_lvl(char **mat, int id, t_binary *tree)
 	create_binary_lvl (mat + sep + 1, 1, tree->right);
 	create_binary_lvl (mat, 1, tree->left);
 }
+ */

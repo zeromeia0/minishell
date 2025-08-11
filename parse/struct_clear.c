@@ -1,5 +1,6 @@
 
 #include "../sigma_minishell.h"
+#include "jojo_libft/libft.h"
 
 void	binary_clear(t_binary *binary)
 {

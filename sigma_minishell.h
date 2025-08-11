@@ -8,6 +8,7 @@
 #include <readline/history.h>
 #include <stdbool.h>
 
+
 // << = 256
 // >> = 255
 
@@ -15,8 +16,6 @@ typedef struct s_token
 {
 	char	**stokens;
 	char	**dtokens;
-	char	**ttokens;
-	char	**qtokens;
 }	t_token;
 
 typedef struct s_outfile
@@ -38,7 +37,6 @@ typedef struct s_os_envs{
     struct s_os_envs *next;
 }   t_os_envs;
 
-<<<<<<< HEAD
 int is_builtin(char *cmd);
 void builtin_cd(char *path);
 void builtin_pwd(void);
@@ -50,8 +48,6 @@ t_os_envs **get_env_list(void);
 void builtin_export(char **args);
 void builtin_unset(char **args);
 char *aspas(char *str);
-=======
->>>>>>> main
 
 typedef struct s_cmds
 {
@@ -80,8 +76,9 @@ typedef struct s_binary
 	struct s_binary	*subshell;
 }	t_binary;
 
-int			parsing(char *str);
 t_binary	*btree(void);
+int			parsing(char *str);
+void		init_tree(void);
 
 char *aspas(char *str);
 int is_builtin(char *cmd);
@@ -115,6 +112,7 @@ t_cmds	*get_cmds(char **mat);
 void	create_binary_tree(char **mat, int	shlvl, t_binary *tree);
 void	create_binary_lvl(char **mat, int id, t_binary *tree);
 
+// future libft.h
+void	ft_matrix_uni(char **dest, char **src);
+
 #endif
-
-

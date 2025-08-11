@@ -3,11 +3,16 @@
 #include <readline/history.h>
 #include <stdlib.h>
 
+t_binary	*btree(void)
+{
+	static	t_binary	tree;
+
+	return (&tree);
+}
+
 int main(void)
 {
-
     builtin_env();
-        return (1);
     while(1)
     {
         char *input = readline("minishell$ ");
@@ -19,7 +24,7 @@ int main(void)
         if (!args || !args[0])
         {
             free (input);
-            free(args);
+            free (args);
             continue;
         }
 		if (parsing(input))

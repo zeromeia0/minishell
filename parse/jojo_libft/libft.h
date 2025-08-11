@@ -6,7 +6,7 @@
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:02:51 by jlima-so          #+#    #+#             */
-/*   Updated: 2025/08/10 20:21:55 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/08/11 20:11:05 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_pipex
 	int	ind;
 }	t_pipex;
 
+void	ft_matrix_uni(char **dest, char **src);
 char	*ft_itoa(int n);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strrchr(const char *s, int c);
@@ -104,7 +105,6 @@ int		check_one_cmd(char *str, char **env, char **cmd, int value);
 void	rdwr_frm_int_fd(char *cmd_path_inc, char **env, int rd, int wr);
 char	*ft_wrdchr(const char *s, int c);
 int		ft_emptystr(const char *str);
-void	ft_matrix_unify(char **dest, char **src);
 
 typedef struct s_list
 {
