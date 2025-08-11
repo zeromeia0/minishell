@@ -27,8 +27,8 @@ int main(void)
             free (args);
             continue;
         }
-		if (parsing(input))
-			printf("PODES SO POR TIPO PRINT ERROR POR AGORA\n");
+		parsing(input);
+			// printf("PODES SO POR TIPO PRINT ERROR POR AGORA\n");
         char *cmd = args[0];  
         if (is_builtin(cmd))  
             exec_builtin(cmd, args);

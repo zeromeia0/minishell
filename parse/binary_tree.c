@@ -161,18 +161,19 @@ void	create_binary_tree(char **mat, int	shlvl, t_binary *tree)
 {
 	int	sub;
 
+	if (mat == NULL || *mat == NULL)
+		return ;
 	sub = separator_comp(mat, 0);
 	if (sub)
 	{
 		free(mat[sub]);
 		mat[sub] = NULL;
-		tree->subshell = binary_new(shlvl - 1, EMPTY, tree, NULL);
 		create_binary_tree (mat, shlvl - 1, tree->subshell);
 		mat += sub + 1;
 	}
-	printf("start\n");
+	// printf("===============================================================\n");
 	ft_print_matrix(mat);
-	printf("end\n");
+	printf("^===============================================================^\n");
 	// create_binary_lvl(mat, shlvl, tree);
 }
 /* 

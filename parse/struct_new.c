@@ -54,6 +54,7 @@ t_binary	*binary_new(int shlvl, t_type type, t_binary *up, t_table *table)
 	new->sublvl = shlvl;
 	new->left_ret = -1;
 	new->right_ret = -1;
+	new->subshell_ret = -1;
 	new->table = table;
 	new->up = up;
 	new->left = NULL;

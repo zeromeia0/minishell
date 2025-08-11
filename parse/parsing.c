@@ -140,7 +140,6 @@ char **tokenization(char *str, t_token tokens, char **sep)
 	if (wc < 0)
 		return (printf("\nUnclosed |%c|\n", -wc), NULL);
 	printf("\nwords in the input ->|%d|\n", wc);
- 	return (NULL);
 	ret = malloc(sizeof(char *) * (wc + 1));
 	if (ret == NULL)
 		return (NULL); // CLOSE PROGRAM INSTEAD OF RETURN NULL WHEN WE FIND MEMORY ERRORS?
@@ -158,9 +157,9 @@ char **tokenization(char *str, t_token tokens, char **sep)
 			return (ft_free_matrix(ret), NULL); // CLOSE PROGRAM INSTEAD OF RETURN NULL WHEN WE FIND MEMORY ERRORS?
 		str += strcount;
 	}
-	printf("=========================================================================================\n");
+	printf("start\n");
 	ft_print_matrix(ret);
-	printf("=========================================================================================\n");
+	printf("end\n");
  	return (ret);
 }
 
@@ -224,34 +223,65 @@ int	separator_count(char **mat)
 	}
 	return (count);
 }
+/* 
+char	*dtokens[] = {"<>", "||", "&&", ">>", "<<", "&>", ">&", "0>", "1>", "2>", NULL};
+char	*ttokens[] = {"0<>", "1<>", "2<>", "&>>", "0>>", "1>>", "2>>", NULL};
+char	*qtokens[] = {"0>&1", "1>&0", / ignore left? /"0>&2", "2>&0", "1>&2", "2>&1", NULL};
+tokens.ttokens = ttokens;
+tokens.qtokens = qtokens;
+ if (check_syntax(mat, tokens))
+	 printf("wrongggggggg\n");
+ else 
+	 printf("rightttttttttt\n");
+	 return (ft_free_matrix(mat), 1);
+ */
+
+int	sep_count(char **mat)
+{
+	int	count;
+
+	count = 0;
+	while (*mat)
+	{
+		if (ft_strncmp(*mat, "&", 2) == 0)
+			count++;
+		mat++;
+	}
+	return (count);
+}
 
 int	parsing(char *str)
 {
 	char	*stokens[] = {"(", ")", "&", "|", ">", "<", NULL};
 	char	*dtokens[] = {"||", "&&", ">>", "<<", NULL};
-	// char	*dtokens[] = {"<>", "||", "&&", ">>", "<<", "&>", ">&", "0>", "1>", "2>", NULL};
-	// char	*ttokens[] = {"0<>", "1<>", "2<>", "&>>", "0>>", "1>>", "2>>", NULL};
-	// char	*qtokens[] = {"0>&1", "1>&0", /* ignore left? */"0>&2", "2>&0", "1>&2", "2>&1", NULL};
 	char	*sep[] = {"'", "\"", "`", NULL};
 	char 	**mat;
 	t_token	tokens;
+	t_binary	*tree;
+	int			subcount;
 
+	if (str == NULL || *str == '\0')
+		return (1);
 	tokens.stokens = stokens;
 	tokens.dtokens = dtokens;
-	// tokens.ttokens = ttokens;
-	// tokens.qtokens = qtokens;
 	mat = tokenization(str, tokens, sep);
 	if (mat == NULL)
 		return (1);
-	// if (check_syntax(mat, tokens))
-		// printf("wrongggggggg\n");
-	// else 
-		// printf("rightttttttttt\n");
-		// return (ft_free_matrix(mat), 1);
 	init_tree();
-	create_binary_tree(mat, separator_count(mat) + 1, btree());
+	subcount = sep_count(mat);
+	printf("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa%d\n", subcount);
+	fflush(stdout);
+	tree = binary_new(0, EMPTY, NULL, NULL);
+	while (subcount--)
+	{
+		printf("loop\n");
+		tree->subshell = binary_new(0, EMPTY, NULL, NULL);
+		tree = tree->subshell;
+	}
+	create_binary_tree(mat, separator_count(mat) + 1, tree);
 	free(mat);
 	if (btree()->type == ERROR)
 		return (binary_clear(btree()), 1);
+	printf("one done\n");
 	return (0);
 }
