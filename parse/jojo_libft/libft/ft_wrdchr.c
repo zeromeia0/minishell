@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnmat.c                                       :+:      :+:    :+:   */
+/*   ft_wrdchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/20 07:29:57 by jlima-so          #+#    #+#             */
-/*   Updated: 2025/08/05 04:18:08 by jlima-so         ###   ########.fr       */
+/*   Created: 2025/06/21 16:40:04 by jlima-so          #+#    #+#             */
+/*   Updated: 2025/06/21 16:40:46 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-char	*ft_strnmat(char **matrix, char *s, int n)
+char	*ft_wrdchr(const char *s, int c)
 {
-	int	ind;
+	char	*temp;
 
-	ind = -1;
-	while (matrix[++ind])
-		if (ft_strnstr(s, matrix[ind], n))
-			return (matrix[ind]);
+	temp = (char *)s;
+	while (*temp != (char)c && *temp && *temp != ' ')
+		temp++;
+	if (*temp == (char)c)
+		return (temp);
 	return (NULL);
 }

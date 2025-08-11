@@ -1,24 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnmat.c                                       :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/20 07:29:57 by jlima-so          #+#    #+#             */
-/*   Updated: 2025/08/05 04:18:08 by jlima-so         ###   ########.fr       */
+/*   Created: 2025/03/25 17:21:27 by jlima-so          #+#    #+#             */
+/*   Updated: 2025/06/11 09:05:56 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-char	*ft_strnmat(char **matrix, char *s, int n)
+void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
-	int	ind;
+	t_list		*temp;
+	int			count;
+	int			sub_count;
 
-	ind = -1;
-	while (matrix[++ind])
-		if (ft_strnstr(s, matrix[ind], n))
-			return (matrix[ind]);
-	return (NULL);
+	if (lst == NULL || *lst == NULL || del == NULL)
+		return ;
+	count = ft_lstsize (*lst);
+	while (count-- > 0)
+	{
+		temp = *lst;
+		sub_count = count;
+		while (sub_count-- > 0)
+			temp = temp->next;
+		ft_lstdelone(temp, del);
+	}
+	*lst = NULL;
 }

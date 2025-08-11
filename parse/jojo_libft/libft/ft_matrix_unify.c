@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnmat.c                                       :+:      :+:    :+:   */
+/*   ft_matrix_uni.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/20 07:29:57 by jlima-so          #+#    #+#             */
-/*   Updated: 2025/08/05 04:18:08 by jlima-so         ###   ########.fr       */
+/*   Created: 2025/08/10 20:36:54 by jlima-so          #+#    #+#             */
+/*   Updated: 2025/08/10 20:37:55 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-char	*ft_strnmat(char **matrix, char *s, int n)
+void	ft_matrix_unify(char **dest, char **src)
 {
 	int	ind;
 
+	if (src == NULL || dest == NULL)
+		return;
 	ind = -1;
-	while (matrix[++ind])
-		if (ft_strnstr(s, matrix[ind], n))
-			return (matrix[ind]);
-	return (NULL);
+	while (src[++ind])
+		dest[ind] = src[ind];
+	dest[ind] = src[ind];
 }

@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnmat.c                                       :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/20 07:29:57 by jlima-so          #+#    #+#             */
-/*   Updated: 2025/08/05 04:18:08 by jlima-so         ###   ########.fr       */
+/*   Created: 2025/03/25 17:27:10 by jlima-so          #+#    #+#             */
+/*   Updated: 2025/06/11 09:06:10 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-char	*ft_strnmat(char **matrix, char *s, int n)
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	int	ind;
-
-	ind = -1;
-	while (matrix[++ind])
-		if (ft_strnstr(s, matrix[ind], n))
-			return (matrix[ind]);
-	return (NULL);
+	if (lst == NULL || f == NULL)
+		return ;
+	while (lst != NULL)
+	{
+		f(lst->content);
+		lst = lst->next;
+	}
 }

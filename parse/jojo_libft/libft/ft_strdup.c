@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnmat.c                                       :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/20 07:29:57 by jlima-so          #+#    #+#             */
-/*   Updated: 2025/08/05 04:18:08 by jlima-so         ###   ########.fr       */
+/*   Created: 2025/03/25 13:53:00 by jlima-so          #+#    #+#             */
+/*   Updated: 2025/06/11 09:10:19 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-char	*ft_strnmat(char **matrix, char *s, int n)
+char	*ft_strdup(const char *s)
 {
-	int	ind;
+	char	*src;
+	char	*dest;
+	int		size;
 
-	ind = -1;
-	while (matrix[++ind])
-		if (ft_strnstr(s, matrix[ind], n))
-			return (matrix[ind]);
-	return (NULL);
+	src = (char *)s;
+	size = ft_strlen(src);
+	dest = ft_calloc(size + 1, 1);
+	if (dest == NULL)
+		return (NULL);
+	dest = ft_memcpy(dest, src, size);
+	return (dest);
 }

@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnmat.c                                       :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/20 07:29:57 by jlima-so          #+#    #+#             */
-/*   Updated: 2025/08/05 04:18:08 by jlima-so         ###   ########.fr       */
+/*   Created: 2025/03/24 19:58:30 by jlima-so          #+#    #+#             */
+/*   Updated: 2025/06/11 12:47:33 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-char	*ft_strnmat(char **matrix, char *s, int n)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	int	ind;
+	size_t			ind;
+	unsigned char	*str1;
+	unsigned char	*str2;
 
-	ind = -1;
-	while (matrix[++ind])
-		if (ft_strnstr(s, matrix[ind], n))
-			return (matrix[ind]);
-	return (NULL);
+	if (n == 0)
+		return (1);
+	str1 = (unsigned char *)s1;
+	str2 = (unsigned char *)s2;
+	ind = 0;
+	while (str1[ind] && str2[ind] && str1[ind] == str2[ind] && ind < n - 1)
+		ind++;
+	return (str1[ind] - str2[ind]);
 }

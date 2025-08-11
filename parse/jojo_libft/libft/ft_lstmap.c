@@ -1,42 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/14 09:20:43 by jlima-so          #+#    #+#             */
-/*   Updated: 2025/07/25 15:18:03 by jlima-so         ###   ########.fr       */
+/*   Created: 2025/03/25 17:29:20 by jlima-so          #+#    #+#             */
+/*   Updated: 2025/06/11 09:06:19 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-char	*get_next_line(int fd)
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	static char	keep[FOPEN_MAX][BUFFER_SIZE + 1];
-	char		*ret;
-	int			i;
+	t_list	*ret;
+	t_list	*temp;
 
-	if (BUFFER_SIZE <= 0 || fd >= FOPEN_MAX || fd < 0)
+	if (lst == NULL || f == NULL || del == NULL)
 		return (NULL);
-	i = 1;
-	if (*keep[fd] == '\0')
-		i = zero_read(fd, keep[fd]);
-	if (i < 1 && (*keep[fd] == '\0' || !check(keep[fd])))
-		return (NULL);
-	ret = ft_gln_strjoin(NULL, keep[fd]);
+	ret = ft_lstnew(f(lst->content));
 	if (ret == NULL)
 		return (NULL);
-	while (i && check(ret))
+	lst = lst->next;
+	while (lst != NULL)
 	{
-		i = zero_read(fd, keep[fd]);
-		if (i < 1)
-			break ;
-		ret = ft_gln_strjoin(ret, keep[fd]);
-		if (ret == NULL)
+		temp = ft_lstnew(f(lst->content));
+		if (temp == NULL)
+		{
+			ft_lstclear (&ret, del);
 			return (NULL);
+		}
+		ft_lstadd_back(&ret, temp);
+		lst = lst->next;
 	}
-	next_lines(keep[fd]);
 	return (ret);
 }
