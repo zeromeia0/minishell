@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+         #
+#    By: jlima-so <jlima-so@student.42lisba.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/12 13:07:24 by jlima-so          #+#    #+#              #
-#    Updated: 2025/07/25 15:17:29 by jlima-so         ###   ########.fr        #
+#    Updated: 2025/08/12 16:21:21 by jlima-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ CC=			cc
 
 AR=			ar rcs
 
-CFLAGS=		-Wall -Wextra -Werror -lreadline -lncurses
+CFLAGS=		-Wall -Wextra -Werror
 
 all: lib ${NAME}
 

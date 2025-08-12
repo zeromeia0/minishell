@@ -10,6 +10,52 @@ t_binary	*btree(void)
 	return (&tree);
 }
 
+void    print_cmds(t_cmds *cmds)
+{
+    while (cmds)
+    {
+        printf("===============================================================\n");
+        printf("starts commands\n\n");
+        ft_print_matrix(cmds->cmd);
+        printf("end commands\n\n");
+        printf("starts outfiles\n\n");
+        print_files((t_infile *)cmds->outfiles);
+        printf("end outfiles\n");
+        printf("===============================================================\n\n");
+        cmds = cmds->next;
+    }
+    
+}
+
+
+void    print_tree(t_binary *tree, int sub)
+{
+    if (tree == NULL)
+        return ;
+    print_tree(tree->subshell, 1);
+    print_tree(tree->left, 0);
+    print_tree(tree->right, 0);
+    if (tree->type != EMPTY)
+    {
+        if (tree->table->infiles)
+        {
+        printf("table here\n");
+        printf("start infiles\n");
+        print_files(tree->table->infiles);
+        printf("end infiles\n");
+        }
+        if (tree->table->infiles)
+        {
+            printf("table here\n");
+            printf("start cmds\n");
+            print_cmds(tree->table->cmds);
+            printf("end cmds\n");
+        }
+    }
+    if (sub)
+        printf("\n^exiting shubshell^\n");
+}
+
 int main(void)
 {
     builtin_env();
@@ -28,6 +74,7 @@ int main(void)
             continue;
         }
 		parsing(input);
+        print_tree(btree(), 0);
 			// printf("PODES SO POR TIPO PRINT ERROR POR AGORA\n");
         char *cmd = args[0];  
         if (is_builtin(cmd))  

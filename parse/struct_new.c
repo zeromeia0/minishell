@@ -24,7 +24,7 @@ t_infile	*infile_new(char *file, char *token)
 	return (new);
 }
 
-t_cmds	*cmds_new(char **cmd, t_outfile *outfile)
+t_cmds	*cmds_new(t_outfile *outfile, char **cmd)
 {
 	t_cmds	*new;
 

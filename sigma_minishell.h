@@ -101,7 +101,7 @@ void		infile_clear(t_infile *infile);
 
 t_binary	*binary_new(int shlvl, t_type type, t_binary *up, t_table *table);
 t_table		*table_new(t_infile *infile, t_cmds *cmds);
-t_cmds		*cmds_new(char **cmd, t_outfile *outfile);
+t_cmds		*cmds_new(t_outfile *outfile, char **cmd);
 t_outfile	*outfile_new(char *file, char *token);
 t_infile	*infile_new(char *file, char *token);
 
@@ -114,5 +114,7 @@ void	create_binary_lvl(char **mat, int id, t_binary *tree);
 
 // future libft.h
 void	ft_matrix_uni(char **dest, char **src);
+
+void	print_files(t_infile	*file);
 
 #endif

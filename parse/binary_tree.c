@@ -2,46 +2,7 @@
 #include "../sigma_minishell.h"
 #include "jojo_libft/libft.h"
 
-int	separator_comp(char **mat, int flag)
-{
-	int	ind;
-
-	ind = ft_matlen(mat) - 1;
-	if (flag == 1)
-	{
-		while (ind >= 0)
-		{
-			if (ft_strncmp(mat[ind], ")", 2) == 0)
-				while (ind >= 0 && ft_strncmp(mat[ind], "(", 2) == 0)
-					ind--;
-			if (ind >= 0 && ft_strncmp(mat[ind], "&&", 3) == 0|| ft_strncmp(mat[ind], "||", 3) == 0)
-				return (ind);
-			ind--;
-		}
-	}
-	else
-	{
-		while (ind-- > 0)
-			if (ft_strncmp(mat[ind], "&", 2) == 0)
-				return (ind);
-	}
-	return (0);
-} 
 /* 
-
-int	input_comp(char *str)
-{
-	if (strncmp(str, "<<", 3) && strncmp(str, "<", 2))
-		return (1);
-	return (0);
-}
-
-int	output_comp(char *str)
-{
-	if (strncmp(str, ">>", 3) && strncmp(str, ">", 2))
-		return (1);
-	return (0);
-}
 int	output_comp(char *str)
 {
 	if (strncmp(str, ">>", 3) == 0 || strncmp(str, "&>", 3) == 0\
@@ -55,7 +16,6 @@ int	output_comp(char *str)
 						return (0);
 	return (1);
 }
-*/
 
 int	input_comp(char *str)
 {
@@ -63,28 +23,8 @@ int	input_comp(char *str)
 		return (1);
 	return (0);
 }
+*/
 
-t_infile	*get_infile(char **mat)
-{
-	t_infile	*infile;
-	int			ind; 
-
-	ind = 0;
-	if (mat == NULL)
-		return (NULL);
-	while (mat[ind] && input_comp(mat[ind]))
-		ind++;
-	if (mat[ind] == NULL)
-		return (NULL);
-	infile = infile_new(mat[ind + 1], mat[ind]);
-	if (infile == NULL)
-		return (NULL);
-	mat[ind] = NULL;
-	mat[ind + 1] = NULL;
-	ft_matrix_uni(mat + ind, mat + ind + 2);
-	infile->next = get_infile (mat + ind);
-	return (infile);
-}
 
 /*
 int redirect_comp(char *str)
@@ -103,33 +43,87 @@ int redirect_comp(char *str)
 
 input is:
 	"<<", "<", "<>"
+*/
+int	separator_comp(char **mat, int flag)
+{
+	int	ind;
 
+	ind = ft_matlen(mat) - 1;
+	if (flag == 1)
+	{
+		while (ind >= 0)
+		{
+			if (ft_strncmp(mat[ind], ")", 2) == 0)
+				while (ind >= 0 && ft_strncmp(mat[ind], "(", 2) == 0)
+					ind--;
+			if (ind >= 0 && (ft_strncmp(mat[ind], "&&", 3) == 0 || ft_strncmp(mat[ind], "||", 3) == 0))
+				return (ind);
+			ind--;
+		}
+	}
+	else
+	{
+		while (ind-- > 0)
+			if (ft_strncmp(mat[ind], "&", 2) == 0)
+				return (ind);
+	}
+	return (0);
+} 
+
+int	input_comp(char *str)
+{
+	if (strncmp(str, "<<", 3) && strncmp(str, "<", 2))
+		return (1);
+	return (0);
+}
+
+int	output_comp(char *str)
+{
+	if (strncmp(str, ">>", 3) && strncmp(str, ">", 2))
+		return (1);
+	return (0);
+}
+
+t_infile	*get_infile(char **mat)
+{
+	t_infile	*infile;
+	int			ind;
+
+	if (mat == NULL || *mat == NULL)
+		return (NULL);
+	ind = 0;
+	while (mat[ind] && input_comp(mat[ind]))
+		ind++;
+	if (mat[ind] == NULL)
+		return (NULL);
+	infile = infile_new(mat[ind + 1], mat[ind]);
+	if (infile == NULL)
+		return (NULL);
+	mat[ind] = NULL;
+	mat[ind + 1] = NULL;
+	ft_matrix_uni(mat + ind, mat + ind + 2);
+	infile->next = get_infile (mat + ind);
+	return (infile);
+}
 
 t_outfile	*get_outfile(char **mat)
 {
 	t_outfile	*outfile;
-	int			flag;
 	int			ind;
 
-	ind = 0;
-	if (mat == NULL)
+	if (mat == NULL || *mat == NULL)
 		return (NULL);
-	while (mat[ind] && ft_strncmp(mat[ind], "|", 2)
-		&& (output_comp(mat[ind]) && redirect_comp(mat[ind])))
+	ind = 0;
+	while (mat[ind] && ft_strncmp(mat[ind], "|", 2) && output_comp(mat[ind]))
 		ind++;
 	if (mat[ind] == NULL || ft_strncmp(mat[ind], "|", 2) == 0)
 		return (NULL);
-	flag = redirect_comp(mat[ind]);
-	if (flag)
-		outfile = outfile_new(mat[ind + 1], mat[ind]);
-	else
-		outfile = outfile_new(NULL, mat[ind]);
+	outfile = outfile_new(mat[ind + 1], mat[ind]);
 	if (outfile == NULL)
 		return (NULL);
 	mat[ind] = NULL;
-	if (flag)
-		mat[ind + 1] = NULL;
-	ft_matrix_uni(mat + ind, mat + ind + 1 + flag);
+	mat[ind + 1] = NULL;
+	ft_matrix_uni(mat + ind, mat + ind + 2);
 	outfile->next = get_outfile (mat + ind);
 	return (outfile);
 }
@@ -142,6 +136,16 @@ int	find_pipe(char **mat)
 	while (mat[ind] && ft_strncmp(mat[ind], "&", 2))
 		ind++;
 	return ((mat[ind] == NULL) * -1 + (mat[ind] != NULL) * ind);
+}
+
+void	print_files(t_infile	*file)
+{
+	while (file)
+	{
+		printf("red is | file is\n");
+		printf("%s       %s\n", file->token, file->file);
+		file = file->next;
+	}
 }
 
 t_cmds	*get_cmds(char **mat)
@@ -157,24 +161,14 @@ t_cmds	*get_cmds(char **mat)
 		free(mat[sep]);
 		mat[sep] = NULL;
 	}
-	cmds = cmds_new(mat, get_outfile(mat));
+	cmds = cmds_new(get_outfile(mat), mat);
 	if (sep != -1)
 		cmds->next = get_cmds(mat + sep + 1);
 	return (cmds);
 }
 // in < cat | cat & echo done & echo ola
 // in < cat | cat & echo done &
-*/
 
-void	print_files(t_infile	*file)
-{
-	while (file)
-	{
-		printf("red is | file is\n");
-		printf("%s       %s\n", file->token, file->file);
-		file = file->next;
-	}
-}
 
 void	create_binary_tree(char **mat, int	shlvl, t_binary *tree)
 {
@@ -207,14 +201,21 @@ void	create_binary_lvl(char **mat, int id, t_binary *tree)
 {
 	int			sep;
 
+	/*if (check_syntax())
+	{
+		btree()->type = ERROR;
+		return ;
+	}*/
 	if (btree()->type == ERROR)
 		return ;
+	// sep = open_parethesis(mat);
+	// mat += sep;
 	sep = separator_comp(mat, 1);
 	if (sep == 0)
 	{
-		print_files(get_infile(mat));
-		printf("^===============================================================^\n");
-		// tree->table = table_new(get_infile(mat), get_cmds(mat));
+		// print_files(get_cmds(mat));
+		// printf("^===============================================================^\n");
+		tree->table = table_new(get_infile(mat), get_cmds(mat));
 		return ;
 	}
 	tree->left = binary_new(id ,EMPTY, tree, NULL);
@@ -237,4 +238,4 @@ void	create_binary_lvl(char **mat, int id, t_binary *tree)
 	create_binary_lvl (mat + sep + 1, 1, tree->right);
 	// ft_print_matrix(mat + sep + 1);
 	// printf("^right==============================================================^\n");
-} 
+}
