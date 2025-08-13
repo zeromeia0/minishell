@@ -69,6 +69,7 @@ typedef struct s_binary
 	int				left_ret;
 	int				right_ret;
 	int				subshell_ret;
+	char			**mat;
 	t_table			*table;
 	struct s_binary	*up;
 	struct s_binary	*left;
@@ -78,7 +79,7 @@ typedef struct s_binary
 
 t_binary	*btree(void);
 int			parsing(char *str);
-void		init_tree(void);
+// void		init_tree(void);
 
 char *aspas(char *str);
 int is_builtin(char *cmd);

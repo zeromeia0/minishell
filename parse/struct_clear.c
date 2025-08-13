@@ -12,6 +12,8 @@ void	binary_clear(t_binary *binary)
 	table_clear(binary->table);
 	if (binary->up)
 		free(binary);
+	else
+		free(binary->mat);
 }
 
 void	table_clear(t_table *table)
@@ -28,7 +30,11 @@ void	cmds_clear(t_cmds *cmds)
 	if (cmds == NULL)
 		return ;
 	cmds_clear(cmds->next);
-	ft_free_matrix(cmds->cmd);
+	while (*(cmds->cmd))
+	{
+		free(*(cmds->cmd));
+			cmds->cmd++;
+	}
 	outfile_clear(cmds->outfiles);
 	free(cmds);
 }

@@ -35,11 +35,11 @@ void    print_tree(t_binary *tree, int sub)
     print_tree(tree->subshell, 1);
     print_tree(tree->left, 0);
     print_tree(tree->right, 0);
-    if (tree->type != EMPTY)
+    if (tree->left == NULL && tree->right == NULL)
     {
+        printf("BEGGINNING table here\n");
         if (tree->table->infiles)
         {
-        printf("table here\n");
         printf("start infiles\n");
         print_files(tree->table->infiles);
         printf("end infiles\n");
@@ -51,6 +51,7 @@ void    print_tree(t_binary *tree, int sub)
             print_cmds(tree->table->cmds);
             printf("end cmds\n");
         }
+        printf("ENDING THE table here\n");
     }
     if (sub)
         printf("\n^exiting shubshell^\n");
@@ -75,6 +76,7 @@ int main(void)
         }
 		parsing(input);
         print_tree(btree(), 0);
+		binary_clear(btree());
 			// printf("PODES SO POR TIPO PRINT ERROR POR AGORA\n");
         char *cmd = args[0];  
         if (is_builtin(cmd))  

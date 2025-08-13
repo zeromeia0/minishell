@@ -62,5 +62,6 @@ t_binary	*binary_new(int shlvl, t_type type, t_binary *up, t_table *table)
 	new->left = NULL;
 	new->right = NULL;
 	new->subshell = NULL;
+	new->mat = NULL;
 	return (new);
 }

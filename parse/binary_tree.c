@@ -47,15 +47,27 @@ input is:
 int	separator_comp(char **mat, int flag)
 {
 	int	ind;
+	int	pcount;
 
 	ind = ft_matlen(mat) - 1;
+	pcount = 0;
 	if (flag == 1)
 	{
 		while (ind >= 0)
 		{
 			if (ft_strncmp(mat[ind], ")", 2) == 0)
-				while (ind >= 0 && ft_strncmp(mat[ind], "(", 2) == 0)
+			{
+				pcount++;
+				ind--;
+				while (ind >= 0 && pcount)
+				{
+					if (ft_strncmp(mat[ind], ")", 2) == 0)
+						pcount++;
+					if (ft_strncmp(mat[ind], "(", 2) == 0)
+						pcount--;
 					ind--;
+				}
+			}
 			if (ind >= 0 && (ft_strncmp(mat[ind], "&&", 3) == 0 || ft_strncmp(mat[ind], "||", 3) == 0))
 				return (ind);
 			ind--;
@@ -114,6 +126,7 @@ t_outfile	*get_outfile(char **mat)
 	if (mat == NULL || *mat == NULL)
 		return (NULL);
 	ind = 0;
+	// test if we really need ft_strncmp(mat[ind], "|", 2), I dont think we do
 	while (mat[ind] && ft_strncmp(mat[ind], "|", 2) && output_comp(mat[ind]))
 		ind++;
 	if (mat[ind] == NULL || ft_strncmp(mat[ind], "|", 2) == 0)
@@ -133,7 +146,7 @@ int	find_pipe(char **mat)
 	int ind;
 
 	ind = 0;
-	while (mat[ind] && ft_strncmp(mat[ind], "&", 2))
+	while (mat[ind] && ft_strncmp(mat[ind], "|", 2))
 		ind++;
 	return ((mat[ind] == NULL) * -1 + (mat[ind] != NULL) * ind);
 }
@@ -197,24 +210,47 @@ void	create_binary_tree(char **mat, int	shlvl, t_binary *tree)
 	create_binary_lvl(mat, shlvl, tree);
 }
 
+int	open_parethesis(char **mat)
+{
+	int	ind;
+	int	pcount;
+
+	ind = 0;
+	pcount = 0;
+	if (ft_strncmp(mat[ind], "(", 2) == 0)
+	{
+		pcount++;
+		while (pcount && mat[++ind])
+		{
+			if (ft_strncmp(mat[ind], "(", 2) == 0)
+				pcount++;
+			if (ft_strncmp(mat[ind], ")", 2) == 0)
+				pcount--;
+		}
+		if (pcount == 0 && mat[ind + 1] == NULL)
+		{
+			free (*mat);
+			free (mat[ind]);
+			*mat = NULL;
+			mat[ind] = NULL;
+			return (1);
+		}
+	}
+	return (0);
+}
+
 void	create_binary_lvl(char **mat, int id, t_binary *tree)
 {
 	int			sep;
 
+	mat += open_parethesis(mat);
 	/*if (check_syntax())
-	{
-		btree()->type = ERROR;
-		return ;
-	}*/
+		btree()->type = ERROR;*/
 	if (btree()->type == ERROR)
 		return ;
-	// sep = open_parethesis(mat);
-	// mat += sep;
 	sep = separator_comp(mat, 1);
 	if (sep == 0)
 	{
-		// print_files(get_cmds(mat));
-		// printf("^===============================================================^\n");
 		tree->table = table_new(get_infile(mat), get_cmds(mat));
 		return ;
 	}
@@ -230,6 +266,10 @@ void	create_binary_lvl(char **mat, int id, t_binary *tree)
 		btree()->type = ERROR;
 		return ;
 	}
+	if (ft_strncmp(mat[sep], "&&", 3) == 0)
+		tree->type = AND;
+	else
+		tree->type = OR;
 	free (mat[sep]);
 	mat[sep] = NULL;
 	create_binary_lvl (mat, 1, tree->left);
