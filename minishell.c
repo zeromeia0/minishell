@@ -75,7 +75,7 @@ int main(void)
             continue;
         }
 		parsing(input);
-        print_tree(btree(), 0);
+        // print_tree(btree(), 0);
 		binary_clear(btree());
 			// printf("PODES SO POR TIPO PRINT ERROR POR AGORA\n");
         char *cmd = args[0];  

@@ -70,6 +70,7 @@ typedef struct s_binary
 	int				right_ret;
 	int				subshell_ret;
 	char			**mat;
+	char			**env;
 	t_table			*table;
 	struct s_binary	*up;
 	struct s_binary	*left;
