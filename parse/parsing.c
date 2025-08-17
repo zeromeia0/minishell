@@ -251,6 +251,36 @@ int	sep_count(char **mat)
 	return (count);
 }
 
+char	*expand(char *str)
+{
+	int		ind;
+	int		count;
+	char	*temp;
+	char	*strcp;
+
+	ind = 0;
+	while (str[ind])
+	{
+		count = 0;
+		if (str[ind] == '$' && ft_isalnum(str[ind + 1]))
+		{
+			ind++;
+			while ((str + ind)[count] != ' ' && str[ind + 1] != '\0')
+				count++;
+			strcp = ft_strdup(str + ind + count);
+			temp = ft_strndup(str + ind, count);
+
+			temp = ft_strnmat(mat, "$", 1);
+			temp = ft_strnmat(btree()->env, *temp, 1);
+
+			return (str);
+		}
+		else
+			ind++;
+	}
+	return (str);
+}
+
 void	get_here_doc(char *eof, int fd[2])
 {
 	char	*str;
@@ -261,7 +291,7 @@ void	get_here_doc(char *eof, int fd[2])
 	str = readline("> ");
 	while (ft_strncmp(str, eof, len + 1))
 	{
-		// str = expanded(str);
+		str = expand(str);
 		write (fd[1], str, ft_strlen(str));
 		write (fd[1], "\n", 1);
 		free (str);
