@@ -251,9 +251,32 @@ int	sep_count(char **mat)
 	return (count);
 }
 
+void	get_here_doc(char *eof, int fd[2])
+{
+	char	*str;
+	// char	strfinal[1024];
+	int		len;
+
+	len = ft_strlen(eof);
+	str = readline("> ");
+	while (ft_strncmp(str, eof, len + 1))
+	{
+		// str = expanded(str);
+		write (fd[1], str, ft_strlen(str));
+		write (fd[1], "\n", 1);
+		free (str);
+		str = readline("> ");
+	}
+	free (str);
+	// read(fd[0], strfinal, 1023);
+	// printf("%s", strfinal);
+	close (fd[0]);
+	close (fd[1]);
+}
+
 int	parsing(char *str)
 {
-	char	*stokens[] = {"(", ")", "&", "|", ">", "<", NULL};
+	/* char	*stokens[] = {"(", ")", "&", "|", ">", "<", NULL};
 	char	*dtokens[] = {"||", "&&", ">>", "<<", NULL};
 	char	*sep[] = {"'", "\"", "`", NULL};
 	char 	**mat;
@@ -269,6 +292,11 @@ int	parsing(char *str)
 	init_tree(mat);
 	create_binary_tree(mat, separator_count(mat) + 1, btree());
 	if (btree()->type == ERROR)
-		return (binary_clear(btree()), 1);
+		return (binary_clear(btree()), 1); */
+	int			fd[2];
+
+	if (pipe(fd))
+		return (printf("error\n"));
+	get_here_doc(str, fd);
 	return (0);
 }

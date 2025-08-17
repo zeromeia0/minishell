@@ -243,18 +243,24 @@ void    print_thiscmds(t_cmds *cmds)
 {
     while (cmds)
     {
-        printf("===============================================================\n");
+        // printf("===============================================================\n");
         printf("starts commands\n\n");
         ft_print_matrix(cmds->cmd);
         printf("end commands\n\n");
         printf("starts outfiles\n\n");
         print_files((t_infile *)cmds->outfiles);
         printf("end outfiles\n");
-        printf("===============================================================\n\n");
+        // printf("===============================================================\n\n");
         cmds = cmds->next;
     }
-    
 }
+// 
+// int	check_syntax(char **mat)
+// {
+	// if ()
+	// return (0);
+// }
+
 void	create_binary_lvl(char **mat, int id, t_binary *tree)
 {
 	int			sep;
@@ -262,12 +268,12 @@ void	create_binary_lvl(char **mat, int id, t_binary *tree)
 	if (mat == NULL || *mat == NULL)
 	{
 		if (tree->up != NULL)
-		free(tree);
+			free(tree);
 		return ;
 	}
 	mat += open_parethesis(mat);
-	/*if (check_syntax())
-		btree()->type = ERROR;*/
+	// if (check_syntax(mat))
+		// btree()->type = ERROR;
 	if (btree()->type == ERROR)
 		return ;
 	sep = separator_comp(mat, 1);
@@ -294,12 +300,13 @@ void	create_binary_lvl(char **mat, int id, t_binary *tree)
 		tree->type = OR;
 	free (mat[sep]);
 	mat[sep] = NULL;
-	create_binary_lvl (mat, 1, tree->left);
 	// printf("===============================================================\n");
-	// print_files(get_infile(mat));
-	// print_thiscmds(get_cmds(mat));
 	// ft_print_matrix(mat);
-	// printf("^left===============================================================^\n");
+	create_binary_lvl (mat, 1, tree->left);
+	// print_files(get_infile(mat));
+	// // print_thiscmds(get_cmds(mat));
+	// // printf("^left===============================================================^\n");
+	// ft_print_matrix(mat);
 	create_binary_lvl (mat + sep + 1, 1, tree->right);
 	// print_files(get_infile(mat + sep + 1));	
 	// print_thiscmds(get_cmds(mat + sep + 1));

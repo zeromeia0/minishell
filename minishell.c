@@ -14,14 +14,14 @@ void	print_cmds(t_cmds *cmds)
 {
 	while (cmds)
 	{
-		printf("===============================================================\n");
+		// printf("===============================================================\n");
 		printf("starts commands\n\n");
 		ft_print_matrix(cmds->cmd);
 		printf("end commands\n\n");
 		printf("starts outfiles\n\n");
 		print_files((t_infile *)cmds->outfiles);
 		printf("end outfiles\n");
-		printf("===============================================================\n\n");
+		// printf("===============================================================\n\n");
 		cmds = cmds->next;
 	}
 }
@@ -39,9 +39,9 @@ void	print_tree(t_binary *tree, int sub)
 		printf("BEGGINNING table here\n");
 		if (tree->table && tree->table->infiles)
 		{
-		printf("start infiles\n");
-		print_files(tree->table->infiles);
-		printf("end infiles\n");
+			printf("start infiles\n");
+			print_files(tree->table->infiles);
+			printf("end infiles\n");
 		}
 		else
 		{
@@ -84,8 +84,8 @@ int main(void)
 			continue;
 		}
 		parsing(input);
-		print_tree(btree(), 0);
-		binary_clear(btree());
+		// print_tree(btree(), 0);
+		// binary_clear(btree());
 			// printf("PODES SO POR TIPO PRINT ERROR POR AGORA\n");
 		char *cmd = args[0];  
 		if (is_builtin(cmd))  
