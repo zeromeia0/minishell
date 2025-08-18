@@ -267,12 +267,12 @@ char	*expand_aux(char *str, int ind, int count)
 		env_var = ft_calloc(1, 1);
 	if (env_var == NULL)
 		return (free (str), NULL);
-	printf("\nvar expanded|%s|\n", env_var + count);
+	printf("\nvar expanded|%s|\n", env_var);
 	temp = ft_strdup(str + ind + count);
 	if (temp == NULL)
 		return (free (str), NULL);
 	printf("str after var|%s|\n", str + ind + count);
-	temp = ft_strjoin_free(env_var + count, temp, 2);
+	temp = ft_strjoin_free(env_var + count * (*env_var != '\0'), temp, 2);
 	str[ind] = '\0';
 	if (temp == NULL)
 		return (free (str), NULL);
@@ -330,7 +330,7 @@ void	get_here_doc(char *eof, int fd[2])
 
 int	parsing(char *str)
 {
-	/* char	*stokens[] = {"(", ")", "&", "|", ">", "<", NULL};
+	char	*stokens[] = {"(", ")", "&", "|", ">", "<", NULL};
 	char	*dtokens[] = {"||", "&&", ">>", "<<", NULL};
 	char	*sep[] = {"'", "\"", "`", NULL};
 	char 	**mat;
@@ -347,11 +347,26 @@ int	parsing(char *str)
 	create_binary_tree(mat, separator_count(mat) + 1, btree());
 	if (btree()->type == ERROR)
 		return (binary_clear(btree()), 1); */
-	printf("|%s|\n", str);
-	str = expand(str);
-	// str = ft_strnmat(btree()->env, "PATH=", 5);
-	// ft_print_matrix(btree()->env);
-	printf("\n|%s|\n", str);
+
+	// printf("|%s|\n", str);
+	// str = expand(str);
+	// printf("\n|%s|\n", str);
+
+	int		ind;
+	int		len = ft_strlen(str);
+	char	**matrix = btree()->env;
+
+	ind = -1;
+	while (matrix[++ind])
+	{
+		if (ft_strnstr(str, matrix[ind], len))
+		{
+			printf("\n\n|%s| and |%s| are the same %d\n", str, matrix[ind], ft_strncmp(str, matrix[ind], ft_strlen(str)));
+			break ;
+		}
+		printf("|%s| and |%s| are not the same %d\n\n", str, matrix[ind], ft_strncmp(str, matrix[ind], ft_strlen(str)));
+	}
+
 
 	// int			fd[2];
 // 
