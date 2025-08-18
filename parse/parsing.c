@@ -25,13 +25,13 @@ char **tokenization(char *str)
 
 int	find_tokens(char *str, t_token tokens)
 {
-	// if (ft_strnmat(tokens.qtokens, str, 4))
+	// if (ft_matnstr(tokens.qtokens, str, 4))
 		// return (4);
-	// if (ft_strnmat(tokens.ttokens, str, 3))
+	// if (ft_matnstr(tokens.ttokens, str, 3))
 		// return (3);
-	if (ft_strnmat(tokens.dtokens, str, 2))
+	if (ft_matnstr(tokens.dtokens, str, 2))
 		return (2);
-	if (ft_strnmat(tokens.stokens, str, 1))
+	if (ft_matnstr(tokens.stokens, str, 1))
 		return (1);
 	return (0);
 }
@@ -66,7 +66,7 @@ int	word_count(char *str, t_token tokens, char **sep)
 			while (find_tokens(str + ind, tokens) == 0 \
 				&& str[ind] && (str[ind] != ' ' && str[ind] != '\t' && str[ind] != '\n'))
 			{
-				sep_found = ft_strnmat(sep, str + ind, 1);
+				sep_found = ft_matnstr(sep, str + ind, 1);
 				if (sep_found)
 				{
 					// write(1, str + ind, 1);
@@ -109,7 +109,7 @@ static int	parsing_strlen(char *str, t_token tokens, char **sep)
 		while (find_tokens(str + ind, tokens) == 0 \
 			&& str[ind] && (str[ind] != ' ' && str[ind] != '\t' && str[ind] != '\n'))
 		{
-			sep_found = ft_strnmat(sep, str + ind, 1);
+			sep_found = ft_matnstr(sep, str + ind, 1);
 			if (sep_found)
 			{
 				ind++;
@@ -139,7 +139,7 @@ char **tokenization(char *str, t_token tokens, char **sep)
 	wc = word_count(str, tokens, sep);
 	if (wc < 0)
 		return (printf("\nUnclosed |%c|\n", -wc), NULL);
-	printf("\nwords in the input ->|%d|\n", wc);
+	// printf("\nwords in the input ->|%d|\n", wc);
 	ret = malloc(sizeof(char *) * (wc + 1));
 	if (ret == NULL)
 		return (NULL); // CLOSE PROGRAM INSTEAD OF RETURN NULL WHEN WE FIND MEMORY ERRORS?
@@ -157,9 +157,9 @@ char **tokenization(char *str, t_token tokens, char **sep)
 			return (ft_free_matrix(ret), NULL); // CLOSE PROGRAM INSTEAD OF RETURN NULL WHEN WE FIND MEMORY ERRORS?
 		str += strcount;
 	}
-	printf("========================================================\n");
-	ft_print_matrix(ret);
-	printf("========================================================\n");
+	// printf("========================================================\n");
+	// ft_print_matrix(ret);
+	// printf("========================================================\n");
  	return (ret);
 }
 
@@ -190,9 +190,9 @@ void init_tree(char	**mat)
 
 int	find_syntax(char *str, t_token tokens)
 {
-	if (ft_strnmat(tokens.dtokens, str, 2))
+	if (ft_matnstr(tokens.dtokens, str, 2))
 		return (2);
-	if (ft_strnmat(tokens.stokens, str, 1))
+	if (ft_matnstr(tokens.stokens, str, 1))
 		return (1);
 	return (0);
 }
@@ -261,7 +261,7 @@ char	*expand_aux(char *str, int ind, int count)
 	printf("\nvar not expanded|%s|", temp);
 	if (temp == NULL)
 		return (free (str), NULL);
-	env_var = ft_strnmat(btree()->env, temp, count);
+	env_var = ft_matnstr(btree()->env, temp, count);
 	free(temp);
 	if (env_var == NULL)
 		env_var = ft_calloc(1, 1);
@@ -346,13 +346,13 @@ int	parsing(char *str)
 	init_tree(mat);
 	create_binary_tree(mat, separator_count(mat) + 1, btree());
 	if (btree()->type == ERROR)
-		return (binary_clear(btree()), 1); */
+		return (binary_clear(btree()), 1);
 
 	// printf("|%s|\n", str);
 	// str = expand(str);
 	// printf("\n|%s|\n", str);
 
-	int		ind;
+	/*int		ind;
 	int		len = ft_strlen(str);
 	char	**matrix = btree()->env;
 
@@ -365,7 +365,7 @@ int	parsing(char *str)
 			break ;
 		}
 		printf("|%s| and |%s| are not the same %d\n\n", str, matrix[ind], ft_strncmp(str, matrix[ind], ft_strlen(str)));
-	}
+	}*/
 
 
 	// int			fd[2];

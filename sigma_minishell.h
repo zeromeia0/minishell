@@ -2,7 +2,7 @@
 # define JOJOMINISHELL_H
 
 #include "exec/minishell.h"
-#include "exec/my_libft/libft.h"
+#include "parse/jojo_libft/libft.h"
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -116,6 +116,7 @@ void	create_binary_lvl(char **mat, int id, t_binary *tree);
 
 // future libft.h
 void	ft_matrix_uni(char **dest, char **src);
+char	*ft_matnstr(char **matrix, char *s, int n);
 
 void	print_files(t_infile	*file);
 
