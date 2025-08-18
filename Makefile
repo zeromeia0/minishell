@@ -24,7 +24,7 @@ $(NAME):
 	@echo -e "$(BLUE)Building pipex...$(RESET)"
 	@$(MAKE) --no-print-directory -C $(PIPEX_DIR)
 	@echo -e "$(BLUE)Building minishell...$(RESET)"
-	@$(CC) $(CFLAGS) $(BULTIN_SRCS) executor.c signal_handler.c \
+	@$(CC) $(CFLAGS) $(BULTIN_SRCS) executor.c signal_handler.c path_cmd.c\
 		$(PIPEX_DIR)/$(PIPEX).a $(LIBFT_DIR)/libft.a -o $(NAME) $(LDFLAGS)
 	@echo -e "$(GREEN)Minishell built successfully!$(RESET)"
 

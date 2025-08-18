@@ -1,0 +1,6 @@
+{
+	"files.associations": {
+		"sigma_minishell.h": "c",
+		"stdio.h": "c"
+	}
+}
