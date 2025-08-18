@@ -120,5 +120,7 @@ void	ft_matrix_uni(char **dest, char **src);
 void	print_files(t_infile	*file);
 
 void	get_here_doc(char *eof, int fd[2]);
+char	*expand(char *str);
+char	*expand_aux(char *str, int ind, int count);
 
 #endif

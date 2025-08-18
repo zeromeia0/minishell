@@ -179,6 +179,7 @@ t_cmds	*get_cmds(char **mat)
 		cmds->next = get_cmds(mat + sep + 1);
 	return (cmds);
 }
+
 // in < cat | cat & echo done & echo ola
 // in < cat | cat & echo done &
 

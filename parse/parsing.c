@@ -251,32 +251,56 @@ int	sep_count(char **mat)
 	return (count);
 }
 
+char	*expand_aux(char *str, int ind, int count)
+{
+	char	*temp;
+	char	*env_var;
+
+	temp = ft_strndup(str + ind + 1, count - 1);
+	temp = ft_strjoin_free(temp, "=", 1);
+	printf("\nvar not expanded|%s|", temp);
+	if (temp == NULL)
+		return (free (str), NULL);
+	env_var = ft_strnmat(btree()->env, temp, count);
+	free(temp);
+	if (env_var == NULL)
+		env_var = ft_calloc(1, 1);
+	if (env_var == NULL)
+		return (free (str), NULL);
+	printf("\nvar expanded|%s|\n", env_var + count);
+	temp = ft_strdup(str + ind + count);
+	if (temp == NULL)
+		return (free (str), NULL);
+	printf("str after var|%s|\n", str + ind + count);
+	temp = ft_strjoin_free(env_var + count, temp, 2);
+	str[ind] = '\0';
+	if (temp == NULL)
+		return (free (str), NULL);
+	return (expand(ft_strjoin_free(str, temp, 0)));
+}
+
 char	*expand(char *str)
 {
 	int		ind;
 	int		count;
-	char	*temp;
-	char	*strcp;
 
+	if (str == NULL)
+		return (NULL);
 	ind = 0;
 	while (str[ind])
 	{
 		count = 0;
-		if (str[ind] == '$' && ft_isalnum(str[ind + 1]))
+		if (str[ind] == '$' && str[ind + 1] != ' ' && str[ind + 1] != '\0')
 		{
-			ind++;
-			while ((str + ind)[count] != ' ' && str[ind + 1] != '\0')
+			write (1, "str before var|", 16);
+			write(1, str, ind);
+			printf("|\n");
+			while ((str + ind)[count] != ' ' && (str + ind)[count] != '\0'
+				&& str[ind + 1] != '\'' && str[ind + 1] != '\"')
 				count++;
-			strcp = ft_strdup(str + ind + count);
-			temp = ft_strndup(str + ind, count);
-
-			temp = ft_strnmat(mat, "$", 1);
-			temp = ft_strnmat(btree()->env, *temp, 1);
-
-			return (str);
+			return (expand_aux(str, ind, count));
 		}
-		else
-			ind++;
+		ind++;
 	}
 	return (str);
 }
@@ -323,10 +347,16 @@ int	parsing(char *str)
 	create_binary_tree(mat, separator_count(mat) + 1, btree());
 	if (btree()->type == ERROR)
 		return (binary_clear(btree()), 1); */
-	int			fd[2];
+	printf("|%s|\n", str);
+	str = expand(str);
+	// str = ft_strnmat(btree()->env, "PATH=", 5);
+	// ft_print_matrix(btree()->env);
+	printf("\n|%s|\n", str);
 
-	if (pipe(fd))
-		return (printf("error\n"));
-	get_here_doc(str, fd);
+	// int			fd[2];
+// 
+	// if (pipe(fd))
+		// return (printf("error\n"));
+	// get_here_doc(str, fd);
 	return (0);
 }

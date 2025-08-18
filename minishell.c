@@ -66,8 +66,9 @@ void	print_tree(t_binary *tree, int sub)
 		printf("\n^exiting shubshell^\n");
 }
 
-int main(void)
+int main(int ac, char **av, char **env)
 {
+
 	builtin_env();
 	while(1)
 	{
@@ -75,7 +76,7 @@ int main(void)
 		if (!input)
 			break;
 		add_history(input);
-		
+
 		char **args = ft_split(input, ' ');
 		if (!args || !args[0])
 		{
@@ -83,6 +84,7 @@ int main(void)
 			free (args);
 			continue;
 		}
+		btree()->env = env;
 		parsing(input);
 		// print_tree(btree(), 0);
 		// binary_clear(btree());
