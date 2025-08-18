@@ -34,7 +34,7 @@ bonus:
 	@echo -e "$(BLUE)Building pipex (bonus)...$(RESET)"
 	@$(MAKE) --no-print-directory -C $(PIPEX_DIR) bonus
 	@echo -e "$(BLUE)Building minishell with bonus...$(RESET)"
-	@$(CC) $(CFLAGS) $(BULTIN_SRCS) executor.c \
+	@$(CC) $(CFLAGS) $(BULTIN_SRCS) executor.c path_cmd.c \
 		$(PIPEX_DIR)/$(PIPEX_BONUS).a $(LIBFT_DIR)/libft.a -o $(NAME) $(LDFLAGS)
 	@echo -e "$(GREEN)Minishell with bonus built successfully!$(RESET)"
 
