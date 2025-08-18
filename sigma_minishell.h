@@ -49,5 +49,6 @@ t_os_envs **get_env_list(void);
 void builtin_export(char **args);
 void builtin_unset(char **args);
 char *aspas(char *str);
+void exec_path(char *cmd, char **args, char **envp);
 
 #endif
