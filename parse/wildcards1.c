@@ -47,8 +47,8 @@ char	**wildcards_aux(char **mat, int count, int flag)
 		{
 			new = expand_wildcards(mat, count, "\0", NULL);
 			count += ft_matlen(new) - ft_matlen(mat);
-			// if (flag && new != mat) //revisit this edgecase
-				// free(mat);
+			if (flag && new != mat) //revisit this edgecase
+				free_matrix(mat);
 			return (wildcards(new, count + 1, flag + (new != mat)));
 		}
 		ind++;

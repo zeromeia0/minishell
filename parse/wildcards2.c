@@ -7,14 +7,14 @@ char	**bind_mat_lst_aux(char **mat, char **ret, int count, t_wild *head)
 	ind = 0;
 	while (ind < count)
 	{
-		ret[ind] = mat[ind];
+		ret[ind] = ft_strdup(mat[ind]);
 		// printf( "ret[%d] = %s\n", ind, mat[ind]);
 		// fflush(stdout);
 		ind++;
 	}
 	while (head)
 	{
-		ret[ind] = ft_strdup(head->file);
+		ret[ind] = head->file;
 		// printf( "ret[%d] = %s\n", ind, head->file);
 		// fflush(stdout);
 		head = head->next;
@@ -22,7 +22,7 @@ char	**bind_mat_lst_aux(char **mat, char **ret, int count, t_wild *head)
 	}
 	while (mat[++count])
 	{
-		ret[ind] = mat[count];
+		ret[ind] = ft_strdup(mat[count]);
 		// printf( "ret[%d] = %s\n", ind, mat[count]);
 		// fflush(stdout);
 		ind++;

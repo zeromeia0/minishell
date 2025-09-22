@@ -15,7 +15,7 @@ void	binary_clear(t_binary *binary)
 	if (binary->up)
 		free(binary);
 	else
-		free_matrix(binary->mat);
+		free(binary->mat);
 }
 
 void	cmds_clear(t_cmds *cmds)
@@ -60,6 +60,5 @@ void	wild_clear(t_wild *node)
 	if (node == NULL)
 		return ;
 	wild_clear(node->next);
-	free(node->file);
 	free(node);
 }

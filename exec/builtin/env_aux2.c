@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:01:02 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/22 21:05:14 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/22 21:46:04 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,11 @@ void	free_asterisc(char **mat)
 
 	ind = -1;
 	while (mat && mat[++ind])
+	{
 		if (ft_strchr(mat[ind], '*'))
 			free(mat[ind]);
+	}
+	
 }
 
 void	expand_args(t_cmds *cmd)
@@ -96,7 +99,7 @@ void	expand_args(t_cmds *cmd)
 	printf("\t\tover\n");
 	cmd->expanded = (temp != mat);
 	if (temp != mat)
-		free_asterisc(temp);
+		free_matrix_nodes(temp);
 	else
 	{
 		ind = -1;
