@@ -26,8 +26,8 @@ void	cmds_clear(t_cmds *cmds)
 	cmds->next = NULL;
 	outfile_clear(cmds->outfiles);
 	infile_clear(cmds->infiles);
-	ft_print_matrix(cmds->cmd);
-	printf("%d\n", cmds->expanded);
+	// ft_print_matrix(cmds->cmd);
+	// printf("%d\n", cmds->expanded);
 	if (cmds->expanded)
 		free_matrix (cmds->cmd);
 	else

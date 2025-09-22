@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:44:52 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/22 20:42:41 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/22 22:00:23 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,10 +120,11 @@ int	handle_system_path_cmd_aux(char *cmd, char **args, char **envp)
 				prepare_for_exec();
 				execve(new_args[0], new_args, envp);
 			}
-			return (perror(cmd), -1);
+			perror(cmd);
+			exit(1);
 		}
 		else
-			return (perror("minishell"), -1);
+			exit(1);
 	}
 	return (0);
 }
