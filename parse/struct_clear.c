@@ -20,15 +20,12 @@ void	binary_clear(t_binary *binary)
 
 void	cmds_clear(t_cmds *cmds)
 {
-	int	ind;
-
 	if (cmds == NULL)
 		return ;
 	cmds_clear(cmds->next);
 	cmds->next = NULL;
 	outfile_clear(cmds->outfiles);
 	infile_clear(cmds->infiles);
-	ind = -1;
 	if (cmds->expanded)
 		free_matrix (cmds->cmd);
 	else
