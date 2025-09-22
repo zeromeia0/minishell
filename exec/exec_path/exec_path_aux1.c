@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_path_aux1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:36:54 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/22 11:26:48 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/22 19:05:35 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int	is_system_path_command(char *cmd, char **envp)
 	char	**paths_to_search;
 
 	paths_to_search = get_paths_to_search(envp);
+	// for (int k = 0; paths_to_search[k]; k++)
+	// 	printf("paths to search: %s", paths_to_search[k]);
 	if (!paths_to_search)
 		return (-1);
 	i = 0;

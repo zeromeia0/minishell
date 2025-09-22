@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:44:52 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/22 18:26:35 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/22 19:07:50 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,9 +147,9 @@ int	exec_path(char *cmd, char **args, char **envp)
 	if (am_i_truly_myself(args[0]) && access(cmd, F_OK) == 0 && access(cmd,
 			X_OK) == 0)
 		update_shell_level(1);
-	if (handle_absolute_path_cmd(cmd, args, envp) != 0)
-		return (-1);
 	if (handle_system_path_cmd(cmd, args, envp) != 0)
+		return (-1);
+	if (handle_absolute_path_cmd(cmd, args, envp) != 0)
 		return (-1);
 	printf("command not found\n");
 	return (-1);
