@@ -65,17 +65,15 @@ int	simple_syntax(char **mat)
 	return (0);
 }
 
-t_cmds	*get_cmds(char **temp)
+t_cmds	*get_cmds(char **mat)
 {
 	t_cmds	*cmds;
-	char	**mat;
 	int		sep;
 
-	if (*temp == NULL)
+	if (*mat == NULL)
 		return (NULL);
-	if (simple_syntax(temp))
-		return (free_matrix_nodes(temp), btree()->type = ERROR, NULL);
-	mat = wildcards(temp, 0, 0);
+	if (simple_syntax(mat))
+		return (free_matrix_nodes(mat), btree()->type = ERROR, NULL);
 	if (btree()->type == ERROR || mat == NULL || *mat == NULL)
 		return (NULL);
 	sep = find_pipe(mat);
@@ -87,7 +85,6 @@ t_cmds	*get_cmds(char **temp)
 	cmds = cmds_new(get_outfile(mat), get_infile(mat), mat);
 	if (cmds == NULL)
 		return (btree()->type = ERROR, NULL);
-	cmds->expanded = (mat != temp);
 	if (sep != -1)
 		cmds->next = get_cmds(mat + sep + 1);
 	return (cmds);

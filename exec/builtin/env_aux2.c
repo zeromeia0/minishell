@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:01:02 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/22 17:20:15 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/22 21:05:14 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,16 @@ char	*find_temp_var(const char *key)
 	return (NULL);
 }
 
+void	free_asterisc(char **mat)
+{
+	int	ind;
+
+	ind = -1;
+	while (mat && mat[++ind])
+		if (ft_strchr(mat[ind], '*'))
+			free(mat[ind]);
+}
+
 void	expand_args(t_cmds *cmd)
 {
 	char	**mat;
@@ -79,12 +89,14 @@ void	expand_args(t_cmds *cmd)
 		return ;
 	temp = cmd->cmd;
 	mat = wildcards(temp, 0, 0);
-	cmd->expanded = 0;
+	printf("\t\tmat\n");
+	ft_print_matrix(mat);
+	printf("\t\ttemp\n");
+	ft_print_matrix(temp);
+	printf("\t\tover\n");
+	cmd->expanded = (temp != mat);
 	if (temp != mat)
-	{
-		free_matrix_nodes(temp);
-		cmd->expanded = 1;
-	}
+		free_asterisc(temp);
 	else
 	{
 		ind = -1;
@@ -92,5 +104,11 @@ void	expand_args(t_cmds *cmd)
 			mat[ind] = quote(mat[ind]);
 	}
 	cmd->cmd = mat;
+	while (cmd->cmd && *cmd->cmd && **cmd->cmd == '\0')
+	{
+		fflush(stdout);
+		free(*cmd->cmd);
+		ft_matrix_uni(cmd->cmd, cmd->cmd + 1);
+	}
 	expand_args(cmd->next);
 }

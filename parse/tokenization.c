@@ -60,10 +60,13 @@ int	word_count(char *str, t_token tokens, char **sep)
 	return (count);
 }
 
+// echo $USER "$USER" '$USER' "'$USER'" '"$USER"'
 int parsing_strlen_aux(int ind, char *str, t_token tokens, char **sep)
 {
 	char	*sep_found;
 	
+	// printf("we found here\n");
+	// fflush(stdout);
 	while (find_tokens(str + ind, tokens) == 0 && str[ind] \
 		&& (str[ind] != ' ' && str[ind] != '\t' && str[ind] != '\n'))
 	{
@@ -74,7 +77,11 @@ int parsing_strlen_aux(int ind, char *str, t_token tokens, char **sep)
 			while (str[ind] != *sep_found && str[ind])
 				ind++;
 			if (str[ind] == '\0')
+			{
+				printf("we found the error\n");
+				fflush(stdout);
 				return (-(*sep_found));
+			}
 			ind++;
 		}
 		else

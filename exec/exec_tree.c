@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/22 17:20:15 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/22 20:10:49 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,14 @@ int	exec_tree(t_binary *tree)
 		return (130);
 	if (!tree)
 		return (0);
-	if (tree->logic && strcmp(tree->logic, "&&") == 0)
+	if (tree->logic && ft_strcmp(tree->logic, "&&") == 0)
 	{
 		ret_left = exec_tree(tree->left);
 		if (ret_left == 0)
 			return (exec_tree(tree->right));
 		return (ret_left);
 	}
-	if (tree->logic && strcmp(tree->logic, "||") == 0)
+	if (tree->logic && ft_strcmp(tree->logic, "||") == 0)
 	{
 		ret_left = exec_tree(tree->left);
 		if (ret_left != 0)
