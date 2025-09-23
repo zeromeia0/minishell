@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:44:52 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/23 13:05:18 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/23 13:11:19 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ int handle_non_slash_commands(char *cmd, char **args, char **envp)
 
 int	handle_absolute_path_cmd(char *cmd, char **args, char **envp)
 {
-	printf("TRING TO COME HERE 2\n");
-	
+	char	*new_args[3];
+	// printf("TRING TO COME HERE 2\n");
 	if (strchr(cmd, '/'))
 	{
 		if (access(cmd, F_OK) != 0)
@@ -93,6 +93,14 @@ int	handle_absolute_path_cmd(char *cmd, char **args, char **envp)
 			{
 				prepare_for_exec();
 				execve(cmd, args, envp);
+			if (errno == ENOEXEC)
+			{
+				new_args[0] = "/bin/bash";
+				new_args[1] = cmd;
+				new_args[2] = NULL;
+				prepare_for_exec();
+				execve(new_args[0], new_args, envp);
+			}
 				perror(cmd);
 				exit (1);
 			}
@@ -159,19 +167,6 @@ int	handle_system_path_cmd(char *cmd, char **args, char **envp)
 	}
 	return (0);
 }
-
-// int		exec_path(char *cmd, char **args, char **envp)
-// {
-// 	if (am_i_truly_myself(args[0]) && access(cmd, F_OK) == 0 && access(cmd,
-// 			X_OK) == 0)
-// 		update_shell_level(1);
-// 	if (handle_system_path_cmd(cmd, args, envp) != 0)
-// 		return (-1);
-// 	if (handle_absolute_path_cmd(cmd, args, envp) != 0)
-// 		return (-1);
-// 	printf("command not found\n");
-// 	return (-1);
-// }
 
 int exec_path(char *cmd, char **args, char **envp)
 {
