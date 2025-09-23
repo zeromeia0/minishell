@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:44:52 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/23 12:24:25 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/23 13:05:18 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@
 
 int handle_non_slash_commands(char *cmd, char **args, char **envp)
 {
+	printf("TRING TO COME HERE 3\n");
+
 	if (access(cmd, F_OK) != 0)
 	{
 		my_ffprintf(cmd, "command not found\n");
@@ -76,11 +78,13 @@ int handle_non_slash_commands(char *cmd, char **args, char **envp)
 
 int	handle_absolute_path_cmd(char *cmd, char **args, char **envp)
 {
+	printf("TRING TO COME HERE 2\n");
+	
 	if (strchr(cmd, '/'))
 	{
 		if (access(cmd, F_OK) != 0)
 		{
-			my_ffprintf(cmd, "No such file or directory\n");
+			my_ffprintf(cmd, "No such file or directory 1\n");
 			exit(127);
 		}
 		else
@@ -89,12 +93,11 @@ int	handle_absolute_path_cmd(char *cmd, char **args, char **envp)
 			{
 				prepare_for_exec();
 				execve(cmd, args, envp);
-				printf("dos\n");
 				perror(cmd);
 				exit (1);
 			}
 			else
-				my_ffprintf(cmd, "Permission denied 3\n");
+				my_ffprintf(cmd, "Permission denied 3\n"), exit(1);
 		}
 	}
 	else
@@ -105,11 +108,19 @@ int	handle_absolute_path_cmd(char *cmd, char **args, char **envp)
 int	handle_system_path_cmd_aux(char *cmd, char **args, char **envp)
 {
 	char	*new_args[3];
-
-	if (access(cmd, F_OK) == 0)
+	printf("TRING TO COME HERE\n");
+	if (access(cmd, F_OK) != 0)
 	{
+		my_ffprintf(cmd, "No such file or directory 2\n");
+		exit(126);
+	}
+	else
+	{
+		printf("am i comming here 1\n");
 		if (access(cmd, X_OK) == 0)
 		{
+			printf("should be here\n");
+			
 			prepare_for_exec();
 			execve(cmd, args, envp);
 			if (errno == ENOEXEC)
@@ -120,11 +131,16 @@ int	handle_system_path_cmd_aux(char *cmd, char **args, char **envp)
 				prepare_for_exec();
 				execve(new_args[0], new_args, envp);
 			}
-			perror(cmd);
-			exit(1);
+			// perror(cmd);
+			// exit(1);
 		}
 		else
+		{
+			
+			my_ffprintf(cmd, "Permission denied\n");
 			exit(1);
+		}
+		printf("am i comming here 2\n");
 	}
 	return (0);
 }
@@ -144,15 +160,27 @@ int	handle_system_path_cmd(char *cmd, char **args, char **envp)
 	return (0);
 }
 
-int		exec_path(char *cmd, char **args, char **envp)
+// int		exec_path(char *cmd, char **args, char **envp)
+// {
+// 	if (am_i_truly_myself(args[0]) && access(cmd, F_OK) == 0 && access(cmd,
+// 			X_OK) == 0)
+// 		update_shell_level(1);
+// 	if (handle_system_path_cmd(cmd, args, envp) != 0)
+// 		return (-1);
+// 	if (handle_absolute_path_cmd(cmd, args, envp) != 0)
+// 		return (-1);
+// 	printf("command not found\n");
+// 	return (-1);
+// }
+
+int exec_path(char *cmd, char **args, char **envp)
 {
-	if (am_i_truly_myself(args[0]) && access(cmd, F_OK) == 0 && access(cmd,
-			X_OK) == 0)
-		update_shell_level(1);
-	if (handle_system_path_cmd(cmd, args, envp) != 0)
-		return (-1);
-	if (handle_absolute_path_cmd(cmd, args, envp) != 0)
-		return (-1);
-	printf("command not found\n");
-	return (-1);
+    if (am_i_truly_myself(args[0]) && access(cmd, F_OK) == 0 && access(cmd, X_OK) == 0)
+        update_shell_level(1);
+    if (strchr(cmd, '/'))
+        return handle_absolute_path_cmd(cmd, args, envp);
+    if (is_system_path_command(cmd, envp))
+        return exec_system_path(cmd, args, envp);
+    my_ffprintf(cmd, "command not found\n");
+    return -1;
 }

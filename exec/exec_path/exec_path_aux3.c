@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:41:23 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/22 19:58:36 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/23 12:55:39 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	exec_system_path_aux_aux(char *full_path, char **args, char **envp)
 		return (-1);
 	}
 	else
-		return (perror("permission denied 1"), -1);
+		return (perror("permission denied"), -1);
 }
 
 int	exec_system_path_aux2(char *cmd, char **args, char **envp,
