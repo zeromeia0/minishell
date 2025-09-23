@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:19:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/23 14:16:46 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/23 22:43:43 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,18 @@ void	execute_child(t_cmds *cmd, int first_fd, int fd[2], char **env)
 	int		status;
 
 	setup_child_fds(first_fd, fd, cmd);
+	
+	if (has_redir(cmd))
+		exec_redirections(cmd);
 	cleaned_cmd = array_to_exec(cmd);
+	
+	if (!cleaned_cmd || !cleaned_cmd[0])
+	{
+		write(2, "cmd is empty\n", 14);
+		free_matrix(cleaned_cmd);
+		exit(127); // Command not found
+	}
+	
 	if (is_builtin(cleaned_cmd[0]))
 	{
 		status = exec_builtin(cleaned_cmd[0], cleaned_cmd, env);
@@ -49,7 +60,7 @@ void	execute_child(t_cmds *cmd, int first_fd, int fd[2], char **env)
 	{
 		exec_path(cleaned_cmd[0], cleaned_cmd, env);
 		free_matrix(cleaned_cmd);
-		exit(1);
+		exit(127); // Command not found
 	}
 }
 
@@ -84,25 +95,84 @@ static int	process_command(t_cmds **cmd, int *first_fd, char **env)
 	return (0);
 }
 
+int	has_heredocs(t_cmds *cmd)
+{
+	t_infile *in = cmd->infiles;
+	while (in)
+	{
+		if (ft_strcmp(in->token, "<<") == 0)
+			return (1);
+		in = in->next;
+	}
+	return (0);
+}
+int	process_command_heredocs(t_cmds *cmd)
+{
+	int		p[2];
+	pid_t	pid;
+	int		status;
+
+	if (pipe(p) == -1)
+		return (perror("pipe"), -1);
+	
+	pid = fork();
+	if (pid == 0)
+	{
+		close(p[0]);
+		signal(SIGINT, handle_heredoc);
+		process_all_heredocs(cmd->infiles, p);
+		close(p[1]);
+		exit(0);
+	}
+	else
+	{
+		close(p[1]);
+		waitpid(pid, &status, 0);
+		close(p[0]); // We don't use the output for now
+		
+		if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
+			return (-1);
+	}
+	return (0);
+}
+
 int	exec_pipes(t_cmds *cmd, char **env)
 {
-	int	first_fd;
-	int	status;
+	int		first_fd;
+	int		status;
+	t_cmds	*current;
 
+	// Process ALL heredocs for ALL commands in the pipe first
+	current = cmd;
+	while (current)
+	{
+		if (has_heredocs(current))
+		{
+			if (process_command_heredocs(current) < 0)
+				return (-1);
+		}
+		current = current->next;
+	}
+
+	// Now set up and execute the pipes
 	first_fd = -1;
 	if (!cmd || cmd->cmd[0] == NULL)
 		return (0);
-	while (cmd)
+	
+	current = cmd;
+	while (current)
 	{
-		if (process_command(&cmd, &first_fd, env) == -1)
+		if (process_command(&current, &first_fd, env) == -1)
 			return (-1);
 	}
+	
 	while (wait(&status) > 0)
 		;
+	
 	if (WIFEXITED(status))
 		btree()->exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 		btree()->exit_status = 128 + WTERMSIG(status);
-	btree()->exit_status = 15;
+	
 	return (btree()->exit_status);
 }
