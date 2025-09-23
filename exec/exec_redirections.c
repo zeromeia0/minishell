@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirections.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:08:05 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/23 13:31:58 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/23 22:21:31 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,23 +50,38 @@ static int	exec_single_left(t_infile *in)
 	return (0);
 }
 
-static int	exec_double_left(t_infile *in, t_cmds *cmd)
+static int exec_double_left(t_infile *in, t_cmds *cmd)
 {
-	int	p[2];
+    int p[2];
+    pid_t pid;
+    int status;
 
-	if (cmd->cmd)
-	{
-		if (pipe(p) == -1)
-			return (perror("pipe"), -1);
-		get_here_doc(in->file, p);
-		if (dup2(p[0], STDIN_FILENO) < 0)
-			return (perror("dup2"), close(p[0]), -1);
-		close(p[0]);
-		close(p[1]);
-	}
-	else
-		get_here_doc(in->file, NULL);
-	return (0);
+    if (pipe(p) == -1)
+        return (perror("pipe"), -1);
+    pid = fork();
+    if (pid == 0)
+    {
+        close(p[0]);
+        signal(SIGINT, handle_heredoc);
+        process_all_heredocs(cmd->infiles, p);
+        close(p[1]);
+        exit(0);
+    }
+    else
+    {
+        close(p[1]);
+        waitpid(pid, &status, 0);
+        
+        if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
+        {
+            close(p[0]);
+            return (-1);
+        }
+        if (dup2(p[0], STDIN_FILENO) < 0)
+            return (perror("dup2"), close(p[0]), -1);
+        close(p[0]);
+    }
+    return (0);
 }
 
 static int	exec_out_redirections(t_outfile *out)

@@ -9,61 +9,124 @@
 	}
 } */
 
-void get_here_doc(char *eof, int fd[2])
+
+int count_heredocs(t_infile *in)
+{
+    int count = 0;
+    while (in)
+    {
+        if (ft_strcmp(in->token, "<<") == 0)
+            count++;
+        in = in->next;
+    }
+    return count;
+}
+
+void get_single_heredoc(char *eof, int fd[2])
 {
     char *str;
     char *delimiter = remove_aspas(eof);
     int len = ft_strlen(delimiter);
+    int tty_fd;
 
-	if (btree()->global_signal == 130)
-		exit(130);
-	signal(SIGINT, handle_heredoc);
-	signal(SIGQUIT, handle_quit);
+    if (btree()->global_signal == 130)
+        exit(130);
+    
+    // Ensure we read from terminal for each heredoc
+    tty_fd = open("/dev/tty", O_RDONLY);
+    if (tty_fd != -1)
+    {
+        dup2(tty_fd, STDIN_FILENO);
+        close(tty_fd);
+    }
+    
+    signal(SIGINT, handle_heredoc);
+    signal(SIGQUIT, handle_quit);
+    
     str = readline("> ");
     while (str && ft_strncmp(str, delimiter, len + 1))
     {
         if (fd)
         {
-            char *expanded = expand(str, 0, 0, 1);  // expand input
+            char *expanded = expand(str, 0, 0, 1);
             write(fd[1], expanded, ft_strlen(expanded));
             write(fd[1], "\n", 1);
-
             if (expanded != str)
                 free(expanded);
         }
         free(str);
-		if (btree()->global_signal == 130)
-			exit(130);
+        
+        if (btree()->global_signal == 130)
+            exit(130);
         str = readline("> ");
     }
+    
+    if (!str) // Ctrl+D was pressed
+    {
+        fprintf(stderr, "warning: here-document delimited by end-of-file (wanted `%s')\n", delimiter);
+    }
+    
     free(str);
     free(delimiter);
-
-    if (fd)
-        close(fd[1]);
 }
 
-void discard_heredoc(t_infile *infiles)
+void process_heredoc_recursive(t_infile *current, int fd[2], int heredocs_remaining)
 {
-	char *str;
-    while (infiles)
-    {
-        if (ft_strcmp(infiles->token, "<<") == 0)
-        {
-            char *delimiter = remove_aspas(infiles->file);
-            int len = ft_strlen(delimiter);
-            str = readline("> ");
-            while (str && ft_strncmp(str, delimiter, len + 1))
-            {
-                free(str);
-                str = readline("> ");
-            }
-            free(str);
-            free(delimiter);
-        }
-        infiles = infiles->next;
-    }
+    if (!current || heredocs_remaining <= 0)
+        return;
+    
+    // Find the next heredoc
+    while (current && ft_strcmp(current->token, "<<") != 0)
+        current = current->next;
+    
+    if (!current)
+        return;
+    
+    // Process this heredoc
+    get_single_heredoc(current->file, fd);
+    
+    // Recursively process the next heredoc
+    process_heredoc_recursive(current->next, fd, heredocs_remaining - 1);
 }
+void process_all_heredocs(t_infile *in, int fd[2])
+{
+    int total_heredocs = count_heredocs(in);
+    process_heredoc_recursive(in, fd, total_heredocs);
+}
+
+// void get_here_doc(char *eof, int fd[2])
+// {
+//     char *str;
+//     char *delimiter = remove_aspas(eof);
+//     int len = ft_strlen(delimiter);
+
+// 	if (btree()->global_signal == 130)
+// 		exit(130);
+// 	signal(SIGINT, handle_heredoc);
+// 	signal(SIGQUIT, handle_quit);
+//     str = readline("> ");
+//     while (str && ft_strncmp(str, delimiter, len + 1))
+//     {
+//         if (fd)
+//         {
+//             char *expanded = expand(str, 0, 0, 1);  // expand input
+//             write(fd[1], expanded, ft_strlen(expanded));
+//             write(fd[1], "\n", 1);
+
+//             if (expanded != str)
+//                 free(expanded);
+//         }
+//         free(str);
+// 		if (btree()->global_signal == 130)
+// 			exit(130);
+//         str = readline("> ");
+//     }
+//     free(str);
+//     free(delimiter);
+
+//     if (fd)
+//         close(fd[1]);
+// }
 
 void	single_error_msg(char wc)
 {
