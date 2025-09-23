@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/22 17:25:49 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/23 11:34:09 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <stdio.h>
 # include <sys/stat.h>
 # include <termios.h>
+# include <signal.h>
 
 typedef struct s_wild
 {
@@ -78,7 +79,8 @@ typedef struct s_binary
 	int						right_ret;
 	char					*print_cmd;
 	int						subshell_ret;
-	int				global_signal;
+	int					global_signal;
+	int					exit_status;
 	char					**mat;
 	t_os_envs				*os_env;
 	char					**env;

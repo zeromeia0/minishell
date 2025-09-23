@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/22 21:45:21 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/23 12:26:32 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,12 @@ int	exec_single_cmd(t_cmds *cmd)
 	else
 	{
 		signal(SIGINT, set_to_onethirty);
-		waitpid(pid, &status, 0);
-		signal(SIGINT, handle_sigint);
-		return (WEXITSTATUS(status));
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		btree()->exit_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		btree()->exit_status = 126;
+	return (btree()->exit_status);
 	}
 	return (1);
 }
@@ -62,7 +65,11 @@ static int	exec_subshell(t_binary *subshell)
 	if (pid == 0)
 		exit(exec_tree(subshell));
 	waitpid(pid, &status, 0);
-	return (WEXITSTATUS(status));
+	if (WIFEXITED(status))
+		btree()->exit_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		btree()->exit_status = 128 + WTERMSIG(status);
+	return (btree()->exit_status);
 }
 
 int	exec_node(t_binary *node)

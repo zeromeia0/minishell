@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:44:52 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/22 22:00:23 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/23 12:24:25 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,23 +55,23 @@
 int handle_non_slash_commands(char *cmd, char **args, char **envp)
 {
 	if (access(cmd, F_OK) != 0)
+	{
+		my_ffprintf(cmd, "command not found\n");
+		exit(127);
+	}
+	else
+	{
+		if (access(cmd, X_OK) == 0)
 		{
-			my_ffprintf(cmd, "command not found\n");
-			exit(1);
+			prepare_for_exec();
+			execve(cmd, args, envp);
+			perror(cmd);
+			exit (127);
 		}
 		else
-		{
-			if (access(cmd, X_OK) == 0)
-			{
-				prepare_for_exec();
-				execve(cmd, args, envp);
-				perror(cmd);
-				exit (1);
-			}
-			else
-				my_ffprintf(cmd, "Permission denied 2\n");
-		}
-	exit(1);
+			my_ffprintf(cmd, "Permission denied 2\n");
+	}
+	exit(126);
 }
 
 int	handle_absolute_path_cmd(char *cmd, char **args, char **envp)
@@ -81,7 +81,7 @@ int	handle_absolute_path_cmd(char *cmd, char **args, char **envp)
 		if (access(cmd, F_OK) != 0)
 		{
 			my_ffprintf(cmd, "No such file or directory\n");
-			exit(1);
+			exit(127);
 		}
 		else
 		{

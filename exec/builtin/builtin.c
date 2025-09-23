@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:21:23 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/22 11:41:51 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/23 12:19:09 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,64 @@ int	builtin_echo(char **args)
 	return (0);
 }
 
-int	builtin_exit(char **args, char **envp)
-{
-	int	status;
+// int	builtin_exit(char **args, char **envp)
+// {
+// 	int	status;
 
-	status = 0;
-	if (args[1])
-		status = ft_atoi(args[1]);
-	update_shell_level(-1);
-	exit(status);
+// 	status = 0;
+// 	if (args[1])
+// 		status = ft_atoi(args[1]);
+// 	else if(btree()->global_signal)
+// 		status = btree()->global_signal;
+// 	else
+// 		status = btree()->exit_status;
+// 	update_shell_level(-1);
+// 	if (status > 255 || status < 0)
+// 		status = status % 255;
+// 	exit(status);
+// }
+
+int is_numeric(const char *s)
+{
+    int i = 0;
+
+    if (s[i] == '+' || s[i] == '-')
+        i++;
+    while (s[i])
+    {
+        if (!ft_isdigit(s[i]))
+            return (0);
+        i++;
+    }
+    return (1);
+}
+
+
+int builtin_exit(char **args, char **envp)
+{
+    long status;
+
+    (void)envp;
+    if (!args[1])
+    {
+        if (btree()->global_signal)
+            status = btree()->global_signal;
+        else
+            status = btree()->exit_status;
+        update_shell_level(-1);
+        exit((unsigned char)status);
+    }
+    if (!is_numeric(args[1]))
+    {
+		my_ffprintf(args[1], "numeric argument required");
+        update_shell_level(-1);
+        exit(127);
+    }
+    if (args[2])
+        return (ft_putstr_fd("minishell: exit: too many arguments", 2), 1);
+    status = ft_atol(args[1]);
+    update_shell_level(-1);
+    exit((unsigned char)status);
 }
 
 int	exec_builtin(char *cmd, char **args, char **envp)

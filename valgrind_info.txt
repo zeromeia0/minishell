@@ -3,30 +3,3 @@ ctrl d on here doc
 exit status here doc 130 shit
 
 how tf ls works without path
-
-* <-- why entering minishell??
-
-
-vivaz-ca@c2r2s10:~/42_Cursus/minishell% ./minishell 
-minishell$ ls *
-Makefile   minishell.c	out2	   sigma_minishell.h
-minishell  out		README.md  valgrind_info.txt
-
-exec:
-builtin		     exec_redirections_tokenization.c  my_libft
-exec_path	     exec_tree.c		       pipex
-exec_pipes.c	     makefile			       signal_handler.c
-exec_redirections.c  minishell.h		       super_duper_hiper_free.c
-
-parse:
-binary_tree.c	get_pattern.c  struct_clear.c	   wildcards1.c
-check_syntax.c	jojo_libft     struct_new.c	   wildcards2.c
-env_lst.c	Makefile       syntax_error_msg.c  wildcards_aux1.c
-expansions.c	parsing.c      tokenization.c	   wildcards_aux2.c
-minishell$ pwd
-/home/vivaz-ca/42_Cursus/minishell
-minishell$ ls
-malloc(): unaligned fastbin chunk detected 3
-minishell$ 
-
-

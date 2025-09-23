@@ -16,7 +16,7 @@ void get_here_doc(char *eof, int fd[2])
     int len = ft_strlen(delimiter);
 
 	if (btree()->global_signal == 130)
-		exit(1);
+		exit(130);
 	signal(SIGINT, handle_heredoc);
     str = readline("> ");
     while (str && ft_strncmp(str, delimiter, len + 1))
@@ -32,7 +32,7 @@ void get_here_doc(char *eof, int fd[2])
         }
         free(str);
 		if (btree()->global_signal == 130)
-			exit(1);
+			exit(130);
         str = readline("> ");
     }
     free(str);

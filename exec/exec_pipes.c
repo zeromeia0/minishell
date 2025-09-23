@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:19:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/22 16:47:08 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/23 11:30:27 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,9 @@ int	exec_pipes(t_cmds *cmd, char **env)
 	}
 	while (wait(&status) > 0)
 		;
-	return (WEXITSTATUS(status));
+	if (WIFEXITED(status))
+		btree()->exit_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		btree()->exit_status = 128 + WTERMSIG(status);
+	return (btree()->exit_status);
 }
