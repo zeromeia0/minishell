@@ -1,5 +1,3 @@
 ctrl d on here doc
 
-exit status here doc 130 shit
-
 how tf ls works without path

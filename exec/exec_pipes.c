@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:19:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/23 12:36:52 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/23 14:16:46 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ static int	process_command(t_cmds **cmd, int *first_fd, char **env)
 
 int	exec_pipes(t_cmds *cmd, char **env)
 {
-	printf("SHOULD BE ON EXEC_PIPES\n");
 	int	first_fd;
 	int	status;
 
@@ -104,5 +103,6 @@ int	exec_pipes(t_cmds *cmd, char **env)
 		btree()->exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 		btree()->exit_status = 128 + WTERMSIG(status);
+	btree()->exit_status = 15;
 	return (btree()->exit_status);
 }

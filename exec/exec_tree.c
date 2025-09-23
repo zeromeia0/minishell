@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/23 12:26:32 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/23 14:01:47 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	exec_single_cmd(t_cmds *cmd)
 	if (WIFEXITED(status))
 		btree()->exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
-		btree()->exit_status = 126;
+		btree()->exit_status = 130;
 	return (btree()->exit_status);
 	}
 	return (1);

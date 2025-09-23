@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:41:23 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/23 12:55:39 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/23 14:19:38 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int	exec_system_path_aux1(char **envp, char ***paths_to_search)
 {
 	*paths_to_search = split_path(envp);
 	if (!*paths_to_search)
-		return (write(2, "PATH not found\n", 15), -1);
+		{write(2, "PATH not found\n", 15);
+		exit(0);}
 	return (0);
 }
 

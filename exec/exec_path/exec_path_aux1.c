@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:36:54 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/23 12:54:46 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/23 14:17:08 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	is_system_path_command(char *cmd, char **envp)
 		access_result = check_path_access(paths_to_search[i], cmd);
 		if (access_result == -1)
 		{
+			printf("RESULT 1\n");
 			free_matrix(paths_to_search);
 			return (-1);
 		}
@@ -88,7 +89,5 @@ int	is_system_path_command(char *cmd, char **envp)
 		}
 		i++;
 	}
-	ft_print_matrix(paths_to_search);
-	free_matrix(paths_to_search);
-	return (0);
+	return (free_matrix(paths_to_search), 0);
 }

@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/23 11:34:09 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/23 14:09:27 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ char						**split_path(char **envp);
 t_binary					*btree(void);
 t_os_envs					**get_env_list(void);
 t_os_envs					*create_env_node(char *path);
+void						handle_quit(int sig);
 
 // struct_clear.c
 void						binary_clear(t_binary *binary);

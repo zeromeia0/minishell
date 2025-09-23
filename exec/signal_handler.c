@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/23 12:05:32 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/23 14:12:10 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,14 @@ void	handle_heredoc(int sig)
 
 	close(0);
 	btree()->global_signal = 130;
+}
+
+void handle_quit(int sig)
+{
+	(void)sig;
+	printf("control d\n");
+	signal(SIGQUIT, SIG_IGN);
+	close(0);
 }
 
 int restart_signals(void)

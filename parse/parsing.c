@@ -18,6 +18,7 @@ void get_here_doc(char *eof, int fd[2])
 	if (btree()->global_signal == 130)
 		exit(130);
 	signal(SIGINT, handle_heredoc);
+	signal(SIGQUIT, handle_quit);
     str = readline("> ");
     while (str && ft_strncmp(str, delimiter, len + 1))
     {
