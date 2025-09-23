@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:08:05 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/23 22:30:33 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/23 22:51:35 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,18 +55,16 @@ static int exec_double_left(t_infile *in, t_cmds *cmd)
     int p[2];
     pid_t pid;
     int status;
-    static int already_processed = 0;
 
-    if (already_processed)
-        return (0);
     if (pipe(p) == -1)
         return (perror("pipe"), -1);
+    
     pid = fork();
     if (pid == 0)
     {
         close(p[0]);
         signal(SIGINT, handle_heredoc);
-        process_all_heredocs(cmd->infiles, p);  // Process ALL heredocs
+        process_all_heredocs(cmd->infiles, p);
         close(p[1]);
         exit(0);
     }
@@ -75,16 +73,20 @@ static int exec_double_left(t_infile *in, t_cmds *cmd)
         close(p[1]);
         waitpid(pid, &status, 0);
         
+        // Restore normal signal handling in parent
+        signal(SIGINT, handle_sigint);
+        
         if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
         {
             close(p[0]);
+            btree()->global_signal = 130;
+            write(1, "\n", 1);  // Print newline for interrupted heredoc
             return (-1);
         }
+        
         if (dup2(p[0], STDIN_FILENO) < 0)
             return (perror("dup2"), close(p[0]), -1);
         close(p[0]);
-        
-        already_processed = 1;  // Mark as processed
     }
     return (0);
 }

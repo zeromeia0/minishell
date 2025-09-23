@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:19:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/23 22:43:43 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/23 22:52:36 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	execute_child(t_cmds *cmd, int first_fd, int fd[2], char **env)
 		free_matrix(cleaned_cmd);
 		exit(127); // Command not found
 	}
-	
 	if (is_builtin(cleaned_cmd[0]))
 	{
 		status = exec_builtin(cleaned_cmd[0], cleaned_cmd, env);
@@ -149,7 +148,11 @@ int	exec_pipes(t_cmds *cmd, char **env)
 		if (has_heredocs(current))
 		{
 			if (process_command_heredocs(current) < 0)
-				return (-1);
+			{
+				btree()->exit_status = 130;
+				write(1, "\n", 1);
+				return (btree()->exit_status);
+			}
 		}
 		current = current->next;
 	}

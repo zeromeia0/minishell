@@ -40,7 +40,7 @@ void get_single_heredoc(char *eof, int fd[2])
     }
     
     signal(SIGINT, handle_heredoc);
-    signal(SIGQUIT, handle_quit);
+    signal(SIGQUIT, SIG_IGN);  // Ignore SIGQUIT in heredoc
     
     str = readline("> ");
     while (str && ft_strncmp(str, delimiter, len + 1))
@@ -60,7 +60,8 @@ void get_single_heredoc(char *eof, int fd[2])
         str = readline("> ");
     }
     
-    if (!str) // Ctrl+D was pressed
+    // Only print warning if we reached EOF (Ctrl+D), not if interrupted by SIGINT
+    if (!str && btree()->global_signal != 130) 
     {
         fprintf(stderr, "warning: here-document delimited by end-of-file (wanted `%s')\n", delimiter);
     }
