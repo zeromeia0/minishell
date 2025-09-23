@@ -9,7 +9,6 @@
 	}
 } */
 
-
 int count_heredocs(t_infile *in)
 {
     int count = 0;
@@ -70,29 +69,25 @@ void get_single_heredoc(char *eof, int fd[2])
     free(delimiter);
 }
 
-void process_heredoc_recursive(t_infile *current, int fd[2], int heredocs_remaining)
+void process_heredoc_recursive_simple(t_infile *current, int fd[2])
 {
-    if (!current || heredocs_remaining <= 0)
-        return;
-    
-    // Find the next heredoc
-    while (current && ft_strcmp(current->token, "<<") != 0)
-        current = current->next;
-    
     if (!current)
         return;
     
-    // Process this heredoc
-    get_single_heredoc(current->file, fd);
+    if (ft_strcmp(current->token, "<<") == 0)
+    {
+        get_single_heredoc(current->file, fd);
+    }
     
-    // Recursively process the next heredoc
-    process_heredoc_recursive(current->next, fd, heredocs_remaining - 1);
+    // Process next node (whether it's a heredoc or not)
+    process_heredoc_recursive_simple(current->next, fd);
 }
+
 void process_all_heredocs(t_infile *in, int fd[2])
 {
-    int total_heredocs = count_heredocs(in);
-    process_heredoc_recursive(in, fd, total_heredocs);
+    process_heredoc_recursive_simple(in, fd);
 }
+
 
 // void get_here_doc(char *eof, int fd[2])
 // {

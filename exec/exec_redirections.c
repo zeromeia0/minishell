@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:08:05 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/23 22:21:31 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/23 22:30:33 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ static int exec_double_left(t_infile *in, t_cmds *cmd)
     int p[2];
     pid_t pid;
     int status;
+    static int already_processed = 0;
 
+    if (already_processed)
+        return (0);
     if (pipe(p) == -1)
         return (perror("pipe"), -1);
     pid = fork();
@@ -63,7 +66,7 @@ static int exec_double_left(t_infile *in, t_cmds *cmd)
     {
         close(p[0]);
         signal(SIGINT, handle_heredoc);
-        process_all_heredocs(cmd->infiles, p);
+        process_all_heredocs(cmd->infiles, p);  // Process ALL heredocs
         close(p[1]);
         exit(0);
     }
@@ -80,6 +83,8 @@ static int exec_double_left(t_infile *in, t_cmds *cmd)
         if (dup2(p[0], STDIN_FILENO) < 0)
             return (perror("dup2"), close(p[0]), -1);
         close(p[0]);
+        
+        already_processed = 1;  // Mark as processed
     }
     return (0);
 }
@@ -114,7 +119,23 @@ int	exec_redirections(t_cmds *cmd)
 {
 	t_infile	*in;
 	t_outfile	*out;
+	int			has_heredocs = 0;
 
+	in = cmd->infiles;
+	while (in)
+	{
+		if (ft_strcmp(in->token, "<<") == 0)
+		{
+			has_heredocs = 1;
+			break;
+		}
+		in = in->next;
+	}
+	if (has_heredocs)
+	{
+		if (exec_double_left(cmd->infiles, cmd) < 0)  // Pass the whole list
+			return (-1);
+	}
 	in = cmd->infiles;
 	while (in)
 	{
@@ -123,15 +144,13 @@ int	exec_redirections(t_cmds *cmd)
 			if (exec_single_left(in) < 0)
 				return (-1);
 		}
-		else if (ft_strcmp(in->token, "<<") == 0)
-		{
-			if (exec_double_left(in, cmd) < 0)
-				return (-1);
-		}
 		in = in->next;
 	}
+
+	// Process output redirections
 	out = cmd->outfiles;
 	if (exec_out_redirections(out) < 0)
 		return (-1);
+	
 	return (0);
 }
