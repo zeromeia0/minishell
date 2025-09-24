@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:39:31 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 13:29:06 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/24 14:38:19 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,16 @@ char	*get_env_var(char *name, char **envp)
 	return (NULL);
 }
 
-
-
-int	am_i_truly_myself(const char *cmd)
+int am_i_truly_myself(const char *cmd)
 {
-	char	*real;
-	char	*self;
-	int		result;
-
-	real = my_realpath(cmd, NULL); //i think i can't use realpath
-	self = my_realpath("/proc/self/exe", NULL); //tf is this
-	result = real && self && strcmp(real, self) == 0;
-	free(real);
-	free(self);
-	return (result);
+    struct stat cmd_stat, self_stat;
+    
+    if (stat(cmd, &cmd_stat) == -1)
+        return (0);
+    if (stat("/proc/self/exe", &self_stat) == -1)
+        return (0);
+    return (cmd_stat.st_dev == self_stat.st_dev && 
+            cmd_stat.st_ino == self_stat.st_ino);
 }
 
 void	my_ffprintf(char *cmd, char *which_message)

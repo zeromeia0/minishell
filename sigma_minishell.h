@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 11:10:02 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/24 14:35:04 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ t_os_envs					*create_env_node(char *path);
 void						handle_quit(int sig);
 void process_all_heredocs(t_infile *in, int fd[2]);
 int is_numeric(const char *s);
+char	*my_realpath(const char *path, char *resolved_path);
 
 // struct_clear.c
 void						binary_clear(t_binary *binary);
