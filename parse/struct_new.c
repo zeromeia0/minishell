@@ -39,6 +39,7 @@ t_cmds	*cmds_new(t_outfile *outfile, t_infile *infile, char **cmd)
 	new->outfiles = outfile;
 	new->infiles = infile;
 	new->next = NULL;
+	new->expanded = 0;
 	return (new);
 }
 

@@ -49,7 +49,6 @@ char	*expand_aux(char *str, int ind, int count, char *temp)
 	if (temp == NULL)
 		return (btree()->type = ERROR, free (str), NULL);
 	env_var = find_os_env(btree()->os_env, temp, count);
-	// printf( "we found %s\n", env_var);
 	free(temp);
 	if (env_var == NULL)
 		env_var = ft_calloc(1, 1);
@@ -63,7 +62,26 @@ char	*expand_aux(char *str, int ind, int count, char *temp)
 		return (btree()->type = ERROR, free (str), NULL);
 	str[ind] = '\0';
 	str = ft_strjoin_free(str, temp, 0);
-	// str = ft_strjoin(str, temp);
+	if (str == NULL)
+		return (btree()->type = ERROR, NULL);
+	return (expand(str, 0, 0, 1));
+}
+
+char	*expand_last_exit(char *str, int ind, char *temp)
+{
+	char	*env_var;
+
+	env_var = ft_itoa(btree()->exit_status);
+	if (env_var == NULL)
+		return (btree()->type = ERROR, free (str), NULL);
+	temp = ft_strdup(str + ind + 2);
+	if (temp == NULL)
+		return (btree()->type = ERROR,free (env_var), free (str), NULL);
+	temp = ft_strjoin_free(env_var, temp, 0);
+	if (temp == NULL)
+		return (btree()->type = ERROR, free (str), NULL);
+	str[ind] = '\0';
+	str = ft_strjoin_free(str, temp, 0);
 	if (str == NULL)
 		return (btree()->type = ERROR, NULL);
 	return (expand(str, 0, 0, 1));
@@ -85,7 +103,7 @@ char    *expand(char *str, int ind, int count, int flag)
         {
             count++;
             if (str[ind + 1] == '?')
-                return (expand_aux(str, ind, 2, NULL));
+                return (expand_last_exit(str, ind, NULL));
             while (ft_isalnum((str + ind)[count]) || (str + ind)[count] == '_')
                 count++;
             return (expand_aux(str, ind, count, NULL));
