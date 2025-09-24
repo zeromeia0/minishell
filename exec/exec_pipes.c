@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:19:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 09:50:51 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/24 12:42:54 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ static int	process_command(t_cmds *cmd, int *first_fd, char **env)
 		close(fd[1]);
 		*first_fd = fd[0];
 	}
-	cmd = (cmd)->next;
 	return (0);
 }
 
@@ -150,7 +149,7 @@ int	exec_pipes(t_cmds *cmd, char **env)
 				return (btree()->exit_status);
 			}
 		}
-		current = current->next;
+		current = current->next;  // ← ADD THIS LINE
 	}
 	if (btree()->global_signal == 130)
 		return (130);
@@ -162,9 +161,11 @@ int	exec_pipes(t_cmds *cmd, char **env)
 	{
 		if (process_command(current, &first_fd, env) == -1)
 			return (-1);
+		current = current->next;  // ← ADD THIS LINE
 	}
 	while (wait(&status) > 0)
 		;
+	
 	if (WIFEXITED(status))
 		btree()->exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))

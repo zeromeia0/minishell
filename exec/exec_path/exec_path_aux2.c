@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:39:31 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 09:34:32 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/24 12:43:30 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ char	*get_env_var(char *name, char **envp)
 	}
 	return (NULL);
 }
+
 
 int	am_i_truly_myself(const char *cmd)
 {
