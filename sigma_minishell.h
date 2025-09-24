@@ -6,7 +6,7 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 19:07:19 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/09/24 19:08:02 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,6 @@ int			find_pipe(char **mat);
 // check_syntax.c
 int			check_syntax(char **mat, t_token tokens);
 
-//
 int			parsing_strlen(char *str, t_token tokens, char **sep);
 int			word_count(char *str, t_token tokens, char **sep);
 
