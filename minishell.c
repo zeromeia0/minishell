@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:54:32 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 11:26:30 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/24 15:22:37 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,5 +110,9 @@ int	main(int argc, char *argv[], char **envp)
 		}
 	}
 	free_matrix(btree()->env);
+	if (btree()->global_signal)
+		exit_status = btree()->global_signal;
+	else
+		exit_status = btree()->exit_status;
 	return (clear_env_list(), printf("Closing Minishell\n"), btree()->exit_status);
 }

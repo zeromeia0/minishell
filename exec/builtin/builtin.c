@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:21:23 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 11:20:21 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/24 15:21:52 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ int	builtin_echo(char **args)
 int is_numeric(const char *s)
 {
     int i = 0;
-
+	if (!s)
+		return (1);
     if (s[i] == '+' || s[i] == '-')
         i++;
     while (s[i])
