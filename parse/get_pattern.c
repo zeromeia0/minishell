@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_pattern.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/24 19:02:01 by namejojo          #+#    #+#             */
+/*   Updated: 2025/09/24 19:02:02 by namejojo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../sigma_minishell.h"
 
 int	find_pipe(char **mat)
 {
-	int ind;
+	int	ind;
 
 	ind = 0;
 	while (mat[ind] && ft_strncmp(mat[ind], "|", 2))
@@ -57,7 +69,6 @@ t_outfile	*get_outfile(char **mat)
 	if (btree()->type == ERROR || mat == NULL || *mat == NULL)
 		return (NULL);
 	ind = 0;
-	// test if we really need ft_strncmp(mat[ind], "|", 2), I dont think we do
 	while (mat[ind] && ft_strncmp(mat[ind], "|", 2) && output_comp(mat[ind]))
 		ind++;
 	if (mat[ind] == NULL || ft_strncmp(mat[ind], "|", 2) == 0)

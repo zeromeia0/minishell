@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokenization.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/24 18:56:20 by namejojo          #+#    #+#             */
+/*   Updated: 2025/09/24 19:00:25 by namejojo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../sigma_minishell.h"
 
 int	find_tokens(char *str, t_token tokens)
@@ -13,8 +25,8 @@ static int	word_count_aux(int ind, char *str, t_token tokens, char **sep)
 {
 	char	*sep_found;
 
-	while (find_tokens(str + ind, tokens) == 0 && str[ind] && \
-		(str[ind] != ' ' && str[ind] != '\t' && str[ind] != '\n'))
+	while (find_tokens(str + ind, tokens) == 0 && str[ind]
+		&& (str[ind] != ' ' && str[ind] != '\t' && str[ind] != '\n'))
 	{
 		sep_found = ft_matnstr(sep, str + ind, 1);
 		if (sep_found && ++ind)
@@ -33,41 +45,39 @@ static int	word_count_aux(int ind, char *str, t_token tokens, char **sep)
 
 int	word_count(char *str, t_token tokens, char **sep)
 {
-	int		ind;
-	int		count;
+	int		i;
+	int		cnt;
 	int		token_found;
 
-	ind = 0;
-	count = 0;
-	while (str[ind])
+	i = 0;
+	cnt = 0;
+	while (str[i])
 	{
-		while (str[ind] == ' ' || str[ind] == '\t' || str[ind] == '\n')
-			ind++;
-		if (str[ind] == '\0')
-			return (count);
-		token_found = find_tokens(str + ind, tokens);
+		while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n')
+			i++;
+		if (str[i] == '\0')
+			return (cnt);
+		token_found = find_tokens(str + i, tokens);
 		if (token_found)
 		{
-			count++;
-			ind += token_found;
+			cnt++;
+			i += token_found;
 		}
-		else if (find_tokens(str + ind, tokens) == 0 && str[ind] && \
-			(str[ind] != ' ' && str[ind] != '\t' && str[ind] != '\n') && ++count)
-			ind = word_count_aux( ind, str, tokens, sep);
-		if (ind < 0)
-			return (ind);
+		else if (find_tokens(str + i, tokens) == 0 && str[i]
+			&& (str[i] != ' ' && str[i] != '\t' && str[i] != '\n') && ++cnt)
+			i = word_count_aux(i, str, tokens, sep);
+		if (i < 0)
+			return (i);
 	}
-	return (count);
+	return (cnt);
 }
 
 // echo $USER "$USER" '$USER' "'$USER'" '"$USER"'
-int parsing_strlen_aux(int ind, char *str, t_token tokens, char **sep)
+int	parsing_strlen_aux(int ind, char *str, t_token tokens, char **sep)
 {
 	char	*sep_found;
-	
-	// printf("we found here\n");
-	// fflush(stdout);
-	while (find_tokens(str + ind, tokens) == 0 && str[ind] \
+
+	while (find_tokens(str + ind, tokens) == 0 && str[ind]
 		&& (str[ind] != ' ' && str[ind] != '\t' && str[ind] != '\n'))
 	{
 		sep_found = ft_matnstr(sep, str + ind, 1);
@@ -88,19 +98,19 @@ int parsing_strlen_aux(int ind, char *str, t_token tokens, char **sep)
 			ind++;
 	}
 	return (ind);
-} 
+}
 
 int	parsing_strlen(char *str, t_token tokens, char **sep)
 {
-	int		ind;
-	int		token_found;
+	int	ind;
+	int	token_found;
 
-	ind  = 0;
+	ind = 0;
 	token_found = find_tokens(str + ind, tokens);
 	if (token_found)
 		return (token_found);
-	else if (find_tokens(str + ind, tokens) == 0 \
-		&& str[ind] && (str[ind] != ' ' && str[ind] != '\t' && str[ind] != '\n'))
+	else if (find_tokens(str + ind, tokens) == 0 && str[ind]
+		&& (str[ind] != ' ' && str[ind] != '\t' && str[ind] != '\n'))
 		return (parsing_strlen_aux(ind, str, tokens, sep));
 	return (0);
 }

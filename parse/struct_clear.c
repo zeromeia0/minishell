@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   struct_clear.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/24 18:56:07 by namejojo          #+#    #+#             */
+/*   Updated: 2025/09/24 19:01:51 by namejojo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../sigma_minishell.h"
 #include "jojo_libft/libft.h"
@@ -26,8 +37,6 @@ void	cmds_clear(t_cmds *cmds)
 	cmds->next = NULL;
 	outfile_clear(cmds->outfiles);
 	infile_clear(cmds->infiles);
-	// ft_print_matrix(cmds->cmd);
-	// printf("%d\n", cmds->expanded);
 	if (cmds->expanded)
 		free_matrix(cmds->cmd);
 	else

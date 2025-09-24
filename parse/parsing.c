@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/24 19:03:05 by namejojo          #+#    #+#             */
+/*   Updated: 2025/09/24 19:05:16 by namejojo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../sigma_minishell.h"
 
 /* void	print_wild(t_wild *head)
@@ -9,129 +21,84 @@
 	}
 } */
 
-int count_heredocs(t_infile *in)
+int	count_heredocs(t_infile *in)
 {
-    int count = 0;
-    while (in)
-    {
-        if (ft_strcmp(in->token, "<<") == 0)
-            count++;
-        in = in->next;
-    }
-    return count;
+	int	count = 0;
+	while (in)
+	{
+		if (ft_strcmp(in->token, "<<") == 0)
+			count++;
+		in = in->next;
+	}
+	return count;
 }
 
 void get_single_heredoc(char *eof, int fd[2])
 {
-    char *str;
-    char *delimiter = remove_aspas(eof);
-    int len = ft_strlen(delimiter);
-    int tty_fd;
+	char *str;
+	char *delimiter = remove_aspas(eof);
+	int len = ft_strlen(delimiter);
+	int tty_fd;
 
-    if (btree()->global_signal == 130)
-        exit(130);
-    
-    // Ensure we read from terminal for each heredoc
-    tty_fd = open("/dev/tty", O_RDONLY);
-    if (tty_fd != -1)
-    {
-        dup2(tty_fd, STDIN_FILENO);
-        close(tty_fd);
-    }
-    
-    signal(SIGINT, handle_heredoc);
-    signal(SIGQUIT, SIG_IGN);  // Ignore SIGQUIT in heredoc
-    
-    str = readline("> ");
-    while (str && ft_strncmp(str, delimiter, len + 1))
-    {
-        if (fd)
-        {
-            char *expanded = expand(str, 0, 0, 1);
-            write(fd[1], expanded, ft_strlen(expanded));
-            write(fd[1], "\n", 1);
-            if (expanded != str)
-                free(expanded);
-        }
-        free(str);
-        
-        if (btree()->global_signal == 130)
-            exit(130);
-        str = readline("> ");
-    }
-    
-    // Only print warning if we reached EOF (Ctrl+D), not if interrupted by SIGINT
-    if (!str && btree()->global_signal != 130) 
-    {
-        fprintf(stderr, "warning: here-document delimited by end-of-file (wanted `%s')\n", delimiter);
-    }
-    
-    free(str);
-    free(delimiter);
+	if (btree()->global_signal == 130)
+		exit(130);
+		
+	// Ensure we read from terminal for each heredoc
+	tty_fd = open("/dev/tty", O_RDONLY);
+	if (tty_fd != -1)
+	{
+		dup2(tty_fd, STDIN_FILENO);
+		close(tty_fd);
+	}
+		
+	signal(SIGINT, handle_heredoc);
+	signal(SIGQUIT, SIG_IGN);  // Ignore SIGQUIT in heredoc
+		
+	str = readline("> ");
+	while (str && ft_strncmp(str, delimiter, len + 1))
+	{
+		if (fd)
+		{
+			char *expanded = expand(str, 0, 0, 1);
+			write(fd[1], expanded, ft_strlen(expanded));
+			write(fd[1], "\n", 1);
+			if (expanded != str)
+				free(expanded);
+		}
+		free(str);
+		
+		if (btree()->global_signal == 130)
+			exit(130);
+		str = readline("> ");
+	}
+		
+	// Only print warning if we reached EOF (Ctrl+D), not if interrupted by SIGINT
+	if (!str && btree()->global_signal != 130) 
+	{
+		fprintf(stderr, "warning: here-document delimited by end-of-file (wanted `%s')\n", delimiter);
+	}
+		
+	free(str);
+	free(delimiter);
 }
 
-void process_heredoc_recursive_simple(t_infile *current, int fd[2])
+void	process_heredoc_recursive_simple(t_infile *current, int fd[2])
 {
-    if (!current)
-        return;
-    
-    if (ft_strcmp(current->token, "<<") == 0)
-    {
-        get_single_heredoc(current->file, fd);
-    }
-    
-    // Process next node (whether it's a heredoc or not)
-    process_heredoc_recursive_simple(current->next, fd);
+	if (!current)
+		return ;
+	if (ft_strcmp(current->token, "<<") == 0)
+	{
+		get_single_heredoc(current->file, fd);
+	}
+	process_heredoc_recursive_simple(current->next, fd);
 }
 
-void process_all_heredocs(t_infile *in, int fd[2])
+void	process_all_heredocs(t_infile *in, int fd[2])
 {
-    process_heredoc_recursive_simple(in, fd);
+	process_heredoc_recursive_simple(in, fd);
 }
 
-
-// void get_here_doc(char *eof, int fd[2])
-// {
-//     char *str;
-//     char *delimiter = remove_aspas(eof);
-//     int len = ft_strlen(delimiter);
-
-// 	if (btree()->global_signal == 130)
-// 		exit(130);
-// 	signal(SIGINT, handle_heredoc);
-// 	signal(SIGQUIT, handle_quit);
-//     str = readline("> ");
-//     while (str && ft_strncmp(str, delimiter, len + 1))
-//     {
-//         if (fd)
-//         {
-//             char *expanded = expand(str, 0, 0, 1);  // expand input
-//             write(fd[1], expanded, ft_strlen(expanded));
-//             write(fd[1], "\n", 1);
-
-//             if (expanded != str)
-//                 free(expanded);
-//         }
-//         free(str);
-// 		if (btree()->global_signal == 130)
-// 			exit(130);
-//         str = readline("> ");
-//     }
-//     free(str);
-//     free(delimiter);
-
-//     if (fd)
-//         close(fd[1]);
-// }
-
-void	single_error_msg(char wc)
-{
-	ft_putstr_fd("syntax error near unexpected token: `", 2);
-	write(1, &wc, 1);
-	ft_putstr_fd("'\n", 2);
-}
-
-char **tokenization(char *str, t_token tokens, char **sep, int wc)
+char	**tokenization(char *str, t_token tokens, char **sep, int wc)
 {
 	int		ind;
 	int		strcount;
@@ -139,14 +106,9 @@ char **tokenization(char *str, t_token tokens, char **sep, int wc)
 
 	if (wc < 0)
 		return (single_error_msg(-wc), NULL);
-		// return (printf( "\nUnclosed |%c|\n", -wc), NULL);
-	// QUANDO COLOCAS SINGLE QUOTES PROGRAMA NAO ENTRA NO > INPUT
-
-
-	// printf( "\nwords in the input ->|%d|\n", wc);
 	ret = malloc(sizeof(char *) * (wc + 1));
 	if (ret == NULL)
-		return (NULL); // CLOSE PROGRAM INSTEAD OF RETURN NULL WHEN WE FIND MEMORY ERRORS?
+		return (NULL);
 	ret[wc] = NULL;
 	ind = -1;
 	while (++ind < wc)
@@ -158,13 +120,13 @@ char **tokenization(char *str, t_token tokens, char **sep, int wc)
 		strcount = parsing_strlen(str, tokens, sep);
 		ret[ind] = ft_strndup(str, strcount);
 		if (ret[ind] == NULL)
-			return (ft_free_matrix(ret), NULL); // CLOSE PROGRAM INSTEAD OF RETURN NULL WHEN WE FIND MEMORY ERRORS?
+			return (ft_free_matrix(ret), NULL);
 		str += strcount;
 	}
  	return (ret);
 }
 
-void init_tree(char	**mat)
+void	init_tree(char	**mat)
 {
 	btree()->sublvl = 0;
 	btree()->type = EMPTY;
@@ -213,9 +175,6 @@ int	parsing(char *str)
 		mat = tokenization(str, tokens, sep, word_count(str, tokens, sep));
 	if (mat == NULL)
 		return (1);
-	// printf( "printing matrix\n");
-	// ft_print_matrix(mat);
-	// printf( "done printing matrix\n");
 	if (check_syntax(mat, tokens))
 		return (1);
 	init_tree(mat);
