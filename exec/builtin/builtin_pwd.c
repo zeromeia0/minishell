@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:22:16 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 11:20:52 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/24 11:25:58 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	exec_single_cmd_aux(t_cmds *cmd)
 		return (btree()->exit_status);
 	if (ft_strncmp(cmd->cmd[0], "exit", 4) == 0)
 	{
-		env_array = list_to_char(*get_env_list()); //no checker?
+		env_array = list_to_char(*get_env_list());
 		status = exec_builtin(cmd->cmd[0], cmd->cmd, env_array);
 		free_matrix(env_array);
 		// free(env_array);

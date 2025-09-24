@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:54:32 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 09:19:26 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/24 11:26:30 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ int	main(int argc, char *argv[], char **envp)
 	initialize_stuff(argc, argv, envp);
 	while (1)
 	{
-		// printf("%d\n", getpid());	
 		input = readline("minishell$ ");
 		if (!input)
 			break ;
