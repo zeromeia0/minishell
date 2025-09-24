@@ -6,11 +6,12 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:08:05 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 09:59:55 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/24 22:56:21 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../sigma_minishell.h"
+#include <signal.h>
 #include <stdio.h>
 
 char	**array_to_exec(t_cmds *cmd)
@@ -50,36 +51,38 @@ static int	exec_single_left(t_infile *in)
 	return (0);
 }
 
-static int exec_double_left(t_infile *in, t_cmds *cmd)
+void pid_equal_zero_double(t_cmds *cmd, int p[2])
 {
-    int p[2];
-    pid_t pid;
-    int status;
+	close(p[0]);
+	signal(SIGINT, handle_heredoc);
+	process_all_heredocs(cmd->infiles, p);
+	close(p[1]);
+	exit(0);
+}
+static int	exec_double_left(t_infile *in, t_cmds *cmd)
+{
+	int		p[2];
+	pid_t	pid;
+	int		status;
 
-    if (pipe(p) == -1)
-        return (perror("pipe"), -1);
-    pid = fork();
-    if (pid == 0)
-    {
-        close(p[0]);
-        signal(SIGINT, handle_heredoc);
-        process_all_heredocs(cmd->infiles, p);
-        close(p[1]);
-        exit(0);
-    }
-    else
-    {
-        close(p[1]);
-        signal(SIGINT, SIG_IGN);
-        waitpid(pid, &status, 0);
-        restart_signals();
-        if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
-            return (close(p[0]), btree()->global_signal = 130, -1);
-        if (dup2(p[0], STDIN_FILENO) < 0)
-            return (perror("dup2"), close(p[0]), -1);
-        close(p[0]);
-    }
-    return (0);
+	if (pipe(p) == -1)
+		return (perror("pipe"), -1);
+	pid = fork();
+	if (pid == 0)
+		pid_equal_zero_double(cmd, p);
+	else
+	{
+		close(p[1]);
+		signal(SIGINT, SIG_IGN);
+		waitpid(pid, &status, 0);
+		restart_signals();
+		if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
+			return (close(p[0]), btree()->global_signal = 130, -1);
+		if (dup2(p[0], STDIN_FILENO) < 0)
+			return (perror("dup2"), close(p[0]), -1);
+		close(p[0]);
+	}
+	return (0);
 }
 
 static int	exec_out_redirections(t_outfile *out)
@@ -112,15 +115,16 @@ int	exec_redirections(t_cmds *cmd)
 {
 	t_infile	*in;
 	t_outfile	*out;
-	int			has_heredocs = 0;
+	int			has_heredocs;
 
+	has_heredocs = 0;
 	in = cmd->infiles;
 	while (in)
 	{
 		if (ft_strcmp(in->token, "<<") == 0)
 		{
 			has_heredocs = 1;
-			break;
+			break ;
 		}
 		in = in->next;
 	}
