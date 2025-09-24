@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:19:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 09:42:53 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/24 09:50:51 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,24 +71,24 @@ int	setup_pipe(t_cmds *cmd, int *first_fd, int fd[2])
 	return (0);
 }
 
-static int	process_command(t_cmds **cmd, int *first_fd, char **env)
+static int	process_command(t_cmds *cmd, int *first_fd, char **env)
 {
 	int		fd[2];
 	pid_t	pid;
 
-	if (setup_pipe(*cmd, first_fd, fd) == -1)
+	if (setup_pipe(cmd, first_fd, fd) == -1)
 		return (-1);
 	pid = fork();
 	if (pid == 0)
-		execute_child(*cmd, *first_fd, fd, env);
+		execute_child(cmd, *first_fd, fd, env);
 	if (*first_fd != -1)
 		close(*first_fd);
-	if ((*cmd)->next != NULL)
+	if ((cmd)->next != NULL)
 	{
 		close(fd[1]);
 		*first_fd = fd[0];
 	}
-	*cmd = (*cmd)->next;
+	cmd = (cmd)->next;
 	return (0);
 }
 
@@ -107,7 +107,7 @@ int	process_command_heredocs(t_cmds *cmd)
 {
 	int		p[2];
 	pid_t	pid;
-	int		status;
+	int		status; //can't i just get rid of it?
 
 	if (pipe(p) == -1)
 		return (perror("pipe"), -1);
@@ -124,7 +124,7 @@ int	process_command_heredocs(t_cmds *cmd)
 	{
 		close(p[1]);
 		signal(SIGINT, SIG_IGN);
-		waitpid(pid, &status, 0);
+		waitpid(pid, &status, 0); //watch out for this line  nigga
 		restart_signals();
 		close(p[0]);
 		if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
@@ -139,7 +139,6 @@ int	exec_pipes(t_cmds *cmd, char **env)
 	int		status;
 	t_cmds	*current;
 
-	// Process ALL heredocs for ALL commands in the pipe first
 	current = cmd;
 	while (current)
 	{
@@ -147,37 +146,28 @@ int	exec_pipes(t_cmds *cmd, char **env)
 		{
 			if (process_command_heredocs(current) < 0)
 			{
-				// Heredoc was interrupted - don't execute commands
 				btree()->exit_status = 130;
 				return (btree()->exit_status);
 			}
 		}
 		current = current->next;
 	}
-
-	// Only proceed if no heredoc was interrupted
 	if (btree()->global_signal == 130)
 		return (130);
-
-	// Now set up and execute the pipes
 	first_fd = -1;
 	if (!cmd || cmd->cmd[0] == NULL)
 		return (0);
-	
 	current = cmd;
 	while (current)
 	{
-		if (process_command(&current, &first_fd, env) == -1)
+		if (process_command(current, &first_fd, env) == -1)
 			return (-1);
 	}
-	
 	while (wait(&status) > 0)
 		;
-	
 	if (WIFEXITED(status))
 		btree()->exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 		btree()->exit_status = 128 + WTERMSIG(status);
-	
 	return (btree()->exit_status);
 }

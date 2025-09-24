@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:08:05 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 08:49:11 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/24 09:59:55 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ static int exec_double_left(t_infile *in, t_cmds *cmd)
 
     if (pipe(p) == -1)
         return (perror("pipe"), -1);
-    
     pid = fork();
     if (pid == 0)
     {
@@ -71,17 +70,11 @@ static int exec_double_left(t_infile *in, t_cmds *cmd)
     else
     {
         close(p[1]);
-        signal(SIGINT, SIG_IGN); // Ignore SIGINT while waiting for heredoc
+        signal(SIGINT, SIG_IGN);
         waitpid(pid, &status, 0);
-        restart_signals(); // Restore normal signal handling
-        
+        restart_signals();
         if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
-        {
-            close(p[0]);
-            btree()->global_signal = 130;
-            return (-1);
-        }
-        
+            return (close(p[0]), btree()->global_signal = 130, -1);
         if (dup2(p[0], STDIN_FILENO) < 0)
             return (perror("dup2"), close(p[0]), -1);
         close(p[0]);
@@ -133,7 +126,7 @@ int	exec_redirections(t_cmds *cmd)
 	}
 	if (has_heredocs)
 	{
-		if (exec_double_left(cmd->infiles, cmd) < 0)  // Pass the whole list
+		if (exec_double_left(cmd->infiles, cmd) < 0)
 			return (-1);
 	}
 	in = cmd->infiles;
@@ -146,11 +139,8 @@ int	exec_redirections(t_cmds *cmd)
 		}
 		in = in->next;
 	}
-
-	// Process output redirections
 	out = cmd->outfiles;
 	if (exec_out_redirections(out) < 0)
 		return (-1);
-	
 	return (0);
 }
