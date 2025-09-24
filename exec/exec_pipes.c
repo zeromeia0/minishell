@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:19:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 12:42:54 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/24 15:03:43 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	setup_child_fds(int first_fd, int fd[2], t_cmds *cmd)
 	}
 	if (first_fd != -1)
 		close(first_fd);
-}
+} //explain this hit
 
 void	execute_child(t_cmds *cmd, int first_fd, int fd[2], char **env)
 {

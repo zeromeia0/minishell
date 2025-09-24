@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:39:31 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 14:38:19 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/24 15:03:19 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*get_env_var(char *name, char **envp)
 
 int am_i_truly_myself(const char *cmd)
 {
-    struct stat cmd_stat, self_stat;
+    struct stat cmd_stat, self_stat; //come here again to review stat
     
     if (stat(cmd, &cmd_stat) == -1)
         return (0);

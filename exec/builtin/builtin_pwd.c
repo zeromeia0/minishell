@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:22:16 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 11:25:58 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/24 14:47:49 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int deal_with_bad_exit(t_cmds *cmd)
         ft_putstr_fd("exit: too many arguments\n", 2);
         return 0;
     }
-    if (ft_strncmp(cmd->cmd[0], "exit", 4) == 0 && !is_numeric(cmd->cmd[1]))
+    if (ft_strncmp(cmd->cmd[0], "exit", 4) == 0 && cmd->cmd[1] && !is_numeric(cmd->cmd[1]))
     {
         btree()->exit_status = 2;
         my_ffprintf(cmd->cmd[0], "numeric argument required\n");
