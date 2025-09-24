@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:08:05 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 22:56:21 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/24 23:08:15 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	**array_to_exec(t_cmds *cmd)
 	return (new_argv);
 }
 
-static int	exec_single_left(t_infile *in)
+int	exec_single_left(t_infile *in)
 {
 	int	fd;
 
@@ -51,15 +51,7 @@ static int	exec_single_left(t_infile *in)
 	return (0);
 }
 
-void pid_equal_zero_double(t_cmds *cmd, int p[2])
-{
-	close(p[0]);
-	signal(SIGINT, handle_heredoc);
-	process_all_heredocs(cmd->infiles, p);
-	close(p[1]);
-	exit(0);
-}
-static int	exec_double_left(t_infile *in, t_cmds *cmd)
+int	exec_double_left(t_infile *in, t_cmds *cmd)
 {
 	int		p[2];
 	pid_t	pid;
@@ -85,7 +77,7 @@ static int	exec_double_left(t_infile *in, t_cmds *cmd)
 	return (0);
 }
 
-static int	exec_out_redirections(t_outfile *out)
+int	exec_out_redirections(t_outfile *out)
 {
 	int	fd;
 	int	flags;
@@ -113,38 +105,9 @@ static int	exec_out_redirections(t_outfile *out)
 
 int	exec_redirections(t_cmds *cmd)
 {
-	t_infile	*in;
-	t_outfile	*out;
-	int			has_heredocs;
-
-	has_heredocs = 0;
-	in = cmd->infiles;
-	while (in)
-	{
-		if (ft_strcmp(in->token, "<<") == 0)
-		{
-			has_heredocs = 1;
-			break ;
-		}
-		in = in->next;
-	}
-	if (has_heredocs)
-	{
-		if (exec_double_left(cmd->infiles, cmd) < 0)
-			return (-1);
-	}
-	in = cmd->infiles;
-	while (in)
-	{
-		if (ft_strcmp(in->token, "<") == 0)
-		{
-			if (exec_single_left(in) < 0)
-				return (-1);
-		}
-		in = in->next;
-	}
-	out = cmd->outfiles;
-	if (exec_out_redirections(out) < 0)
+	if (handle_heredocs(cmd) < 0)
+		return (-1);
+	if (handle_regular_redirections(cmd) < 0)
 		return (-1);
 	return (0);
 }

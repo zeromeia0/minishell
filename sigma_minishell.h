@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 22:05:02 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/24 23:23:45 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,16 @@ int	make_update_env(const char *str);
 size_t	get_env_key_length(const char *str);
 int	make_update_env_aux(t_os_envs **env_list, const char *str,
 		size_t len);
+int	handle_heredocs(t_cmds *cmd);
+int	handle_regular_redirections(t_cmds *cmd);
+void	pid_equal_zero_double(t_cmds *cmd, int p[2]);
+int	exec_single_left(t_infile *in);
+int exec_out_redirections(t_outfile *out);
+int	exec_double_left(t_infile *in, t_cmds *cmd);
+void	buildup_new_args(char *cmd, char **envp);
+int	handle_absolute_path_cmd(char *cmd, char **args, char **envp);
+int	handle_slash_command(char *cmd, char **args, char **envp);
+int	handle_non_slash_commands(char *cmd, char **args, char **envp);
 
 // struct_clear.c
 void						binary_clear(t_binary *binary);

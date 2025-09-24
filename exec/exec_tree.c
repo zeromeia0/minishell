@@ -46,12 +46,12 @@ int	exec_single_cmd(t_cmds *cmd)
 	else
 	{
 		signal(SIGINT, set_to_onethirty);
-	waitpid(pid, &status, 0);
-	if (WIFEXITED(status))
-		btree()->exit_status = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-		btree()->exit_status = 130;
-	return (btree()->exit_status);
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			btree()->exit_status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			btree()->exit_status = 130;
+		return (btree()->exit_status);
 	}
 	return (1);
 }
