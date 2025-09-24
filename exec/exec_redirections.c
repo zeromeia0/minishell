@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:08:05 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/23 22:51:35 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/24 08:49:11 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,16 +71,14 @@ static int exec_double_left(t_infile *in, t_cmds *cmd)
     else
     {
         close(p[1]);
+        signal(SIGINT, SIG_IGN); // Ignore SIGINT while waiting for heredoc
         waitpid(pid, &status, 0);
-        
-        // Restore normal signal handling in parent
-        signal(SIGINT, handle_sigint);
+        restart_signals(); // Restore normal signal handling
         
         if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
         {
             close(p[0]);
             btree()->global_signal = 130;
-            write(1, "\n", 1);  // Print newline for interrupted heredoc
             return (-1);
         }
         

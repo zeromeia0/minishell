@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:02 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/22 11:49:12 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/24 09:18:46 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,23 @@ void	free_env_list(t_os_envs *head)
 		free_env_list(head);
 		head = temp;
 	}
+}
+
+void	clear_env_list(void)
+{
+	t_os_envs	**env_list;
+	t_os_envs	*current;
+	t_os_envs	*next;
+
+	env_list = get_env_list();
+	current = *env_list;
+	while (current)
+	{
+		next = current->next;
+		free(current->linux_envs);
+		free(current->temp_vars);
+		free(current);
+		current = next;
+	}
+	*env_list = NULL;
 }

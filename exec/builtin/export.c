@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 23:57:32 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/22 17:17:53 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/24 09:32:38 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,19 +96,17 @@ int	builtin_export(char **args)
 
 	i = 0;
 	if (!args[1])
-		return (print_env_list(), 0);
+		return (export_print_env_list(), 0);
 	while (args[i])
 	{
 		if (!strchr(args[i], '='))
 		{
-			add_temp_var(args[i]);
+			add_temp_var(args[i]); //maybe i can fix the bug here
 			i++;
 			continue ;
 		}
 		if (make_update_env(args[i]) < 0)
-		{
 			return (perror("minishell: export"), 0);
-		}
 		i++;
 	}
 	return (0);

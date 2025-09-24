@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:17:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/22 16:43:06 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/24 09:10:17 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../sigma_minishell.h"
-
-static char	*pwd_update_aux(const char *oldpwd, const char *target)
-{
-	char	*newpwd;
-	char	*slash;
-
-	newpwd = ft_strdup(oldpwd);
-	if (!newpwd)
-		return (NULL);
-	slash = ft_strrchr(newpwd, '/');
-	if (slash && slash != newpwd)
-		*slash = '\0';
-	else
-		*(slash + 1) = '\0';
-	return (newpwd);
-}
 
 char	*builtin_cd_aux(char **args)
 {
@@ -45,12 +29,14 @@ char	*builtin_cd_aux(char **args)
 			return (my_ffprintf(target, "cd: OLDPWD not set\n"), NULL);
 		printf("%s\n", target);
 	}
+	else if(args[2])
+		return(my_ffprintf(args[0], "too many arguments\n"), NULL);
 	else
 		target = args[1];
 	return (target);
 }
 
-static char	*another_auxiliary(char *oldpwd, char *target)
+static char	*pwd_updater(char *oldpwd, char *target)
 {
 	char	*newpwd;
 
@@ -61,7 +47,7 @@ static char	*another_auxiliary(char *oldpwd, char *target)
 		free(newpwd);
 	}
 	else
-		ft_putstr_fd("cd: failed to update PWD\n", 2);
+		ft_putstr_fd("cd: failed to update PWD\n", 2); //maybe i should add a check here?
 	return (newpwd);
 }
 
@@ -82,6 +68,6 @@ int	builtin_cd(char **args)
 	if (getcwd(buf, sizeof(buf)) != NULL)
 		update_env_var("PWD=", buf);
 	else
-		another_auxiliary(oldpwd, target);
+		pwd_updater(oldpwd, target); // why tf did I put this here?
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/23 22:21:21 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/24 09:20:08 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int							add_new_env_var(t_os_envs **env_list,
 int							exec_single_cmd_aux(t_cmds *cmd);
 bool						is_n_flag(const char *arg);
 void						init_tree(char **mat);
-void						print_env_list(void);
+void						export_print_env_list(void);
 void						free_matrix(char **table);
 void						builtin_env(char **env);
 void						initialize_pwd(char **envp);
@@ -132,7 +132,7 @@ void						handle_sigint(int sig);
 void						update_env_var(const char *key, const char *value);
 void						discard_heredoc(t_infile *infiles);
 void						init_shell_meta(void);
-void						enhanced_sort_wild_vini_goat(t_os_envs *envs);
+void						enhanced_sorted_stoled_from_jlima(t_os_envs *envs);
 void						my_ffprintf(char *cmd, char *which_message);
 void						expand_args(t_cmds *cmd);
 void						prepare_for_exec(void);

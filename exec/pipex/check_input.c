@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 08:22:04 by jlima-so          #+#    #+#             */
-/*   Updated: 2025/09/23 13:14:51 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/24 09:36:53 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	check_all_cmd(int ac, char **av, char **env)
 		else if (value == -1)
 		{
 			ft_putstr_fd(av[ind], 2);
-			ft_putstr_fd(": command not found 3\n", 2);
+			ft_putstr_fd(": command not found\n", 2);
 		}
 	}
 }

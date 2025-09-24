@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:19:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/23 22:52:36 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/24 09:42:53 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,10 @@ void	execute_child(t_cmds *cmd, int first_fd, int fd[2], char **env)
 	if (has_redir(cmd))
 		exec_redirections(cmd);
 	cleaned_cmd = array_to_exec(cmd);
-	
 	if (!cleaned_cmd || !cleaned_cmd[0])
 	{
-		write(2, "cmd is empty\n", 14);
 		free_matrix(cleaned_cmd);
-		exit(127); // Command not found
+		exit(127);
 	}
 	if (is_builtin(cleaned_cmd[0]))
 	{
@@ -59,7 +57,7 @@ void	execute_child(t_cmds *cmd, int first_fd, int fd[2], char **env)
 	{
 		exec_path(cleaned_cmd[0], cleaned_cmd, env);
 		free_matrix(cleaned_cmd);
-		exit(127); // Command not found
+		exit(127);
 	}
 }
 
@@ -113,7 +111,6 @@ int	process_command_heredocs(t_cmds *cmd)
 
 	if (pipe(p) == -1)
 		return (perror("pipe"), -1);
-	
 	pid = fork();
 	if (pid == 0)
 	{
@@ -126,11 +123,12 @@ int	process_command_heredocs(t_cmds *cmd)
 	else
 	{
 		close(p[1]);
+		signal(SIGINT, SIG_IGN);
 		waitpid(pid, &status, 0);
-		close(p[0]); // We don't use the output for now
-		
+		restart_signals();
+		close(p[0]);
 		if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
-			return (-1);
+			return (btree()->exit_status = 130, -1);
 	}
 	return (0);
 }
@@ -149,13 +147,17 @@ int	exec_pipes(t_cmds *cmd, char **env)
 		{
 			if (process_command_heredocs(current) < 0)
 			{
+				// Heredoc was interrupted - don't execute commands
 				btree()->exit_status = 130;
-				write(1, "\n", 1);
 				return (btree()->exit_status);
 			}
 		}
 		current = current->next;
 	}
+
+	// Only proceed if no heredoc was interrupted
+	if (btree()->global_signal == 130)
+		return (130);
 
 	// Now set up and execute the pipes
 	first_fd = -1;

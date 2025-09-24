@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_path_aux2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:39:31 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/22 18:19:15 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/24 09:34:32 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	prepare_for_exec(void)
 	}
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-}
+} //explain why I need this function
 
 char	*get_env_var(char *name, char **envp)
 {
@@ -32,7 +32,7 @@ char	*get_env_var(char *name, char **envp)
 	len = strlen(name);
 	while (envp[i])
 	{
-		if (strncmp(envp[i], name, len) == 0 && envp[i][len] == '=')
+		if (ft_strncmp(envp[i], name, len) == 0 && envp[i][len] == '=')
 			return (envp[i] + len + 1);
 		i++;
 	}
@@ -45,7 +45,7 @@ int	am_i_truly_myself(const char *cmd)
 	char	*self;
 	int		result;
 
-	real = realpath(cmd, NULL);
+	real = realpath(cmd, NULL); //i think i can't use realpath
 	self = realpath("/proc/self/exe", NULL);
 	result = real && self && strcmp(real, self) == 0;
 	free(real);

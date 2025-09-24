@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/23 22:53:14 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/24 08:48:22 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,16 @@
 void	handle_sigint(int sig)
 {
 	(void)sig;
-	// printf("HANDLE SIGINT\n");
 	btree()->exit_status = 130;
-	btree()->global_signal = 0;
+	btree()->global_signal = 130;
 	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	
+	if (btree()->global_signal != 131)
+	{
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }
 void set_to_onethirty(int sig)
 {
@@ -35,10 +38,9 @@ void set_to_onethirty(int sig)
 void	handle_heredoc(int sig)
 {
 	(void)sig;
-	// printf("HANDLE heredoc\n");
-	
-	signal(SIGINT, SIG_DFL);
 	btree()->global_signal = 130;
+	btree()->exit_status = 130;
+	write(1, "\n", 1); // Ensure newline is written
 	exit(130);
 }
 

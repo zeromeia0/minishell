@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_aux2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:01:02 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/22 21:58:48 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/24 09:23:01 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ void	free_asterisc(char **mat)
 		if (ft_strchr(mat[ind], '*'))
 			free(mat[ind]);
 	}
-	
 }
 
 void	expand_args(t_cmds *cmd)
@@ -92,11 +91,6 @@ void	expand_args(t_cmds *cmd)
 		return ;
 	temp = cmd->cmd;
 	mat = wildcards(temp, 0, 0);
-/* 	printf("\t\tmat\n");
-	ft_print_matrix(mat);
-	printf("\t\ttemp\n");
-	ft_print_matrix(temp);
-	printf("\t\tover\n"); */
 	cmd->expanded = (temp != mat);
 	if (temp != mat)
 		free_matrix_nodes(temp);

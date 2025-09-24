@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:11:26 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/21 23:31:14 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/24 09:26:59 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,7 @@ void	add_node_to_list(t_os_envs **env_list, t_os_envs *new_node)
 	t_os_envs	*last;
 
 	if (*env_list == NULL)
-	{
 		*env_list = new_node;
-	}
 	else
 	{
 		last = *env_list;

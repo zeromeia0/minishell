@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:54:32 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/23 12:15:59 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/24 09:19:26 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static void	initialize_stuff(int argc, char *argv[], char **envp)
 		update_shell_level(1);
 	btree()->env = list_to_char(*get_env_list());
 	btree()->os_env = *get_env_list();
-	enhanced_sort_wild_vini_goat(btree()->os_env);
+	enhanced_sorted_stoled_from_jlima(btree()->os_env);
 }
 
 int	main(int argc, char *argv[], char **envp)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:21:23 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/23 12:19:09 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/24 09:16:39 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	is_builtin(char *cmd)
 {
 	if (!cmd)
-		return (write(2, "cmd is empty\n", 14), 0);
+		return (0);
 	if (ft_strncmp(cmd, "cd", 2) == 0)
 		return (1);
 	else if (ft_strncmp(cmd, "pwd", 3) == 0)
@@ -65,23 +65,6 @@ int	builtin_echo(char **args)
 	return (0);
 }
 
-// int	builtin_exit(char **args, char **envp)
-// {
-// 	int	status;
-
-// 	status = 0;
-// 	if (args[1])
-// 		status = ft_atoi(args[1]);
-// 	else if(btree()->global_signal)
-// 		status = btree()->global_signal;
-// 	else
-// 		status = btree()->exit_status;
-// 	update_shell_level(-1);
-// 	if (status > 255 || status < 0)
-// 		status = status % 255;
-// 	exit(status);
-// }
-
 int is_numeric(const char *s)
 {
     int i = 0;
@@ -113,11 +96,7 @@ int builtin_exit(char **args, char **envp)
         exit((unsigned char)status);
     }
     if (!is_numeric(args[1]))
-    {
-		my_ffprintf(args[1], "numeric argument required");
-        update_shell_level(-1);
-        exit(127);
-    }
+		return (my_ffprintf(args[1], "numeric argument required"), 0);
     if (args[2])
         return (ft_putstr_fd("minishell: exit: too many arguments", 2), 1);
     status = ft_atol(args[1]);
