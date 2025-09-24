@@ -6,7 +6,7 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 19:09:07 by namejojo          #+#    #+#             */
-/*   Updated: 2025/09/24 19:09:22 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/09/24 20:18:58 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,61 +14,64 @@
 
 int	count_heredocs(t_infile *in)
 {
-	int	count = 0;
+	int	count;
+
+	count = 0;
 	while (in)
 	{
 		if (ft_strcmp(in->token, "<<") == 0)
 			count++;
 		in = in->next;
 	}
-	return count;
+	return (count);
 }
 
-void get_single_heredoc(char *eof, int fd[2])
+void	here_doc_loop(char *str, char *delimiter, int len, int *fd)
 {
-	char *str;
-	char *delimiter = remove_aspas(eof);
-	int len = ft_strlen(delimiter);
-	int tty_fd;
+	char	*expanded;
 
-	if (btree()->global_signal == 130)
-		exit(130);
-		
-	// Ensure we read from terminal for each heredoc
-	tty_fd = open("/dev/tty", O_RDONLY);
-	if (tty_fd != -1)
-	{
-		dup2(tty_fd, STDIN_FILENO);
-		close(tty_fd);
-	}
-		
-	signal(SIGINT, handle_heredoc);
-	signal(SIGQUIT, SIG_IGN);  // Ignore SIGQUIT in heredoc
-		
-	str = readline("> ");
 	while (str && ft_strncmp(str, delimiter, len + 1))
 	{
 		if (fd)
 		{
-			char *expanded = expand(str, 0, 0, 1);
+			expanded = expand(str, 0, 0, 1);
 			write(fd[1], expanded, ft_strlen(expanded));
 			write(fd[1], "\n", 1);
 			if (expanded != str)
 				free(expanded);
 		}
 		free(str);
-		
 		if (btree()->global_signal == 130)
 			exit(130);
 		str = readline("> ");
 	}
-		
-	// Only print warning if we reached EOF (Ctrl+D), not if interrupted by SIGINT
-	if (!str && btree()->global_signal != 130) 
+}
+
+void	get_single_heredoc(char *eof, int fd[2])
+{
+	char	*str;
+	char	*delimiter;
+	int		len;
+	int		tty_fd;
+
+	delimiter = remove_aspas(eof);
+	len = ft_strlen(delimiter);
+	if (btree()->global_signal == 130)
+		exit(130);
+	tty_fd = open("/dev/tty", O_RDONLY);
+	if (tty_fd != -1)
 	{
-		fprintf(stderr, "warning: here-document delimited by end-of-file (wanted `%s')\n", delimiter);
+		dup2(tty_fd, STDIN_FILENO);
+		close(tty_fd);
 	}
-		
+	signal(SIGINT, handle_heredoc);
+	signal(SIGQUIT, SIG_IGN);
+	str = readline("> ");
+	here_doc_loop(str, delimiter, len, fd);
+	if (!str && btree()->global_signal != 130)
+		fprintf(stderr,
+			"warning: here-document delimited by end-of-file (wanted `%s')\n",
+			delimiter);
 	free(str);
 	free(delimiter);
 }

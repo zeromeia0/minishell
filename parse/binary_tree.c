@@ -6,7 +6,7 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 18:55:31 by namejojo          #+#    #+#             */
-/*   Updated: 2025/09/24 18:55:54 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/09/24 20:20:18 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	separator_comp(char **mat, int flag, int ind, int pcount)
 {
 	if (flag == 1)
 	{
-		while (ind >= 0)
+		while (--ind >= 0)
 		{
 			if (ft_strncmp(mat[ind], ")", 2) == 0 && ++pcount && --ind >= 0)
 			{
@@ -49,10 +49,9 @@ int	separator_comp(char **mat, int flag, int ind, int pcount)
 			if (ind >= 0 && (ft_strncmp(mat[ind], "&&", 3) == 0
 					|| ft_strncmp(mat[ind], "||", 3) == 0))
 				return (ind);
-			ind--;
 		}
 	}
-	else
+	else if (--ind)
 		while (ind-- > 0)
 			if (ft_strncmp(mat[ind], "&", 2) == 0)
 				return (ind);
@@ -90,7 +89,7 @@ void	create_binary_tree(char **mat, int shlvl, t_binary *tree)
 
 	if (btree()->type == ERROR || mat == NULL || *mat == NULL)
 		return ;
-	sub = separator_comp(mat, 0, ft_matlen(mat) - 1, 0);
+	sub = separator_comp(mat, 0, ft_matlen(mat), 0);
 	if (sub)
 	{
 		free(mat[sub]);
@@ -148,7 +147,7 @@ void	*create_binary_lvl(char **mat, int id, t_binary *tree)
 		mat += 1;
 	if (btree()->type == ERROR)
 		return (NULL);
-	sep = separator_comp(mat, 1, ft_matlen(mat) - 1, 0);
+	sep = separator_comp(mat, 1, ft_matlen(mat), 0);
 	if (sep == 0)
 	{
 		tree->print_cmd = ft_join_matrix(mat, 0, 0, 0);

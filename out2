@@ -1,2 +1,0 @@
-export arg=e
-echo "M"*a*$arg | rev && echo were fine
