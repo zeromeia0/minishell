@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:39:31 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 12:43:30 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/24 13:29:06 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,15 @@ char	*get_env_var(char *name, char **envp)
 }
 
 
+
 int	am_i_truly_myself(const char *cmd)
 {
 	char	*real;
 	char	*self;
 	int		result;
 
-	real = realpath(cmd, NULL); //i think i can't use realpath
-	self = realpath("/proc/self/exe", NULL);
+	real = my_realpath(cmd, NULL); //i think i can't use realpath
+	self = my_realpath("/proc/self/exe", NULL); //tf is this
 	result = real && self && strcmp(real, self) == 0;
 	free(real);
 	free(self);
