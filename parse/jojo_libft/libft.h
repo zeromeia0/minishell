@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:02:51 by jlima-so          #+#    #+#             */
-/*   Updated: 2025/09/23 11:45:19 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/24 18:22:57 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	ft_ult_swap(char **p1, char **p2);
 void	ft_swap(char *p1, char *p2);
 int		ft_abs_strcmp(char *str1, char *str2);
 void	free_matrix_nodes(char **mat);
-char    *ft_join_matrix(char **mat, int indv, int ind, int total);
+char	*ft_join_matrix(char **mat, int indv, int ind, int total);
 long	ft_atol(const char *str);
 
 typedef struct s_list

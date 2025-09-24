@@ -6,9 +6,11 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 16:57:38 by namejojo          #+#    #+#             */
-/*   Updated: 2025/09/24 16:57:43 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/09/24 17:50:56 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../sigma_minishell.h"
 
 int	simple_syntax(char **mat)
 {

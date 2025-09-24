@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wildcards_aux2.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/24 18:34:05 by namejojo          #+#    #+#             */
+/*   Updated: 2025/09/24 18:34:15 by namejojo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../sigma_minishell.h"
 
 static int	check_end(char *big, char *little)
@@ -15,8 +27,8 @@ static int	check_end(char *big, char *little)
 
 void	remove_non_end(t_wild **head, char *end)
 {
-	t_wild *node;
-	t_wild *next;
+	t_wild	*node;
+	t_wild	*next;
 
 	while (*head && check_end((*head)->file, end))
 	{
@@ -70,8 +82,8 @@ void	remove_null(t_wild **head, t_wild *node, t_wild *next)
 
 void	remove_non_start(t_wild **head, char *start, int len)
 {
-	t_wild *node;
-	t_wild *next;
+	t_wild	*node;
+	t_wild	*next;
 
 	while (*head && ft_strnstr((*head)->file, start, len) == NULL)
 	{

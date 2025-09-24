@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wildcards1.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/24 18:33:14 by namejojo          #+#    #+#             */
+/*   Updated: 2025/09/24 18:33:29 by namejojo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../sigma_minishell.h"
 
 char	**expand_wildcards(char **mat, int count, char *empty_str, t_wild *head)
@@ -30,7 +42,7 @@ char	**expand_wildcards(char **mat, int count, char *empty_str, t_wild *head)
 
 char	**wildcards_aux(char **mat, int count, int flag)
 {
-	int 	ind;
+	int		ind;
 	char	ch;
 	char	**new;
 
@@ -47,7 +59,7 @@ char	**wildcards_aux(char **mat, int count, int flag)
 		{
 			new = expand_wildcards(mat, count, "\0", NULL);
 			count += ft_matlen(new) - ft_matlen(mat);
-			if (flag && new != mat) //revisit this edgecase
+			if (flag && new != mat)
 				free_matrix(mat);
 			return (wildcards(new, count + 1, flag + (new != mat)));
 		}

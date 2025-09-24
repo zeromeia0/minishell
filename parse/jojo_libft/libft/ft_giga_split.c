@@ -3,26 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_giga_split.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 13:50:55 by jlima-so          #+#    #+#             */
-/*   Updated: 2025/09/02 16:35:17 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/09/24 18:17:12 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
 static char	**ft_giga_split_aux(char *str, int count, int i, char c);
-
-
-static void	ft_free_all_split(char **mat)
-{
-	while (*mat != NULL)
-	{
-		free(*mat);
-		mat++;
-	}
-}
 
 static int	close_quotes(char *str, int i)
 {
@@ -57,7 +47,7 @@ static char	**end_loop(char *str, int i, int count, char c)
 		return (NULL);
 	ret[count] = ft_strndup(str, i);
 	if (ret[count] == NULL)
-		return (ft_free_all_split(ret + count + 1), free(ret), NULL);
+		return (free_matrix_nodes(ret + count + 1), free(ret), NULL);
 	return (ret);
 }
 
@@ -91,5 +81,5 @@ char	**ft_giga_split(char *str, char c)
 {
 	if (str == NULL)
 		return (NULL);
-	return (ft_giga_split_aux(str, 0, -1 , c));
+	return (ft_giga_split_aux(str, 0, -1, c));
 }

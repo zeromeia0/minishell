@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expansions.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/24 18:31:45 by namejojo          #+#    #+#             */
+/*   Updated: 2025/09/24 18:32:21 by namejojo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../sigma_minishell.h"
 
 char	*quote(char *str)
@@ -76,7 +88,7 @@ char	*expand_last_exit(char *str, int ind, char *temp)
 		return (btree()->type = ERROR, free (str), NULL);
 	temp = ft_strdup(str + ind + 2);
 	if (temp == NULL)
-		return (btree()->type = ERROR,free (env_var), free (str), NULL);
+		return (btree()->type = ERROR, free (env_var), free (str), NULL);
 	temp = ft_strjoin_free(env_var, temp, 0);
 	if (temp == NULL)
 		return (btree()->type = ERROR, free (str), NULL);
@@ -87,28 +99,29 @@ char	*expand_last_exit(char *str, int ind, char *temp)
 	return (expand(str, 0, 0, 1));
 }
 
-char    *expand(char *str, int ind, int count, int flag)
+char	*expand(char *str, int ind, int count, int flag)
 {
-    if (str == NULL)
-        return (btree()->type = ERROR, NULL);
-    ind = 0;
-    while (str[ind])
-    {
-        if (flag == 1 && str[ind] == '\'' && ++ind)
-            while (str[ind] != '\'')
-                ind++;
-        if (str[ind] == '\"')
-            flag = -flag;
-        if (str[ind] == '$' && (ft_isalnum(str[ind + 1]) || str[ind + 1] == '?' || str[ind + 1] == '_'))
-        {
-            count++;
-            if (str[ind + 1] == '?')
-                return (expand_last_exit(str, ind, NULL));
-            while (ft_isalnum((str + ind)[count]) || (str + ind)[count] == '_')
-                count++;
-            return (expand_aux(str, ind, count, NULL));
-        }
-        ind++;
-    }
-    return (str);
+	if (str == NULL)
+		return (btree()->type = ERROR, NULL);
+	ind = 0;
+	while (str[ind])
+	{
+		if (flag == 1 && str[ind] == '\'' && ++ind)
+			while (str[ind] != '\'')
+				ind++;
+		if (str[ind] == '\"')
+			flag = -flag;
+		if (str[ind] == '$' && (ft_isalnum(str[ind + 1])
+				|| str[ind + 1] == '?' || str[ind + 1] == '_'))
+		{
+			count++;
+			if (str[ind + 1] == '?')
+				return (expand_last_exit(str, ind, NULL));
+			while (ft_isalnum((str + ind)[count]) || (str + ind)[count] == '_')
+				count++;
+			return (expand_aux(str, ind, count, NULL));
+		}
+		ind++;
+	}
+	return (str);
 }

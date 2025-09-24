@@ -6,14 +6,14 @@
 {
 	while (cmds)
 	{
-		printf( "===============================================================\n");
+		printf( "=====================================\n");
 		printf( "starts commands\n\n");
 		ft_print_matrix(cmds->cmd);
 		printf( "end commands\n\n");
 		printf( "starts outfiles\n\n");
 		print_files((t_infile *)cmds->outfiles);
 		printf( "end outfiles\n");
-		printf( "===============================================================\n\n");
+		printf( "=====================================\n");
 		cmds = cmds->next;
 	}
 }*/
@@ -25,6 +25,7 @@ int	separator_comp(char **mat, int flag, int ind, int pcount)
 		while (ind >= 0)
 		{
 			if (ft_strncmp(mat[ind], ")", 2) == 0 && ++pcount && --ind >= 0)
+			{
 				while (ind >= 0 && pcount)
 				{
 					if (ft_strncmp(mat[ind], ")", 2) == 0)
@@ -33,8 +34,9 @@ int	separator_comp(char **mat, int flag, int ind, int pcount)
 						pcount--;
 					ind--;
 				}
-			if (ind >= 0 && (ft_strncmp(mat[ind], "&&", 3) == 0 \
-				|| ft_strncmp(mat[ind], "||", 3) == 0))
+			}
+			if (ind >= 0 && (ft_strncmp(mat[ind], "&&", 3) == 0
+					|| ft_strncmp(mat[ind], "||", 3) == 0))
 				return (ind);
 			ind--;
 		}
