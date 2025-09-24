@@ -6,7 +6,7 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 19:03:05 by namejojo          #+#    #+#             */
-/*   Updated: 2025/09/24 19:13:18 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/09/24 20:11:03 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,21 +81,56 @@ int	sep_count(char **mat)
 	return (count);
 }
 
+void	init_tokens(t_token *tokens)
+{
+	static char	*stokens[7];
+	static char	*dtokens[5];
+	static char	*sep[4];
+
+	if (*stokens != NULL)
+		return ;
+	stokens[0] = "(";
+	stokens[1] = ")";
+	stokens[2] = "&";
+	stokens[3] = "|";
+	stokens[4] = ">";
+	stokens[5] = "<";
+	stokens[6] = NULL;
+	dtokens[0] = "||";
+	dtokens[1] = "&&";
+	dtokens[2] = ">>";
+	dtokens[3] = "<<";
+	dtokens[4] = NULL;
+	sep[0] = "'";
+	sep[1] = "\"";
+	sep[2] = "`";
+	sep[3] = NULL;
+	tokens->dtokens = dtokens;
+	tokens->stokens = stokens;
+	tokens->sep = sep;
+}
+
+// char	*stokens[] = {"(", ")", "&", "|", ">", "<", NULL};
+// char	*dtokens[] = {"||", "&&", ">>", "<<", NULL};
+// char	*sep[] = {"'", "\"", "`", NULL};
+// // tokens.dtokens = dtokens;
+// tokens.stokens = stokens;
+// tokens.sep = sep;
 int	parsing(char *str)
 {
-	char	*stokens[] = {"(", ")", "&", "|", ">", "<", NULL};
-	char	*dtokens[] = {"||", "&&", ">>", "<<", NULL};
-	char	*sep[] = {"'", "\"", "`", NULL};
-	char	**mat;
-	t_token	tokens;
+	char			**mat;
+	static t_token	tokens;
 
 	if (str == NULL || *str == '\0')
 		return (1);
-	tokens.stokens = stokens;
-	tokens.dtokens = dtokens;
+	init_tokens(&tokens);
+	ft_print_matrix(tokens.dtokens);
+	ft_print_matrix(tokens.stokens);
+	ft_print_matrix(tokens.sep);
 	mat = NULL;
 	if (str != NULL && *str != '\0')
-		mat = tokenization(str, tokens, sep, word_count(str, tokens, sep));
+		mat = tokenization(str, tokens, tokens.sep,
+				word_count(str, tokens, tokens.sep));
 	if (mat == NULL)
 		return (1);
 	if (check_syntax(mat, tokens))
