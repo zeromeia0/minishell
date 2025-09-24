@@ -1,6 +1,0 @@
-
-comment on
-	exec pipes
-	exec path aux2 (2 comments)
-	export
-	builltin cd
