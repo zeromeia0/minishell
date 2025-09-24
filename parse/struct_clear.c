@@ -15,7 +15,7 @@ void	binary_clear(t_binary *binary)
 	if (binary->up)
 		free(binary);
 	else
-		free(binary->mat);
+		free(btree()->mat);
 }
 
 void	cmds_clear(t_cmds *cmds)
@@ -29,7 +29,7 @@ void	cmds_clear(t_cmds *cmds)
 	// ft_print_matrix(cmds->cmd);
 	// printf("%d\n", cmds->expanded);
 	if (cmds->expanded)
-		free_matrix (cmds->cmd);
+		free_matrix(cmds->cmd);
 	else
 		free_matrix_nodes(cmds->cmd);
 	free(cmds);

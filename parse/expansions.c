@@ -67,31 +67,17 @@ char	*expand_aux(char *str, int ind, int count, char *temp)
 	return (expand(str, 0, 0, 1));
 }
 
-char *get_last_exit()
-{
-	
-}
-
 char	*expand_last_exit(char *str, int ind, char *temp)
 {
 	char	*env_var;
 
-	temp = ft_strndup(str + ind + 1, 2 - 1);
-	if (temp == NULL)
-		return (btree()->type = ERROR, free (str), NULL);
-	temp = ft_strjoin_free(temp, "=", 1);
-	if (temp == NULL)
-		return (btree()->type = ERROR, free (str), NULL);
-	env_var = get_last_exit(btree()->os_env, temp, 2);
-	free(temp);
-	if (env_var == NULL)
-		env_var = ft_calloc(1, 1);
+	env_var = ft_itoa(btree()->exit_status);
 	if (env_var == NULL)
 		return (btree()->type = ERROR, free (str), NULL);
 	temp = ft_strdup(str + ind + 2);
 	if (temp == NULL)
-		return (btree()->type = ERROR, free (str), NULL);
-	temp = ft_strjoin_free(env_var + 2 * (*env_var != '\0'), temp, 2);
+		return (btree()->type = ERROR,free (env_var), free (str), NULL);
+	temp = ft_strjoin_free(env_var, temp, 0);
 	if (temp == NULL)
 		return (btree()->type = ERROR, free (str), NULL);
 	str[ind] = '\0';
