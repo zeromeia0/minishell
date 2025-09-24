@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:19:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 15:03:43 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/24 23:30:23 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 
 static void	setup_child_fds(int first_fd, int fd[2], t_cmds *cmd)
 {
+	char	**cleaned_cmd;
+	int		status;
+
 	if (first_fd != -1)
 		dup2(first_fd, STDIN_FILENO);
 	if (has_redir(cmd))
@@ -29,8 +32,8 @@ static void	setup_child_fds(int first_fd, int fd[2], t_cmds *cmd)
 		close(fd[1]);
 	}
 	if (first_fd != -1)
-		close(first_fd);
-} //explain this hit
+		close(first_fd); // gotta explain this fucking function
+}
 
 void	execute_child(t_cmds *cmd, int first_fd, int fd[2], char **env)
 {
@@ -38,7 +41,6 @@ void	execute_child(t_cmds *cmd, int first_fd, int fd[2], char **env)
 	int		status;
 
 	setup_child_fds(first_fd, fd, cmd);
-	
 	if (has_redir(cmd))
 		exec_redirections(cmd);
 	cleaned_cmd = array_to_exec(cmd);
@@ -93,7 +95,9 @@ static int	process_command(t_cmds *cmd, int *first_fd, char **env)
 
 int	has_heredocs(t_cmds *cmd)
 {
-	t_infile *in = cmd->infiles;
+	t_infile	*in;
+
+	in = cmd->infiles;
 	while (in)
 	{
 		if (ft_strcmp(in->token, "<<") == 0)
@@ -102,11 +106,12 @@ int	has_heredocs(t_cmds *cmd)
 	}
 	return (0);
 }
+
 int	process_command_heredocs(t_cmds *cmd)
 {
 	int		p[2];
 	pid_t	pid;
-	int		status; //can't i just get rid of it?
+	int		status;
 
 	if (pipe(p) == -1)
 		return (perror("pipe"), -1);
@@ -123,7 +128,7 @@ int	process_command_heredocs(t_cmds *cmd)
 	{
 		close(p[1]);
 		signal(SIGINT, SIG_IGN);
-		waitpid(pid, &status, 0); //watch out for this line  nigga
+		waitpid(pid, &status, 0);
 		restart_signals();
 		close(p[0]);
 		if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
@@ -149,7 +154,7 @@ int	exec_pipes(t_cmds *cmd, char **env)
 				return (btree()->exit_status);
 			}
 		}
-		current = current->next;  // ← ADD THIS LINE
+		current = current->next;
 	}
 	if (btree()->global_signal == 130)
 		return (130);
@@ -161,11 +166,10 @@ int	exec_pipes(t_cmds *cmd, char **env)
 	{
 		if (process_command(current, &first_fd, env) == -1)
 			return (-1);
-		current = current->next;  // ← ADD THIS LINE
+		current = current->next;
 	}
 	while (wait(&status) > 0)
 		;
-	
 	if (WIFEXITED(status))
 		btree()->exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
