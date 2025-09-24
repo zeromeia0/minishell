@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:21:23 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 11:11:25 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/24 11:20:21 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,6 @@ int builtin_exit(char **args, char **envp)
 
 int	exec_builtin(char *cmd, char **args, char **envp)
 {
-	if (!envp)
-		return (1);
 	if (ft_strncmp(cmd, "cd", 2) == 0)
 		return (builtin_cd(args));
 	else if (ft_strncmp(cmd, "pwd", 3) == 0)

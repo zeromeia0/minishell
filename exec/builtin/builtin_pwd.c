@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:22:16 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 11:12:20 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/24 11:20:52 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +48,37 @@ bool	is_n_flag(const char *arg)
 	return (true);
 }
 
+int deal_with_bad_exit(t_cmds *cmd)
+{
+    if (ft_strncmp(cmd->cmd[0], "exit", 4) == 0 && cmd->cmd[2])
+    {
+        btree()->exit_status = 2;
+        ft_putstr_fd("exit: too many arguments\n", 2);
+        return 0;
+    }
+    if (ft_strncmp(cmd->cmd[0], "exit", 4) == 0 && !is_numeric(cmd->cmd[1]))
+    {
+        btree()->exit_status = 2;
+        my_ffprintf(cmd->cmd[0], "numeric argument required\n");
+        return 0;
+    }
+    return 1;
+}
+
+
 int	exec_single_cmd_aux(t_cmds *cmd)
 {
 	int		status;
 	char	**env_array;
 
-	if (ft_strncmp(cmd->cmd[0], "exit", 4) == 0 && cmd->cmd[2])
-		return (ft_putstr_fd("exit: too many arguments\n", 2), 1);
-	if (ft_strncmp(cmd->cmd[0], "exit", 4) == 0 && !is_numeric(cmd->cmd[1]))
-		return (my_ffprintf(cmd->cmd[0], "numeric argument required\n"), 0);
+	if (deal_with_bad_exit(cmd) != 1)
+		return (btree()->exit_status);
 	if (ft_strncmp(cmd->cmd[0], "exit", 4) == 0)
 	{
 		env_array = list_to_char(*get_env_list()); //no checker?
 		status = exec_builtin(cmd->cmd[0], cmd->cmd, env_array);
 		free_matrix(env_array);
-		free(env_array);
+		// free(env_array);
 	}
 	else
 		status = exec_builtin(cmd->cmd[0], cmd->cmd, NULL);
