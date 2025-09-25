@@ -1,4 +1,6 @@
 (in1 and in2 dont exist) < in1 < in2 cat > out1 > out2
+    OKY
+    
 (in1 or in2 dont exit) < in1 < in2 cat > out1 > out2
 (in1 and in2 exit) < in1 < in2 cat > out1 > out2
 (in1 and in2 have perms) < in1 < in2 cat > out1 > out2

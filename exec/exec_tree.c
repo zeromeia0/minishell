@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/25 22:06:57 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/25 22:24:18 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,24 @@ char **buildup_path(t_cmds *cmd, char **args, char **envp)
 	return (final_str);
 }
 
+int ensure_outfile(t_outfile *out)
+{
+    int fd;
+
+    if (!out || !out->file)
+        return -1;
+
+    fd = open(out->file, O_WRONLY | O_CREAT, 0644);
+    if (fd < 0)
+    {
+        // Failed to open or create → maybe permission issue in directory
+        return btree()->cmds->flag_to_exec = 1,
+               my_ffprintf(out->file, "Permission denied\n"), -1;
+    }
+    close(fd); // Close immediately; actual redirection happens in exec_out_redirections
+    return 0;
+}
+
 int	check_order(t_binary *tree, char **args, char **envp)
 {
 	t_infile	*current_infile;
@@ -134,9 +152,9 @@ int	check_order(t_binary *tree, char **args, char **envp)
 	current_infile = tree->cmds->infiles;
 	while (current_infile)
 	{
-		if (access(current_infile->file, F_OK) != 0
-			|| access(current_infile->file, R_OK) != 0)
-			return (btree()->cmds->flag_to_exec = 1, printf("infile non existent\n"), 0);
+		if ((access(current_infile->file, F_OK) != 0
+			|| access(current_infile->file, R_OK) != 0) && ft_strncmp(current_infile->token, "<<", 2) != 0)
+			return (btree()->cmds->flag_to_exec = 1, my_ffprintf(current_infile->file, "No such file or directory 1\n"), 0);
 		current_infile = current_infile->next;
 	}
 	if (!tree->cmds->cmd)
@@ -160,19 +178,17 @@ int	check_order(t_binary *tree, char **args, char **envp)
 		if (something)
 			ft_free_matrix(something);
 		if (!valid)
-			return (printf("command not found or not executable\n"), 0);
+			return (0);
 		current_cmds = current_cmds->next;
 	}
 	if (!tree->cmds->outfiles)
 		return (0);
 	current_outfile = tree->cmds->outfiles;
-	if (current_outfile->file == NULL)
-		exec_out_redirections(current_outfile);
 	while (current_outfile)
 	{
-		if (access(current_outfile->file, W_OK) != 0)
-			return (btree()->cmds->flag_to_exec = 1, my_ffprintf(current_outfile->file, "Permission denied\n"), 0);
-		current_outfile = current_outfile->next;	
+		if (ensure_outfile(current_outfile) < 0)
+			return 0;
+		current_outfile = current_outfile->next;
 	}
 	return (1);
 }
