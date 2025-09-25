@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:54:32 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 15:31:16 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/25 08:50:01 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,30 +85,28 @@ static void	initialize_stuff(int argc, char *argv[], char **envp)
 
 int	main(int argc, char *argv[], char **envp)
 {
-	char	*input;
-	int		exit_status;
-
 	initialize_stuff(argc, argv, envp);
 	while (1)
 	{
-		input = readline("minishell$ ");
-		if (!input)
+		btree()->input = readline("minishell$ ");
+		if (!btree()->input)
 			break ;
 		restart_signals();
-		add_history(input);
-		if (*input == '\0')
+		add_history(btree()->input);
+		if (*btree()->input == '\0')
 		{
-			free(input);
+			free(btree()->input);
 			continue ;
 		}
-		if (parsing(input) == 0)
+		if (parsing(btree()->input) == 0)
 		{
-			exit_status = exec_tree(btree());
+			btree()->main_exit = exec_tree(btree());
 			restart_signals();
-			free(input);
+			free(btree()->input);
 			binary_clear(btree());
 		}
 	}
 	free_matrix(btree()->env);
-	return (clear_env_list(), printf("Closing Minishell\n"), btree()->exit_status);
+	return (clear_env_list(), printf("Closing Minishell\n"),
+		btree()->exit_status);
 }

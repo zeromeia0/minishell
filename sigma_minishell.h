@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/25 08:30:01 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/25 08:49:30 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <stdio.h>
 # include <sys/stat.h>
 # include <termios.h>
+#include <sys/wait.h>
 # include <signal.h>
 
 typedef struct s_wild
@@ -75,10 +76,12 @@ typedef struct s_binary
 	char					*logic;
 	t_type					type;
 	int						sublvl;
+	char					*input;
 	int						left_ret;
 	int						right_ret;
 	char					*print_cmd;
 	int						subshell_ret;
+	int						main_exit;
 	int					global_signal;
 	int					exit_status;
 	char					**mat;
@@ -176,6 +179,8 @@ void	buildup_new_args(char *cmd, char **envp);
 int	handle_absolute_path_cmd(char *cmd, char **args, char **envp);
 int	handle_slash_command(char *cmd, char **args, char **envp);
 int	handle_non_slash_commands(char *cmd, char **args, char **envp);
+int	has_heredocs(t_cmds *cmd);
+int	process_command(t_cmds *cmd, int *first_fd, char **env);
 
 // struct_clear.c
 void						binary_clear(t_binary *binary);
