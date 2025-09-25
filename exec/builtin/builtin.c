@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:21:23 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 22:00:52 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/25 11:32:38 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	builtin_exit(char **args, char **envp)
 		return (my_ffprintf(args[1], "numeric argument required"), 0);
 	if (args[2])
 		return (ft_putstr_fd("minishell: exit: too many arguments", 2), 1);
+	
 	status = ft_atol(args[1]);
 	update_shell_level(-1);
 	exit((unsigned char)status);

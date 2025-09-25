@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sigma_minishell.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/25 08:49:30 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/25 14:05:33 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_os_envs
 typedef struct s_cmds
 {
 	int						expanded;
+	int						flag_to_exec;
 	char					**cmd;
 	t_infile				*infiles;
 	t_outfile				*outfiles;
@@ -107,7 +108,7 @@ int							builtin_unset(char **args);
 int							exec_builtin(char *cmd, char **args, char **envp);
 int							builtin_export(char **args);
 int							exec_path(char *cmd, char **args, char **envp);
-int							exec_tree(t_binary *tree);
+int							exec_tree(t_binary *tree, char **args, char **envp);
 int							exec_pipes(t_cmds *cmd, char **env);
 int							exec_redirections(t_cmds *cmd);
 int							has_redir(t_cmds *cmd);
@@ -181,6 +182,11 @@ int	handle_slash_command(char *cmd, char **args, char **envp);
 int	handle_non_slash_commands(char *cmd, char **args, char **envp);
 int	has_heredocs(t_cmds *cmd);
 int	process_command(t_cmds *cmd, int *first_fd, char **env);
+void	print_cmds(t_cmds *cmds);
+
+
+
+
 
 // struct_clear.c
 void						binary_clear(t_binary *binary);
