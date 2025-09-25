@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 23:05:16 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 23:08:52 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/25 22:03:16 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	handle_regular_redirections(t_cmds *cmd)
 		if (ft_strcmp(in->token, "<") == 0)
 		{
 			if (exec_single_left(in) < 0)
-				return (-1);
+				return (1);
 		}
 		in = in->next;
 	}

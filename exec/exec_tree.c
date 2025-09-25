@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/25 21:56:14 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/25 22:06:57 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ int	check_order(t_binary *tree, char **args, char **envp)
 	{
 		if (access(current_infile->file, F_OK) != 0
 			|| access(current_infile->file, R_OK) != 0)
-			return (printf("infile non existent\n"), 0);
+			return (btree()->cmds->flag_to_exec = 1, printf("infile non existent\n"), 0);
 		current_infile = current_infile->next;
 	}
 	if (!tree->cmds->cmd)
