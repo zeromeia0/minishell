@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:39:31 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 23:26:36 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/25 08:31:38 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,12 @@ char	*get_env_var(char *name, char **envp)
 
 int	am_i_truly_myself(const char *cmd)
 {
-	struct stat cmd_stat, self_stat;
-
-	if (stat(cmd, &cmd_stat) == -1)
+	if (stat(cmd, &btree()->cmd_stat) == -1)
 		return (0);
-	if (stat("/proc/self/exe", &self_stat) == -1)
+	if (stat("/proc/self/exe", &btree()->self_stat) == -1)
 		return (0);
-	return (cmd_stat.st_dev == self_stat.st_dev
-		&& cmd_stat.st_ino == self_stat.st_ino);
+	return (btree()->cmd_stat.st_dev == btree()->self_stat.st_dev
+		&& btree()->cmd_stat.st_ino == btree()->self_stat.st_ino);
 }
 
 void	my_ffprintf(char *cmd, char *which_message)

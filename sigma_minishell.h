@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 23:23:45 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/25 08:30:01 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ typedef struct s_binary
 	struct s_binary			*right;
 	struct s_binary			*subshell;
 	struct termios			orig_termios; //<-- VINI TESTEANDO UMA CRAZY THING
+	struct stat cmd_stat;
+	struct stat self_stat;
 }	t_binary;
 
 int							parsing(char *str);
