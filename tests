@@ -1,0 +1,20 @@
+(in1 and in2 dont exist) < in1 < in2 cat > out1 > out2
+(in1 or in2 dont exit) < in1 < in2 cat > out1 > out2
+(in1 and in2 exit) < in1 < in2 cat > out1 > out2
+(in1 and in2 have perms) < in1 < in2 cat > out1 > out2
+(in1 or in2 have perms) < in1 < in2 cat > out1 > out2
+
+(out1 no perms out2 doesnt exist) < in1 < in2 cat > out1 > out2
+(out2 no perms out1 doesnt exist) < in1 < in2 cat > out1 > out2
+
+(out1 or out2 dont have perms) < in1 < in2 cat > out1 > out2
+(out1 and out2 dont have perms) < in1 < in2 cat > out1 > out2
+
+(out1 and out2 dont have perms) << eof << eof cat > out1 > out2
+(out1 or out2 dont have perms) << eof << eof cat > out1 > out2
+
+(ctrl c before first eof) << eof << eof cat > out1 > out2
+(ctrl c after first eof) << eof << eof cat > out1 > out2
+
+(ctrl d before first eof) << eof << eof cat > out1 > out2
+(ctrl d after first eof) << eof << eof cat > out1 > out2
