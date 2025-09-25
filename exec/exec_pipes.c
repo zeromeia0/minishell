@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:19:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/25 08:44:57 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/25 14:18:37 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	exec_pipes(t_cmds *cmd, char **env)
 	int		first_fd;
 	int		status;
 	t_cmds	*current;
-
+	
 	if (process_heredocs_and_checks(cmd) != 0)
 		return (btree()->exit_status);
 	first_fd = -1;

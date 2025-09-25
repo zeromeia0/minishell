@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/25 14:11:21 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/25 14:38:37 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ int	exec_node(t_binary *node, char **args, char **envp)
 {
 	if (!node)
 		return (0);
-	if (node->cmds->cmd == NULL)
-		node->cmds->flag_to_exec = 1;
-	if (node->cmds != NULL && node->cmds->flag_to_exec == 0)
+	// if (node->cmds->cmd == NULL)
+	// 	node->cmds->flag_to_exec = 1;
+	if (node->cmds != NULL/*  && node->cmds->flag_to_exec == 0 */)
 	{
 		expand_args(node->cmds);
 		if (node->cmds->next)
@@ -97,6 +97,8 @@ char **buildup_path(t_cmds *cmd, char **args, char **envp)
 	char **paths_to_search;
 	int i = 0;
 	
+	if (cmd->cmd == NULL || cmd->flag_to_exec == 0)
+		return (NULL);
 	paths_to_search = get_paths_to_search(envp);
 	final_str = malloc(sizeof(char *) * (ft_matlen(envp) + 1));
 	if (has_builtin(cmd))
@@ -153,9 +155,10 @@ int	check_order(t_binary *tree, char **args, char **envp)
 			}
 			i++;
 		}
-		ft_free_matrix(something);
+		if (something)
+			ft_free_matrix(something);
 		if (!valid)
-			return (printf("command not found or not executable\n"), 0);
+			return (printf("command not found or not executable\n"), -1);
 		current_cmds = current_cmds->next;
 	}
 	if (!tree->cmds->outfiles)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipes_aux.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 08:43:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/25 08:45:53 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/25 14:25:38 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,17 +75,25 @@ int	process_command(t_cmds *cmd, int *first_fd, char **env)
 	int		fd[2];
 	pid_t	pid;
 
-	if (setup_pipe(cmd, first_fd, fd) == -1)
-		return (-1);
-	pid = fork();
-	if (pid == 0)
-		execute_child(cmd, *first_fd, fd, env);
-	if (*first_fd != -1)
-		close(*first_fd);
-	if ((cmd)->next != NULL)
+	// fprintf(stderr, "PUTTING THE FLAG exec\n");
+	
+	if (cmd->cmd == NULL)
+		cmd->flag_to_exec = 1;
+	// fprintf(stderr, "PUTTING THE FLAG exec 2\n");
+	if (cmd->flag_to_exec == 0)
 	{
-		close(fd[1]);
-		*first_fd = fd[0];
+		if (setup_pipe(cmd, first_fd, fd) == -1)
+			return (-1);
+		pid = fork();
+		if (pid == 0)
+			execute_child(cmd, *first_fd, fd, env);
+		if (*first_fd != -1)
+			close(*first_fd);
+		if ((cmd)->next != NULL)
+		{
+			close(fd[1]);
+			*first_fd = fd[0];
+		}
 	}
 	return (0);
 }

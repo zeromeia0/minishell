@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:08:05 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/25 11:42:58 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/25 14:28:33 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ int	exec_out_redirections(t_outfile *out)
 
 int	exec_redirections(t_cmds *cmd)
 {
+	if (cmd->cmd == NULL)
+		cmd->flag_to_exec = 1;
 	if (handle_heredocs(cmd) < 0)
 		return (-1);
 	if (handle_regular_redirections(cmd) < 0)

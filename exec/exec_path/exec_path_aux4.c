@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 23:22:49 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/25 13:06:16 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/25 14:40:08 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	buildup_new_args(char *cmd, char **envp)
 	new_args[1] = cmd;
 	new_args[2] = NULL;
 	prepare_for_exec();
+		printf("faz parte 2\n");
+
 	execve(new_args[0], new_args, envp);
 }
 

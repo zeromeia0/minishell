@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_path_aux3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:41:23 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 23:24:36 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/25 14:46:02 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,12 @@ int	exec_system_path_aux1(char **envp, char ***paths_to_search)
 
 int	exec_system_path_aux_aux(char *full_path, char **args, char **envp)
 {
+	if (btree()->cmds->flag_to_exec == 1)
+		return (-1);
 	if (access(full_path, X_OK) == 0)
 	{
 		prepare_for_exec();
+		printf("faz parte 1\n");
 		execve(full_path, args, envp);
 		perror(full_path);
 		return (-1);

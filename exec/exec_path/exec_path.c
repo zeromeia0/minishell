@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:44:52 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/25 12:23:23 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/25 14:43:10 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 
 int	handle_non_slash_commands(char *cmd, char **args, char **envp)
 {
+	if (cmd == NULL)
+		btree()->cmds->flag_to_exec = 1;
+	if (btree()->cmds->flag_to_exec == 1)
+		exit(126);
 	if (access(cmd, F_OK) != 0)
 	{
 		my_ffprintf(cmd, "command not found\n");
@@ -26,6 +30,8 @@ int	handle_non_slash_commands(char *cmd, char **args, char **envp)
 		if (access(cmd, X_OK) == 0)
 		{
 			prepare_for_exec();
+		printf("faz parte 3\n");
+
 			execve(cmd, args, envp);
 			perror(cmd);
 			exit(127);
@@ -38,6 +44,10 @@ int	handle_non_slash_commands(char *cmd, char **args, char **envp)
 
 int	handle_slash_command(char *cmd, char **args, char **envp)
 {
+	if (cmd == NULL)
+		btree()->cmds->flag_to_exec = 1;
+	if (btree()->cmds->flag_to_exec == 1)
+			exit(126);
 	if (access(cmd, F_OK) != 0)
 	{
 		my_ffprintf(cmd, "No such file or directory\n");
@@ -46,6 +56,8 @@ int	handle_slash_command(char *cmd, char **args, char **envp)
 	if (access(cmd, X_OK) == 0)
 	{
 		prepare_for_exec();
+		printf("faz parte 4\n");
+
 		execve(cmd, args, envp);
 		if (errno == ENOEXEC)
 		{
@@ -65,6 +77,10 @@ int	handle_slash_command(char *cmd, char **args, char **envp)
 
 int	handle_system_path_cmd_aux(char *cmd, char **args, char **envp)
 {
+	if (cmd == NULL)
+		btree()->cmds->flag_to_exec = 1;
+	if (btree()->cmds->flag_to_exec == 1)
+			exit(126);
 	if (access(cmd, F_OK) != 0)
 	{
 		my_ffprintf(cmd, "No such file or directory\n");
@@ -73,6 +89,8 @@ int	handle_system_path_cmd_aux(char *cmd, char **args, char **envp)
 	if (access(cmd, X_OK) == 0)
 	{
 		prepare_for_exec();
+		printf("faz parte 5\n");
+
 		execve(cmd, args, envp);
 		if (errno == ENOEXEC)
 		{
