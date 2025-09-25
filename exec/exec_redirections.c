@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:08:05 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/25 14:28:33 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/25 16:11:17 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int	exec_single_left(t_infile *in)
 {
 	int	fd;
 
+	if (access(in->file, F_OK) != 0)
+		return (printf("BRUVA\n"), -1);
 	fd = open(in->file, O_RDONLY);
 	if (fd < 0)
 		return (perror(in->file), -1);

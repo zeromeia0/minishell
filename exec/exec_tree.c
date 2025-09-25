@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/25 14:38:37 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/25 16:05:30 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static void	exec_child(t_cmds *cmd)
 	char	**cleaned;
 	char	**updated_envs;
 
+	if (cmd->flag_to_exec == 1)
+		return ;
 	signal(SIGINT, handle_sigint);
 	cleaned = array_to_exec(cmd);
 	updated_envs = list_to_char(*get_env_list());
@@ -38,6 +40,8 @@ int	exec_single_cmd(t_cmds *cmd)
 	pid_t	pid;
 	int		status;
 
+	if (cmd->flag_to_exec == 1)
+		return (btree()->exit_status);
 	if (has_builtin(cmd) && !has_redir(cmd))
 		return (exec_single_cmd_aux(cmd));
 	pid = fork();
@@ -97,8 +101,6 @@ char **buildup_path(t_cmds *cmd, char **args, char **envp)
 	char **paths_to_search;
 	int i = 0;
 	
-	if (cmd->cmd == NULL || cmd->flag_to_exec == 0)
-		return (NULL);
 	paths_to_search = get_paths_to_search(envp);
 	final_str = malloc(sizeof(char *) * (ft_matlen(envp) + 1));
 	if (has_builtin(cmd))
@@ -158,7 +160,7 @@ int	check_order(t_binary *tree, char **args, char **envp)
 		if (something)
 			ft_free_matrix(something);
 		if (!valid)
-			return (printf("command not found or not executable\n"), -1);
+			return (printf("command not found or not executable\n"), 0);
 		current_cmds = current_cmds->next;
 	}
 	if (!tree->cmds->outfiles)
@@ -169,8 +171,8 @@ int	check_order(t_binary *tree, char **args, char **envp)
 	while (current_outfile)
 	{
 		if (access(current_outfile->file, W_OK) != 0)
-			return (printf("no permissions fella\n"), 0);
-		current_outfile = current_outfile->next;
+			return (btree()->cmds->flag_to_exec = 1, my_ffprintf(current_outfile->file, "Permission denied\n"), 0);
+		current_outfile = current_outfile->next;	
 	}
 	return (1);
 }
@@ -185,6 +187,8 @@ int	exec_tree(t_binary *tree, char **args, char **envp)
 {
 	int	ret_left;
 
+	if (btree()->cmds->flag_to_exec == 1)
+		return (0);
 	check_order(tree, args, envp);
 	if (btree()->global_signal == 130)
 		return (130);

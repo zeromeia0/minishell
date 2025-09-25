@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:22:16 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/25 11:38:30 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/25 16:01:51 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	exec_single_cmd_aux(t_cmds *cmd)
 {
 	int		status;
 	char	**env_array;
-
+	
 	if (deal_with_bad_exit(cmd) != 1)
 		exit (btree()->exit_status);
 	if (ft_strncmp(cmd->cmd[0], "exit", 4) == 0)

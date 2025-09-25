@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:44:52 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/25 14:43:10 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/25 16:06:52 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ int	handle_slash_command(char *cmd, char **args, char **envp)
 	{
 		prepare_for_exec();
 		printf("faz parte 4\n");
-
 		execve(cmd, args, envp);
+		printf("executado\n");
 		if (errno == ENOEXEC)
 		{
 			buildup_new_args(cmd, envp);
@@ -126,6 +126,8 @@ int	handle_system_path_cmd(char *cmd, char **args, char **envp)
 
 int	exec_path(char *cmd, char **args, char **envp)
 {
+	if (btree()->cmds->flag_to_exec == 1)
+		return (-1);
 	if (am_i_truly_myself(args[0]) && access(cmd, F_OK) == 0 && access(cmd,
 			X_OK) == 0)
 		update_shell_level(1);
