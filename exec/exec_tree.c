@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/25 22:24:18 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/25 22:39:00 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	exec_single_cmd(t_cmds *cmd)
 	pid_t	pid;
 	int		status;
 
+	if (!cmd || !cmd->cmd)
+		return (btree()->exit_status);
 	if (cmd->flag_to_exec == 1)
 		return (btree()->exit_status);
 	if (has_builtin(cmd) && !has_redir(cmd))
@@ -97,31 +99,37 @@ int	exec_node(t_binary *node, char **args, char **envp)
 
 char **buildup_path(t_cmds *cmd, char **args, char **envp)
 {
-	char **final_str;
-	char **paths_to_search;
-	int i = 0;
-	
-	paths_to_search = get_paths_to_search(envp);
-	final_str = malloc(sizeof(char *) * (ft_matlen(envp) + 1));
-	if (has_builtin(cmd))
-	{
-		final_str[0] = ft_strdup(*cmd->cmd);
-		final_str[1] = NULL;
-		return (final_str);
-	}
-	else if (is_system_path_command(cmd->cmd[0], envp))
-	{
-		while (paths_to_search[i])
-		{
-			char *tmp = ft_strjoin(paths_to_search[i], "/");
-			final_str[i] = ft_strjoin(tmp, cmd->cmd[0]);
-			free(tmp);
-			i++;
-		}
-		final_str[i] = NULL;
-	}
-	return (final_str);
+    char **final_str;
+    char **paths_to_search;
+    int i = 0;
+    int path_count;
+
+    paths_to_search = get_paths_to_search(envp);
+    path_count = ft_matlen(paths_to_search);
+    final_str = malloc(sizeof(char *) * (path_count + 1));
+    if (!final_str)
+        return NULL;
+
+    if (has_builtin(cmd))
+    {
+        final_str[0] = ft_strdup(cmd->cmd[0]);
+        final_str[1] = NULL;
+        return final_str;
+    }
+    else if (is_system_path_command(cmd->cmd[0], envp))
+    {
+        while (paths_to_search[i])
+        {
+            char *tmp = ft_strjoin(paths_to_search[i], "/");
+            final_str[i] = ft_strjoin(tmp, cmd->cmd[0]);
+            free(tmp);
+            i++;
+        }
+        final_str[i] = NULL;
+    }
+    return final_str;
 }
+
 
 int ensure_outfile(t_outfile *out)
 {
@@ -152,9 +160,15 @@ int	check_order(t_binary *tree, char **args, char **envp)
 	current_infile = tree->cmds->infiles;
 	while (current_infile)
 	{
-		if ((access(current_infile->file, F_OK) != 0
-			|| access(current_infile->file, R_OK) != 0) && ft_strncmp(current_infile->token, "<<", 2) != 0)
-			return (btree()->cmds->flag_to_exec = 1, my_ffprintf(current_infile->file, "No such file or directory 1\n"), 0);
+		if (ft_strncmp(current_infile->token, "<<", 2) != 0) // skip heredocs
+		{
+			if (access(current_infile->file, F_OK) != 0)
+				return (btree()->cmds->flag_to_exec = 1,
+						my_ffprintf(current_infile->file, "No such file or directory\n"), 0);
+			if (access(current_infile->file, R_OK) != 0)
+				return (btree()->cmds->flag_to_exec = 1,
+						my_ffprintf(current_infile->file, "Permission denied\n"), 0);
+		}
 		current_infile = current_infile->next;
 	}
 	if (!tree->cmds->cmd)
