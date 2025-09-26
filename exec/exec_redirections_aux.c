@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 23:05:16 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/25 22:03:16 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/26 11:10:58 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,12 @@ int	handle_regular_redirections(t_cmds *cmd)
 	return (0);
 }
 
-void	pid_equal_zero_double(t_cmds *cmd, int p[2])
+void pid_equal_zero_double(t_cmds *cmd, int p[2])
 {
-	close(p[0]);
-	signal(SIGINT, handle_heredoc);
-	process_all_heredocs(cmd->infiles, p);
-	close(p[1]);
-	exit(0);
+    close(p[0]);
+    signal(SIGINT, handle_heredoc);
+    process_all_heredocs(cmd->infiles, p);
+    close(p[1]);
+    exit(0);
 }
+

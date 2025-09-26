@@ -86,7 +86,72 @@ void process_heredoc_recursive_simple(t_infile *current, int fd[2])
 
 void process_all_heredocs(t_infile *in, int fd[2])
 {
-    process_heredoc_recursive_simple(in, fd);
+    t_infile *current = in;
+    t_infile *last = NULL;
+    char *line;
+    int tty_fd;
+
+    // Find the last heredoc
+    while (current)
+    {
+        if (ft_strcmp(current->token, "<<") == 0)
+            last = current;
+        current = current->next;
+    }
+
+    current = in;
+    while (current)
+    {
+        if (ft_strcmp(current->token, "<<") == 0)
+        {
+            // Open /dev/tty for reading heredoc input
+            tty_fd = open("/dev/tty", O_RDONLY);
+            if (tty_fd != -1)
+            {
+                dup2(tty_fd, STDIN_FILENO);
+                close(tty_fd);
+            }
+
+            signal(SIGINT, handle_heredoc);
+            signal(SIGQUIT, SIG_IGN);
+
+            line = readline("> ");
+            while (line && ft_strcmp(line, remove_aspas(current->file)) != 0)
+            {
+                // Only write to pipe if this is the last heredoc
+                if (current == last && fd)
+                {
+                    char *expanded = expand(line, 0, 0, 1);
+                    write(fd[1], expanded, ft_strlen(expanded));
+                    write(fd[1], "\n", 1);
+                    if (expanded != line)
+                        free(expanded);
+                }
+                free(line);
+                if (btree()->global_signal == 130)
+                    exit(130);
+                line = readline("> ");
+            }
+            free(line);
+        }
+        current = current->next;
+    }
+}
+
+
+void process_last_heredoc(t_infile *in, int fd[2])
+{
+    t_infile *last = NULL;
+
+    while (in)
+    {
+        if (ft_strcmp(in->token, "<<") == 0)
+            last = in;  // keep updating → ends up with the last one
+        in = in->next;
+    }
+
+    if (last)
+        get_single_heredoc(last->file, fd);
 }
 
 

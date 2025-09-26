@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sigma_minishell.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/25 14:05:33 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/26 11:09:27 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,7 @@ int	handle_non_slash_commands(char *cmd, char **args, char **envp);
 int	has_heredocs(t_cmds *cmd);
 int	process_command(t_cmds *cmd, int *first_fd, char **env);
 void	print_cmds(t_cmds *cmds);
-
+void process_last_heredoc(t_infile *in, int fd[2]);
 
 
 
