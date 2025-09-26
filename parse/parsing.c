@@ -132,6 +132,8 @@ void process_all_heredocs(t_infile *in, int fd[2])
                     exit(130);
                 line = readline("> ");
             }
+			if (!line)
+				printf("warning: here-document delimited by end-of-file (wanted `%s')\n", current->file);
             free(line);
         }
         current = current->next;
