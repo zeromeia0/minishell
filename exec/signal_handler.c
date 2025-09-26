@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/25 12:36:46 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/26 11:37:15 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../sigma_minishell.h"
+#include <signal.h>
 
 void	handle_sigint(int sig)
 {

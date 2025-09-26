@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/25 22:39:00 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/26 11:33:54 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,20 @@ static void	exec_child(t_cmds *cmd)
 	free_matrix(updated_envs);
 }
 
-int	exec_single_cmd(t_cmds *cmd)
+int exec_single_cmd(t_cmds *cmd)
 {
-	pid_t	pid;
-	int		status;
+	pid_t pid;
+	int status;
 
 	if (!cmd || !cmd->cmd)
 		return (btree()->exit_status);
-	if (cmd->flag_to_exec == 1)
+
+	if (cmd->flag_to_exec == 1 || btree()->global_signal == 130)
 		return (btree()->exit_status);
+
 	if (has_builtin(cmd) && !has_redir(cmd))
 		return (exec_single_cmd_aux(cmd));
+
 	pid = fork();
 	if (pid == 0)
 		exec_child(cmd);
@@ -57,10 +60,12 @@ int	exec_single_cmd(t_cmds *cmd)
 			btree()->exit_status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
 			btree()->exit_status = 130;
+
 		return (btree()->exit_status);
 	}
 	return (1);
 }
+
 
 static int	exec_subshell(t_binary *subshell, char **args, char **envp)
 {

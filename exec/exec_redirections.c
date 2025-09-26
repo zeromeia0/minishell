@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:08:05 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/25 22:03:58 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/26 11:32:23 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	exec_double_left(t_infile *in, t_cmds *cmd)
 	pid_t	pid;
 	int		status;
 
+	signal(SIGTTOU, SIG_IGN);
 	if (pipe(p) == -1)
 		return (perror("pipe"), -1);
 	pid = fork();
@@ -105,13 +106,20 @@ int	exec_out_redirections(t_outfile *out)
 	return (0);
 }
 
-int	exec_redirections(t_cmds *cmd)
+int exec_redirections(t_cmds *cmd)
 {
 	if (cmd->cmd == NULL)
 		cmd->flag_to_exec = 1;
-	if (handle_heredocs(cmd) < 0)
+	if (handle_heredocs(cmd) < 0 || btree()->global_signal == 130)
+	{
+		cmd->flag_to_exec = 1;
 		return (-1);
-	if (handle_regular_redirections(cmd) < 0)
-		return (btree()->cmds->flag_to_exec = 1, -1);
+	}
+	if (handle_regular_redirections(cmd) < 0 || btree()->global_signal == 130)
+	{
+		cmd->flag_to_exec = 1;
+		return (-1);
+	}
 	return (0);
 }
+
