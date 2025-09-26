@@ -6,7 +6,7 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 19:03:05 by namejojo          #+#    #+#             */
-/*   Updated: 2025/09/24 20:11:03 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/09/26 11:54:10 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,9 +124,9 @@ int	parsing(char *str)
 	if (str == NULL || *str == '\0')
 		return (1);
 	init_tokens(&tokens);
-	ft_print_matrix(tokens.dtokens);
-	ft_print_matrix(tokens.stokens);
-	ft_print_matrix(tokens.sep);
+	// ft_print_matrix(tokens.dtokens);
+	// ft_print_matrix(tokens.stokens);
+	// ft_print_matrix(tokens.sep);
 	mat = NULL;
 	if (str != NULL && *str != '\0')
 		mat = tokenization(str, tokens, tokens.sep,

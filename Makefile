@@ -11,7 +11,8 @@ EXEC=			$(wildcard ${EXEC_DIR}/*.c) \
 
 CC=			cc
 AR=			ar rcs
-CFLAGS=		-Wall -Wextra -Werror -g -finstrument-functions
+# CFLAGS=		-Wall -Wextra -Werror -g -finstrument-functions
+CFLAGS=		-g -finstrument-functions
 PIPEX       = pipex
 PIPEX_BONUS = pipex_bonus
 PIPEX_DIR   = pipex
@@ -22,7 +23,7 @@ BULTIN_SRCS = $(wildcard $(BULTIN_DIR)/*.c)
 all: exec_rule parse_rule $(PROJ)
 
 $(PROJ): $(PROJ).c
-	$(CC) -lreadline -lncurses $(PROJ).c ${EXEC} $(PARSER) $(PARSER_DIR)/jojo_libft.a $(EXEC_DIR)/$(PIPEX_DIR)/$(PIPEX).a $(EXEC_DIR)/$(LIBFT_DIR)/libft.a -o $(PROJ) -lncurses -lreadline
+	$(CC) $(CFLAGS) -lreadline -lncurses $(PROJ).c ${EXEC} $(PARSER) $(PARSER_DIR)/jojo_libft.a $(EXEC_DIR)/$(PIPEX_DIR)/$(PIPEX).a $(EXEC_DIR)/$(LIBFT_DIR)/libft.a -o $(PROJ) -lncurses -lreadline
 
 parse_rule:
 	$(MAKE) -C $(PARSER_DIR)

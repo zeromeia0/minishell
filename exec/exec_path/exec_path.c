@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:44:52 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 09:38:30 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/25 16:06:52 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 #include <string.h>
 #include <unistd.h>
 
-int handle_non_slash_commands(char *cmd, char **args, char **envp)
+int	handle_non_slash_commands(char *cmd, char **args, char **envp)
 {
+	if (cmd == NULL)
+		btree()->cmds->flag_to_exec = 1;
+	if (btree()->cmds->flag_to_exec == 1)
+		exit(126);
 	if (access(cmd, F_OK) != 0)
 	{
 		my_ffprintf(cmd, "command not found\n");
@@ -26,9 +30,11 @@ int handle_non_slash_commands(char *cmd, char **args, char **envp)
 		if (access(cmd, X_OK) == 0)
 		{
 			prepare_for_exec();
+		printf("faz parte 3\n");
+
 			execve(cmd, args, envp);
 			perror(cmd);
-			exit (127);
+			exit(127);
 		}
 		else
 			my_ffprintf(cmd, "Permission denied\n");
@@ -36,72 +42,69 @@ int handle_non_slash_commands(char *cmd, char **args, char **envp)
 	exit(126);
 }
 
-int	handle_absolute_path_cmd(char *cmd, char **args, char **envp)
+int	handle_slash_command(char *cmd, char **args, char **envp)
 {
-	char	*new_args[3];
-	if (strchr(cmd, '/'))
+	if (cmd == NULL)
+		btree()->cmds->flag_to_exec = 1;
+	if (btree()->cmds->flag_to_exec == 1)
+			exit(126);
+	if (access(cmd, F_OK) != 0)
 	{
-		if (access(cmd, F_OK) != 0)
+		my_ffprintf(cmd, "No such file or directory\n");
+		exit(127);
+	}
+	if (access(cmd, X_OK) == 0)
+	{
+		prepare_for_exec();
+		printf("faz parte 4\n");
+		execve(cmd, args, envp);
+		printf("executado\n");
+		if (errno == ENOEXEC)
 		{
-			my_ffprintf(cmd, "No such file or directory\n");
-			exit(127);
+			buildup_new_args(cmd, envp);
+			perror("/bin/bash");
+			exit(1);
 		}
-		else
-		{
-			if (access(cmd, X_OK) == 0)
-			{
-				prepare_for_exec();
-				execve(cmd, args, envp);
-				if (errno == ENOEXEC)
-				{
-					new_args[0] = "/bin/bash";
-					new_args[1] = cmd;
-					new_args[2] = NULL;
-					prepare_for_exec();
-					execve(new_args[0], new_args, envp);
-				}
-				perror(cmd);
-				exit (btree()->exit_status);
-			}
-			else
-				my_ffprintf(cmd, "Permission denied\n"), exit(126);
-		}
+		perror(cmd);
+		exit(btree()->exit_status);
 	}
 	else
-		handle_non_slash_commands(cmd, args, envp);
-	return (0);
+	{
+		my_ffprintf(cmd, "Permission denied\n");
+		exit(126);
+	}
 }
 
 int	handle_system_path_cmd_aux(char *cmd, char **args, char **envp)
 {
-	char	*new_args[3];
+	if (cmd == NULL)
+		btree()->cmds->flag_to_exec = 1;
+	if (btree()->cmds->flag_to_exec == 1)
+			exit(126);
 	if (access(cmd, F_OK) != 0)
 	{
 		my_ffprintf(cmd, "No such file or directory\n");
 		exit(126);
 	}
-	else
+	if (access(cmd, X_OK) == 0)
 	{
-		if (access(cmd, X_OK) == 0)
+		prepare_for_exec();
+		printf("faz parte 5\n");
+
+		execve(cmd, args, envp);
+		if (errno == ENOEXEC)
 		{
-			prepare_for_exec();
-			execve(cmd, args, envp);
-			if (errno == ENOEXEC)
-			{
-				new_args[0] = "/bin/bash";
-				new_args[1] = cmd;
-				new_args[2] = NULL;
-				prepare_for_exec();
-				execve(new_args[0], new_args, envp);
-			}
-			perror(cmd);
+			buildup_new_args(cmd, envp);
+			perror("/bin/bash");
 			exit(1);
 		}
-		else
-		{
-			my_ffprintf(cmd, "Permission denied\n");
-			exit(126);
-		}
+		perror(cmd);
+		exit(1);
+	}
+	else
+	{
+		my_ffprintf(cmd, "Permission denied\n");
+		exit(126);
 	}
 	return (0);
 }
@@ -121,14 +124,20 @@ int	handle_system_path_cmd(char *cmd, char **args, char **envp)
 	return (0);
 }
 
-int exec_path(char *cmd, char **args, char **envp)
+int	exec_path(char *cmd, char **args, char **envp)
 {
-    if (am_i_truly_myself(args[0]) && access(cmd, F_OK) == 0 && access(cmd, X_OK) == 0)
-        update_shell_level(1);
-    if (strchr(cmd, '/'))
-        return handle_absolute_path_cmd(cmd, args, envp);
-    if (is_system_path_command(cmd, envp))
-        return exec_system_path(cmd, args, envp);
-    my_ffprintf(cmd, "command not found\n");
-    exit (127);
+	if (btree()->cmds->flag_to_exec == 1)
+		return (-1);
+	if (am_i_truly_myself(args[0]) && access(cmd, F_OK) == 0 && access(cmd,
+			X_OK) == 0)
+		update_shell_level(1);
+	if (strchr(cmd, '/'))
+		return (handle_absolute_path_cmd(cmd, args, envp));
+	if (is_system_path_command(cmd, envp))
+		return (exec_system_path(cmd, args, envp));
+	my_ffprintf(cmd, "command not found\n");
+	exit(127);
 }
+
+
+	

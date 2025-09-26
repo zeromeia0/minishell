@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:54:32 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 15:31:16 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/25 13:32:57 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <termios.h>
 #include <unistd.h>
 
-/* void	print_files(t_infile *file)
+void	print_files(t_infile *file)
 {
 	while (file)
 	{
@@ -45,23 +45,23 @@ void	print_cmds(t_cmds *cmds)
 	}
 }
 
-void	print_tree(t_binary *tree, int sub)
-{
-	static t_binary	tree;
+// void	print_tree(t_binary *tree, int sub)
+// {
+// 	static t_binary	tree;
 
-	// if (sub)
-	// printf( "\nentering subshell\n");
-	if (tree == NULL)
-		return ;
-	print_tree(tree->subshell, 1);
-	print_tree(tree->left, 0);
-	print_tree(tree->right, 0);
-	if (tree->left == NULL && tree->right == NULL)
-		if (tree->cmds)
-			print_cmds(tree->cmds);
-	if (sub)
-		printf("\n^exiting shubshell^\n");
-} */
+// 	// if (sub)
+// 	// printf( "\nentering subshell\n");
+// 	if (tree == NULL)
+// 		return ;
+// 	print_tree(tree->subshell, 1);
+// 	print_tree(tree->left, 0);
+// 	print_tree(tree->right, 0);
+// 	if (tree->left == NULL && tree->right == NULL)
+// 		if (tree->cmds)
+// 			print_cmds(tree->cmds);
+// 	if (sub)
+// 		printf("\n^exiting shubshell^\n");
+// } 
 t_binary	*btree(void)
 {
 	static t_binary	tree;
@@ -85,30 +85,28 @@ static void	initialize_stuff(int argc, char *argv[], char **envp)
 
 int	main(int argc, char *argv[], char **envp)
 {
-	char	*input;
-	int		exit_status;
-
 	initialize_stuff(argc, argv, envp);
 	while (1)
 	{
-		input = readline("minishell$ ");
-		if (!input)
+		btree()->input = readline("minishell$ ");
+		if (!btree()->input)
 			break ;
 		restart_signals();
-		add_history(input);
-		if (*input == '\0')
+		add_history(btree()->input);
+		if (*btree()->input == '\0')
 		{
-			free(input);
+			free(btree()->input);
 			continue ;
 		}
-		if (parsing(input) == 0)
+		if (parsing(btree()->input) == 0)
 		{
-			exit_status = exec_tree(btree());
+			btree()->main_exit = exec_tree(btree(), argv, btree()->env);
 			restart_signals();
-			free(input);
+			free(btree()->input);
 			binary_clear(btree());
 		}
 	}
 	free_matrix(btree()->env);
-	return (clear_env_list(), printf("Closing Minishell\n"), btree()->exit_status);
+	return (clear_env_list(), printf("Closing Minishell\n"),
+		btree()->exit_status);
 }

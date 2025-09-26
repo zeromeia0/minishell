@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:17:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 09:10:17 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/24 22:48:13 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ char	*builtin_cd_aux(char **args)
 			return (my_ffprintf(target, "cd: OLDPWD not set\n"), NULL);
 		printf("%s\n", target);
 	}
-	else if(args[2])
-		return(my_ffprintf(args[0], "too many arguments\n"), NULL);
+	else if (args[2])
+		return (my_ffprintf(args[0], "too many arguments\n"), NULL);
 	else
 		target = args[1];
 	return (target);
@@ -47,7 +47,7 @@ static char	*pwd_updater(char *oldpwd, char *target)
 		free(newpwd);
 	}
 	else
-		ft_putstr_fd("cd: failed to update PWD\n", 2); //maybe i should add a check here?
+		ft_putstr_fd("cd: failed to update PWD\n", 2);
 	return (newpwd);
 }
 
@@ -68,6 +68,6 @@ int	builtin_cd(char **args)
 	if (getcwd(buf, sizeof(buf)) != NULL)
 		update_env_var("PWD=", buf);
 	else
-		pwd_updater(oldpwd, target); // why tf did I put this here?
+		pwd_updater(oldpwd, target);
 	return (0);
 }

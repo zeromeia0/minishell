@@ -6,7 +6,7 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 19:34:06 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/09/26 11:51:41 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <stdio.h>
 # include <sys/stat.h>
 # include <termios.h>
+#include <sys/wait.h>
 # include <signal.h>
 
 typedef struct s_wild
@@ -64,6 +65,7 @@ typedef struct s_os_envs
 
 typedef struct s_cmds
 {
+/*
 	int				expanded;
 	char			**cmd;
 	t_infile		*infiles;
@@ -156,6 +158,130 @@ void		handle_quit(int sig);
 void		process_all_heredocs(t_infile *in, int fd[2]);
 int			is_numeric(const char *s);
 char		*my_realpath(const char *path, char *resolved_path);
+*/
+	int						expanded;
+	int						flag_to_exec;
+	char					**cmd;
+	t_infile				*infiles;
+	t_outfile				*outfiles;
+	struct s_cmds			*next;
+}							t_cmds;
+
+typedef struct s_binary
+{
+	char					*logic;
+	t_type					type;
+	int						sublvl;
+	char					*input;
+	int						left_ret;
+	int						right_ret;
+	char					*print_cmd;
+	int						subshell_ret;
+	int						main_exit;
+	int					global_signal;
+	int					exit_status;
+	char					**mat;
+	t_os_envs				*os_env;
+	char					**env;
+	t_cmds					*cmds;
+	struct s_binary			*up;
+	struct s_binary			*left;
+	struct s_binary			*right;
+	struct s_binary			*subshell;
+	struct termios			orig_termios; //<-- VINI TESTEANDO UMA CRAZY THING
+	struct stat cmd_stat;
+	struct stat self_stat;
+}	t_binary;
+
+int							parsing(char *str);
+int							is_builtin(char *cmd);
+int							builtin_cd(char **args);
+int							builtin_pwd(void);
+int							builtin_echo(char **args);
+int							builtin_exit(char **args, char **envp);
+int							builtin_unset(char **args);
+int							exec_builtin(char *cmd, char **args, char **envp);
+int							builtin_export(char **args);
+int							exec_path(char *cmd, char **args, char **envp);
+int							exec_tree(t_binary *tree, char **args, char **envp);
+int							exec_pipes(t_cmds *cmd, char **env);
+int							exec_redirections(t_cmds *cmd);
+int							has_redir(t_cmds *cmd);
+int							print_linux_env_list(void);
+int							add_temp_var(const char *str);
+int							update_shell_level(int amount);
+int							make_update_env(const char *str);
+int							am_i_truly_myself(const char *cmd);
+int							has_builtin(t_cmds *cmd);
+int							is_redir_token(const char *s);
+int							count_tokens(t_cmds *cmd);
+int							check_path_access(char *path, char *cmd);
+int							is_system_path_command(char *cmd, char **envp);
+int							exec_system_path(char *cmd, char **args,
+								char **envp);
+int							count_it(char *str, int c);
+int							add_new_env_var(t_os_envs **env_list,
+								const char *str);
+int							exec_single_cmd_aux(t_cmds *cmd);
+bool						is_n_flag(const char *arg);
+void						init_tree(char **mat);
+void						export_print_env_list(void);
+void						free_matrix(char **table);
+void						builtin_env(char **env);
+void						initialize_pwd(char **envp);
+void						handle_sigint(int sig);
+void						update_env_var(const char *key, const char *value);
+void						discard_heredoc(t_infile *infiles);
+void						init_shell_meta(void);
+void						enhanced_sorted_stoled_from_jlima(t_os_envs *envs);
+void						my_ffprintf(char *cmd, char *which_message);
+void						expand_args(t_cmds *cmd);
+void						prepare_for_exec(void);
+void						clear_env_list(void);
+void						rebuild_env_list(t_os_envs **env_list,
+								char **env_vars);
+void						free_env_list(t_os_envs *head);
+char						*aspas(char *str, int c);
+char						*remove_it(char *str, int c);
+char						*remove_aspas(char *str);
+char						*find_path(char **envp, char *which_env);
+char						*find_path_in_list(t_os_envs *env_list,
+								const char *key);
+char						*get_env_var(char *name, char **envp);
+char						*logical_pwd_update(const char *oldpwd,
+								const char *target);
+char						**array_to_exec(t_cmds *cmd);
+char						**list_to_char(t_os_envs *envs);
+char						**get_paths_to_search(char **envp);
+char						**split_path(char **envp);
+t_binary					*btree(void);
+t_os_envs					**get_env_list(void);
+t_os_envs					*create_env_node(char *path);
+void						handle_quit(int sig);
+void process_all_heredocs(t_infile *in, int fd[2]);
+int is_numeric(const char *s);
+int	add_new_env_var(t_os_envs **env_list, const char *str);
+int	make_update_env(const char *str);
+size_t	get_env_key_length(const char *str);
+int	make_update_env_aux(t_os_envs **env_list, const char *str,
+		size_t len);
+int	handle_heredocs(t_cmds *cmd);
+int	handle_regular_redirections(t_cmds *cmd);
+void	pid_equal_zero_double(t_cmds *cmd, int p[2]);
+int	exec_single_left(t_infile *in);
+int exec_out_redirections(t_outfile *out);
+int	exec_double_left(t_infile *in, t_cmds *cmd);
+void	buildup_new_args(char *cmd, char **envp);
+int	handle_absolute_path_cmd(char *cmd, char **args, char **envp);
+int	handle_slash_command(char *cmd, char **args, char **envp);
+int	handle_non_slash_commands(char *cmd, char **args, char **envp);
+int	has_heredocs(t_cmds *cmd);
+int	process_command(t_cmds *cmd, int *first_fd, char **env);
+void	print_cmds(t_cmds *cmds);
+void process_last_heredoc(t_infile *in, int fd[2]);
+
+
+
 
 // struct_clear.c
 void		binary_clear(t_binary *binary);

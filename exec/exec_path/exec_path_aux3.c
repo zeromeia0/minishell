@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:41:23 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/23 14:19:38 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/25 15:45:44 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,21 @@ int	exec_system_path_aux1(char **envp, char ***paths_to_search)
 {
 	*paths_to_search = split_path(envp);
 	if (!*paths_to_search)
-		{write(2, "PATH not found\n", 15);
-		exit(0);}
+	{
+		write(2, "PATH not found\n", 15);
+		exit(0);
+	}
 	return (0);
 }
 
 int	exec_system_path_aux_aux(char *full_path, char **args, char **envp)
 {
+	if (btree()->cmds->flag_to_exec == 1)
+		return (-1);
 	if (access(full_path, X_OK) == 0)
 	{
 		prepare_for_exec();
+		// printf("faz parte 1\n");
 		execve(full_path, args, envp);
 		perror(full_path);
 		return (-1);
