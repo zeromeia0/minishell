@@ -30,8 +30,6 @@ void get_single_heredoc(char *eof, int fd[2])
 
     if (btree()->global_signal == 130)
         exit(130);
-    
-    // Ensure we read from terminal for each heredoc
     tty_fd = open("/dev/tty", O_RDONLY);
     if (tty_fd != -1)
     {
@@ -59,8 +57,6 @@ void get_single_heredoc(char *eof, int fd[2])
             exit(130);
         str = readline("> ");
     }
-    
-    // Only print warning if we reached EOF (Ctrl+D), not if interrupted by SIGINT
     if (!str && btree()->global_signal != 130) 
     {
         fprintf(stderr, "warning: here-document delimited by end-of-file (wanted `%s')\n", delimiter);
@@ -80,7 +76,6 @@ void process_heredoc_recursive_simple(t_infile *current, int fd[2])
         get_single_heredoc(current->file, fd);
     }
     
-    // Process next node (whether it's a heredoc or not)
     process_heredoc_recursive_simple(current->next, fd);
 }
 
@@ -91,20 +86,17 @@ void process_all_heredocs(t_infile *in, int fd[2])
     char *line;
     int tty_fd;
 
-    // Find the last heredoc
     while (current)
     {
         if (ft_strcmp(current->token, "<<") == 0)
             last = current;
         current = current->next;
     }
-
     current = in;
     while (current)
     {
         if (ft_strcmp(current->token, "<<") == 0)
         {
-            // Open /dev/tty for reading heredoc input
             tty_fd = open("/dev/tty", O_RDONLY);
             if (tty_fd != -1)
             {
@@ -118,7 +110,6 @@ void process_all_heredocs(t_infile *in, int fd[2])
             line = readline("> ");
             while (line && ft_strcmp(line, remove_aspas(current->file)) != 0)
             {
-                // Only write to pipe if this is the last heredoc
                 if (current == last && fd)
                 {
                     char *expanded = expand(line, 0, 0, 1);
@@ -148,7 +139,7 @@ void process_last_heredoc(t_infile *in, int fd[2])
     while (in)
     {
         if (ft_strcmp(in->token, "<<") == 0)
-            last = in;  // keep updating → ends up with the last one
+            last = in;
         in = in->next;
     }
 
