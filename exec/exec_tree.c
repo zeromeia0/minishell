@@ -6,11 +6,12 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/25 22:39:00 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/27 16:07:19 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../sigma_minishell.h"
+#include <signal.h>
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -39,6 +40,8 @@ int	exec_single_cmd(t_cmds *cmd)
 {
 	pid_t	pid;
 	int		status;
+	signal(SIGTTOU, SIG_IGN);
+	signal(SIGTTIN, SIG_IGN);
 
 	if (!cmd || !cmd->cmd)
 		return (btree()->exit_status);
@@ -82,9 +85,7 @@ int	exec_node(t_binary *node, char **args, char **envp)
 {
 	if (!node)
 		return (0);
-	// if (node->cmds->cmd == NULL)
-	// 	node->cmds->flag_to_exec = 1;
-	if (node->cmds != NULL/*  && node->cmds->flag_to_exec == 0 */)
+	if (node->cmds != NULL)
 	{
 		expand_args(node->cmds);
 		if (node->cmds->next)

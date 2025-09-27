@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipes_aux.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 08:43:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/25 14:25:38 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/27 16:31:03 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,18 @@ void	execute_child(t_cmds *cmd, int first_fd, int fd[2], char **env)
 	}
 	if (is_builtin(cleaned_cmd[0]))
 	{
+		printf("I SEE A BUILTIN\n");
 		status = exec_builtin(cleaned_cmd[0], cleaned_cmd, env);
+		printf("BUILTIN EXECUTED\n");
+		
 		free_matrix(cleaned_cmd);
 		exit(status);
 	}
 	else
 	{
+		// printf("I SEE A PATH CMD\n");
 		exec_path(cleaned_cmd[0], cleaned_cmd, env);
+		// printf("THE PATH CMD WAS EXECUTED\n");
 		free_matrix(cleaned_cmd);
 		exit(127);
 	}
@@ -75,11 +80,8 @@ int	process_command(t_cmds *cmd, int *first_fd, char **env)
 	int		fd[2];
 	pid_t	pid;
 
-	// fprintf(stderr, "PUTTING THE FLAG exec\n");
-	
 	if (cmd->cmd == NULL)
 		cmd->flag_to_exec = 1;
-	// fprintf(stderr, "PUTTING THE FLAG exec 2\n");
 	if (cmd->flag_to_exec == 0)
 	{
 		if (setup_pipe(cmd, first_fd, fd) == -1)
