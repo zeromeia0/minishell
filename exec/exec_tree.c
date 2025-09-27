@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/27 16:07:19 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/27 17:09:30 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,23 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <unistd.h>
+
+int cmd_has_heredoc(t_cmds *cmd)
+{
+    t_infile *in = NULL;
+
+    if (!cmd)
+        return 0;
+    in = cmd->infiles;
+    while (in)
+    {
+        if (in->token && ft_strcmp(in->token, "<<") == 0)
+            return 1;
+        in = in->next;
+    }
+    return 0;
+}
+
 
 static void	exec_child(t_cmds *cmd)
 {
@@ -36,34 +53,48 @@ static void	exec_child(t_cmds *cmd)
 	free_matrix(updated_envs);
 }
 
-int	exec_single_cmd(t_cmds *cmd)
+int exec_single_cmd(t_cmds *cmd)
 {
-	pid_t	pid;
-	int		status;
-	signal(SIGTTOU, SIG_IGN);
-	signal(SIGTTIN, SIG_IGN);
+    pid_t   pid;
+    int     status;
+    int     shell_should_ignore = 0;
 
-	if (!cmd || !cmd->cmd)
-		return (btree()->exit_status);
-	if (cmd->flag_to_exec == 1)
-		return (btree()->exit_status);
-	if (has_builtin(cmd) && !has_redir(cmd))
-		return (exec_single_cmd_aux(cmd));
-	pid = fork();
-	if (pid == 0)
-		exec_child(cmd);
-	else
-	{
-		signal(SIGINT, set_to_onethirty);
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			btree()->exit_status = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-			btree()->exit_status = 130;
-		return (btree()->exit_status);
-	}
-	return (1);
+    signal(SIGTTOU, SIG_IGN);
+    signal(SIGTTIN, SIG_IGN);
+
+    if (!cmd || !cmd->cmd)
+        return (btree()->exit_status);
+    if (cmd->flag_to_exec == 1)
+        return (btree()->exit_status);
+    if (has_builtin(cmd) && !has_redir(cmd))
+        return (exec_single_cmd_aux(cmd));
+    if (cmd_has_heredoc(cmd))
+    {
+        shell_should_ignore = 1;
+        signal(SIGINT, SIG_IGN);
+    }
+
+    pid = fork();
+    if (pid == 0)
+        exec_child(cmd);
+    else
+    {
+        if (!shell_should_ignore)
+            signal(SIGINT, set_to_onethirty);
+        waitpid(pid, &status, 0);
+        if (shell_should_ignore)
+            restart_signals();
+        else
+            restart_signals();
+        if (WIFEXITED(status))
+            btree()->exit_status = WEXITSTATUS(status);
+        else if (WIFSIGNALED(status))
+            btree()->exit_status = 130;
+        return (btree()->exit_status);
+    }
+    return (1);
 }
+
 
 static int	exec_subshell(t_binary *subshell, char **args, char **envp)
 {
