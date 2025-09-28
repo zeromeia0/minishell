@@ -76,16 +76,13 @@ void process_heredoc_recursive_simple(t_infile *current, int fd[2])
         return;
     
     if (ft_strcmp(current->token, "<<") == 0)
-    {
         get_single_heredoc(current->file, fd);
-    }
-    
-    // Process next node (whether it's a heredoc or not)
     process_heredoc_recursive_simple(current->next, fd);
 }
 
 void process_all_heredocs(t_infile *in, int fd[2])
 {
+	printf("PROCESSING ALL HEREDOCS FELLA\n");
     process_heredoc_recursive_simple(in, fd);
 }
 

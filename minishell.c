@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:54:32 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/27 17:05:13 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/28 16:38:36 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	main(int argc, char *argv[], char **envp)
 		btree()->input = readline("minishell$ ");
 		if (!btree()->input)
 			break ;
-		printf("restart ONE\n"), restart_signals();
+		/* printf("restart ONE\n"),  */restart_signals();
 		add_history(btree()->input);
 		if (*btree()->input == '\0')
 		{
@@ -101,7 +101,7 @@ int	main(int argc, char *argv[], char **envp)
 		if (parsing(btree()->input) == 0)
 		{
 			btree()->main_exit = exec_tree(btree(), argv, btree()->env);
-			printf("restart TWO\n"), restart_signals();
+			/* printf("restart TWO\n"),  */restart_signals();
 			free(btree()->input);
 			binary_clear(btree());
 		}

@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:08:05 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/25 22:03:58 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/28 16:47:12 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	exec_single_left(t_infile *in)
 
 int	exec_double_left(t_infile *in, t_cmds *cmd)
 {
+	printf("EXECUTING DOULB LEFT\n");
 	int		p[2];
 	pid_t	pid;
 	int		status;

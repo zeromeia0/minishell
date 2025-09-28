@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:44:52 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/27 16:30:03 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/28 16:40:08 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	handle_slash_command(char *cmd, char **args, char **envp)
 			exit(126);
 	if (access(cmd, F_OK) != 0)
 	{
-		my_ffprintf(cmd, "No such file or directory\n");
+		my_ffprintf(cmd, "No such file or directory 2\n");
 		exit(127);
 	}
 	if (access(cmd, X_OK) == 0)
@@ -83,7 +83,7 @@ int	handle_system_path_cmd_aux(char *cmd, char **args, char **envp)
 			exit(126);
 	if (access(cmd, F_OK) != 0)
 	{
-		my_ffprintf(cmd, "No such file or directory\n");
+		my_ffprintf(cmd, "No such file or directory 3\n");
 		exit(126);
 	}
 	if (access(cmd, X_OK) == 0)

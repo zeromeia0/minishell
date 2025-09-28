@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/27 17:09:30 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/28 16:45:56 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,28 +181,33 @@ int ensure_outfile(t_outfile *out)
     return 0;
 }
 
-int	check_order(t_binary *tree, char **args, char **envp)
+int check_order(t_binary *tree, char **args, char **envp)
 {
-	t_infile	*current_infile;
-	t_cmds		*current_cmds;
-	t_outfile	*current_outfile;
+    t_infile    *current_infile;
+    t_cmds      *current_cmds;
+    t_outfile   *current_outfile;
 
-	if (!tree->cmds || !tree->cmds->infiles)
-		return (0);
-	current_infile = tree->cmds->infiles;
-	while (current_infile)
-	{
-		if (ft_strncmp(current_infile->token, "<<", 2) != 0) // skip heredocs
-		{
-			if (access(current_infile->file, F_OK) != 0)
-				return (btree()->cmds->flag_to_exec = 1,
-						my_ffprintf(current_infile->file, "No such file or directory\n"), 0);
-			if (access(current_infile->file, R_OK) != 0)
-				return (btree()->cmds->flag_to_exec = 1,
-						my_ffprintf(current_infile->file, "Permission denied\n"), 0);
-		}
-		current_infile = current_infile->next;
-	}
+    if (!tree->cmds)
+        return (0);
+
+    if (handle_heredocs(tree->cmds) < 0)
+        return (btree()->cmds->flag_to_exec = 1, -1);
+
+    // 🔹 2. Now validate regular infiles (< file)
+    current_infile = tree->cmds->infiles;
+    while (current_infile)
+    {
+        if (ft_strncmp(current_infile->token, "<<", 2) != 0) // skip heredocs
+        {
+            if (access(current_infile->file, F_OK) != 0)
+                return (btree()->cmds->flag_to_exec = 1,
+                        my_ffprintf(current_infile->file, "No such file or directory 1\n"), 0);
+            if (access(current_infile->file, R_OK) != 0)
+                return (btree()->cmds->flag_to_exec = 1,
+                        my_ffprintf(current_infile->file, "Permission denied\n"), 0);
+        }
+        current_infile = current_infile->next;
+    }
 	if (!tree->cmds->cmd)
 		return (0);
 	current_cmds = tree->cmds;
