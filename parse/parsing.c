@@ -82,7 +82,7 @@ void process_heredoc_recursive_simple(t_infile *current, int fd[2])
 
 void process_all_heredocs(t_infile *in, int fd[2])
 {
-	printf("PROCESSING ALL HEREDOCS FELLA\n");
+	// printf("PROCESSING ALL HEREDOCS FELLA\n");
     process_heredoc_recursive_simple(in, fd);
 }
 

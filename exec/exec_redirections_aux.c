@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 23:05:16 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/28 16:47:30 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/28 19:29:16 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	handle_heredocs(t_cmds *cmd)
 {
-	printf("INSIDE HANDLE HEREDOCS\n");
+	// printf("INSIDE HANDLE HEREDOCS\n");
 	t_infile	*in;
 
 	in = cmd->infiles;
@@ -52,7 +52,7 @@ int	handle_regular_redirections(t_cmds *cmd)
 
 void	pid_equal_zero_double(t_cmds *cmd, int p[2])
 {
-	printf("PID IS EQUAL TO ZERO FUNCTIONS\n");
+	// printf("PID IS EQUAL TO ZERO FUNCTIONS\n");
 	close(p[0]);
 	signal(SIGINT, handle_heredoc);
 	process_all_heredocs(cmd->infiles, p);

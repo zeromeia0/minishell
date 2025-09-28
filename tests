@@ -13,8 +13,6 @@
 (out1 and out2 dont have perms) < in1 < in2 cat > out1 > out2
 -- OKAY
 
-
-
 (out1 and out2 dont have perms) << eof << eof cat > out1 > out2
 (out1 or out2 dont have perms) << eof << eof cat > out1 > out2
 
@@ -23,8 +21,7 @@
 
 (ctrl d before first eof) << eof << eof cat > out1 > out2
 (ctrl d after first eof) << eof << eof cat > out1 > out2
-
-
+-- OKAY
 
 
 < in1 < in2 cat > out1 > out2 | ls <-- ls doesn't work if first pipe command doesn't work
@@ -33,15 +30,22 @@
 
 
 < eof1 << eof cat > out1 > out2 <--- Heredoc should be executed before permission denied shows up
+    FIXED
+< eof1 << eof cat > out1 > out2 <--- EXECUTING HEREDOC TWICE
+    FIXED
+
+< eof1 << here AND cat < eof1 << here <--- Have different behaviour, study it
+    FIXED
 
 
 << eof << eof cat > out1 > out2 <-- CONTROL C IS LAKCING because of cat. control c is skipping but executing the stuff. COntrol c should stop everything
 << eof << eof cat > out1 > out2 | echo salve <--- CONTROL C STOPS EVERYTHING IN THIS CASE, WHY?
+    FIXED
 
 
-< eof1 << here AND cat < eof1 << here <--- Have different behaviour, study it
 
-invalid free issue
+<< eof << eof cat > out1 > out2 <--- PRINTING BOTH EOF ON OUT2 INSTEAD OF JUST THE LAST
+# invalid free issue
 
 
 

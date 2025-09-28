@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:08:05 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/28 19:23:03 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/28 19:30:21 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	exec_out_redirections(t_outfile *out)
 
 int exec_redirections(t_cmds *cmd)
 {
-	printf("INSIDE REDIRECTIONS\n");
+	// printf("INSIDE REDIRECTIONS\n");
     t_infile *in;
 
     if (cmd->cmd == NULL)

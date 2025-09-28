@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/28 19:25:14 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/28 19:33:38 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,15 +188,8 @@ int check_order(t_binary *tree, char **args, char **envp)
 
     if (!tree->cmds)
         return (0);
-
-    // 🔹 1. Process heredocs first (only once, early)
-    // if (process_heredocs_and_checks(tree->cmds) < 0)
-    //     return (btree()->cmds->flag_to_exec = 1, -1);
-	
 	if (handle_heredocs(tree->cmds) < 0)
-		return (printf("INSIDE CHECK ORDER\n"), btree()->cmds->flag_to_exec = 1, -1);
-
-    // 🔹 2. Validate regular infiles (< file)
+		return (btree()->cmds->flag_to_exec = 1, -1);
     current_infile = tree->cmds->infiles;
     while (current_infile)
     {
@@ -211,8 +204,6 @@ int check_order(t_binary *tree, char **args, char **envp)
         }
         current_infile = current_infile->next;
     }
-
-    // 🔹 3. Validate executables
     if (!tree->cmds->cmd)
         return (0);
     current_cmds = tree->cmds;
@@ -237,8 +228,6 @@ int check_order(t_binary *tree, char **args, char **envp)
             return (0);
         current_cmds = current_cmds->next;
     }
-
-    // 🔹 4. Validate outfiles
     if (!tree->cmds->outfiles)
         return (0);
     current_outfile = tree->cmds->outfiles;
@@ -248,7 +237,6 @@ int check_order(t_binary *tree, char **args, char **envp)
             return 0;
         current_outfile = current_outfile->next;
     }
-
     return (1);
 }
 

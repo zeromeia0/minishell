@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 08:43:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/27 16:31:03 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/28 19:37:24 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,13 @@ void	execute_child(t_cmds *cmd, int first_fd, int fd[2], char **env)
 	}
 	if (is_builtin(cleaned_cmd[0]))
 	{
-		printf("I SEE A BUILTIN\n");
 		status = exec_builtin(cleaned_cmd[0], cleaned_cmd, env);
-		printf("BUILTIN EXECUTED\n");
-		
 		free_matrix(cleaned_cmd);
 		exit(status);
 	}
 	else
 	{
-		// printf("I SEE A PATH CMD\n");
 		exec_path(cleaned_cmd[0], cleaned_cmd, env);
-		// printf("THE PATH CMD WAS EXECUTED\n");
 		free_matrix(cleaned_cmd);
 		exit(127);
 	}
