@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/28 19:20:33 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/28 23:16:47 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,7 @@ int	has_heredocs(t_cmds *cmd);
 int	process_command(t_cmds *cmd, int *first_fd, char **env);
 void	print_cmds(t_cmds *cmds);
 int	process_heredocs_and_checks(t_cmds *cmd);
+void get_single_heredoc(char *eof, int fd[2]);
 
 
 

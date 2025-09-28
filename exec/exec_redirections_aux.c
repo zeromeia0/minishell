@@ -6,29 +6,46 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 23:05:16 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/28 19:29:16 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/28 23:17:44 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../sigma_minishell.h"
 
+// int	handle_heredocs(t_cmds *cmd)
+// {
+// 	// printf("INSIDE HANDLE HEREDOCS\n");
+// 	t_infile	*in;
+
+// 	in = cmd->infiles;
+// 	while (in)
+// 	{
+// 		if (ft_strcmp(in->token, "<<") == 0)
+// 		{
+// 			if (exec_double_left(cmd->infiles, cmd) < 0)
+// 				return (-1);
+// 			break ;
+// 		}
+// 		in = in->next;
+// 	}
+// 	return (0);
+// }
+
 int	handle_heredocs(t_cmds *cmd)
 {
-	// printf("INSIDE HANDLE HEREDOCS\n");
-	t_infile	*in;
+    t_infile	*in;
 
-	in = cmd->infiles;
-	while (in)
-	{
-		if (ft_strcmp(in->token, "<<") == 0)
-		{
-			if (exec_double_left(cmd->infiles, cmd) < 0)
-				return (-1);
-			break ;
-		}
-		in = in->next;
-	}
-	return (0);
+    in = cmd->infiles;
+    while (in)
+    {
+        if (ft_strcmp(in->token, "<<") == 0)
+        {
+            if (exec_double_left(in, cmd) < 0)  // Pass 'in' instead of 'cmd->infiles'
+                return (-1);
+        }
+        in = in->next;
+    }
+    return (0);
 }
 
 int	handle_regular_redirections(t_cmds *cmd)
