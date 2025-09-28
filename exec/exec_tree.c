@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/28 16:45:56 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/28 19:25:14 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,6 @@ int ensure_outfile(t_outfile *out)
     close(fd); // Close immediately; actual redirection happens in exec_out_redirections
     return 0;
 }
-
 int check_order(t_binary *tree, char **args, char **envp)
 {
     t_infile    *current_infile;
@@ -190,10 +189,14 @@ int check_order(t_binary *tree, char **args, char **envp)
     if (!tree->cmds)
         return (0);
 
-    if (handle_heredocs(tree->cmds) < 0)
-        return (btree()->cmds->flag_to_exec = 1, -1);
+    // 🔹 1. Process heredocs first (only once, early)
+    // if (process_heredocs_and_checks(tree->cmds) < 0)
+    //     return (btree()->cmds->flag_to_exec = 1, -1);
+	
+	if (handle_heredocs(tree->cmds) < 0)
+		return (printf("INSIDE CHECK ORDER\n"), btree()->cmds->flag_to_exec = 1, -1);
 
-    // 🔹 2. Now validate regular infiles (< file)
+    // 🔹 2. Validate regular infiles (< file)
     current_infile = tree->cmds->infiles;
     while (current_infile)
     {
@@ -208,41 +211,47 @@ int check_order(t_binary *tree, char **args, char **envp)
         }
         current_infile = current_infile->next;
     }
-	if (!tree->cmds->cmd)
-		return (0);
-	current_cmds = tree->cmds;
-	while (current_cmds)
-	{
-		char	**something = buildup_path(current_cmds, args, envp);
-		int		i = 0;
-		int		valid = 0;
 
-		while (something && something[i])
-		{
-			if (access(something[i], F_OK) == 0 && access(something[i], X_OK) == 0)
-			{
-				valid = 1;
-				break;
-			}
-			i++;
-		}
-		if (something)
-			ft_free_matrix(something);
-		if (!valid)
-			return (0);
-		current_cmds = current_cmds->next;
-	}
-	if (!tree->cmds->outfiles)
-		return (0);
-	current_outfile = tree->cmds->outfiles;
-	while (current_outfile)
-	{
-		if (ensure_outfile(current_outfile) < 0)
-			return 0;
-		current_outfile = current_outfile->next;
-	}
-	return (1);
+    // 🔹 3. Validate executables
+    if (!tree->cmds->cmd)
+        return (0);
+    current_cmds = tree->cmds;
+    while (current_cmds)
+    {
+        char    **something = buildup_path(current_cmds, args, envp);
+        int     i = 0;
+        int     valid = 0;
+
+        while (something && something[i])
+        {
+            if (access(something[i], F_OK) == 0 && access(something[i], X_OK) == 0)
+            {
+                valid = 1;
+                break;
+            }
+            i++;
+        }
+        if (something)
+            ft_free_matrix(something);
+        if (!valid)
+            return (0);
+        current_cmds = current_cmds->next;
+    }
+
+    // 🔹 4. Validate outfiles
+    if (!tree->cmds->outfiles)
+        return (0);
+    current_outfile = tree->cmds->outfiles;
+    while (current_outfile)
+    {
+        if (ensure_outfile(current_outfile) < 0)
+            return 0;
+        current_outfile = current_outfile->next;
+    }
+
+    return (1);
 }
+
 
 
 // < in1 < in2 /bin/cat > out1 > out2

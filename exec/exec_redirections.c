@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:08:05 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/28 16:53:14 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/28 19:23:03 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,13 +110,14 @@ int	exec_out_redirections(t_outfile *out)
 
 int exec_redirections(t_cmds *cmd)
 {
+	printf("INSIDE REDIRECTIONS\n");
     t_infile *in;
 
     if (cmd->cmd == NULL)
         cmd->flag_to_exec = 1;
 
-    if (handle_heredocs(cmd) < 0)
-        return (-1);
+    // if (handle_heredocs(cmd) < 0)
+    //     return (-1);
 
     // apply heredoc input fds here
     in = cmd->infiles;
