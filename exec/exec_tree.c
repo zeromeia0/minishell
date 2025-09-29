@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/28 19:33:38 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/29 09:42:27 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,7 +251,7 @@ int	exec_tree(t_binary *tree, char **args, char **envp)
 {
 	int	ret_left;
 
-	if (btree()->cmds->flag_to_exec == 1)
+	if (btree()->cmds && btree()->cmds->flag_to_exec == 1)
 		return (0);
 	check_order(tree, args, envp);
 	if (btree()->global_signal == 130)
