@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 08:43:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/28 19:37:24 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/29 21:17:48 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void	execute_child(t_cmds *cmd, int first_fd, int fd[2], char **env)
 	int		status;
 
 	setup_child_fds(first_fd, fd, cmd);
-	if (has_redir(cmd))
-		exec_redirections(cmd);
+	// if (has_redir(cmd))
+	// 	exec_redirections(cmd); // THIS FIXED DUP 2 BAD FD ERROR
 	cleaned_cmd = array_to_exec(cmd);
 	if (!cleaned_cmd || !cleaned_cmd[0])
 	{

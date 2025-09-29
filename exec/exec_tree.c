@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/29 09:42:27 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/29 21:42:07 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,25 +131,26 @@ int	exec_node(t_binary *node, char **args, char **envp)
 
 char **buildup_path(t_cmds *cmd, char **args, char **envp)
 {
-    char **final_str;
+    char **final_str = NULL;
     char **paths_to_search;
     int i = 0;
-    int path_count;
 
     paths_to_search = get_paths_to_search(envp);
-    path_count = ft_matlen(paths_to_search);
-    final_str = malloc(sizeof(char *) * (path_count + 1));
-    if (!final_str)
-        return NULL;
-
+    int path_count = ft_matlen(paths_to_search);
     if (has_builtin(cmd))
     {
+        final_str = malloc(sizeof(char *) * 2);
+        if (!final_str)
+            return NULL;
         final_str[0] = ft_strdup(cmd->cmd[0]);
         final_str[1] = NULL;
         return final_str;
     }
-    else if (is_system_path_command(cmd->cmd[0], envp))
+    if (is_system_path_command(cmd->cmd[0], envp))
     {
+        final_str = malloc(sizeof(char *) * (path_count + 1));
+        if (!final_str)
+            return NULL;
         while (paths_to_search[i])
         {
             char *tmp = ft_strjoin(paths_to_search[i], "/");
@@ -158,7 +159,12 @@ char **buildup_path(t_cmds *cmd, char **args, char **envp)
             i++;
         }
         final_str[i] = NULL;
+        return final_str;
     }
+    final_str = malloc(sizeof(char *));
+    if (!final_str)
+        return NULL;
+    final_str[0] = NULL;
     return final_str;
 }
 
@@ -180,6 +186,7 @@ int ensure_outfile(t_outfile *out)
     close(fd); // Close immediately; actual redirection happens in exec_out_redirections
     return 0;
 }
+
 int check_order(t_binary *tree, char **args, char **envp)
 {
     t_infile    *current_infile;
@@ -197,7 +204,7 @@ int check_order(t_binary *tree, char **args, char **envp)
         {
             if (access(current_infile->file, F_OK) != 0)
                 return (btree()->cmds->flag_to_exec = 1,
-                        my_ffprintf(current_infile->file, "No such file or directory 1\n"), 0);
+                        my_ffprintf(current_infile->file, "No such file or directory\n"), 0);
             if (access(current_infile->file, R_OK) != 0)
                 return (btree()->cmds->flag_to_exec = 1,
                         my_ffprintf(current_infile->file, "Permission denied\n"), 0);
@@ -222,8 +229,10 @@ int check_order(t_binary *tree, char **args, char **envp)
             }
             i++;
         }
+        // printf("IM GONNA FREE IT\n");
         if (something)
             ft_free_matrix(something);
+        // printf("I FREED IT\n");
         if (!valid)
             return (0);
         current_cmds = current_cmds->next;
