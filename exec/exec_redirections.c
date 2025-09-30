@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirections.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:08:05 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 09:59:55 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/30 16:32:10 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../sigma_minishell.h"
+#include <signal.h>
 #include <stdio.h>
 
 char	**array_to_exec(t_cmds *cmd)
@@ -37,10 +38,12 @@ char	**array_to_exec(t_cmds *cmd)
 	return (new_argv);
 }
 
-static int	exec_single_left(t_infile *in)
+int	exec_single_left(t_infile *in)
 {
 	int	fd;
 
+	if (access(in->file, F_OK) != 0)
+		return (printf("BRUVA\n"), 1);
 	fd = open(in->file, O_RDONLY);
 	if (fd < 0)
 		return (perror(in->file), -1);
@@ -50,20 +53,21 @@ static int	exec_single_left(t_infile *in)
 	return (0);
 }
 
-static int exec_double_left(t_infile *in, t_cmds *cmd)
+int exec_double_left(t_infile *in, t_cmds *cmd)
 {
-    int p[2];
-    pid_t pid;
-    int status;
+    int     p[2];
+    pid_t   pid;
+    int     status;
 
+	signal(SIGTTOU, SIG_IGN);
+	signal(SIGTTIN, SIG_IGN);
     if (pipe(p) == -1)
         return (perror("pipe"), -1);
     pid = fork();
     if (pid == 0)
     {
         close(p[0]);
-        signal(SIGINT, handle_heredoc);
-        process_all_heredocs(cmd->infiles, p);
+        get_single_heredoc(in->file, p);
         close(p[1]);
         exit(0);
     }
@@ -75,14 +79,42 @@ static int exec_double_left(t_infile *in, t_cmds *cmd)
         restart_signals();
         if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
             return (close(p[0]), btree()->global_signal = 130, -1);
-        if (dup2(p[0], STDIN_FILENO) < 0)
-            return (perror("dup2"), close(p[0]), -1);
-        close(p[0]);
+
+        in->heredoc_fd = p[0];
     }
     return (0);
 }
+// < eof1 << eof cat > out1 > out2 && ls
+// int exec_double_left(t_infile *in, t_cmds *cmd)
+// {
+//     int     p[2];
+//     pid_t   pid;
+//     int     status;
 
-static int	exec_out_redirections(t_outfile *out)
+//     if (pipe(p) == -1)
+//         return (perror("pipe"), -1);
+
+//     pid = fork();
+//     if (pid == 0)
+//         pid_equal_zero_double(cmd, p); // child writes heredoc into p[1]
+//     else
+//     {
+//         close(p[1]);                     // parent keeps only read end
+//         signal(SIGINT, SIG_IGN);
+//         waitpid(pid, &status, 0);
+//         restart_signals();
+
+//         if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
+//             return (close(p[0]), btree()->global_signal = 130, -1);
+
+//         // 👉 don’t dup2 here! just remember the fd
+//         in->heredoc_fd = p[0];
+//     }
+//     return (0);
+// }
+
+
+int	exec_out_redirections(t_outfile *out)
 {
 	int	fd;
 	int	flags;
@@ -108,39 +140,33 @@ static int	exec_out_redirections(t_outfile *out)
 	return (0);
 }
 
-int	exec_redirections(t_cmds *cmd)
+int exec_redirections(t_cmds *cmd)
 {
-	t_infile	*in;
-	t_outfile	*out;
-	int			has_heredocs = 0;
+	// printf("INSIDE REDIRECTIONS\n");
+    t_infile *in;
 
-	in = cmd->infiles;
-	while (in)
-	{
-		if (ft_strcmp(in->token, "<<") == 0)
-		{
-			has_heredocs = 1;
-			break;
-		}
-		in = in->next;
-	}
-	if (has_heredocs)
-	{
-		if (exec_double_left(cmd->infiles, cmd) < 0)
-			return (-1);
-	}
-	in = cmd->infiles;
-	while (in)
-	{
-		if (ft_strcmp(in->token, "<") == 0)
-		{
-			if (exec_single_left(in) < 0)
-				return (-1);
-		}
-		in = in->next;
-	}
-	out = cmd->outfiles;
-	if (exec_out_redirections(out) < 0)
-		return (-1);
-	return (0);
+    if (cmd->cmd == NULL)
+        cmd->flag_to_exec = 1;
+
+    // if (handle_heredocs(cmd) < 0)
+    //     return (-1);
+
+    // apply heredoc input fds here
+    in = cmd->infiles;
+    while (in)
+    {
+        if (ft_strcmp(in->token, "<<") == 0 && in->heredoc_fd > 0)
+        {
+            if (dup2(in->heredoc_fd, STDIN_FILENO) < 0)
+                return (perror("dup2"), close(in->heredoc_fd), -1);
+            close(in->heredoc_fd);
+        }
+        in = in->next;
+    }
+
+    if (handle_regular_redirections(cmd) < 0)
+        return (btree()->cmds->flag_to_exec = 1, -1);
+
+    return (0);
 }
+

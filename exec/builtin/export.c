@@ -6,37 +6,83 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 23:57:32 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 09:32:38 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/24 22:05:13 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../sigma_minishell.h"
 
-static int	make_update_env_aux(t_os_envs **env_list, const char *str,
+int	update_existing_env_var(t_os_envs *current, const char *str,
 		size_t len)
 {
-	t_os_envs	*current;
-	char		*new_var;
+	char	*new_var;
 
-	current = *env_list;
-	while (current)
+	if (current->linux_envs && ft_strncmp(current->linux_envs, str, len) == 0)
 	{
-		if (current->linux_envs && ft_strncmp(current->linux_envs, str,
-				len) == 0 && current->linux_envs[len] == '=')
+		if (current->linux_envs[len] == '=' || current->linux_envs[len] == '\0')
 		{
 			new_var = ft_strdup(str);
 			if (!new_var)
 				return (-1);
 			free(current->linux_envs);
 			current->linux_envs = new_var;
+			if (current->temp_vars)
+			{
+				free(current->temp_vars);
+				current->temp_vars = NULL;
+			}
 			return (0);
 		}
+	}
+	return (1);
+}
+
+int	convert_temp_to_env_var(t_os_envs *current, const char *str,
+		size_t len)
+{
+	char	*new_var;
+
+	if (current->temp_vars && ft_strncmp(current->temp_vars, str, len) == 0
+		&& current->temp_vars[len] == '\0')
+	{
+		new_var = ft_strdup(str);
+		if (!new_var)
+			return (-1);
+		free(current->temp_vars);
+		current->temp_vars = NULL;
+		if (current->linux_envs)
+			free(current->linux_envs);
+		current->linux_envs = new_var;
+		return (0);
+	}
+	return (1);
+}
+
+int	make_update_env_aux(t_os_envs **env_list, const char *str,
+		size_t len)
+{
+	t_os_envs	*current;
+	int			result;
+
+	current = *env_list;
+	while (current)
+	{
+		result = update_existing_env_var(current, str, len);
+		if (result == 0)
+			return (0);
+		if (result == -1)
+			return (-1);
+		result = convert_temp_to_env_var(current, str, len);
+		if (result == 0)
+			return (0);
+		if (result == -1)
+			return (-1);
 		current = current->next;
 	}
 	return (1);
 }
 
-static size_t	get_env_key_length(const char *str)
+size_t	get_env_key_length(const char *str)
 {
 	char	*equal_sign;
 
@@ -47,66 +93,24 @@ static size_t	get_env_key_length(const char *str)
 		return (strlen(str));
 }
 
-int	add_new_env_var(t_os_envs **env_list, const char *str)
-{
-	t_os_envs	*new_node;
-	t_os_envs	*current;
-
-	new_node = malloc(sizeof(t_os_envs));
-	if (!new_node)
-		return (-1);
-	new_node->linux_envs = ft_strdup(str);
-	if (!new_node->linux_envs)
-		return (free(new_node), -1);
-	new_node->temp_vars = NULL;
-	new_node->next = NULL;
-	if (!*env_list)
-	{
-		*env_list = new_node;
-	}
-	else
-	{
-		current = *env_list;
-		while (current->next)
-			current = current->next;
-		current->next = new_node;
-	}
-	return (0);
-}
-
-int	make_update_env(const char *str)
-{
-	t_os_envs	**env_list;
-	size_t		len;
-	int			result;
-
-	env_list = get_env_list();
-	len = get_env_key_length(str);
-	result = make_update_env_aux(env_list, str, len);
-	if (result == 0)
-		return (0);
-	if (result == -1)
-		return (-1);
-	return (add_new_env_var(env_list, str));
-}
-
 int	builtin_export(char **args)
 {
-	int	i;
+	int		i;
+	size_t	len;
 
-	i = 0;
+	i = 1;
 	if (!args[1])
 		return (export_print_env_list(), 0);
 	while (args[i])
 	{
-		if (!strchr(args[i], '='))
+		len = get_env_key_length(args[i]);
+		if (make_update_env(args[i]) == 1)
 		{
-			add_temp_var(args[i]); //maybe i can fix the bug here
-			i++;
-			continue ;
+			if (!strchr(args[i], '='))
+				add_temp_var(args[i]);
+			else if (add_new_env_var(get_env_list(), args[i]) < 0)
+				return (perror("minishell: export"), 1);
 		}
-		if (make_update_env(args[i]) < 0)
-			return (perror("minishell: export"), 0);
 		i++;
 	}
 	return (0);

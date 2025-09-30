@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:21:23 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 15:24:49 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/25 11:32:38 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,44 +65,28 @@ int	builtin_echo(char **args)
 	return (0);
 }
 
-int is_numeric(const char *s)
+int	builtin_exit(char **args, char **envp)
 {
-    int i = 0;
-	if (!s)
-		return (1);
-    if (s[i] == '+' || s[i] == '-')
-        i++;
-    while (s[i])
-    {
-        if (!ft_isdigit(s[i]))
-            return (0);
-        i++;
-    }
-    return (1);
-}
+	long	status;
 
-
-int builtin_exit(char **args, char **envp)
-{
-    long status;
-
-    (void)envp;
-    if (!args[1])
-    {
-        if (btree()->global_signal)
-            status = btree()->global_signal;
-        else
-            status = btree()->exit_status;
-        update_shell_level(-1);
-        exit((unsigned char)status);
-    }
-    if (!is_numeric(args[1]))
+	(void)envp;
+	if (!args[1])
+	{
+		if (btree()->global_signal)
+			status = btree()->global_signal;
+		else
+			status = btree()->exit_status;
+		update_shell_level(-1);
+		exit((unsigned char)status);
+	}
+	if (!is_numeric(args[1]))
 		return (my_ffprintf(args[1], "numeric argument required"), 0);
-    if (args[2])
-        return (ft_putstr_fd("minishell: exit: too many arguments", 2), 1);
-    status = ft_atol(args[1]);
-    update_shell_level(-1);
-    exit((unsigned char)status);
+	if (args[2])
+		return (ft_putstr_fd("minishell: exit: too many arguments", 2), 1);
+	
+	status = ft_atol(args[1]);
+	update_shell_level(-1);
+	exit((unsigned char)status);
 }
 
 int	exec_builtin(char *cmd, char **args, char **envp)
