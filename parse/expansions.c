@@ -2,6 +2,7 @@
 
 char    *single_expand(char *str, int ind, int count);
 
+
 int	get_diff(char *str1, char *str2, int start)
 {
 	int	ind1;
@@ -19,6 +20,25 @@ int	get_diff(char *str1, char *str2, int start)
 	if (ind1 > ind2)
 		return (ind1 - start);
 	return (ind2 - start);
+}
+
+char *expand_hd(char *str)
+{
+	char	*str2;
+	int		count;
+
+	str2 = ft_strdup(str);
+	count = -1;
+	while (str[++count])
+	{
+		str = single_expand(str, count, 0);
+		if (ft_strcmp(str, str2))
+		{
+			count += get_diff(str, str2, 0);
+			free(str2);
+			str2 = ft_strdup(str);
+		}
+	}
 }
 
 char	*quote(char *str)
