@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   super_duper_hiper_free.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:02 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 09:18:46 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/30 19:29:35 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	free_env_list(t_os_envs *head)
 	while (head)
 	{
 		temp = head->next;
-		free_env_list(head);
+		free_env_node(head);
 		head = temp;
 	}
 }
@@ -61,4 +61,9 @@ void	clear_env_list(void)
 		current = next;
 	}
 	*env_list = NULL;
+}
+
+void free_os_envs(void)
+{
+	
 }

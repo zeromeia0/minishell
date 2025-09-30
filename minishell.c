@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:54:32 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/28 16:38:36 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/30 19:29:45 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ int	main(int argc, char *argv[], char **envp)
 		}
 	}
 	free_matrix(btree()->env);
+	btree()->env = NULL;
 	return (clear_env_list(), printf("Closing Minishell\n"),
 		btree()->exit_status);
 }

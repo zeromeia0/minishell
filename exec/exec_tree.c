@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/30 17:09:36 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/30 19:41:38 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,16 +197,18 @@ int check_order(t_binary *tree, char **args, char **envp)
         return (0);
 	if (handle_heredocs(tree->cmds) < 0)
 		return (btree()->cmds->flag_to_exec = 1, -1);
+	if (!tree->cmds->infiles)
+		return (0);
     current_infile = tree->cmds->infiles;
     while (current_infile)
     {
-        if (ft_strncmp(current_infile->token, "<<", 2) != 0) // skip heredocs
+        if (ft_strcmp(current_infile->token, "<<") != 0) // skip heredocs
         {
             if (access(current_infile->file, F_OK) != 0)
-                return (btree()->cmds->flag_to_exec = 1,
+                return (tree->cmds->flag_to_exec = 1,
                         my_ffprintf(current_infile->file, "No such file or directory\n"), 0);
             if (access(current_infile->file, R_OK) != 0)
-                return (btree()->cmds->flag_to_exec = 1,
+                return (tree->cmds->flag_to_exec = 1,
                         my_ffprintf(current_infile->file, "Permission denied\n"), 0);
         }
         current_infile = current_infile->next;

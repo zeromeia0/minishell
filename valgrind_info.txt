@@ -1,33 +1,101 @@
-==99261== 496 bytes in 1 blocks are still reachable in loss record 39 of 83
-==99261==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==99261==    by 0x406D54: list_to_char (env_aux3.c:64)
-==99261==    by 0x402806: initialize_stuff (minishell.c:81)
-==99261==    by 0x402622: main (minishell.c:92)
+==113027==
+==113027== 528 bytes in 1 blocks are still reachable in loss record 48 of 92
+==113027==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==113027==    by 0x406D34: list_to_char (env_aux3.c:64)
+==113027==    by 0x402806: initialize_stuff (minishell.c:81)
+==113027==    by 0x402622: main (minishell.c:88)
 
-==99261== 
-==99261== 1,464 bytes in 61 blocks are still reachable in loss record 52 of 83
-==99261==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==99261==    by 0x406450: create_env_node (env_aux1.c:26)
-==99261==    by 0x406ED1: rebuild_env_list (env_aux3.c:95)
-==99261==    by 0x406F75: builtin_env (env_aux4.c:22)
-==99261==    by 0x4027DA: initialize_stuff (minishell.c:78)
-==99261==    by 0x402622: main (minishell.c:92)
+==113027== 2,353 bytes in 65 blocks are still reachable in loss record 67 of 92
+==113027==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==113027==    by 0x40D821: ft_calloc (in /home/vivaz-ca/42_Cursus/minishell/minishell)
+==113027==    by 0x40EB42: ft_strdup (in /home/vivaz-ca/42_Cursus/minishell/minishell)
+==113027==    by 0x406C57: fill_env_array (env_aux3.c:42)
+==113027==    by 0x406D5D: list_to_char (env_aux3.c:67)
+==113027==    by 0x402806: initialize_stuff (minishell.c:81)
+==113027==    by 0x402622: main (minishell.c:88)
 
-==99261== 2,141 bytes in 61 blocks are still reachable in loss record 56 of 83
-==99261==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==99261==    by 0x40D901: ft_calloc (in /home/vivaz-ca/42_Cursus/minishell/minishell)
-==99261==    by 0x40EC22: ft_strdup (in /home/vivaz-ca/42_Cursus/minishell/minishell)
-==99261==    by 0x406475: create_env_node (env_aux1.c:29)
-==99261==    by 0x406ED1: rebuild_env_list (env_aux3.c:95)
-==99261==    by 0x406F75: builtin_env (env_aux4.c:22)
-==99261==    by 0x4027DA: initialize_stuff (minishell.c:78)
-==99261==    by 0x402622: main (minishell.c:92)
+==113028== 528 bytes in 1 blocks are still reachable in loss record 48 of 92
+==113028==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==113028==    by 0x406D34: list_to_char (env_aux3.c:64)
+==113028==    by 0x402806: initialize_stuff (minishell.c:81)
+==113028==    by 0x402622: main (minishell.c:88)
 
-==99261== 2,141 bytes in 61 blocks are still reachable in loss record 57 of 83
-==99261==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==99261==    by 0x40D901: ft_calloc (in /home/vivaz-ca/42_Cursus/minishell/minishell)
-==99261==    by 0x40EC22: ft_strdup (in /home/vivaz-ca/42_Cursus/minishell/minishell)
-==99261==    by 0x406C77: fill_env_array (env_aux3.c:42)
-==99261==    by 0x406D7D: list_to_char (env_aux3.c:67)
-==99261==    by 0x402806: initialize_stuff (minishell.c:81)
-==99261==    by 0x402622: main (minishell.c:92)
+
+==113028== 2,353 bytes in 65 blocks are still reachable in loss record 67 of 92
+==113028==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==113028==    by 0x40D821: ft_calloc (in /home/vivaz-ca/42_Cursus/minishell/minishell)
+==113028==    by 0x40EB42: ft_strdup (in /home/vivaz-ca/42_Cursus/minishell/minishell)
+==113028==    by 0x406C57: fill_env_array (env_aux3.c:42)
+==113028==    by 0x406D5D: list_to_char (env_aux3.c:67)
+==113028==    by 0x402806: initialize_stuff (minishell.c:81)
+==113028==    by 0x402622: main (minishell.c:88)
+
+=================================
+
+
+==113027== 1,560 bytes in 65 blocks are still reachable in loss record 62 of 92
+==113027==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==113027==    by 0x406430: create_env_node (env_aux1.c:26)
+==113027==    by 0x406EB1: rebuild_env_list (env_aux3.c:95)
+==113027==    by 0x406F55: builtin_env (env_aux4.c:22)
+==113027==    by 0x4027DA: initialize_stuff (minishell.c:78)
+==113027==    by 0x402622: main (minishell.c:88)
+
+==113027== 2,353 bytes in 65 blocks are still reachable in loss record 66 of 92
+==113027==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==113027==    by 0x40D821: ft_calloc (in /home/vivaz-ca/42_Cursus/minishell/minishell)
+==113027==    by 0x40EB42: ft_strdup (in /home/vivaz-ca/42_Cursus/minishell/minishell)
+==113027==    by 0x406455: create_env_node (env_aux1.c:29)
+==113027==    by 0x406EB1: rebuild_env_list (env_aux3.c:95)
+==113027==    by 0x406F55: builtin_env (env_aux4.c:22)
+==113027==    by 0x4027DA: initialize_stuff (minishell.c:78)
+==113027==    by 0x402622: main (minishell.c:88)
+==113027==
+
+
+==113028== 1,560 bytes in 65 blocks are still reachable in loss record 62 of 92
+==113028==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==113028==    by 0x406430: create_env_node (env_aux1.c:26)
+==113028==    by 0x406EB1: rebuild_env_list (env_aux3.c:95)
+==113028==    by 0x406F55: builtin_env (env_aux4.c:22)
+==113028==    by 0x4027DA: initialize_stuff (minishell.c:78)
+==113028==    by 0x402622: main (minishell.c:88)
+
+==113028== 2,353 bytes in 65 blocks are still reachable in loss record 66 of 92
+==113028==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==113028==    by 0x40D821: ft_calloc (in /home/vivaz-ca/42_Cursus/minishell/minishell)
+==113028==    by 0x40EB42: ft_strdup (in /home/vivaz-ca/42_Cursus/minishell/minishell)
+==113028==    by 0x406455: create_env_node (env_aux1.c:29)
+==113028==    by 0x406EB1: rebuild_env_list (env_aux3.c:95)
+==113028==    by 0x406F55: builtin_env (env_aux4.c:22)
+==113028==    by 0x4027DA: initialize_stuff (minishell.c:78)
+==113028==    by 0x402622: main (minishell.c:88)
+==113028==
+
+====================
+
+==112994== 215 bytes in 14 blocks are indirectly lost in loss record 32 of 75
+==112994==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==112994==    by 0x40D821: ft_calloc (in /home/vivaz-ca/42_Cursus/minishell/minishell)
+==112994==    by 0x40E7B8: ft_split_strndup (in /home/vivaz-ca/42_Cursus/minishell/minishell)
+==112994==    by 0x40E620: ft_split (in /home/vivaz-ca/42_Cursus/minishell/minishell)
+==112994==    by 0x408363: split_path (exec_path_aux1.c:37)
+==112994==    by 0x4083CF: get_paths_to_search (exec_path_aux1.c:44)
+==112994==    by 0x4042C6: buildup_path (exec_tree.c:138)
+==112994==    by 0x404731: check_order (exec_tree.c:219)
+==112994==    by 0x40491E: exec_tree (exec_tree.c:258)
+==112994==    by 0x4049B7: exec_tree (exec_tree.c:267)
+==112994==    by 0x4026D0: main (minishell.c:103)
+
+==112994== 335 (120 direct, 215 indirect) bytes in 1 blocks are definitely lost in loss record 34 of 75
+==112994==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==112994==    by 0x40E6EC: alloc_mem (in /home/vivaz-ca/42_Cursus/minishell/minishell)
+==112994==    by 0x40E590: ft_split (in /home/vivaz-ca/42_Cursus/minishell/minishell)
+==112994==    by 0x408363: split_path (exec_path_aux1.c:37)
+==112994==    by 0x4083CF: get_paths_to_search (exec_path_aux1.c:44)
+==112994==    by 0x4042C6: buildup_path (exec_tree.c:138)
+==112994==    by 0x404731: check_order (exec_tree.c:219)
+==112994==    by 0x40491E: exec_tree (exec_tree.c:258)
+==112994==    by 0x4049B7: exec_tree (exec_tree.c:267)
+==112994==    by 0x4026D0: main (minishell.c:103)
+==112994==
