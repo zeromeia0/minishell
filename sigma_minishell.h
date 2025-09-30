@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/26 11:09:27 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/30 12:50:55 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_outfile
 
 typedef struct s_infile
 {
+	int						heredoc_fd;
 	char					*token;
 	char					*file;
 	struct s_infile			*next;
@@ -183,7 +184,9 @@ int	handle_non_slash_commands(char *cmd, char **args, char **envp);
 int	has_heredocs(t_cmds *cmd);
 int	process_command(t_cmds *cmd, int *first_fd, char **env);
 void	print_cmds(t_cmds *cmds);
-void process_last_heredoc(t_infile *in, int fd[2]);
+int	process_heredocs_and_checks(t_cmds *cmd);
+void get_single_heredoc(char *eof, int fd[2]);
+
 
 
 
