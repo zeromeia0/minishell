@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sigma_minishell.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlima-so <jlima-so@student.42lisba.com>    +#+  +:+       +#+        */
+/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/30 21:31:55 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/10/01 00:30:52 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,8 @@ void	print_cmds(t_cmds *cmds);
 int	process_heredocs_and_checks(t_cmds *cmd);
 void get_single_heredoc(char *eof, int fd[2]);
 char	*expand_hd(char *str);
+void	expand_infiles(t_infile *infile);
+void	expand_outfiles(t_outfile *outfile);
 
 
 
