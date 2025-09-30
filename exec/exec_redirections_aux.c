@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 23:05:16 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/30 21:45:43 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/30 22:12:11 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	handle_regular_redirections(t_cmds *cmd)
 	return (0);
 }
 
-void	pid_equal_zero_double(t_cmds *cmd, int p[2])
+void pid_equal_zero_double(t_cmds *cmd, int p[2])
 {
 	close(p[0]);
 	signal(SIGINT, sig_handle_hererdoc);
@@ -58,3 +58,4 @@ void	pid_equal_zero_double(t_cmds *cmd, int p[2])
 	close(p[1]);
 	megalodon_giga_chad_exit(0);
 }
+

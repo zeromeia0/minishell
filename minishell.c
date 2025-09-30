@@ -3,10 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:54:32 by vvazzs            #+#    #+#             */
 /*   Updated: 2025/09/30 21:28:57 by vivaz-ca         ###   ########.fr       */
+=======
+/*   By: jlima-so <jlima-so@student.42lisba.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/22 11:54:32 by vvazzs            #+#    #+#             */
+/*   Updated: 2025/09/30 19:29:22 by jlima-so         ###   ########.fr       */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +23,20 @@
 #include <termios.h>
 #include <unistd.h>
 
-void	print_files(t_infile *file)
+void	print_infiles(t_infile *file)
 {
 	while (file)
 	{
-		printf("red is | file is\n");
-		printf("%s		%s\n", file->token, file->file);
+		printf("%s %s\n", file->token, file->file);
+		file = file->next;
+	}
+}
+
+void	print_outfiles(t_outfile *file)
+{
+	while (file)
+	{
+		printf("%s %s\n", file->token, file->file);
 		file = file->next;
 	}
 }
@@ -32,36 +47,35 @@ void	print_cmds(t_cmds *cmds)
 	{
 		printf("==================\n");
 		printf("\t\tstarts infile\n");
-		print_files(cmds->infiles);
+		print_infiles(cmds->infiles);
 		printf("\t\tend infile\n");
 		printf("\t\tstarts commands\n");
 		ft_print_matrix(cmds->cmd);
 		printf("\t\tend commands\n");
 		printf("\t\tstarts outfiles\n");
-		print_files((t_infile *)cmds->outfiles);
+		print_outfiles(cmds->outfiles);
 		printf("\t\tend outfiles\n");
 		printf("==================\n");
 		cmds = cmds->next;
 	}
 }
 
-// void	print_tree(t_binary *tree, int sub)
-// {
-// 	static t_binary	tree;
+void	print_tree(t_binary *tree, int sub)
+{
+	// if (sub)
+	// printf( "\nentering subshell\n");
+	if (tree == NULL)
+		return ;
+	print_tree(tree->subshell, 1);
+	print_tree(tree->left, 0);
+	print_tree(tree->right, 0);
+	if (tree->left == NULL && tree->right == NULL)
+		if (tree->cmds)
+			print_cmds(tree->cmds);
+	if (sub)
+		printf("\n^exiting shubshell^\n");
+}
 
-// 	// if (sub)
-// 	// printf( "\nentering subshell\n");
-// 	if (tree == NULL)
-// 		return ;
-// 	print_tree(tree->subshell, 1);
-// 	print_tree(tree->left, 0);
-// 	print_tree(tree->right, 0);
-// 	if (tree->left == NULL && tree->right == NULL)
-// 		if (tree->cmds)
-// 			print_cmds(tree->cmds);
-// 	if (sub)
-// 		printf("\n^exiting shubshell^\n");
-// } 
 t_binary	*btree(void)
 {
 	static t_binary	tree;
@@ -100,6 +114,7 @@ int	main(int argc, char *argv[], char **envp)
 		}
 		if (parsing(btree()->input) == 0)
 		{
+			print_tree(btree(), 0);
 			btree()->main_exit = exec_tree(btree(), argv, btree()->env);
 			/* printf("restart TWO\n"),  */restart_signals();
 			free(btree()->input);

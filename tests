@@ -59,3 +59,5 @@ dup2: Bad file descriptor
 minishell$ cat out2
 piha
 minishell$
+
+< eof << eof cat > out1 > out2 && ls -l

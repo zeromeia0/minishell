@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:44:52 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/30 21:53:42 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/30 22:16:18 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ int	handle_slash_command(char *cmd, char **args, char **envp)
 	{
 		prepare_for_exec();
 		execve(cmd, args, envp);
-		printf("executado\n");
 		if (errno == ENOEXEC)
 		{
 			buildup_new_args(cmd, envp);

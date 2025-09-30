@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:08:05 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/30 21:45:46 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/30 22:13:03 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,12 @@ int exec_double_left(t_infile *in, t_cmds *cmd)
 
 	signal(SIGTTOU, SIG_IGN);
 	signal(SIGTTIN, SIG_IGN);
-     if (pipe(p) == -1)
+    if (pipe(p) == -1)
         return (perror("pipe"), -1);
-
     pid = fork();
     if (pid == 0)
     {
         close(p[0]);
-        // Process only THIS specific heredoc
         get_single_heredoc(in->file, p);
         close(p[1]);
         megalodon_giga_chad_exit(0);
@@ -79,7 +77,6 @@ int exec_double_left(t_infile *in, t_cmds *cmd)
         signal(SIGINT, SIG_IGN);
         waitpid(pid, &status, 0);
         restart_signals();
-
         if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
             return (close(p[0]), btree()->global_signal = 130, -1);
 
@@ -87,7 +84,34 @@ int exec_double_left(t_infile *in, t_cmds *cmd)
     }
     return (0);
 }
+// < eof1 << eof cat > out1 > out2 && ls
+// int exec_double_left(t_infile *in, t_cmds *cmd)
+// {
+//     int     p[2];
+//     pid_t   pid;
+//     int     status;
 
+//     if (pipe(p) == -1)
+//         return (perror("pipe"), -1);
+
+//     pid = fork();
+//     if (pid == 0)
+//         pid_equal_zero_double(cmd, p); // child writes heredoc into p[1]
+//     else
+//     {
+//         close(p[1]);                     // parent keeps only read end
+//         signal(SIGINT, SIG_IGN);
+//         waitpid(pid, &status, 0);
+//         restart_signals();
+
+//         if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
+//             return (close(p[0]), btree()->global_signal = 130, -1);
+
+//         // 👉 don’t dup2 here! just remember the fd
+//         in->heredoc_fd = p[0];
+//     }
+//     return (0);
+// }
 
 
 int	exec_out_redirections(t_outfile *out)

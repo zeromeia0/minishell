@@ -47,7 +47,7 @@ void get_single_heredoc(char *eof, int fd[2])
     {
         if (fd)
         {
-            char *expanded = expand(str, 0, 0, 1);
+            char *expanded = expand_hd(str, 0, 0, 1);
             write(fd[1], expanded, ft_strlen(expanded));
             write(fd[1], "\n", 1);
             if (expanded != str)
@@ -59,8 +59,6 @@ void get_single_heredoc(char *eof, int fd[2])
             megalodon_giga_chad_exit(130);
         str = readline("> ");
     }
-    
-    // Only print warning if we reached EOF (Ctrl+D), not if interrupted by SIGINT
     if (!str && btree()->global_signal != 130) 
     {
         fprintf(stderr, "warning: here-document delimited by end-of-file (wanted `%s')\n", delimiter);
