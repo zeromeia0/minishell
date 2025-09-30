@@ -39,6 +39,8 @@ char *expand_hd(char *str)
 			str2 = ft_strdup(str);
 		}
 	}
+	free(str2);
+	return (str);
 }
 
 char	*quote(char *str)
