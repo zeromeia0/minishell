@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/30 19:56:06 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/30 21:46:19 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	exec_child(t_cmds *cmd)
 	if (has_redir(cmd))
 		exec_redirections(cmd);
 	if (has_builtin(cmd))
-		exit(exec_builtin(cleaned[0], cleaned, updated_envs));
+		megalodon_giga_chad_exit(exec_builtin(cleaned[0], cleaned, updated_envs));
 	else
 		exec_path(cleaned[0], cleaned, updated_envs);
 	free_matrix(cleaned);
@@ -103,7 +103,7 @@ static int	exec_subshell(t_binary *subshell, char **args, char **envp)
 
 	pid = fork();
 	if (pid == 0)
-		exit(exec_tree(subshell, args, envp));
+		megalodon_giga_chad_exit(exec_tree(subshell, args, envp));
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		btree()->exit_status = WEXITSTATUS(status);

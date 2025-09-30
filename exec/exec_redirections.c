@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:08:05 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/30 19:52:21 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/30 21:45:46 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int exec_double_left(t_infile *in, t_cmds *cmd)
         // Process only THIS specific heredoc
         get_single_heredoc(in->file, p);
         close(p[1]);
-        exit(0);
+        megalodon_giga_chad_exit(0);
     }
     else
     {

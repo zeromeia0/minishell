@@ -29,7 +29,7 @@ void get_single_heredoc(char *eof, int fd[2])
     int tty_fd;
 
     if (btree()->global_signal == 130)
-        exit(130);
+        megalodon_giga_chad_exit(130);
     
     // Ensure we read from terminal for each heredoc
     tty_fd = open("/dev/tty", O_RDONLY);
@@ -56,7 +56,7 @@ void get_single_heredoc(char *eof, int fd[2])
         free(str);
         
         if (btree()->global_signal == 130)
-            exit(130);
+            megalodon_giga_chad_exit(130);
         str = readline("> ");
     }
     

@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:21:23 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/30 18:35:48 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/30 21:51:42 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	builtin_exit(char **args, char **envp)
 		else
 			status = btree()->exit_status;
 		update_shell_level(-1);
-		exit((unsigned char)status);
+		megalodon_giga_chad_exit((unsigned char)status);
 	}
 	if (!is_numeric(args[1]))
 		return (my_ffprintf(args[1], "numeric argument required"), 0);
@@ -88,7 +88,7 @@ int	builtin_exit(char **args, char **envp)
 	
 	status = ft_atol(args[1]);
 	update_shell_level(-1);
-	exit((unsigned char)status);
+	return (megalodon_giga_chad_exit((unsigned char)status), 0);
 }
 
 int	exec_builtin(char *cmd, char **args, char **envp)

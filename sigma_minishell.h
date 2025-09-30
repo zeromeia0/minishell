@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/30 21:02:53 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/30 21:44:27 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,7 @@ void	print_cmds(t_cmds *cmds);
 int	process_heredocs_and_checks(t_cmds *cmd);
 void get_single_heredoc(char *eof, int fd[2]);
 void free_os_envs(void);
+void	megalodon_giga_chad_exit(int status);
 
 
 

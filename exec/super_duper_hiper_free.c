@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:02 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/30 20:54:05 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/30 21:49:37 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,3 +80,28 @@ void free_os_envs(void)
     *env_list = NULL;
 }
 
+void	ft_close(int fd)
+{
+	if (fd > 2)
+		close(fd);
+}
+
+void	close_all_non_standart_fds(void)
+{
+	int	fd;
+
+	fd = 2;
+	while (++fd <= FOPEN_MAX)
+		ft_close(fd);
+}
+
+void	megalodon_giga_chad_exit(int status)
+{
+	ft_free_matrix(btree()->env);
+	free_os_envs();
+	clear_env_list();
+	close_all_non_standart_fds();
+	binary_clear(btree());
+	free(btree()->input);
+	exit(status);
+}

@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/30 19:52:10 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/30 21:46:36 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	sig_handle_hererdoc(int sig)
 	btree()->exit_status = 130;
 	write(1, "\n", 1);
 	// printf("HANDLING HEREDOC\n");
-	exit(130);
+	megalodon_giga_chad_exit(130);
 }
 
 void	handle_quit(int sig)

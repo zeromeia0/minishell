@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 23:05:16 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/30 21:09:01 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/30 21:45:43 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,5 @@ void	pid_equal_zero_double(t_cmds *cmd, int p[2])
 	signal(SIGINT, sig_handle_hererdoc);
 	process_all_heredocs(cmd->infiles, p);
 	close(p[1]);
-	exit(0);
+	megalodon_giga_chad_exit(0);
 }

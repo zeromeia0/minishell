@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:54:32 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/30 21:03:17 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/30 21:28:57 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	main(int argc, char *argv[], char **envp)
 		}
 	}
 	ft_free_matrix(btree()->env);
-	btree()->env = NULL;
+	// btree()->env = NULL;
 	free_os_envs();
 	return (clear_env_list(), printf("Closing Minishell\n"),
 		btree()->exit_status);
