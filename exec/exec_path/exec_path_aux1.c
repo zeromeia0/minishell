@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:36:54 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 09:33:47 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/25 21:58:38 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int	is_system_path_command(char *cmd, char **envp)
 	int		access_result;
 	char	**paths_to_search;
 
+	if (!cmd)
+		return (0);
 	paths_to_search = get_paths_to_search(envp);
 	if (!paths_to_search)
 		return (-1);

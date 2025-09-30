@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:44:52 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/25 16:06:52 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/29 21:54:26 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ int	handle_non_slash_commands(char *cmd, char **args, char **envp)
 		if (access(cmd, X_OK) == 0)
 		{
 			prepare_for_exec();
-		printf("faz parte 3\n");
-
 			execve(cmd, args, envp);
 			perror(cmd);
 			exit(127);
@@ -56,7 +54,6 @@ int	handle_slash_command(char *cmd, char **args, char **envp)
 	if (access(cmd, X_OK) == 0)
 	{
 		prepare_for_exec();
-		printf("faz parte 4\n");
 		execve(cmd, args, envp);
 		printf("executado\n");
 		if (errno == ENOEXEC)
@@ -89,8 +86,6 @@ int	handle_system_path_cmd_aux(char *cmd, char **args, char **envp)
 	if (access(cmd, X_OK) == 0)
 	{
 		prepare_for_exec();
-		printf("faz parte 5\n");
-
 		execve(cmd, args, envp);
 		if (errno == ENOEXEC)
 		{
@@ -126,11 +121,9 @@ int	handle_system_path_cmd(char *cmd, char **args, char **envp)
 
 int	exec_path(char *cmd, char **args, char **envp)
 {
-	if (btree()->cmds->flag_to_exec == 1)
-		return (-1);
 	if (am_i_truly_myself(args[0]) && access(cmd, F_OK) == 0 && access(cmd,
 			X_OK) == 0)
-		update_shell_level(1);
+		update_shell_level(1)/* , printf("SHOWING DUO\n") */;
 	if (strchr(cmd, '/'))
 		return (handle_absolute_path_cmd(cmd, args, envp));
 	if (is_system_path_command(cmd, envp))

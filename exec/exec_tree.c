@@ -6,14 +6,32 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/25 16:44:19 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/30 16:09:32 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../sigma_minishell.h"
+#include <signal.h>
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <unistd.h>
+
+int cmd_has_heredoc(t_cmds *cmd)
+{
+    t_infile *in = NULL;
+
+    if (!cmd)
+        return 0;
+    in = cmd->infiles;
+    while (in)
+    {
+        if (in->token && ft_strcmp(in->token, "<<") == 0)
+            return 1;
+        in = in->next;
+    }
+    return 0;
+}
+
 
 static void	exec_child(t_cmds *cmd)
 {
@@ -35,30 +53,48 @@ static void	exec_child(t_cmds *cmd)
 	free_matrix(updated_envs);
 }
 
-int	exec_single_cmd(t_cmds *cmd)
+int exec_single_cmd(t_cmds *cmd)
 {
-	pid_t	pid;
-	int		status;
+    pid_t   pid;
+    int     status;
+    int     shell_should_ignore = 0;
 
-	if (cmd->flag_to_exec == 1)
-		return (btree()->exit_status);
-	if (has_builtin(cmd) && !has_redir(cmd))
-		return (exec_single_cmd_aux(cmd));
-	pid = fork();
-	if (pid == 0)
-		exec_child(cmd);
-	else
-	{
-		signal(SIGINT, set_to_onethirty);
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			btree()->exit_status = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-			btree()->exit_status = 130;
-		return (btree()->exit_status);
-	}
-	return (1);
+    signal(SIGTTOU, SIG_IGN);
+    signal(SIGTTIN, SIG_IGN);
+
+    if (!cmd || !cmd->cmd)
+        return (btree()->exit_status);
+    if (cmd->flag_to_exec == 1)
+        return (btree()->exit_status);
+    if (has_builtin(cmd) && !has_redir(cmd))
+        return (exec_single_cmd_aux(cmd));
+    if (cmd_has_heredoc(cmd))
+    {
+        shell_should_ignore = 1;
+        signal(SIGINT, SIG_IGN);
+    }
+
+    pid = fork();
+    if (pid == 0)
+        exec_child(cmd);
+    else
+    {
+        if (!shell_should_ignore)
+            signal(SIGINT, set_to_onethirty);
+        waitpid(pid, &status, 0);
+        if (shell_should_ignore)
+            restart_signals();
+        else
+            restart_signals();
+        if (WIFEXITED(status))
+            btree()->exit_status = WEXITSTATUS(status);
+        else if (WIFSIGNALED(status))
+            btree()->exit_status = 130;
+        return (btree()->exit_status);
+    }
+    return (1);
 }
+
 
 static int	exec_subshell(t_binary *subshell, char **args, char **envp)
 {
@@ -80,9 +116,7 @@ int	exec_node(t_binary *node, char **args, char **envp)
 {
 	if (!node)
 		return (0);
-	// if (node->cmds->cmd == NULL)
-	// 	node->cmds->flag_to_exec = 1;
-	if (node->cmds != NULL/*  && node->cmds->flag_to_exec == 0 */)
+	if (node->cmds != NULL)
 	{
 		expand_args(node->cmds);
 		if (node->cmds->next)
@@ -97,85 +131,124 @@ int	exec_node(t_binary *node, char **args, char **envp)
 
 char **buildup_path(t_cmds *cmd, char **args, char **envp)
 {
-	char **final_str;
-	char **paths_to_search;
-	int i = 0;
-	
-	paths_to_search = get_paths_to_search(envp);
-	final_str = malloc(sizeof(char *) * (ft_matlen(envp) + 1));
-	if (has_builtin(cmd))
-	{
-		final_str[0] = ft_strdup(*cmd->cmd);
-		final_str[1] = NULL;
-		return (final_str);
-	}
-	else if (is_system_path_command(cmd->cmd[0], envp))
-	{
-		while (paths_to_search[i])
-		{
-			char *tmp = ft_strjoin(paths_to_search[i], "/");
-			final_str[i] = ft_strjoin(tmp, cmd->cmd[0]);
-			free(tmp);
-			i++;
-		}
-		final_str[i] = NULL;
-	}
-	return (final_str);
+    char **final_str = NULL;
+    char **paths_to_search;
+    int i = 0;
+
+    paths_to_search = get_paths_to_search(envp);
+    int path_count = ft_matlen(paths_to_search);
+    if (has_builtin(cmd))
+    {
+        final_str = malloc(sizeof(char *) * 2);
+        if (!final_str)
+            return NULL;
+        final_str[0] = ft_strdup(cmd->cmd[0]);
+        final_str[1] = NULL;
+        return final_str;
+    }
+    if (is_system_path_command(cmd->cmd[0], envp))
+    {
+        final_str = malloc(sizeof(char *) * (path_count + 1));
+        if (!final_str)
+            return NULL;
+        while (paths_to_search[i])
+        {
+            char *tmp = ft_strjoin(paths_to_search[i], "/");
+            final_str[i] = ft_strjoin(tmp, cmd->cmd[0]);
+            free(tmp);
+            i++;
+        }
+        final_str[i] = NULL;
+        return final_str;
+    }
+    final_str = malloc(sizeof(char *));
+    if (!final_str)
+        return NULL;
+    final_str[0] = NULL;
+    return final_str;
 }
 
-int	check_order(t_binary *tree, char **args, char **envp)
+
+int ensure_outfile(t_outfile *out)
 {
-	t_infile	*current_infile;
-	t_cmds		*current_cmds;
-	t_outfile	*current_outfile;
+    int fd;
 
-	if (!tree->cmds || !tree->cmds->infiles)
-		return (0);
-	current_infile = tree->cmds->infiles;
-	while (current_infile)
-	{
-		if (access(current_infile->file, F_OK) != 0
-			|| access(current_infile->file, R_OK) != 0)
-			return (0);
-		current_infile = current_infile->next;
-	}
-	if (!tree->cmds->cmd)
-		return (0);
-	current_cmds = tree->cmds;
-	while (current_cmds)
-	{
-		char	**something = buildup_path(current_cmds, args, envp);
-		int		i = 0;
-		int		valid = 0;
+    if (!out || !out->file)
+        return -1;
 
-		while (something && something[i])
-		{
-			if (access(something[i], F_OK) == 0 && access(something[i], X_OK) == 0)
-			{
-				valid = 1;
-				break;
-			}
-			i++;
-		}
-		if (something)
-			ft_free_matrix(something);
-		if (!valid)
-			return (printf("command not found or not executable\n"), 0);
-		current_cmds = current_cmds->next;
-	}
-	if (!tree->cmds->outfiles)
-		return (0);
-	current_outfile = tree->cmds->outfiles;
-	if (current_outfile->file == NULL)
-		exec_out_redirections(current_outfile);
-	while (current_outfile)
-	{
-		if (access(current_outfile->file, W_OK) != 0)
-			return (btree()->cmds->flag_to_exec = 1, my_ffprintf(current_outfile->file, "Permission denied\n"), 0);
-		current_outfile = current_outfile->next;	
-	}
-	return (1);
+    fd = open(out->file, O_WRONLY | O_CREAT, 0644);
+    if (fd < 0)
+    {
+        // Failed to open or create → maybe permission issue in directory
+        return btree()->cmds->flag_to_exec = 1,
+               my_ffprintf(out->file, "Permission denied\n"), -1;
+    }
+    close(fd); // Close immediately; actual redirection happens in exec_out_redirections
+    return 0;
 }
+
+int check_order(t_binary *tree, char **args, char **envp)
+{
+    t_infile    *current_infile;
+    t_cmds      *current_cmds;
+    t_outfile   *current_outfile;
+
+    if (!tree->cmds)
+        return (0);
+	if (handle_heredocs(tree->cmds) < 0)
+		return (btree()->cmds->flag_to_exec = 1, -1);
+    current_infile = tree->cmds->infiles;
+    while (current_infile)
+    {
+        if (ft_strncmp(current_infile->token, "<<", 2) != 0) // skip heredocs
+        {
+            if (access(current_infile->file, F_OK) != 0)
+                return (btree()->cmds->flag_to_exec = 1,
+                        my_ffprintf(current_infile->file, "No such file or directory\n"), 0);
+            if (access(current_infile->file, R_OK) != 0)
+                return (btree()->cmds->flag_to_exec = 1,
+                        my_ffprintf(current_infile->file, "Permission denied\n"), 0);
+        }
+        current_infile = current_infile->next;
+    }
+    if (!tree->cmds->cmd)
+        return (0);
+    current_cmds = tree->cmds;
+    while (current_cmds)
+    {
+        char    **something = buildup_path(current_cmds, args, envp);
+        int     i = 0;
+        int     valid = 0;
+
+        while (something && something[i])
+        {
+            if (access(something[i], F_OK) == 0 && access(something[i], X_OK) == 0)
+            {
+                valid = 1;
+                break;
+            }
+            i++;
+        }
+        // printf("IM GONNA FREE IT\n");
+        if (something)
+            ft_free_matrix(something);
+        // printf("I FREED IT\n");
+        if (!valid)
+            return (0);
+        current_cmds = current_cmds->next;
+    }
+    if (!tree->cmds->outfiles)
+        return (0);
+    current_outfile = tree->cmds->outfiles;
+    while (current_outfile)
+    {
+        if (ensure_outfile(current_outfile) < 0)
+            return 0;
+        current_outfile = current_outfile->next;
+    }
+    return (1);
+}
+
 
 
 // < in1 < in2 /bin/cat > out1 > out2
@@ -187,7 +260,7 @@ int	exec_tree(t_binary *tree, char **args, char **envp)
 {
 	int	ret_left;
 
-	if (btree()->cmds->flag_to_exec == 1)
+	if (btree()->cmds && btree()->cmds->flag_to_exec == 1)
 		return (0);
 	check_order(tree, args, envp);
 	if (btree()->global_signal == 130)
