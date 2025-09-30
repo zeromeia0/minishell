@@ -37,11 +37,9 @@ t_infile	*get_infile(char **mat)
 	if (mat[ind] == NULL)
 		return (NULL);
 	infile = infile_new(mat[ind + 1], mat[ind]);
+	printf("struct infile created\n");
 	if (infile == NULL)
-	{
-		btree()->type = ERROR;
-		return (NULL);
-	}
+		return (btree()->type = ERROR, NULL);
 	mat[ind] = NULL;
 	mat[ind + 1] = NULL;
 	ft_matrix_uni(mat + ind, mat + ind + 2);
@@ -57,17 +55,14 @@ t_outfile	*get_outfile(char **mat)
 	if (btree()->type == ERROR || mat == NULL || *mat == NULL)
 		return (NULL);
 	ind = 0;
-	// test if we really need ft_strncmp(mat[ind], "|", 2), I dont think we do
-	while (mat[ind] && ft_strncmp(mat[ind], "|", 2) && output_comp(mat[ind]))
+	while (mat[ind] && output_comp(mat[ind]))
 		ind++;
-	if (mat[ind] == NULL || ft_strncmp(mat[ind], "|", 2) == 0)
+	if (mat[ind] == NULL)
 		return (NULL);
 	outfile = outfile_new(mat[ind + 1], mat[ind]);
+	printf("struct outfile created\n");
 	if (outfile == NULL)
-	{
-		btree()->type = ERROR;
-		return (NULL);
-	}
+		return (btree()->type = ERROR, NULL);
 	mat[ind] = NULL;
 	mat[ind + 1] = NULL;
 	ft_matrix_uni(mat + ind, mat + ind + 2);
