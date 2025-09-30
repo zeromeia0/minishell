@@ -1,4 +1,33 @@
+==99261== 496 bytes in 1 blocks are still reachable in loss record 39 of 83
+==99261==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==99261==    by 0x406D54: list_to_char (env_aux3.c:64)
+==99261==    by 0x402806: initialize_stuff (minishell.c:81)
+==99261==    by 0x402622: main (minishell.c:92)
 
-cat then ctr c needs to print the ^c
+==99261== 
+==99261== 1,464 bytes in 61 blocks are still reachable in loss record 52 of 83
+==99261==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==99261==    by 0x406450: create_env_node (env_aux1.c:26)
+==99261==    by 0x406ED1: rebuild_env_list (env_aux3.c:95)
+==99261==    by 0x406F75: builtin_env (env_aux4.c:22)
+==99261==    by 0x4027DA: initialize_stuff (minishell.c:78)
+==99261==    by 0x402622: main (minishell.c:92)
 
+==99261== 2,141 bytes in 61 blocks are still reachable in loss record 56 of 83
+==99261==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==99261==    by 0x40D901: ft_calloc (in /home/vivaz-ca/42_Cursus/minishell/minishell)
+==99261==    by 0x40EC22: ft_strdup (in /home/vivaz-ca/42_Cursus/minishell/minishell)
+==99261==    by 0x406475: create_env_node (env_aux1.c:29)
+==99261==    by 0x406ED1: rebuild_env_list (env_aux3.c:95)
+==99261==    by 0x406F75: builtin_env (env_aux4.c:22)
+==99261==    by 0x4027DA: initialize_stuff (minishell.c:78)
+==99261==    by 0x402622: main (minishell.c:92)
 
+==99261== 2,141 bytes in 61 blocks are still reachable in loss record 57 of 83
+==99261==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==99261==    by 0x40D901: ft_calloc (in /home/vivaz-ca/42_Cursus/minishell/minishell)
+==99261==    by 0x40EC22: ft_strdup (in /home/vivaz-ca/42_Cursus/minishell/minishell)
+==99261==    by 0x406C77: fill_env_array (env_aux3.c:42)
+==99261==    by 0x406D7D: list_to_char (env_aux3.c:67)
+==99261==    by 0x402806: initialize_stuff (minishell.c:81)
+==99261==    by 0x402622: main (minishell.c:92)

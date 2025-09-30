@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/30 16:09:32 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/30 17:09:36 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ char **buildup_path(t_cmds *cmd, char **args, char **envp)
             i++;
         }
         final_str[i] = NULL;
+		ft_free_matrix(paths_to_search);
         return final_str;
     }
     final_str = malloc(sizeof(char *));
@@ -179,11 +180,10 @@ int ensure_outfile(t_outfile *out)
     fd = open(out->file, O_WRONLY | O_CREAT, 0644);
     if (fd < 0)
     {
-        // Failed to open or create → maybe permission issue in directory
         return btree()->cmds->flag_to_exec = 1,
                my_ffprintf(out->file, "Permission denied\n"), -1;
     }
-    close(fd); // Close immediately; actual redirection happens in exec_out_redirections
+    close(fd);
     return 0;
 }
 
@@ -248,13 +248,6 @@ int check_order(t_binary *tree, char **args, char **envp)
     }
     return (1);
 }
-
-
-
-// < in1 < in2 /bin/cat > out1 > out2
-// < in1 < in2 cat > out1 > out2
-// < in7 < in2 /bin/cat > out1 > out2 | ls <-- why infinite loop
-
 
 int	exec_tree(t_binary *tree, char **args, char **envp)
 {

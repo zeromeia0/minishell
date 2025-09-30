@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:22:16 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/25 16:01:51 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/30 18:39:59 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	is_numeric(const char *s)
 
 int	deal_with_bad_exit(t_cmds *cmd)
 {
-	if ((ft_strncmp(cmd->cmd[0], "exit", 4) == 0) && cmd->cmd[1])
+	if ((ft_strcmp(cmd->cmd[0], "exit") == 0) && cmd->cmd[1] && cmd->cmd[2])
 	{
 		btree()->exit_status = 2;
 		ft_putstr_fd("exit: too many arguments\n", 2);
@@ -90,7 +90,7 @@ int	exec_single_cmd_aux(t_cmds *cmd)
 	char	**env_array;
 	
 	if (deal_with_bad_exit(cmd) != 1)
-		exit (btree()->exit_status);
+		return (btree()->exit_status);
 	if (ft_strncmp(cmd->cmd[0], "exit", 4) == 0)
 	{
 		env_array = list_to_char(*get_env_list());
