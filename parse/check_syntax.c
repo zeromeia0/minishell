@@ -55,6 +55,10 @@ int	check_tokens(char **mat, t_token tokens)
 		!ft_strcmp(*mat, "<") || !ft_strcmp(*mat, "<<"))
 		if (find_tokens(*(mat + 1), tokens))
 			return (syntax_error_msg(*(mat + 1)), 1);
+	if (!ft_strcmp(*(mat + 1), "(")
+		&& (ft_strcmp(*mat, "(") && ft_strcmp(*mat, "&&") && ft_strcmp(*mat, "||")
+		&& ft_strcmp(*mat, "&") && ft_strcmp(*mat, "(")))
+		return (syntax_error_msg(*(mat + 2)), 1);
 	return (0);
 }
 
