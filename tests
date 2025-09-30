@@ -59,7 +59,3 @@ dup2: Bad file descriptor
 minishell$ cat out2
 piha
 minishell$
-
-
-
-
