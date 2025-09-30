@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:02 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/30 19:29:35 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/30 20:54:05 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,18 @@ void	clear_env_list(void)
 
 void free_os_envs(void)
 {
-	
+    t_os_envs **env_list = get_env_list();
+    t_os_envs *current = *env_list;
+    t_os_envs *next;
+
+    while (current)
+    {
+        next = current->next;
+        free(current->linux_envs);
+        free(current->temp_vars);
+        free(current);
+        current = next;
+    }
+    *env_list = NULL;
 }
+

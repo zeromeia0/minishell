@@ -1,34 +1,18 @@
-==113027==
-==113027== 528 bytes in 1 blocks are still reachable in loss record 48 of 92
-==113027==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==113027==    by 0x406D34: list_to_char (env_aux3.c:64)
-==113027==    by 0x402806: initialize_stuff (minishell.c:81)
-==113027==    by 0x402622: main (minishell.c:88)
+		==113027==
+		==113027== 528 bytes in 1 blocks are still reachable in loss record 48 of 92
+		==113027==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+		==113027==    by 0x406D34: list_to_char (env_aux3.c:64)
+		==113027==    by 0x402806: initialize_stuff (minishell.c:81)
+		==113027==    by 0x402622: main (minishell.c:88)
 
-==113027== 2,353 bytes in 65 blocks are still reachable in loss record 67 of 92
-==113027==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==113027==    by 0x40D821: ft_calloc (in /home/vivaz-ca/42_Cursus/minishell/minishell)
-==113027==    by 0x40EB42: ft_strdup (in /home/vivaz-ca/42_Cursus/minishell/minishell)
-==113027==    by 0x406C57: fill_env_array (env_aux3.c:42)
-==113027==    by 0x406D5D: list_to_char (env_aux3.c:67)
-==113027==    by 0x402806: initialize_stuff (minishell.c:81)
-==113027==    by 0x402622: main (minishell.c:88)
-
-==113028== 528 bytes in 1 blocks are still reachable in loss record 48 of 92
-==113028==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==113028==    by 0x406D34: list_to_char (env_aux3.c:64)
-==113028==    by 0x402806: initialize_stuff (minishell.c:81)
-==113028==    by 0x402622: main (minishell.c:88)
-
-
-==113028== 2,353 bytes in 65 blocks are still reachable in loss record 67 of 92
-==113028==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==113028==    by 0x40D821: ft_calloc (in /home/vivaz-ca/42_Cursus/minishell/minishell)
-==113028==    by 0x40EB42: ft_strdup (in /home/vivaz-ca/42_Cursus/minishell/minishell)
-==113028==    by 0x406C57: fill_env_array (env_aux3.c:42)
-==113028==    by 0x406D5D: list_to_char (env_aux3.c:67)
-==113028==    by 0x402806: initialize_stuff (minishell.c:81)
-==113028==    by 0x402622: main (minishell.c:88)
+		==113027== 2,353 bytes in 65 blocks are still reachable in loss record 67 of 92
+		==113027==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+		==113027==    by 0x40D821: ft_calloc (in /home/vivaz-ca/42_Cursus/minishell/minishell)
+		==113027==    by 0x40EB42: ft_strdup (in /home/vivaz-ca/42_Cursus/minishell/minishell)
+		==113027==    by 0x406C57: fill_env_array (env_aux3.c:42)
+		==113027==    by 0x406D5D: list_to_char (env_aux3.c:67)
+		==113027==    by 0x402806: initialize_stuff (minishell.c:81)
+		==113027==    by 0x402622: main (minishell.c:88)
 
 =================================
 
@@ -51,26 +35,6 @@
 ==113027==    by 0x4027DA: initialize_stuff (minishell.c:78)
 ==113027==    by 0x402622: main (minishell.c:88)
 ==113027==
-
-
-==113028== 1,560 bytes in 65 blocks are still reachable in loss record 62 of 92
-==113028==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==113028==    by 0x406430: create_env_node (env_aux1.c:26)
-==113028==    by 0x406EB1: rebuild_env_list (env_aux3.c:95)
-==113028==    by 0x406F55: builtin_env (env_aux4.c:22)
-==113028==    by 0x4027DA: initialize_stuff (minishell.c:78)
-==113028==    by 0x402622: main (minishell.c:88)
-
-==113028== 2,353 bytes in 65 blocks are still reachable in loss record 66 of 92
-==113028==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==113028==    by 0x40D821: ft_calloc (in /home/vivaz-ca/42_Cursus/minishell/minishell)
-==113028==    by 0x40EB42: ft_strdup (in /home/vivaz-ca/42_Cursus/minishell/minishell)
-==113028==    by 0x406455: create_env_node (env_aux1.c:29)
-==113028==    by 0x406EB1: rebuild_env_list (env_aux3.c:95)
-==113028==    by 0x406F55: builtin_env (env_aux4.c:22)
-==113028==    by 0x4027DA: initialize_stuff (minishell.c:78)
-==113028==    by 0x402622: main (minishell.c:88)
-==113028==
 
 ====================
 

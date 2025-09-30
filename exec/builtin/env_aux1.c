@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_aux1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:00:59 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 09:20:08 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/30 21:02:53 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_os_envs	*create_env_node(char *path)
 	return (new_node);
 }
 
-void	enhanced_sorted_stoled_from_jlima(t_os_envs *envs)
+void	enhanced_sorting_stoled_from_jlima(t_os_envs *envs)
 {
 	t_os_envs	*env2;
 

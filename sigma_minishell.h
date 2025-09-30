@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sigma_minishell.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/28 23:16:47 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/30 21:02:53 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ void						handle_sigint(int sig);
 void						update_env_var(const char *key, const char *value);
 void						discard_heredoc(t_infile *infiles);
 void						init_shell_meta(void);
-void						enhanced_sorted_stoled_from_jlima(t_os_envs *envs);
+void						enhanced_sorting_stoled_from_jlima(t_os_envs *envs);
 void						my_ffprintf(char *cmd, char *which_message);
 void						expand_args(t_cmds *cmd);
 void						prepare_for_exec(void);
@@ -171,7 +171,7 @@ int	make_update_env(const char *str);
 size_t	get_env_key_length(const char *str);
 int	make_update_env_aux(t_os_envs **env_list, const char *str,
 		size_t len);
-int	handle_heredocs(t_cmds *cmd);
+int	handle_heredoc(t_cmds *cmd);
 int	handle_regular_redirections(t_cmds *cmd);
 void	pid_equal_zero_double(t_cmds *cmd, int p[2]);
 int	exec_single_left(t_infile *in);
@@ -186,7 +186,7 @@ int	process_command(t_cmds *cmd, int *first_fd, char **env);
 void	print_cmds(t_cmds *cmds);
 int	process_heredocs_and_checks(t_cmds *cmd);
 void get_single_heredoc(char *eof, int fd[2]);
-
+void free_os_envs(void);
 
 
 
@@ -271,7 +271,7 @@ void						get_here_doc(char *eof, int fd[2]);
 
 
 void set_to_onethirty(int sig);
-void	handle_heredoc(int sig);
+void	sig_handle_hererdoc(int sig);
 int restart_signals(void);
 
 

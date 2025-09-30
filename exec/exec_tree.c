@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/30 19:41:38 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/30 19:56:06 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,9 +193,11 @@ int check_order(t_binary *tree, char **args, char **envp)
     t_cmds      *current_cmds;
     t_outfile   *current_outfile;
 
+	signal(SIGINT, sig_handle_hererdoc);
+	signal(SIGINT, handle_sigint);
     if (!tree->cmds)
         return (0);
-	if (handle_heredocs(tree->cmds) < 0)
+	if (handle_heredoc(tree->cmds) < 0)
 		return (btree()->cmds->flag_to_exec = 1, -1);
 	if (!tree->cmds->infiles)
 		return (0);

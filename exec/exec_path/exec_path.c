@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:44:52 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/29 21:54:26 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/30 21:08:46 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,13 +117,13 @@ int	handle_system_path_cmd(char *cmd, char **args, char **envp)
 			return (-1);
 	}
 	return (0);
-}
+} 
 
 int	exec_path(char *cmd, char **args, char **envp)
 {
 	if (am_i_truly_myself(args[0]) && access(cmd, F_OK) == 0 && access(cmd,
 			X_OK) == 0)
-		update_shell_level(1)/* , printf("SHOWING DUO\n") */;
+		update_shell_level(1);
 	if (strchr(cmd, '/'))
 		return (handle_absolute_path_cmd(cmd, args, envp));
 	if (is_system_path_command(cmd, envp))

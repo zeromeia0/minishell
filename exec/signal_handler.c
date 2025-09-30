@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/28 16:38:04 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/30 19:52:10 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	set_to_onethirty(int sig)
 	// printf("HANDLE_SET TO ONETRHIGTY\n");
 }
 
-void	handle_heredoc(int sig)
+void	sig_handle_hererdoc(int sig)
 {
 	(void)sig;
 	signal(SIGTTOU, SIG_IGN);
