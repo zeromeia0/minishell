@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sigma_minishell.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 14:10:30 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/01 20:04:31 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,7 @@ int						cmd_has_heredoc(t_cmds *cmd);
 int						is_cmd_valid(t_cmds *cmd, char **args, char **envp);
 void					exec_child(t_cmds *cmd);
 void					children_killer(int status);
+int						process_command_heredocs(t_cmds *cmd);
 
 // struct_clear.c
 void					binary_clear(t_binary *binary);
