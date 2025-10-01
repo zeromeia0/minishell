@@ -1,11 +1,15 @@
 # Minishell - A "simple" shell based on bash
 
-## A fully functional shell that deals with commands, redirections, pipes and logical tokens.
+## How to Use Download and Execute our Shell.
 
-This project was aimed to create a "simple" interactive command interpreter, or a shell that deals with basic command prompts, anything from a simple command execution to complex commands with multiple instructions.
+*step by step explanation
+
+## A Fully Functioning Shell That Deals With Commands,Rredirections, Pipes And Logical Expressions.
+
+This project aims to create a "simple" interactive command interpreter, or a shell that deals with basic command prompts, anything from a simple command execution to complex commands with multiple instructions.
 Our program also supports the execution of commands while reading from files, also know shell scripts.
 
-This project was devided into 3 crucial roles.
+The project completion was devided into 3 crucial roles.
 
 * Lexer
 * Parser
@@ -13,20 +17,28 @@ This project was devided into 3 crucial roles.
 
 ## Lexer
 
-The lexer starts off by receiving the information provided to by the user as a string. First the tokenization of the information happens, meaning the string gets devided into chunks of more digestable informations. We devide everything by spaces and special tokens.
+The lexer starts off by receiving the information provided to by the user as a string. First the tokenization of the information happens, meaning the string gets devided into chunks of more digestable informations. We devide everything by spaces and special tokens basically dividing a string into a matrix.
 
 * (tokenization example 1) string to matrix
-* "< in cat > out" = ["in",  "cat",  ">",  "out"]
-* (tokenization example 2)
-* (tokenization example 3)
+* [< in cat > out] = [<] [in] [cat] [>] [out]
+* [>out1<""in cat >out2>>out3] = [>] [out1] [<] [in] [cat] [>] [out2] [>>] [out3]
+* ["cat Makefile"< in>'out file'] = ["cat Makefile"] [<] [in] [>] ['out file']
+* ["cat Make""file"||< in>'out file'|cat< in"_file"] = ["cat Make""file"] [||] [<] [in] [>] [out file] [|] [cat] [<] [in_"file"]
 
-After the information gets tokenized we get those tokens we verify that theres no syntax erros on the part of the user such as:
+
+After the information gets tokenized we get those tokens and verify that theres no syntax erros on the part of the user such as:
 
 * (lexer example 1) syntax the matrix
-* (lexer example 2)
-* (lexer example 3)
+* open quotations(we chose to verify this part during the last step): a single ' or "
+* open parenthesis: a single ) or (
+* command ending in redirection: > or <
+* command starting with a logical token: && or ||
+* command with tokens followed by incompatible tokens: && &&, >> &&, > >, [not_a_token] (, ( ), ) (
 
-If there is no syntax errors, the information (now tokenized) gets to the parser.
+
+If there are no syntax errors, the information (now tokenized) gets to the parser.
+
+If there are any syntax errors we clear all allocated memory and return the prompt to the user.
 
 ## Parser
 
@@ -35,8 +47,6 @@ After the lexer has verified the syntax to be correct/parseble we parse the toke
 While paying attention to the priority of execution we chose to devide the different commands in a binary tree by the logical value of tokens found like so:
 
 * (tree parse example 1) parse the matrix into the structures
-* (tree parse example 2)
-* (tree parse example 3)
 
 Knowing that the return of each command defined how the "tree" of commands was to be executed we found that a tree type structure made the more sense for this type of information "parsing". 
             <!-- define complex command -->
@@ -54,8 +64,6 @@ Every simple command in between pipes '|' gets formatted into a single node of t
 That same node has every input and output redirection accompanied by that command, meaning every input and output redirection in between the same pipes
 
 * (commands list parse example 1) parse the information of the tree nodes into the apropriate lists;
-* (commands list parse example 2)
-* (commands list parse example 3)
 
 ## Executor
 
