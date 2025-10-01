@@ -29,7 +29,9 @@ After the information gets tokenized we get those tokens and verify that theres 
 
 ### Syntax Verification
 
-(https://github.com/zeromeia0/minishell/blob/main/img.png "binary tree")
+Inline-style: 
+![alt text](https://github.com/zeromeia0/minishell/blob/main/img.png "Logo Title Text 1")
+
 
 
 * open quotations (we chose to verify this part during the last step): a single ' or "
