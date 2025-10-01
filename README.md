@@ -23,7 +23,7 @@ After the information gets tokenized we get those tokens we verify that theres n
 
 * (lexer example 1) syntax the matrix
 
-        "< in cat > out" = {"in" "cat" ">" "out"}
+* "< in cat > out" = {"in" "cat" ">" "out"}
 * (lexer example 2)
 * (lexer example 3)
 
