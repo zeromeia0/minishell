@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 13:02:50 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/01 13:58:04 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,14 @@ int	exec_node(t_binary *node, char **args, char **envp)
 
 int	check_order(t_binary *tree, char **args, char **envp)
 {
-	signal(SIGINT, sig_handle_hererdoc);
-	signal(SIGINT, handle_sigint);
-	if (!tree->cmds)
-		return (0);
+	// printf("CHECKING ORDEN\n");
 	if (handle_heredoc(tree->cmds) < 0)
 		return (btree()->cmds->flag_to_exec = 1, -1);
 	if (!check_infiles(tree->cmds))
 		return (0);
-	if (!check_cmds(tree->cmds, args, envp))
-		return (0);
 	if (!check_outfiles(tree->cmds))
+		return (0);
+	if (!check_cmds(tree->cmds, args, envp))
 		return (0);
 	return (1);
 }

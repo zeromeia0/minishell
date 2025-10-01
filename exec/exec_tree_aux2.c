@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:12:18 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/01 12:35:44 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/01 14:09:37 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	exec_subshell(t_binary *subshell, char **args, char **envp)
 
 	pid = fork();
 	if (pid == 0)
-		megalodon_giga_chad_exit(exec_tree(subshell, args, envp));
+		children_killer(exec_tree(subshell, args, envp));
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		btree()->exit_status = WEXITSTATUS(status);

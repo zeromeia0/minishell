@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 13:05:19 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/01 14:10:30 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ typedef struct s_cmds
 typedef struct s_binary
 {
 	char				*logic;
-	t_type				type;
 	int					sublvl;
 	char				*input;
 	int					left_ret;
@@ -86,16 +85,17 @@ typedef struct s_binary
 	int					global_signal;
 	int					exit_status;
 	char				**mat;
-	t_os_envs			*os_env;
 	char				**env;
+	t_type				type;
 	t_cmds				*cmds;
+	t_os_envs			*os_env;
+	struct stat			self_stat;
+	struct stat			cmd_stat;
 	struct s_binary		*up;
 	struct s_binary		*left;
 	struct s_binary		*right;
 	struct s_binary		*subshell;
-	struct termios orig_termios; //<-- VINI TESTEANDO UMA CRAZY THING
-	struct stat			cmd_stat;
-	struct stat			self_stat;
+	struct termios		orig_termios; //<-- VINI TESTEANDO UMA CRAZY THING
 }						t_binary;
 
 int						parsing(char *str);
@@ -203,6 +203,7 @@ int						exec_subshell(t_binary *subshell, char **args,
 int						cmd_has_heredoc(t_cmds *cmd);
 int						is_cmd_valid(t_cmds *cmd, char **args, char **envp);
 void					exec_child(t_cmds *cmd);
+void					children_killer(int status);
 
 // struct_clear.c
 void					binary_clear(t_binary *binary);

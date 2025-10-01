@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 08:43:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/30 21:45:05 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/01 14:11:12 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,19 @@ void	execute_child(t_cmds *cmd, int first_fd, int fd[2], char **env)
 	if (!cleaned_cmd || !cleaned_cmd[0])
 	{
 		ft_free_matrix(cleaned_cmd);
-		megalodon_giga_chad_exit(127);
+		children_killer(127);
 	}
 	if (is_builtin(cleaned_cmd[0]))
 	{
 		status = exec_builtin(cleaned_cmd[0], cleaned_cmd, env);
 		ft_free_matrix(cleaned_cmd);
-		megalodon_giga_chad_exit(status);
+		children_killer(status);
 	}
 	else
 	{
 		exec_path(cleaned_cmd[0], cleaned_cmd, env);
 		ft_free_matrix(cleaned_cmd);
-		megalodon_giga_chad_exit(127);
+		children_killer(127);
 	}
 }
 

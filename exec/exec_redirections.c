@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:08:05 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 12:06:57 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/01 14:09:24 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	exec_double_left(t_infile *in, t_cmds *cmd)
 	int		p[2];
 	pid_t	pid;
 	int		status;
-
+	// printf("DOUBLE LEFT\n");
 	signal(SIGTTOU, SIG_IGN);
 	signal(SIGTTIN, SIG_IGN);
 	if (pipe(p) == -1)
@@ -69,7 +69,7 @@ int	exec_double_left(t_infile *in, t_cmds *cmd)
 		close(p[0]);
 		get_single_heredoc(in->file, p);
 		close(p[1]);
-		megalodon_giga_chad_exit(0);
+		children_killer(0);
 	}
 	else
 	{
