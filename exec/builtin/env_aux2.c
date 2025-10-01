@@ -6,7 +6,7 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:01:02 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 00:33:57 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/01 01:42:02 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,11 +115,11 @@ void	expand_args(t_cmds *cmd)
 void	expand_infiles(t_infile *infile)
 {
 	infile->file = expand_hd(infile->file);
-	expand_infile(infile->next);
+	expand_infiles(infile->next);
 }
 
 void	expand_outfiles(t_outfile *outfile)
 {
 	outfile->file = expand_hd(outfile->file);
-	expand_outfile(outfile->next);
+	expand_outfiles(outfile->next);
 }
