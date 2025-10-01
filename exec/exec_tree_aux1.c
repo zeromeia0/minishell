@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:12:18 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/01 12:34:41 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/01 16:17:56 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ char	**build_system_paths(char *cmd_name, char **paths)
 	if (!final_str)
 		return (NULL);
 	i = 0;
+	if (!paths)
+		return (NULL);
 	while (paths[i])
 	{
 		tmp = ft_strjoin(paths[i], "/");
@@ -51,7 +53,8 @@ char	**buildup_path(t_cmds *cmd, char **args, char **envp)
 	{
 		paths_to_search = get_paths_to_search(envp);
 		final_str = build_system_paths(cmd->cmd[0], paths_to_search);
-		ft_free_matrix(paths_to_search);
+		if (paths_to_search)
+			ft_free_matrix(paths_to_search);
 		return (final_str);
 	}
 	final_str = malloc(sizeof(char *));
@@ -81,7 +84,7 @@ int	check_infiles(t_cmds *cmds)
 {
 	t_infile	*current_infile;
 
-	if (!cmds->infiles)
+	if (!cmds || !cmds->infiles)
 		return (1);
 	current_infile = cmds->infiles;
 	while (current_infile)

@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:12:18 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/01 14:09:37 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/01 16:18:22 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	check_outfiles(t_cmds *cmds)
 {
 	t_outfile	*current_outfile;
 
-	if (!cmds->outfiles)
+	if (!cmds || !cmds->outfiles)
 		return (1);
 	current_outfile = cmds->outfiles;
 	while (current_outfile)
