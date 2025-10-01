@@ -22,7 +22,8 @@ The lexer starts off by receiving the information provided to by the user as a s
 After the information gets tokenized we get those tokens we verify that theres no syntax erros on the part of the user such as:
 
 * (lexer example 1) syntax the matrix
-    "< in cat > out" = {"in" "cat" ">" "out"}
+
+        "< in cat > out" = {"in" "cat" ">" "out"}
 * (lexer example 2)
 * (lexer example 3)
 
