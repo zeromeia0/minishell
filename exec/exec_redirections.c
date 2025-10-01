@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:08:05 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 11:12:13 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/01 12:06:57 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,36 +53,32 @@ int	exec_single_left(t_infile *in)
 	return (0);
 }
 
-int exec_double_left(t_infile *in, t_cmds *cmd)
+int	exec_double_left(t_infile *in, t_cmds *cmd)
 {
-    int     p[2];
-    pid_t   pid;
-    int     status;
+	int		p[2];
+	pid_t	pid;
+	int		status;
 
 	signal(SIGTTOU, SIG_IGN);
 	signal(SIGTTIN, SIG_IGN);
-    if (pipe(p) == -1)
-        return (perror("pipe"), -1);
-    pid = fork();
-    if (pid == 0)
-    {
-        close(p[0]);
-        get_single_heredoc(in->file, p);
-        close(p[1]);
-        megalodon_giga_chad_exit(0);
-    }
-    else
-    {
-        close(p[1]);
-        signal(SIGINT, SIG_IGN);
-        waitpid(pid, &status, 0);
-        restart_signals();
-        if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
-            return (close(p[0]), btree()->global_signal = 130, -1);
-
-        in->heredoc_fd = p[0];
-    }
-    return (0);
+	if (pipe(p) == -1)
+		return (perror("pipe"), -1);
+	pid = fork();
+	if (pid == 0)
+	{
+		close(p[0]);
+		get_single_heredoc(in->file, p);
+		close(p[1]);
+		megalodon_giga_chad_exit(0);
+	}
+	else
+	{
+		double_helper(status, p, pid);
+		if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
+			return (close(p[0]), btree()->global_signal = 130, -1);
+		in->heredoc_fd = p[0];
+	}
+	return (0);
 }
 
 int	exec_out_redirections(t_outfile *out)
@@ -111,31 +107,29 @@ int	exec_out_redirections(t_outfile *out)
 	return (0);
 }
 
-int exec_redirections(t_cmds *cmd)
+int	exec_redirections(t_cmds *cmd)
 {
-    t_infile *in = cmd->infiles;
+	t_infile	*in;
 
-    if (cmd->cmd == NULL)
-        cmd->flag_to_exec = 1;
-
-    while (in)
-    {
-        if (ft_strcmp(in->token, "<<") == 0 && in->heredoc_fd > 0)
-        {
-            if (dup2(in->heredoc_fd, STDIN_FILENO) < 0)
-                return (perror("dup2"), close(in->heredoc_fd), -1);
-            close(in->heredoc_fd);
-        }
-        else if (ft_strcmp(in->token, "<") == 0)
-        {
-            if (exec_single_left(in) < 0)
-                return -1;
-        }
-        in = in->next;
-    }
-    if (exec_out_redirections(cmd->outfiles) < 0)
-        return (btree()->cmds->flag_to_exec = 1, -1);
-    return 0;
+	in = cmd->infiles;
+	if (cmd->cmd == NULL)
+		cmd->flag_to_exec = 1;
+	while (in)
+	{
+		if (ft_strcmp(in->token, "<<") == 0 && in->heredoc_fd > 0)
+		{
+			if (dup2(in->heredoc_fd, STDIN_FILENO) < 0)
+				return (perror("dup2"), close(in->heredoc_fd), -1);
+			close(in->heredoc_fd);
+		}
+		else if (ft_strcmp(in->token, "<") == 0)
+		{
+			if (exec_single_left(in) < 0)
+				return (-1);
+		}
+		in = in->next;
+	}
+	if (exec_out_redirections(cmd->outfiles) < 0)
+		return (btree()->cmds->flag_to_exec = 1, -1);
+	return (0);
 }
-
-

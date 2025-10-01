@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:44:52 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/30 22:16:18 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/01 12:01:58 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,7 @@ int	handle_slash_command(char *cmd, char **args, char **envp)
 {
 	if (cmd == NULL)
 		btree()->cmds->flag_to_exec = 1;
-	if (btree()->cmds->flag_to_exec == 1)
-			megalodon_giga_chad_exit(126);
-	if (access(cmd, F_OK) != 0)
-	{
-		my_ffprintf(cmd, "No such file or directory\n");
-		megalodon_giga_chad_exit(127);
-	}
+	check_commands(cmd);
 	if (access(cmd, X_OK) == 0)
 	{
 		prepare_for_exec();
@@ -76,13 +70,7 @@ int	handle_system_path_cmd_aux(char *cmd, char **args, char **envp)
 {
 	if (cmd == NULL)
 		btree()->cmds->flag_to_exec = 1;
-	if (btree()->cmds->flag_to_exec == 1)
-			megalodon_giga_chad_exit(126);
-	if (access(cmd, F_OK) != 0)
-	{
-		my_ffprintf(cmd, "No such file or directory\n");
-		megalodon_giga_chad_exit(126);
-	}
+	check_commands(cmd);
 	if (access(cmd, X_OK) == 0)
 	{
 		prepare_for_exec();
@@ -117,7 +105,7 @@ int	handle_system_path_cmd(char *cmd, char **args, char **envp)
 			return (-1);
 	}
 	return (0);
-} 
+}
 
 int	exec_path(char *cmd, char **args, char **envp)
 {
@@ -131,6 +119,3 @@ int	exec_path(char *cmd, char **args, char **envp)
 	my_ffprintf(cmd, "command not found\n");
 	return (megalodon_giga_chad_exit(127), 0);
 }
-
-
-	

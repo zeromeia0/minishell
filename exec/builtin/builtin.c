@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:21:23 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/30 21:51:42 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/01 11:39:10 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ int	builtin_exit(char **args, char **envp)
 {
 	long	status;
 
-	for (int i = 0; args[i]; i++)
-		printf("arg[%d] = %s\n", i, args[i]);
 	(void)envp;
 	if (!args[1])
 	{
@@ -85,7 +83,6 @@ int	builtin_exit(char **args, char **envp)
 		return (my_ffprintf(args[1], "numeric argument required"), 0);
 	if (args[0] && args[1] && args[2] != NULL)
 		return (ft_putstr_fd("minishell: exit: too many arguments", 2), 0);
-	
 	status = ft_atol(args[1]);
 	update_shell_level(-1);
 	return (megalodon_giga_chad_exit((unsigned char)status), 0);

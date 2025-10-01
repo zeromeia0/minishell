@@ -107,8 +107,8 @@ void	expand_args(t_cmds *cmd)
 		free(*cmd->cmd);
 		ft_matrix_uni(cmd->cmd, cmd->cmd + 1);
 	}
-    expand_infiles(cmd->infiles);
-    expand_outfiles(cmd->outfiles);
+	expand_infiles(cmd->infiles);
+	expand_outfiles(cmd->outfiles);
 	expand_args(cmd->next);
 }
 

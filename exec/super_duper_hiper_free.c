@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:02 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/30 21:49:37 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/01 12:06:50 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,4 +104,23 @@ void	megalodon_giga_chad_exit(int status)
 	binary_clear(btree());
 	free(btree()->input);
 	exit(status);
+}
+
+void	check_commands(char *cmd)
+{
+	if (btree()->cmds->flag_to_exec == 1)
+		megalodon_giga_chad_exit(126);
+	if (access(cmd, F_OK) != 0)
+	{
+		my_ffprintf(cmd, "No such file or directory\n");
+		megalodon_giga_chad_exit(127);
+	}
+}
+
+void	double_helper(int status, int p[2], pid_t pid)
+{
+	close(p[1]);
+	signal(SIGINT, SIG_IGN);
+	waitpid(pid, &status, 0);
+	restart_signals();
 }

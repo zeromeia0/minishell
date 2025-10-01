@@ -41,7 +41,6 @@ void	sig_handle_hererdoc(int sig)
 	(void)sig;
 	signal(SIGTTOU, SIG_IGN);
 	signal(SIGTTIN, SIG_IGN);
-	
 	btree()->global_signal = 130;
 	btree()->exit_status = 130;
 	write(1, "\n", 1);

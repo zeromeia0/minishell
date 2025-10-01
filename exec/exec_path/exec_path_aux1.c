@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_path_aux1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:36:54 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/25 21:58:38 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/01 11:49:51 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,7 @@ int	is_system_path_command(char *cmd, char **envp)
 			return (-1);
 		}
 		if (access_result == 1)
-		{
-			free_matrix(paths_to_search);
-			return (1);
-		}
+			return (free_matrix(paths_to_search), 1);
 		i++;
 	}
 	return (free_matrix(paths_to_search), 0);
