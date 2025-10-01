@@ -1,8 +1,6 @@
 # Minishell - A "simple" shell based on bash
 
-## How to Download, Execute and Use Our Shell
-
-### Step by Step Explanation:
+### Step by Step Explanation on How to Download, Execute and Use Our Shell:
 #### 1. step by step explanation.
 
 ## Code explenation: A Fully Functioning Shell That Deals With Commands, Redirections, Pipes And Logical Expressions
