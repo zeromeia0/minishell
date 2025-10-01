@@ -29,10 +29,6 @@ After the information gets tokenized we get those tokens and verify that theres 
 
 ### Syntax Verification
 
-Inline-style: 
-![alt text](https://github.com/zeromeia0/minishell/blob/main/img.png "Logo Title Text 1")
-
-
 
 * open quotations (we chose to verify this part during the last step): a single ' or "
 * open parenthesis: a single ) or (
@@ -52,6 +48,10 @@ After the lexer has verified the syntax to be correct/parseble we parse the toke
 While paying attention to the priority of execution we chose to devide the different commands in a binary tree by the logical value of tokens found like so:
 
 ### Structures Visualization
+
+Binary tree construction example: 
+![alt text](https://github.com/zeromeia0/minishell/blob/main/img.png "Graph 1")
+
 * (tree parse example 1) parse the matrix into the structures
 
 Knowing that the return of each command defined how the "tree" of commands was to be executed we found that a tree type structure made the more sense for this type of information "parsing". 
