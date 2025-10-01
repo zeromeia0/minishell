@@ -13,17 +13,24 @@ This project was devided into 3 crucial roles.
 
 ## Lexer
 
-The lexer starts off by receiving the information provided to by the user as a string. First the tokenization of the information happens, meaning the string gets devided into chunks of more digestable informations. We devide everything by spaces and special tokens, basically dividing a string into a matrix.
+The lexer starts off by receiving the information provided to by the user as a string. First the tokenization of the information happens, meaning the string gets devided into chunks of more digestable informations. We devide everything by spaces and special tokens basically dividing a string into a matrix.
 
+* (tokenization example 1) string to matrix
 * [< in cat > out] = [<] [in] [cat] [>] [out]
-* [>out1<""in cat >out2>out3] = [>] [out1] [<] [in] [cat] [>] [out2] [>] [out3]
-* ["cat Makefile"< in>'out file'] = ["cat Makefile"] [<] [in] [>] [out file]
-* ["cat Make""file"||< in>'out file'|cat< in"_file"] = ["cat Makefile"] [||] [<] [in] [>] [out file] [|] [cat] [<] [in_file]
+* [>out1<""in cat >out2>>out3] = [>] [out1] [<] [in] [cat] [>] [out2] [>>] [out3]
+* ["cat Makefile"< in>'out file'] = ["cat Makefile"] [<] [in] [>] ['out file']
+* ["cat Make""file"||< in>'out file'|cat< in"_file"] = ["cat Make""file"] [||] [<] [in] [>] [out file] [|] [cat] [<] [in_"file"]
 
 
-After the information gets tokenized we get those tokens we verify that theres no syntax erros on the part of the user such as:
+After the information gets tokenized we get those tokens and verify that theres no syntax erros on the part of the user such as:
 
 * (lexer example 1) syntax the matrix
+* open quotations: a single ' or "
+* open parenthesis a single ) or (
+* command ending in redirection: > or <
+* command starting with a logical token: && or ||
+* command with tokens followed by incompatible tokens: && &&, >> &&, > >, [not_a_token] (, ( ), ) (
+
 
 If there is no syntax errors, the information (now tokenized) gets to the parser.
 
