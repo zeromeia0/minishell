@@ -50,9 +50,9 @@ char	*quote(char *str)
 	char	*str2;
 	int		count;
 
-	count = -1;
 	str2 = ft_strdup(str);
-	while (str[++count])
+	count = 0;
+	while (str[count])
 	{
 		str = single_expand(str, count, 0);
 		if (ft_strcmp(str, str2))
