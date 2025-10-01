@@ -1,10 +1,11 @@
 # Minishell - A "simple" shell based on bash
 
-## How to Use Download and Execute our Shell.
+## How to Use Download and Execute our Shell
 
-*step by step explanation
+* step by step explanation.
 
-## A Fully Functioning Shell That Deals With Commands,Rredirections, Pipes And Logical Expressions.
+## Code explenation:
+## A Fully Functioning Shell That Deals With Commands, Redirections, Pipes And Logical Expressions
 
 This project aims to create a "simple" interactive command interpreter, or a shell that deals with basic command prompts, anything from a simple command execution to complex commands with multiple instructions.
 Our program also supports the execution of commands while reading from files, also know shell scripts.
@@ -50,7 +51,7 @@ While paying attention to the priority of execution we chose to devide the diffe
 
 Knowing that the return of each command defined how the "tree" of commands was to be executed we found that a tree type structure made the more sense for this type of information "parsing". 
             <!-- define complex command -->
-            
+
 After the multiple complex commands have been stored in the tree we once again devide the information in the tree nodes into even more digestable tokens on linked lists.
 
 Here we use linked lists as the processing of the information is completely linear. We read and subsequently execute the information from left to right.
@@ -66,4 +67,3 @@ That same node has every input and output redirection accompanied by that comman
 * (commands list parse example 1) parse the information of the tree nodes into the apropriate lists;
 
 ## Executor
-
