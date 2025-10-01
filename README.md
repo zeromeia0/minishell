@@ -30,7 +30,7 @@ After the information gets tokenized we get those tokens and verify that theres 
 ### Syntax Verification
 
 Inline-style: 
-![alt text](https://github.com/zeromeia0/minishell/blob/main/img.png "Logo Title Text 1")
+![alt text](https://github.com/zeromeia0/minishell/blob/main/i.png "Logo Title Text 1")
 
 
 
