@@ -28,6 +28,10 @@ The lexer starts off by receiving the information provided to by the user as a s
 After the information gets tokenized we get those tokens and verify that theres no syntax erros on the part of the user such as:
 
 ### Syntax Verification
+
+(https://github.com/zeromeia0/minishell/blob/main/img.png "binary tree")
+
+
 * open quotations (we chose to verify this part during the last step): a single ' or "
 * open parenthesis: a single ) or (
 * command ending in redirection or logical expressions: >, <, && or ||
