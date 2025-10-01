@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 23:05:16 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/30 22:12:11 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/01 13:53:23 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,27 @@
 
 int	handle_heredoc(t_cmds *cmd)
 {
-	t_infile	*in;
+	t_cmds *cur = cmd;
+	t_infile *in;
 
 	signal(SIGINT, sig_handle_hererdoc);
-	in = cmd->infiles;
-	while (in)
+	while (cur)
 	{
-		if (ft_strcmp(in->token, "<<") == 0)
+		in = cur->infiles;
+		while (in)
 		{
-			if (exec_double_left(in, cmd) < 0)
-				return (-1);
+			if (ft_strcmp(in->token, "<<") == 0)
+			{
+				if (exec_double_left(in, cur) < 0)
+					return (-1);
+			}
+			in = in->next;
 		}
-		in = in->next;
+		cur = cur->next;
 	}
 	return (0);
 }
+
 
 int	handle_regular_redirections(t_cmds *cmd)
 {

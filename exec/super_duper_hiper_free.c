@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:02 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 12:34:34 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/01 14:08:12 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,12 @@ void	megalodon_giga_chad_exit(int status)
 	free(btree()->input);
 	exit(status);
 }
+
+void	children_killer(int status)
+{
+	exit(status);
+}
+
 
 void	check_commands(char *cmd)
 {

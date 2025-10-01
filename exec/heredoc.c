@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:11:44 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/01 13:23:04 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/01 14:00:28 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	get_single_heredoc(char *eof, int fd[2])
 	char	*expanded;
 	t_cmds *cmd;
 
-	
 	delimiter = remove_aspas(eof);
 	len = ft_strlen(delimiter);
 	if (btree()->global_signal == 130)
