@@ -6,34 +6,30 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 23:05:16 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 13:53:23 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/01 17:05:58 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../sigma_minishell.h"
 
-int	handle_heredoc(t_cmds *cmd)
+int handle_heredoc(t_cmds *cmd)
 {
-	t_cmds *cur = cmd;
-	t_infile *in;
+    t_cmds *cur;
 
-	signal(SIGINT, sig_handle_hererdoc);
-	while (cur)
-	{
-		in = cur->infiles;
-		while (in)
-		{
-			if (ft_strcmp(in->token, "<<") == 0)
-			{
-				if (exec_double_left(in, cur) < 0)
-					return (-1);
-			}
-			in = in->next;
-		}
-		cur = cur->next;
-	}
-	return (0);
+    signal(SIGINT, sig_handle_hererdoc);
+    cur = cmd;
+    while (cur)
+    {
+        if (has_heredocs(cur))
+        {
+            if (process_command_heredocs(cur) < 0)
+                return (-1);
+        }
+        cur = cur->next;
+    }
+    return (0);
 }
+
 
 
 int	handle_regular_redirections(t_cmds *cmd)

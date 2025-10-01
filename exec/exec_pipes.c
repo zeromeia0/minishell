@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:19:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 14:11:22 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/01 16:45:16 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	process_heredocs_and_checks(t_cmds *cmd)
 	t_cmds	*current;
 
 	current = cmd;
+	signal(SIGINT, sig_handle_hererdoc);
 	while (current)
 	{
 		if (has_heredocs(current))
