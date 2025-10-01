@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:08:05 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 14:09:24 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/01 16:45:54 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	exec_double_left(t_infile *in, t_cmds *cmd)
 	// printf("DOUBLE LEFT\n");
 	signal(SIGTTOU, SIG_IGN);
 	signal(SIGTTIN, SIG_IGN);
+	signal(SIGINT, sig_handle_hererdoc);
 	if (pipe(p) == -1)
 		return (perror("pipe"), -1);
 	pid = fork();
