@@ -6,7 +6,7 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:01:02 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 11:50:58 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/01 12:00:12 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,11 +144,19 @@ void	expand_infiles(t_infile *infile)
 
 	if (!infile || !infile->file)
 		return ;
-	len = ft_strlen(infile->file);
-	infile->flag = 0;
-	take_quotes(infile->file);
-	if (len != ft_strlen(infile->file))
-		infile->flag = 1;
+	if (ft_strcmp(infile->token, "<<"))
+	{
+		len = ft_strlen(infile->file);
+		infile->flag = 0;
+		take_quotes(infile->file);
+		if (len != ft_strlen(infile->file))
+			infile->flag = 1;
+	}
+	else
+	{
+		infile->file = quote(infile->file);
+		expand_infiles(infile->next);
+	}
 	expand_infiles(infile->next);
 }
 
@@ -156,6 +164,6 @@ void	expand_outfiles(t_outfile *outfile)
 {
 	if (!outfile || !outfile->file)
 		return ;
-	outfile->file = expand_hd(outfile->file);
+	outfile->file = quote(outfile->file);
 	expand_outfiles(outfile->next);
 }

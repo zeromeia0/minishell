@@ -68,16 +68,23 @@ char	*quote(char *str)
 			ind++;
 			while ((str + count)[ind] != ch)
 			{
-				str = single_expand(str, count, 0);
-				if (ft_strcmp(str, str2))
+				if (ch == '\"')
 				{
-					count += get_diff(str, str2, 0);
-					free(str2);
-					str2 = ft_strdup(str);
+					str = single_expand(str, count + ind, 0);
+					if (ft_strcmp(str, str2))
+					{
+						ind += get_diff(str, str2, 0);
+						free(str2);
+						str2 = ft_strdup(str);
+					}
 				}
 				ind++;
 			}
+			// printf("what Im  moving|%s| %d %d\n", (str + count) + ind + 1, count, ind + 1);
+			// printf("where Im moving|%s| %d %d\n", (str + count) + ind, count, ind);
 			ft_memmove((str + count) + ind, (str + count) + ind + 1, ft_strlen((str + count) + ind));
+			// printf("what Im  moving|%s|\n", (str + count));
+			// printf("where Im moving|%s|\n\n\n", (str + count));
 			ft_memmove((str + count), (str + count) + 1, ft_strlen((str + count)));
 			count += ind - 1;
 		}
@@ -86,7 +93,7 @@ char	*quote(char *str)
 	}
 	return (str);
 }
-
+// echo $USER "'$USER'" "$USER" '$USER' '"$USER"'
 char	*find_os_env(t_os_envs *env, char *str, int count)
 {
 	while (env)
