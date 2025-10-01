@@ -6,7 +6,7 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 19:03:05 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/01 11:17:54 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/01 11:21:09 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,6 @@
 	}
 } */
 
-int count_heredocs(t_infile *in)
-{
-    int count = 0;
-    while (in)
-    {
-        if (ft_strcmp(in->token, "<<") == 0)
-            count++;
-        in = in->next;
-    }
-    return count;
-}
 
 void get_single_heredoc(char *eof, int fd[2])
 {

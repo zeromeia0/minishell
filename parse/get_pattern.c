@@ -6,7 +6,7 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 19:02:01 by namejojo          #+#    #+#             */
-/*   Updated: 2025/09/24 19:02:02 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/01 11:20:24 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,7 @@ t_outfile	*get_outfile(char **mat)
 	if (btree()->type == ERROR || mat == NULL || *mat == NULL)
 		return (NULL);
 	ind = 0;
-<<<<<<< HEAD
-	while (mat[ind] && ft_strncmp(mat[ind], "|", 2) && output_comp(mat[ind]))
-=======
 	while (mat[ind] && output_comp(mat[ind]))
->>>>>>> main
 		ind++;
 	if (mat[ind] == NULL)
 		return (NULL);

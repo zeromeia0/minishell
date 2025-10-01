@@ -6,7 +6,7 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 18:31:45 by namejojo          #+#    #+#             */
-/*   Updated: 2025/09/24 18:32:21 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/01 11:20:05 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,31 +177,6 @@ char    *single_expand(char *str, int ind, int count)
 
 char	*expand(char *str, int ind, int count, int flag)
 {
-<<<<<<< HEAD
-	if (str == NULL)
-		return (btree()->type = ERROR, NULL);
-	ind = 0;
-	while (str[ind])
-	{
-		if (flag == 1 && str[ind] == '\'' && ++ind)
-			while (str[ind] != '\'')
-				ind++;
-		if (str[ind] == '\"')
-			flag = -flag;
-		if (str[ind] == '$' && (ft_isalnum(str[ind + 1])
-				|| str[ind + 1] == '?' || str[ind + 1] == '_'))
-		{
-			count++;
-			if (str[ind + 1] == '?')
-				return (expand_last_exit(str, ind, NULL));
-			while (ft_isalnum((str + ind)[count]) || (str + ind)[count] == '_')
-				count++;
-			return (expand_aux(str, ind, count, NULL));
-		}
-		ind++;
-	}
-	return (str);
-=======
     if (str == NULL)
         return (btree()->type = ERROR, NULL);
     while (str[ind])
@@ -227,5 +202,4 @@ char	*expand(char *str, int ind, int count, int flag)
         ind++;
     }
     return (str);
->>>>>>> main
 }
