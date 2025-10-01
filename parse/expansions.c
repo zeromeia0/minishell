@@ -39,7 +39,8 @@ char *expand_hd(char *str)
 			str2 = ft_strdup(str);
 		}
 	}
-	// JOAO, TENS DE ADICIONAR UMA LLINHA AQUI BRO
+	free(str2);
+	return (str);
 }
 
 char	*quote(char *str)

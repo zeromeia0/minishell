@@ -3,17 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< HEAD
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/22 11:54:32 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/30 21:28:57 by vivaz-ca         ###   ########.fr       */
-=======
-/*   By: jlima-so <jlima-so@student.42lisba.com>    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/22 11:54:32 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/30 19:29:22 by jlima-so         ###   ########.fr       */
->>>>>>> main
+/*   Created: 2025/10/01 10:49:36 by vivaz-ca          #+#    #+#             */
+/*   Updated: 2025/10/01 10:49:40 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +107,7 @@ int	main(int argc, char *argv[], char **envp)
 		}
 		if (parsing(btree()->input) == 0)
 		{
-			print_tree(btree(), 0);
+			// print_tree(btree(), 0);
 			btree()->main_exit = exec_tree(btree(), argv, btree()->env);
 			/* printf("restart TWO\n"),  */restart_signals();
 			free(btree()->input);

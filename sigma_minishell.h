@@ -3,10 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   sigma_minishell.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
 /*   Updated: 2025/09/30 22:16:36 by vivaz-ca         ###   ########.fr       */
+=======
+/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
+/*   Updated: 2025/10/01 00:30:52 by namejojo         ###   ########.fr       */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,8 +194,14 @@ void	print_cmds(t_cmds *cmds);
 int	process_heredocs_and_checks(t_cmds *cmd);
 void get_single_heredoc(char *eof, int fd[2]);
 char	*expand_hd(char *str);
+<<<<<<< HEAD
 void free_os_envs(void);
 void	megalodon_giga_chad_exit(int status);
+=======
+void	expand_infiles(t_infile *infile);
+void	expand_outfiles(t_outfile *outfile);
+
+>>>>>>> main
 
 
 

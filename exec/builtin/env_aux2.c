@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_aux2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlima-so <jlima-so@student.42lisba.com>    +#+  +:+       +#+        */
+/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:01:02 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/30 20:17:12 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/10/01 10:39:36 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,23 @@ void	expand_args(t_cmds *cmd)
 		free(*cmd->cmd);
 		ft_matrix_uni(cmd->cmd, cmd->cmd + 1);
 	}
+    expand_infiles(cmd->infiles);
+    expand_outfiles(cmd->outfiles);
 	expand_args(cmd->next);
+}
+
+void	expand_infiles(t_infile *infile)
+{
+	if (!infile || !infile->file)
+		return ;
+	infile->file = expand_hd(infile->file);
+	expand_infiles(infile->next);
+}
+
+void	expand_outfiles(t_outfile *outfile)
+{
+	if (!outfile || !outfile->file)
+		return ;
+	outfile->file = expand_hd(outfile->file);
+	expand_outfiles(outfile->next);
 }
