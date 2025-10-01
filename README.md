@@ -1,6 +1,6 @@
 # Minishell - A "simple" shell based on bash
 
-## How to Use Download and Execute our Shell
+## How to Download, Execute and Use Our Shell
 
 * step by step explanation.
 
@@ -19,7 +19,8 @@ The project completion was devided into 3 crucial roles.
 
 The lexer starts off by receiving the information provided to by the user as a string. First the tokenization of the information happens, meaning the string gets devided into chunks of more digestable informations. We devide everything by spaces and special tokens basically dividing a string into a matrix.
 
-* (tokenization example 1) string to matrix
+### Tokenization
+* ( example 1) string to matrix
 * [< in cat > out] = [<] [in] [cat] [>] [out]
 * [>out1<""in cat >out2>>out3] = [>] [out1] [<] [in] [cat] [>] [out2] [>>] [out3]
 * ["cat Makefile"< in>'out file'] = ["cat Makefile"] [<] [in] [>] ['out file']
@@ -28,6 +29,7 @@ The lexer starts off by receiving the information provided to by the user as a s
 
 After the information gets tokenized we get those tokens and verify that theres no syntax erros on the part of the user such as:
 
+### Syntax Verification
 * (lexer example 1) syntax the matrix
 * open quotations(we chose to verify this part during the last step): a single ' or "
 * open parenthesis: a single ) or (
