@@ -2,7 +2,8 @@
 
 ## How to Download, Execute and Use Our Shell
 
-* ### step by step explanation.
+## Step by Step Explanation.
+### 1. step by step explanation.
 
 ## Code explenation: A Fully Functioning Shell That Deals With Commands, Redirections, Pipes And Logical Expressions
 
