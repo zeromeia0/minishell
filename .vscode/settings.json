@@ -2,6 +2,7 @@
     "files.associations": {
 		"cstdlib": "c",
 		"sigma_minishell.h": "c",
-		"sstream": "c"
+		"sstream": "c",
+		"wait.h": "c"
 	}
 }

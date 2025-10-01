@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 11:20:32 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/01 12:33:34 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,9 +191,18 @@ char	*expand_hd(char *str);
 void	expand_infiles(t_infile *infile);
 void	expand_outfiles(t_outfile *outfile);
 void	megalodon_giga_chad_exit(int status);
-
-
-
+void	check_commands(char *cmd);
+char	**buildup_path(t_cmds *cmd, char **args, char **envp);
+int	ensure_outfile(t_outfile *out);
+int	check_infiles(t_cmds *cmds);
+int	check_cmds(t_cmds *cmds, char **args, char **envp);
+int	check_outfiles(t_cmds *cmds);
+void	double_helper(int status, int p[2], pid_t pid);
+void	handle_parent(pid_t pid, int shell_should_ignore);
+void	prepare_signals_and_fork(t_cmds *cmd);
+int	exec_subshell(t_binary *subshell, char **args, char **envp);
+int	cmd_has_heredoc(t_cmds *cmd);
+int	is_cmd_valid(t_cmds *cmd, char **args, char **envp);
 
 // struct_clear.c
 void						binary_clear(t_binary *binary);

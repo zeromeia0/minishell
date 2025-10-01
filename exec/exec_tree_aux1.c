@@ -6,13 +6,13 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:12:18 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/01 12:29:09 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/01 12:34:41 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../sigma_minishell.h"
 
-static char	**build_system_paths(char *cmd_name, char **paths)
+char	**build_system_paths(char *cmd_name, char **paths)
 {
 	char	**final_str;
 	char	*tmp;
@@ -105,35 +105,21 @@ int	check_infiles(t_cmds *cmds)
 	return (1);
 }
 
-int	check_cmds(t_cmds *cmds, char **args, char **envp)
+int	is_cmd_valid(t_cmds *cmd, char **args, char **envp)
 {
-	t_cmds	*current_cmds;
 	char	**paths;
 	int		i;
-	int		valid;
 
-	if (!cmds || !cmds->cmd)
-		return (1);
-	current_cmds = cmds;
-	while (current_cmds)
+	paths = buildup_path(cmd, args, envp);
+	if (!paths)
+		return (0);
+	i = 0;
+	while (paths[i])
 	{
-		paths = buildup_path(current_cmds, args, envp);
-		i = 0;
-		valid = 0;
-		while (paths && paths[i])
-		{
-			if (access(paths[i], F_OK) == 0 && access(paths[i], X_OK) == 0)
-			{
-				valid = 1;
-				break ;
-			}
-			i++;
-		}
-		if (paths)
-			ft_free_matrix(paths);
-		if (!valid)
-			return (0);
-		current_cmds = current_cmds->next;
+		if (access(paths[i], F_OK | X_OK) == 0)
+			break ;
+		i++;
 	}
-	return (1);
+	ft_free_matrix(paths);
+	return (paths[i] != NULL);
 }

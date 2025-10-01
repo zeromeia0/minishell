@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:12:18 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/01 12:26:41 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/01 12:35:44 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	exec_subshell(t_binary *subshell, char **args, char **envp)
 
 int	cmd_has_heredoc(t_cmds *cmd)
 {
-	t_infile *in;
+	t_infile	*in;
 
 	in = NULL;
 	if (!cmd)
@@ -81,7 +81,7 @@ int	cmd_has_heredoc(t_cmds *cmd)
 
 int	check_outfiles(t_cmds *cmds)
 {
-	t_outfile *current_outfile;
+	t_outfile	*current_outfile;
 
 	if (!cmds->outfiles)
 		return (1);

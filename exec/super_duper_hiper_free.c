@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:02 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 12:06:50 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/01 12:34:34 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,4 +123,20 @@ void	double_helper(int status, int p[2], pid_t pid)
 	signal(SIGINT, SIG_IGN);
 	waitpid(pid, &status, 0);
 	restart_signals();
+}
+
+int	check_cmds(t_cmds *cmds, char **args, char **envp)
+{
+	t_cmds	*current;
+
+	if (!cmds || !cmds->cmd)
+		return (1);
+	current = cmds;
+	while (current)
+	{
+		if (!is_cmd_valid(current, args, envp))
+			return (0);
+		current = current->next;
+	}
+	return (1);
 }
