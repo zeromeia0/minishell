@@ -16,14 +16,13 @@ This project was devided into 3 crucial roles.
 The lexer starts off by receiving the information provided to by the user as a string. First the tokenization of the information happens, meaning the string gets devided into chunks of more digestable informations. We devide everything by spaces and special tokens.
 
 * (tokenization example 1) string to matrix
+* "< in cat > out" = {"in",  "cat",  ">",  "out"}
 * (tokenization example 2)
 * (tokenization example 3)
 
 After the information gets tokenized we get those tokens we verify that theres no syntax erros on the part of the user such as:
 
 * (lexer example 1) syntax the matrix
-
-* "< in cat > out" = {"in", "cat", ">", "out"}
 * (lexer example 2)
 * (lexer example 3)
 
