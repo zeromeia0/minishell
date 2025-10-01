@@ -47,11 +47,9 @@ char	*quote(char *str)
 {
 	char	ch;
 	int		ind;
-	char	*ret;
 	char	*str2;
 	int		count;
 
-	ret = str;
 	count = -1;
 	str2 = ft_strdup(str);
 	while (str[++count])
@@ -86,7 +84,7 @@ char	*quote(char *str)
 		else
 			count++;
 	}
-	return (ret);
+	return (str);
 }
 
 char	*find_os_env(t_os_envs *env, char *str, int count)

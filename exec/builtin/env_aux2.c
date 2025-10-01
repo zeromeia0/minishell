@@ -6,7 +6,7 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:01:02 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 11:07:01 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/01 11:50:58 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	expand_args(t_cmds *cmd)
 	temp = cmd->cmd;
 	mat = wildcards(temp, 0, 0);
 	cmd->expanded = (temp != mat);
+	// printf("before %s\n", *cmd->cmd);
 	if (temp != mat)
 		free_matrix_nodes(temp);
 	else
@@ -99,14 +100,16 @@ void	expand_args(t_cmds *cmd)
 		ind = -1;
 		while (mat[++ind])
 			mat[ind] = quote(mat[ind]);
+		// printf("LOOP\n");
 	}
 	cmd->cmd = mat;
-	while (cmd->cmd && *cmd->cmd && **cmd->cmd == '\0')
-	{
-		fflush(stdout);
-		free(*cmd->cmd);
-		ft_matrix_uni(cmd->cmd, cmd->cmd + 1);
-	}
+	// printf("after %s\n", *cmd->cmd);
+	// while (cmd->cmd && *cmd->cmd && **cmd->cmd == '\0')
+	// {
+	// 	fflush(stdout);
+	// 	free(*cmd->cmd);
+	// 	ft_matrix_uni(cmd->cmd, cmd->cmd + 1);
+	// }
     expand_infiles(cmd->infiles);
     expand_outfiles(cmd->outfiles);
 	expand_args(cmd->next);

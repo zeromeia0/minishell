@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sigma_minishell.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 11:20:32 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/01 11:40:12 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,6 +272,7 @@ void						get_here_doc(char *eof, int fd[2]);
 void set_to_onethirty(int sig);
 void	sig_handle_hererdoc(int sig);
 int restart_signals(void);
+void free_os_envs(void);
 
 
 #endif
