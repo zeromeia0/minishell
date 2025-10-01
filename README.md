@@ -19,7 +19,7 @@ The project completion was devided into 3 crucial roles.
 
 The lexer starts off by receiving the information provided to by the user as a string. First the tokenization of the information happens, meaning the string gets devided into chunks of more digestable informations. We devide everything by spaces and special tokens basically dividing a string into a matrix.
 
-### Tokenization
+* ### Tokenization
 * ( example 1) string to matrix
 * [< in cat > out] = [<] [in] [cat] [>] [out]
 * [>out1<""in cat >out2>>out3] = [>] [out1] [<] [in] [cat] [>] [out2] [>>] [out3]
