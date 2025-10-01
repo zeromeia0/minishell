@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:19:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 12:03:23 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/01 13:32:28 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ int	exec_pipes(t_cmds *cmd, char **env)
 	if (!cmd || cmd->cmd[0] == NULL)
 		return (0);
 	current = cmd;
+	if (process_heredocs_and_checks(cmd) < 0)
+    	return (btree()->exit_status);
 	while (current)
 	{
 		if (process_command(current, &first_fd, env) == -1)
