@@ -38,13 +38,13 @@ While paying attention to the priority of execution we chose to devide the diffe
 * (tree parse example 3)
 
 Knowing that the return of each command defined how the "tree" of commands was to be executed we found that a tree type structure made the more sense for this type of information "parsing". 
-
-
             <!-- define complex command -->
+            
 After the multiple complex commands have been stored in the tree we once again devide the information in the tree nodes into even more digestable tokens on linked lists.
 
 Here we use linked lists as the processing of the information is completely linear. We read and subsequently execute the information from left to right.
             <!-- define command -->
+            <!-- define complex command -->
 
 Every simple command in between pipes '|' gets formatted into a single node of the linked list.
 That same node has every input and output redirection accompanied by that command, meaning every input and output redirection in between the same pipes
