@@ -22,6 +22,7 @@ The lexer starts off by receiving the information provided to by the user as a s
 After the information gets tokenized we get those tokens we verify that theres no syntax erros on the part of the user such as:
 
 * (lexer example 1) syntax the matrix
+    "< in cat > out" = {"in" "cat" ">" "out"}
 * (lexer example 2)
 * (lexer example 3)
 
@@ -44,6 +45,7 @@ After the multiple complex commands have been stored in the tree we once again d
 
 Here we use linked lists as the processing of the information is completely linear. We read and subsequently execute the information from left to right.
             <!-- define complex command -->
+
 <a href="https://www.youtube.com/watch?v=E6NO0rgFub4"
 target = "_blank">
 LINK
