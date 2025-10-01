@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   super_duper_hiper_free.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:02 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 09:18:46 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/30 21:49:37 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	free_env_list(t_os_envs *head)
 	while (head)
 	{
 		temp = head->next;
-		free_env_list(head);
+		free_env_node(head);
 		head = temp;
 	}
 }
@@ -61,4 +61,47 @@ void	clear_env_list(void)
 		current = next;
 	}
 	*env_list = NULL;
+}
+
+void free_os_envs(void)
+{
+    t_os_envs **env_list = get_env_list();
+    t_os_envs *current = *env_list;
+    t_os_envs *next;
+
+    while (current)
+    {
+        next = current->next;
+        free(current->linux_envs);
+        free(current->temp_vars);
+        free(current);
+        current = next;
+    }
+    *env_list = NULL;
+}
+
+void	ft_close(int fd)
+{
+	if (fd > 2)
+		close(fd);
+}
+
+void	close_all_non_standart_fds(void)
+{
+	int	fd;
+
+	fd = 2;
+	while (++fd <= FOPEN_MAX)
+		ft_close(fd);
+}
+
+void	megalodon_giga_chad_exit(int status)
+{
+	ft_free_matrix(btree()->env);
+	free_os_envs();
+	clear_env_list();
+	close_all_non_standart_fds();
+	binary_clear(btree());
+	free(btree()->input);
+	exit(status);
 }

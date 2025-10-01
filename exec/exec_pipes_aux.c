@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipes_aux.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 08:43:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/29 21:17:48 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/30 21:45:05 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 void	setup_child_fds(int first_fd, int fd[2], t_cmds *cmd)
 {
-	char	**cleaned_cmd;
-	int		status;
-
 	if (first_fd != -1)
 		dup2(first_fd, STDIN_FILENO);
 	if (has_redir(cmd))
@@ -38,25 +35,23 @@ void	execute_child(t_cmds *cmd, int first_fd, int fd[2], char **env)
 	int		status;
 
 	setup_child_fds(first_fd, fd, cmd);
-	// if (has_redir(cmd))
-	// 	exec_redirections(cmd); // THIS FIXED DUP 2 BAD FD ERROR
 	cleaned_cmd = array_to_exec(cmd);
 	if (!cleaned_cmd || !cleaned_cmd[0])
 	{
-		free_matrix(cleaned_cmd);
-		exit(127);
+		ft_free_matrix(cleaned_cmd);
+		megalodon_giga_chad_exit(127);
 	}
 	if (is_builtin(cleaned_cmd[0]))
 	{
 		status = exec_builtin(cleaned_cmd[0], cleaned_cmd, env);
-		free_matrix(cleaned_cmd);
-		exit(status);
+		ft_free_matrix(cleaned_cmd);
+		megalodon_giga_chad_exit(status);
 	}
 	else
 	{
 		exec_path(cleaned_cmd[0], cleaned_cmd, env);
-		free_matrix(cleaned_cmd);
-		exit(127);
+		ft_free_matrix(cleaned_cmd);
+		megalodon_giga_chad_exit(127);
 	}
 }
 

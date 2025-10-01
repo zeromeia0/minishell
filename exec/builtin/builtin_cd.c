@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:17:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 22:48:13 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/30 18:30:17 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*builtin_cd_aux(char **args)
 		printf("%s\n", target);
 	}
 	else if (args[2])
-		return (my_ffprintf(args[0], "too many arguments\n"), NULL);
+		return (my_ffprintf(args[0], "salve too many arguments\n"), NULL);
 	else
 		target = args[1];
 	return (target);

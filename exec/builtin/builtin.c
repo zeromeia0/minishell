@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:21:23 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/25 11:32:38 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/30 21:51:42 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,19 @@ int	is_builtin(char *cmd)
 {
 	if (!cmd)
 		return (0);
-	if (ft_strncmp(cmd, "cd", 2) == 0)
+	if (ft_strcmp(cmd, "cd") == 0)
 		return (1);
-	else if (ft_strncmp(cmd, "pwd", 3) == 0)
+	else if (ft_strcmp(cmd, "pwd") == 0)
 		return (1);
-	else if (ft_strncmp(cmd, "env", 3) == 0)
+	else if (ft_strcmp(cmd, "env") == 0)
 		return (1);
-	else if (ft_strncmp(cmd, "echo", 4) == 0)
+	else if (ft_strcmp(cmd, "echo") == 0)
 		return (1);
-	else if (ft_strncmp(cmd, "exit", 4) == 0)
+	else if (ft_strcmp(cmd, "exit") == 0)
 		return (1);
-	else if (ft_strncmp(cmd, "unset", 5) == 0)
+	else if (ft_strcmp(cmd, "unset") == 0)
 		return (1);
-	else if (ft_strncmp(cmd, "export", 6) == 0)
+	else if (ft_strcmp(cmd, "export") == 0)
 		return (1);
 	else
 		return (0);
@@ -69,6 +69,8 @@ int	builtin_exit(char **args, char **envp)
 {
 	long	status;
 
+	for (int i = 0; args[i]; i++)
+		printf("arg[%d] = %s\n", i, args[i]);
 	(void)envp;
 	if (!args[1])
 	{
@@ -77,33 +79,33 @@ int	builtin_exit(char **args, char **envp)
 		else
 			status = btree()->exit_status;
 		update_shell_level(-1);
-		exit((unsigned char)status);
+		megalodon_giga_chad_exit((unsigned char)status);
 	}
 	if (!is_numeric(args[1]))
 		return (my_ffprintf(args[1], "numeric argument required"), 0);
-	if (args[2])
-		return (ft_putstr_fd("minishell: exit: too many arguments", 2), 1);
+	if (args[0] && args[1] && args[2] != NULL)
+		return (ft_putstr_fd("minishell: exit: too many arguments", 2), 0);
 	
 	status = ft_atol(args[1]);
 	update_shell_level(-1);
-	exit((unsigned char)status);
+	return (megalodon_giga_chad_exit((unsigned char)status), 0);
 }
 
 int	exec_builtin(char *cmd, char **args, char **envp)
 {
-	if (ft_strncmp(cmd, "cd", 2) == 0)
+	if (ft_strcmp(cmd, "cd") == 0)
 		return (builtin_cd(args));
-	else if (ft_strncmp(cmd, "pwd", 3) == 0)
+	else if (ft_strcmp(cmd, "pwd") == 0)
 		return (builtin_pwd());
-	else if (ft_strncmp(cmd, "env", 3) == 0)
+	else if (ft_strcmp(cmd, "env") == 0)
 		return (print_linux_env_list());
-	else if (ft_strncmp(cmd, "echo", 4) == 0)
+	else if (ft_strcmp(cmd, "echo") == 0)
 		return (builtin_echo(args));
-	else if (ft_strncmp(cmd, "exit", 4) == 0)
+	else if (ft_strcmp(cmd, "exit") == 0)
 		return (builtin_exit(args, envp));
-	else if (ft_strncmp(cmd, "unset", 5) == 0)
+	else if (ft_strcmp(cmd, "unset") == 0)
 		return (builtin_unset(args));
-	else if (ft_strncmp(cmd, "export", 6) == 0)
+	else if (ft_strcmp(cmd, "export") == 0)
 		return (builtin_export(args));
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:19:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/28 19:29:00 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/30 21:45:36 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 void	help_to_process(t_cmds *cmd, int p[2])
 {
 	close(p[0]);
-	signal(SIGINT, handle_heredoc);
+	signal(SIGINT, sig_handle_hererdoc);
 	process_all_heredocs(cmd->infiles, p);
 	close(p[1]);
-	exit(0);
+	megalodon_giga_chad_exit(0);
 }
 
 int	process_command_heredocs(t_cmds *cmd)

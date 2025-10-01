@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_aux3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:11:26 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 09:26:59 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/30 20:57:30 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,7 @@ int	fill_env_array(char **final_char, t_os_envs *envs)
 		{
 			final_char[i] = ft_strdup(temp->linux_envs);
 			if (!final_char[i])
-			{
-				free_matrix(final_char);
-				free(final_char);
-				return (0);
-			}
+				return (ft_free_matrix(final_char), 0);
 			i++;
 		}
 		temp = temp->next;

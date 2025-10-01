@@ -29,7 +29,9 @@ void get_single_heredoc(char *eof, int fd[2])
     int tty_fd;
 
     if (btree()->global_signal == 130)
-        exit(130);
+        megalodon_giga_chad_exit(130);
+    
+    // Ensure we read from terminal for each heredoc
     tty_fd = open("/dev/tty", O_RDONLY);
     if (tty_fd != -1)
     {
@@ -37,7 +39,7 @@ void get_single_heredoc(char *eof, int fd[2])
         close(tty_fd);
     }
     
-    signal(SIGINT, handle_heredoc);
+    signal(SIGINT, sig_handle_hererdoc);
     signal(SIGQUIT, SIG_IGN);  // Ignore SIGQUIT in heredoc
     
     str = readline("> ");
@@ -45,7 +47,7 @@ void get_single_heredoc(char *eof, int fd[2])
     {
         if (fd)
         {
-            char *expanded = expand(str, 0, 0, 1);
+            char *expanded = expand_hd(str);
             write(fd[1], expanded, ft_strlen(expanded));
             write(fd[1], "\n", 1);
             if (expanded != str)
@@ -54,7 +56,7 @@ void get_single_heredoc(char *eof, int fd[2])
         free(str);
         
         if (btree()->global_signal == 130)
-            exit(130);
+            megalodon_giga_chad_exit(130);
         str = readline("> ");
     }
     if (!str && btree()->global_signal != 130) 
@@ -91,7 +93,7 @@ void process_all_heredocs(t_infile *in, int fd[2])
 
 // 	if (btree()->global_signal == 130)
 // 		exit(130);
-// 	signal(SIGINT, handle_heredoc);
+// 	signal(SIGINT, sig_handle_hererdoc);
 // 	signal(SIGQUIT, handle_quit);
 //     str = readline("> ");
 //     while (str && ft_strncmp(str, delimiter, len + 1))

@@ -44,7 +44,7 @@
 
 
 
-<< eof << eof cat > out1 > out2 <--- PRINTING BOTH EOF ON OUT2 INSTEAD OF JUST THE LAST
+< in1 << eof cat > out1 > out2 | ls -l | grep a && echo oi <--- PRINTING BOTH EOF ON OUT2 INSTEAD OF JUST THE LAST
 # invalid free issue
 
 minishell$ 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_path_aux3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:41:23 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/27 16:35:09 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/09/30 21:47:19 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	exec_system_path_aux1(char **envp, char ***paths_to_search)
 	if (!*paths_to_search)
 	{
 		write(2, "PATH not found\n", 15);
-		exit(0);
+		megalodon_giga_chad_exit(0);
 	}
 	return (0);
 }

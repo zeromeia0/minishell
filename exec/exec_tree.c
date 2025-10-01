@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 00:33:17 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/01 10:50:00 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	exec_child(t_cmds *cmd)
 	if (has_redir(cmd))
 		exec_redirections(cmd);
 	if (has_builtin(cmd))
-		exit(exec_builtin(cleaned[0], cleaned, updated_envs));
+		megalodon_giga_chad_exit(exec_builtin(cleaned[0], cleaned, updated_envs));
 	else
 		exec_path(cleaned[0], cleaned, updated_envs);
 	free_matrix(cleaned);
@@ -103,7 +103,7 @@ static int	exec_subshell(t_binary *subshell, char **args, char **envp)
 
 	pid = fork();
 	if (pid == 0)
-		exit(exec_tree(subshell, args, envp));
+		megalodon_giga_chad_exit(exec_tree(subshell, args, envp));
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		btree()->exit_status = WEXITSTATUS(status);
@@ -159,6 +159,7 @@ char **buildup_path(t_cmds *cmd, char **args, char **envp)
             i++;
         }
         final_str[i] = NULL;
+		ft_free_matrix(paths_to_search);
         return final_str;
     }
     final_str = malloc(sizeof(char *));
@@ -179,11 +180,10 @@ int ensure_outfile(t_outfile *out)
     fd = open(out->file, O_WRONLY | O_CREAT, 0644);
     if (fd < 0)
     {
-        // Failed to open or create → maybe permission issue in directory
         return btree()->cmds->flag_to_exec = 1,
                my_ffprintf(out->file, "Permission denied\n"), -1;
     }
-    close(fd); // Close immediately; actual redirection happens in exec_out_redirections
+    close(fd);
     return 0;
 }
 
@@ -193,16 +193,20 @@ int check_order(t_binary *tree, char **args, char **envp)
     t_cmds      *current_cmds;
     t_outfile   *current_outfile;
 
+	signal(SIGINT, sig_handle_hererdoc);
+	signal(SIGINT, handle_sigint);
     if (!tree->cmds)
         return (0);
-	if (handle_heredocs(tree->cmds) < 0)
-		return (tree->cmds->flag_to_exec = 1, -1);
+	if (handle_heredoc(tree->cmds) < 0)
+		return (btree()->cmds->flag_to_exec = 1, -1);
+	if (!tree->cmds->infiles)
+		return (0);
     current_infile = tree->cmds->infiles;
     while (current_infile)
     {
-        if (ft_strncmp(current_infile->token, "<<", 2) != 0) // skip heredocs
+        if (ft_strcmp(current_infile->token, "<<") != 0) // skip heredocs
         {
-            if (access(current_infile->file, F_OK) != 0 && tree->cmds)
+            if (access(current_infile->file, F_OK) != 0)
                 return (tree->cmds->flag_to_exec = 1,
                         my_ffprintf(current_infile->file, "No such file or directory\n"), 0);
             if (access(current_infile->file, R_OK) != 0)
@@ -248,13 +252,6 @@ int check_order(t_binary *tree, char **args, char **envp)
     }
     return (1);
 }
-
-
-
-// < in1 < in2 /bin/cat > out1 > out2
-// < in1 < in2 cat > out1 > out2
-// < in7 < in2 /bin/cat > out1 > out2 | ls <-- why infinite loop
-
 
 int	exec_tree(t_binary *tree, char **args, char **envp)
 {

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/22 11:54:32 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 10:22:28 by vivaz-ca         ###   ########.fr       */
+/*   Created: 2025/10/01 10:49:36 by vivaz-ca          #+#    #+#             */
+/*   Updated: 2025/10/01 10:49:40 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static void	initialize_stuff(int argc, char *argv[], char **envp)
 		update_shell_level(1);
 	btree()->env = list_to_char(*get_env_list());
 	btree()->os_env = *get_env_list();
-	enhanced_sorted_stoled_from_jlima(btree()->os_env);
+	enhanced_sorting_stoled_from_jlima(btree()->os_env);
 }
 
 int	main(int argc, char *argv[], char **envp)
@@ -114,7 +114,9 @@ int	main(int argc, char *argv[], char **envp)
 			binary_clear(btree());
 		}
 	}
-	free_matrix(btree()->env);
+	ft_free_matrix(btree()->env);
+	// btree()->env = NULL;
+	free_os_envs();
 	return (clear_env_list(), printf("Closing Minishell\n"),
 		btree()->exit_status);
 }

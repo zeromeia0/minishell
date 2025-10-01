@@ -1,4 +1,0 @@
-
-cat then ctr c needs to print the ^c
-
-
