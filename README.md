@@ -47,6 +47,7 @@ Here we use linked lists as the processing of the information is completely line
 <a href="https://www.youtube.com/watch?v=E6NO0rgFub4"
 target = "_blank">
 LINK
+
 Every simple command in between pipes '|' gets formatted into a single node of the linked list.
 That same node has every input and output redirection accompanied by that command, meaning every input and output redirection in between the same pipes
 
