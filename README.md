@@ -47,9 +47,9 @@ After the lexer has verified the syntax to be correct/parseble we parse the toke
 
 While paying attention to the priority of execution we chose to devide the different commands in a binary tree by the logical value of tokens found like so:
 
-### Structures Visualization
+### Recursive Parsing Part 1 - Binary Tree
 
-Binary tree construction example: 
+Structures Visualization 
 ![alt text](https://github.com/zeromeia0/minishell/blob/main/img.png "Graph 1")
 
 * (tree parse example 1) parse the matrix into the structures
