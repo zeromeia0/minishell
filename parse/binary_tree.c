@@ -83,7 +83,7 @@ t_cmds	*get_cmds(char **mat)
 		mat[sep] = NULL;
 	}
 	cmds = cmds_new(get_outfile(mat), get_infile(mat), mat);
-	printf("struct cmds created\n");
+	// printf("struct cmds created\n");
 	if (cmds == NULL)
 		return (btree()->type = ERROR, NULL);
 	if (sep != -1)

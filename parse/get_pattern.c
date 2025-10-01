@@ -37,7 +37,7 @@ t_infile	*get_infile(char **mat)
 	if (mat[ind] == NULL)
 		return (NULL);
 	infile = infile_new(mat[ind + 1], mat[ind]);
-	printf("struct infile created\n");
+	// printf("struct infile created\n");
 	if (infile == NULL)
 		return (btree()->type = ERROR, NULL);
 	mat[ind] = NULL;
@@ -60,7 +60,7 @@ t_outfile	*get_outfile(char **mat)
 	if (mat[ind] == NULL)
 		return (NULL);
 	outfile = outfile_new(mat[ind + 1], mat[ind]);
-	printf("struct outfile created\n");
+	// printf("struct outfile created\n");
 	if (outfile == NULL)
 		return (btree()->type = ERROR, NULL);
 	mat[ind] = NULL;
