@@ -26,7 +26,7 @@ After the information gets tokenized we get those tokens and verify that theres 
 
 * (lexer example 1) syntax the matrix
 * open quotations: a single ' or "
-* open parenthesis a single ) or (
+* open parenthesis: a single ) or (
 * command ending in redirection: > or <
 * command starting with a logical token: && or ||
 * command with tokens followed by incompatible tokens: && &&, >> &&, > >, [not_a_token] (, ( ), ) (
