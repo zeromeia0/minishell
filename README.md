@@ -34,6 +34,8 @@ After the information gets tokenized we get those tokens and verify that theres 
 
 If there is no syntax errors, the information (now tokenized) gets to the parser.
 
+If there are any syntax errors we clear all allocated memory and return the prompt to the user.
+
 ## Parser
 
 After the lexer has verified the syntax to be correct/parseble we parse the tokens into structures more easily interpreted but the executer.
