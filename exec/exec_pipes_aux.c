@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipes_aux.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 08:43:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/25 14:25:38 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/09/29 21:17:48 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void	execute_child(t_cmds *cmd, int first_fd, int fd[2], char **env)
 	int		status;
 
 	setup_child_fds(first_fd, fd, cmd);
-	if (has_redir(cmd))
-		exec_redirections(cmd);
+	// if (has_redir(cmd))
+	// 	exec_redirections(cmd); // THIS FIXED DUP 2 BAD FD ERROR
 	cleaned_cmd = array_to_exec(cmd);
 	if (!cleaned_cmd || !cleaned_cmd[0])
 	{
@@ -75,11 +75,8 @@ int	process_command(t_cmds *cmd, int *first_fd, char **env)
 	int		fd[2];
 	pid_t	pid;
 
-	// fprintf(stderr, "PUTTING THE FLAG exec\n");
-	
 	if (cmd->cmd == NULL)
 		cmd->flag_to_exec = 1;
-	// fprintf(stderr, "PUTTING THE FLAG exec 2\n");
 	if (cmd->flag_to_exec == 0)
 	{
 		if (setup_pipe(cmd, first_fd, fd) == -1)

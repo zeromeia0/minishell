@@ -12,29 +12,91 @@
 
 #include "../sigma_minishell.h"
 
+char    *single_expand(char *str, int ind, int count);
+
+
+int	get_diff(char *str1, char *str2, int start)
+{
+	int	ind1;
+	int	ind2;
+
+	while (str1[start] == str2[start])
+		start++;
+	ind1 = ft_strlen(str1);
+	ind2 = ft_strlen(str2);
+	while (ind1 > start && ind2 > start && str1[ind1] == str2[ind2])
+	{
+		ind1--;
+		ind2--;
+	}
+	if (ind1 > ind2)
+		return (ind1 - start);
+	return (ind2 - start);
+}
+
+char *expand_hd(char *str)
+{
+	char	*str2;
+	int		count;
+
+	str2 = ft_strdup(str);
+	count = -1;
+	while (str[++count])
+	{
+		str = single_expand(str, count, 0);
+		if (ft_strcmp(str, str2))
+		{
+			count += get_diff(str, str2, 0);
+			free(str2);
+			str2 = ft_strdup(str);
+		}
+	}
+	free(str2);
+	return (str);
+}
+
 char	*quote(char *str)
 {
 	char	ch;
 	int		ind;
 	char	*ret;
+	char	*str2;
+	int		count;
 
-	str = expand(str, 0, 0, 1);
 	ret = str;
-	while (*str)
+	count = -1;
+	str2 = ft_strdup(str);
+	while (str[++count])
 	{
-		if (*str == '\"' || *str == '\'')
+		str = single_expand(str, count, 0);
+		if (ft_strcmp(str, str2))
+		{
+			count += get_diff(str, str2, 0);
+			free(str2);
+			str2 = ft_strdup(str);
+		}
+		if (*(str + count) == '\"' || *(str + count) == '\'')
 		{
 			ind = 0;
-			ch = str[ind];
+			ch = (str + count)[ind];
 			ind++;
-			while (str[ind] != ch)
+			while ((str + count)[ind] != ch)
+			{
+				str = single_expand(str, count, 0);
+				if (ft_strcmp(str, str2))
+				{
+					count += get_diff(str, str2, 0);
+					free(str2);
+					str2 = ft_strdup(str);
+				}
 				ind++;
-			ft_memmove(str + ind, str + ind + 1, ft_strlen(str + ind));
-			ft_memmove(str, str + 1, ft_strlen(str));
-			str += ind - 1;
+			}
+			ft_memmove((str + count) + ind, (str + count) + ind + 1, ft_strlen((str + count) + ind));
+			ft_memmove((str + count), (str + count) + 1, ft_strlen((str + count)));
+			count += ind - 1;
 		}
 		else
-			str++;
+			count++;
 	}
 	return (ret);
 }
@@ -74,9 +136,7 @@ char	*expand_aux(char *str, int ind, int count, char *temp)
 		return (btree()->type = ERROR, free (str), NULL);
 	str[ind] = '\0';
 	str = ft_strjoin_free(str, temp, 0);
-	if (str == NULL)
-		return (btree()->type = ERROR, NULL);
-	return (expand(str, 0, 0, 1));
+	return (str);
 }
 
 char	*expand_last_exit(char *str, int ind, char *temp)
@@ -94,13 +154,30 @@ char	*expand_last_exit(char *str, int ind, char *temp)
 		return (btree()->type = ERROR, free (str), NULL);
 	str[ind] = '\0';
 	str = ft_strjoin_free(str, temp, 0);
-	if (str == NULL)
-		return (btree()->type = ERROR, NULL);
-	return (expand(str, 0, 0, 1));
+	return (expand(str, ind, 0, 1));
+}
+
+char    *single_expand(char *str, int ind, int count)
+{
+	if (str[ind] == '$' && (ft_isalnum(str[ind + 1]) || str[ind + 1] == '?'
+		|| str[ind + 1] == '_' || str[ind + 1] == '\"' || str[ind + 1] == '\''))
+	{
+		if (str[ind + 1] == '\"' || str[ind + 1] == '\'')
+			return (ft_memmove(str + ind, str + ind + 1
+			, ft_strlen(str + ind + 1) + 1), str);
+	    count++;
+	    if (str[ind + 1] == '?')
+	        return (expand_last_exit(str, ind, NULL));
+	    while (ft_isalnum((str + ind)[count]) || (str + ind)[count] == '_')
+	        count++;
+	    return (expand_aux(str, ind, count, NULL));
+	}
+    return (str);
 }
 
 char	*expand(char *str, int ind, int count, int flag)
 {
+<<<<<<< HEAD
 	if (str == NULL)
 		return (btree()->type = ERROR, NULL);
 	ind = 0;
@@ -124,4 +201,31 @@ char	*expand(char *str, int ind, int count, int flag)
 		ind++;
 	}
 	return (str);
+=======
+    if (str == NULL)
+        return (btree()->type = ERROR, NULL);
+    while (str[ind])
+    {
+        if (flag == 1 && str[ind] == '\'' && ++ind)
+            while (str[ind] != '\'')
+                ind++;
+        if (str[ind] == '\"')
+            flag = -flag;
+        if (str[ind] == '$' && (ft_isalnum(str[ind + 1]) || str[ind + 1] == '?'
+			|| str[ind + 1] == '_' || str[ind + 1] == '\"' || str[ind + 1] == '\''))
+        {
+			if (str[ind + 1] == '\"' || str[ind + 1] == '\'')
+				return (ft_memmove(str + ind, str + ind + 1, ft_strlen(str + ind + 1) + 1)
+				, expand(str, ind, 0, 1));
+            count++;
+            if (str[ind + 1] == '?')
+                return (expand_last_exit(str, ind, NULL));
+            while (ft_isalnum((str + ind)[count]) || (str + ind)[count] == '_')
+                count++;
+            return (expand_aux(str, ind, count, NULL));
+        }
+        ind++;
+    }
+    return (str);
+>>>>>>> main
 }

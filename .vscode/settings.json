@@ -1,6 +1,7 @@
 {
     "files.associations": {
 		"cstdlib": "c",
-		"sigma_minishell.h": "c"
+		"sigma_minishell.h": "c",
+		"sstream": "c"
 	}
 }
