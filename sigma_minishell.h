@@ -3,17 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sigma_minishell.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< HEAD
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/30 22:16:36 by vivaz-ca         ###   ########.fr       */
-=======
-/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 00:30:52 by namejojo         ###   ########.fr       */
->>>>>>> main
+/*   Updated: 2025/10/01 10:52:26 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,14 +187,9 @@ void	print_cmds(t_cmds *cmds);
 int	process_heredocs_and_checks(t_cmds *cmd);
 void get_single_heredoc(char *eof, int fd[2]);
 char	*expand_hd(char *str);
-<<<<<<< HEAD
-void free_os_envs(void);
-void	megalodon_giga_chad_exit(int status);
-=======
 void	expand_infiles(t_infile *infile);
 void	expand_outfiles(t_outfile *outfile);
-
->>>>>>> main
+void	megalodon_giga_chad_exit(int status);
 
 
 
@@ -278,11 +266,6 @@ char						*ft_matnstr(char **matrix, char *s, int n);
 void						ft_matrix_uni(char **dest, char **src);
 
 void						get_here_doc(char *eof, int fd[2]);
-
-/*	this function receives char **environment and returns a t_os_envs_list *
-	where every node in the list has as its content one string from
-	environment the list itself contains every string from environment*/
-// t_os_envs_list	*get_env(char **environ);
 
 
 void set_to_onethirty(int sig);

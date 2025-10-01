@@ -60,6 +60,9 @@ make val: re
 	clear
 	valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
 
+make cal:
+	clear
+	valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
 
 .PHONY: re fclean clean all exec_rule parse_rule
 

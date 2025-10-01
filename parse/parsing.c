@@ -47,7 +47,7 @@ void get_single_heredoc(char *eof, int fd[2])
     {
         if (fd)
         {
-            char *expanded = expand_hd(str, 0, 0, 1);
+            char *expanded = expand_hd(str);
             write(fd[1], expanded, ft_strlen(expanded));
             write(fd[1], "\n", 1);
             if (expanded != str)
