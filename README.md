@@ -47,15 +47,17 @@ After the lexer has verified the syntax to be correct/parseble we parse the toke
 
 While paying attention to the priority of execution we chose to devide the different commands in a binary tree by the logical value of tokens found like so:
 
-### Recursive Parsing Part 1 - Binary Tree
+### Parsing Part 1 - Binary Tree
 
-Structures Visualization 
+Binary Tree Visualization 
 ![alt text](https://github.com/zeromeia0/minishell/blob/main/img.png "Graph 1")
 
 * (tree parse example 1) parse the matrix into the structures
 
 Knowing that the return of each command defined how the "tree" of commands was to be executed we found that a tree type structure made the more sense for this type of information "parsing". 
             <!-- define complex command -->
+
+### Parsing Part 2 - Linked List
 
 After the multiple complex commands have been stored in the tree we once again devide the information in the tree nodes into even more digestable tokens on linked lists.
 
@@ -64,7 +66,8 @@ Here we use linked lists as the processing of the information is completely line
 
 <a href="https://www.youtube.com/watch?v=E6NO0rgFub4"
 target = "_blank">
-LINK
+
+
 
 Every simple command in between pipes '|' gets formatted into a single node of the linked list.
 That same node has every input and output redirection accompanied by that command, meaning every input and output redirection in between the same pipes
