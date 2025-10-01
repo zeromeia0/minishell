@@ -2,7 +2,7 @@
 
 ## How to Download, Execute and Use Our Shell
 
-* step by step explanation.
+* ### step by step explanation.
 
 ## Code explenation: A Fully Functioning Shell That Deals With Commands, Redirections, Pipes And Logical Expressions
 
@@ -19,8 +19,7 @@ The project completion was devided into 3 crucial roles.
 
 The lexer starts off by receiving the information provided to by the user as a string. First the tokenization of the information happens, meaning the string gets devided into chunks of more digestable informations. We devide everything by spaces and special tokens basically dividing a string into a matrix.
 
-* ### Tokenization
-* ( example 1) string to matrix
+### Tokenization
 * [< in cat > out] = [<] [in] [cat] [>] [out]
 * [>out1<""in cat >out2>>out3] = [>] [out1] [<] [in] [cat] [>] [out2] [>>] [out3]
 * ["cat Makefile"< in>'out file'] = ["cat Makefile"] [<] [in] [>] ['out file']
@@ -30,11 +29,10 @@ The lexer starts off by receiving the information provided to by the user as a s
 After the information gets tokenized we get those tokens and verify that theres no syntax erros on the part of the user such as:
 
 ### Syntax Verification
-* (lexer example 1) syntax the matrix
-* open quotations(we chose to verify this part during the last step): a single ' or "
+* open quotations (we chose to verify this part during the last step): a single ' or "
 * open parenthesis: a single ) or (
-* command ending in redirection: > or <
-* command starting with a logical token: && or ||
+* command ending in redirection or logical expressions: >, <, && or ||
+* command starting with a logical expression: && or ||
 * command with tokens followed by incompatible tokens: && &&, >> &&, > >, [not_a_token] (, ( ), ) (
 
 
@@ -48,6 +46,7 @@ After the lexer has verified the syntax to be correct/parseble we parse the toke
 
 While paying attention to the priority of execution we chose to devide the different commands in a binary tree by the logical value of tokens found like so:
 
+### Structures Visualization
 * (tree parse example 1) parse the matrix into the structures
 
 Knowing that the return of each command defined how the "tree" of commands was to be executed we found that a tree type structure made the more sense for this type of information "parsing". 
