@@ -13,12 +13,12 @@ This project was devided into 3 crucial roles.
 
 ## Lexer
 
-The lexer starts off by receiving the information provided to by the user as a string. First the tokenization of the information happens, meaning the string gets devided into chunks of more digestable informations. We devide everything by spaces and special tokens basically dividing a string into a matrix.
+The lexer starts off by receiving the information provided to by the user as a string. First the tokenization of the information happens, meaning the string gets devided into chunks of more digestable informations. We devide everything by spaces and special tokens, basically dividing a string into a matrix.
 
-* [< in cat > out] = [<] [in] [cat] [>] [out]
-* [>out1<in cat >out2>out3] = [>] [out1] [<] [in] [cat] [>] [out2] [>] [out3]
-* ["cat Makefile"<in>'out file'] = ["cat Makefile"] [<] [in] [>] [out file]
-* ["cat Makefile"||<in>'out file'|cat<in"_file"] = ["cat Makefile"] [||] [<] [in] [>] [out file] [|] [cat] [<] [in_file]
+* "[< in cat > out] = [<] [in] [cat] [>] [out]"
+* "[>out1<""in cat >out2>out3] = [>] [out1] [<] [in] [cat] [>] [out2] [>] [out3]"
+* "["cat Makefile"<in>'out file'] = ["cat Makefile"] [<] [in] [>] [out file]"
+* "["cat Make""file"||<in>'out file'|cat<in"_file"] = ["cat Makefile"] [||] [<] [in] [>] [out file] [|] [cat] [<] [in_file]"
 
 
 After the information gets tokenized we get those tokens we verify that theres no syntax erros on the part of the user such as:
