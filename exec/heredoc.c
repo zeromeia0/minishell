@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:11:44 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/01 13:13:47 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/01 13:23:04 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ void	get_single_heredoc(char *eof, int fd[2])
 	int		len;
 	int		tty_fd;
 	char	*expanded;
+	t_cmds *cmd;
 
+	
 	delimiter = remove_aspas(eof);
 	len = ft_strlen(delimiter);
 	if (btree()->global_signal == 130)
@@ -53,7 +55,10 @@ void	get_single_heredoc(char *eof, int fd[2])
 	{
 		if (fd)
 		{
-			expanded = expand_hd(str);
+			if (cmd && cmd->infiles && cmd->infiles->flag == 0)
+				expanded = expand_hd(str);
+			else
+				expanded = str;
 			write(fd[1], expanded, ft_strlen(expanded));
 			write(fd[1], "\n", 1);
 			if (expanded != str)
