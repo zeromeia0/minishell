@@ -6,7 +6,7 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:01:02 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 10:39:36 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/01 11:07:01 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,11 +112,40 @@ void	expand_args(t_cmds *cmd)
 	expand_args(cmd->next);
 }
 
+void	take_quotes(char *str)
+{
+	char	ch;
+	int		ind;
+
+	while (*str)
+	{
+		if (*str == '\"' || *str == '\'')
+		{
+			ind = 0;
+			ch = str[ind];
+			ind++;
+			while (str[ind] != ch)
+				ind++;
+			ft_memmove(str + ind, str + ind + 1, ft_strlen(str + ind));
+			ft_memmove(str, str + 1, ft_strlen(str));
+			str += ind - 1;
+		}
+		else
+			str++;
+	}
+}
+
 void	expand_infiles(t_infile *infile)
 {
+	int	len;
+
 	if (!infile || !infile->file)
 		return ;
-	infile->file = expand_hd(infile->file);
+	len = ft_strlen(infile->file);
+	infile->flag = 0;
+	take_quotes(infile->file);
+	if (len != ft_strlen(infile->file))
+		infile->flag = 1;
 	expand_infiles(infile->next);
 }
 

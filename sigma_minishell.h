@@ -6,7 +6,7 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 00:30:52 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/01 10:52:48 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_outfile
 typedef struct s_infile
 {
 	int						heredoc_fd;
+	int						flag;
 	char					*token;
 	char					*file;
 	struct s_infile			*next;
