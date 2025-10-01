@@ -6,12 +6,12 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 12:24:50 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/01 13:02:50 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../sigma_minishell.h"
-#include <signal.h>
+
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <unistd.h>

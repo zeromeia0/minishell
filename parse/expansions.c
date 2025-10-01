@@ -47,11 +47,9 @@ char	*quote(char *str)
 {
 	char	ch;
 	int		ind;
-	char	*ret;
 	char	*str2;
 	int		count;
 
-	ret = str;
 	count = -1;
 	str2 = ft_strdup(str);
 	while (str[++count])
@@ -70,12 +68,15 @@ char	*quote(char *str)
 			ind++;
 			while ((str + count)[ind] != ch)
 			{
-				str = single_expand(str, count, 0);
-				if (ft_strcmp(str, str2))
+				if (ch == '\"')
 				{
-					count += get_diff(str, str2, 0);
-					free(str2);
-					str2 = ft_strdup(str);
+					str = single_expand(str, count + ind, 0);
+					if (ft_strcmp(str, str2))
+					{
+						ind += get_diff(str, str2, 0);
+						free(str2);
+						str2 = ft_strdup(str);
+					}
 				}
 				ind++;
 			}
@@ -86,9 +87,9 @@ char	*quote(char *str)
 		else
 			count++;
 	}
-	return (ret);
+	return (str);
 }
-
+// echo $USER "'$USER'" "$USER" '$USER' '"$USER"'
 char	*find_os_env(t_os_envs *env, char *str, int count)
 {
 	while (env)

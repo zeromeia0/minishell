@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_aux2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:01:02 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 11:07:01 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/01 13:14:14 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,14 +101,8 @@ void	expand_args(t_cmds *cmd)
 			mat[ind] = quote(mat[ind]);
 	}
 	cmd->cmd = mat;
-	while (cmd->cmd && *cmd->cmd && **cmd->cmd == '\0')
-	{
-		fflush(stdout);
-		free(*cmd->cmd);
-		ft_matrix_uni(cmd->cmd, cmd->cmd + 1);
-	}
-	expand_infiles(cmd->infiles);
-	expand_outfiles(cmd->outfiles);
+    expand_infiles(cmd->infiles);
+    expand_outfiles(cmd->outfiles);
 	expand_args(cmd->next);
 }
 
@@ -141,11 +135,19 @@ void	expand_infiles(t_infile *infile)
 
 	if (!infile || !infile->file)
 		return ;
-	len = ft_strlen(infile->file);
-	infile->flag = 0;
-	take_quotes(infile->file);
-	if (len != ft_strlen(infile->file))
-		infile->flag = 1;
+	if (ft_strcmp(infile->token, "<<"))
+	{
+		len = ft_strlen(infile->file);
+		infile->flag = 0;
+		take_quotes(infile->file);
+		if (len != ft_strlen(infile->file))
+			infile->flag = 1;
+	}
+	else
+	{
+		infile->file = quote(infile->file);
+		expand_infiles(infile->next);
+	}
 	expand_infiles(infile->next);
 }
 
@@ -153,6 +155,6 @@ void	expand_outfiles(t_outfile *outfile)
 {
 	if (!outfile || !outfile->file)
 		return ;
-	outfile->file = expand_hd(outfile->file);
+	outfile->file = quote(outfile->file);
 	expand_outfiles(outfile->next);
 }
