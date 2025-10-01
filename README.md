@@ -4,8 +4,7 @@
 
 * step by step explanation.
 
-## Code explenation:
-## A Fully Functioning Shell That Deals With Commands, Redirections, Pipes And Logical Expressions
+## Code explenation: A Fully Functioning Shell That Deals With Commands, Redirections, Pipes And Logical Expressions
 
 This project aims to create a "simple" interactive command interpreter, or a shell that deals with basic command prompts, anything from a simple command execution to complex commands with multiple instructions.
 Our program also supports the execution of commands while reading from files, also know shell scripts.
