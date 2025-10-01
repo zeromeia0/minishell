@@ -25,14 +25,14 @@ The lexer starts off by receiving the information provided to by the user as a s
 After the information gets tokenized we get those tokens and verify that theres no syntax erros on the part of the user such as:
 
 * (lexer example 1) syntax the matrix
-* open quotations: a single ' or "
+* open quotations(we chose to verify this part during the last step): a single ' or "
 * open parenthesis: a single ) or (
 * command ending in redirection: > or <
 * command starting with a logical token: && or ||
 * command with tokens followed by incompatible tokens: && &&, >> &&, > >, [not_a_token] (, ( ), ) (
 
 
-If there is no syntax errors, the information (now tokenized) gets to the parser.
+If there are no syntax errors, the information (now tokenized) gets to the parser.
 
 If there are any syntax errors we clear all allocated memory and return the prompt to the user.
 
