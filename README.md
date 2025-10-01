@@ -1,11 +1,15 @@
 # Minishell - A "simple" shell based on bash
 
-## A fully functional shell that deals with commands, redirections, pipes and logical tokens.
+## How to Use Download and Execute our Shell.
 
-This project was aimed to create a "simple" interactive command interpreter, or a shell that deals with basic command prompts, anything from a simple command execution to complex commands with multiple instructions.
+*step by step explanation
+
+## A Fully Functioning Shell That Deals With Commands,Rredirections, Pipes And Logical Expressions.
+
+This project aims to create a "simple" interactive command interpreter, or a shell that deals with basic command prompts, anything from a simple command execution to complex commands with multiple instructions.
 Our program also supports the execution of commands while reading from files, also know shell scripts.
 
-This project was devided into 3 crucial roles.
+The project completion was devided into 3 crucial roles.
 
 * Lexer
 * Parser
