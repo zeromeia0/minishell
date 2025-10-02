@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:08:05 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/02 15:32:43 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/02 15:41:34 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,13 +144,11 @@ int exec_redirections(t_cmds *cmd)
             return (perror("dup2"), close(last_heredoc_fd), -1);
         close(last_heredoc_fd);
     }
-
     if (exec_out_redirections(cmd->outfiles) < 0)
     {
         btree()->cmds->flag_to_exec = 1;
         return -1;
     }
-
     return 0;
 }
 
