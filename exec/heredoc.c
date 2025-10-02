@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:11:44 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/01 14:00:28 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/02 15:32:28 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	get_single_heredoc(char *eof, int fd[2])
 	int		len;
 	int		tty_fd;
 	char	*expanded;
-	t_cmds *cmd;
 
 	delimiter = remove_aspas(eof);
 	len = ft_strlen(delimiter);
@@ -47,14 +46,14 @@ void	get_single_heredoc(char *eof, int fd[2])
 		dup2(tty_fd, STDIN_FILENO);
 		close(tty_fd);
 	}
-	signal(SIGINT, sig_handle_hererdoc);
+	signal(SIGINT, sig_handle_heredoc);
 	signal(SIGQUIT, SIG_IGN);
 	str = readline("> ");
 	while (str && ft_strncmp(str, delimiter, len + 1))
 	{
 		if (fd)
 		{
-			if (cmd && cmd->infiles && cmd->infiles->flag == 0)
+			if (btree()->cmds && btree()->cmds->infiles && btree()->cmds->infiles->flag == 0)
 				expanded = expand_hd(str);
 			else
 				expanded = str;
@@ -85,7 +84,27 @@ void	process_heredoc_recursive_simple(t_infile *current, int fd[2])
 	process_heredoc_recursive_simple(current->next, fd);
 }
 
-void	process_all_heredocs(t_infile *in, int fd[2])
+void process_all_heredocs(t_infile *in, int p[2])
 {
-	process_heredoc_recursive_simple(in, fd);
+    t_infile *current = in;
+    int       tmp_pipe[2];
+
+    while (current)
+    {
+        if (ft_strcmp(current->token, "<<") == 0)
+        {
+            if (pipe(tmp_pipe) == -1)
+            {
+                perror("pipe");
+                megalodon_giga_chad_exit(1);
+            }
+
+            get_single_heredoc(current->file, tmp_pipe);
+
+            close(tmp_pipe[1]);           // close write end
+            current->heredoc_fd = tmp_pipe[0]; // store read end
+        }
+        current = current->next;
+    }
 }
+

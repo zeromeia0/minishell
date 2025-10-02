@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:19:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 14:11:22 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/02 15:29:01 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	help_to_process(t_cmds *cmd, int p[2])
 {
 	close(p[0]);
-	signal(SIGINT, sig_handle_hererdoc);
+	signal(SIGINT, sig_handle_heredoc);
 	process_all_heredocs(cmd->infiles, p);
 	close(p[1]);
 	children_killer(0);

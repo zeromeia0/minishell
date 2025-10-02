@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 23:05:16 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 13:53:23 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/02 15:29:01 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	handle_heredoc(t_cmds *cmd)
 	t_cmds *cur = cmd;
 	t_infile *in;
 
-	signal(SIGINT, sig_handle_hererdoc);
+	signal(SIGINT, sig_handle_heredoc);
 	while (cur)
 	{
 		in = cur->infiles;
@@ -58,7 +58,7 @@ int	handle_regular_redirections(t_cmds *cmd)
 void	pid_equal_zero_double(t_cmds *cmd, int p[2])
 {
 	close(p[0]);
-	signal(SIGINT, sig_handle_hererdoc);
+	signal(SIGINT, sig_handle_heredoc);
 	process_all_heredocs(cmd->infiles, p);
 	close(p[1]);
 	megalodon_giga_chad_exit(0);

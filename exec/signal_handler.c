@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 12:35:12 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/02 15:29:01 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	set_to_onethirty(int sig)
 	rl_replace_line("", 0);
 }
 
-void	sig_handle_hererdoc(int sig)
+void	sig_handle_heredoc(int sig)
 {
 	(void)sig;
 	signal(SIGTTOU, SIG_IGN);

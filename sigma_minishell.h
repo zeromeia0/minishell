@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 14:10:30 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/02 15:29:01 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,7 +275,7 @@ void					ft_matrix_uni(char **dest, char **src);
 void					get_here_doc(char *eof, int fd[2]);
 
 void					set_to_onethirty(int sig);
-void					sig_handle_hererdoc(int sig);
+void					sig_handle_heredoc(int sig);
 int						restart_signals(void);
 void					free_os_envs(void);
 
