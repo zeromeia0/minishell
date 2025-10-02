@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_aux2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:01:02 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 13:14:14 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/03 00:40:24 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,40 @@ void	free_asterisc(char **mat)
 	}
 }
 
+char **expand_matrix(t_cmds *cmd)
+{
+	char	*temp;
+	char	**holder;
+	int		ind;
+	int		len;
+	int		flag;
+
+	if (cmd->cmd == NULL)
+		return (NULL);
+	flag = 0;
+	ind = -1;
+	while (cmd->cmd[++ind])
+	{
+		if (ft_strchr(cmd->cmd[ind], '\n'))
+		{
+			holder = ft_split(cmd->cmd[ind], '\n');
+			if (holder == NULL)
+				return (btree()->type == ERROR, cmd->cmd);
+			free(cmd->cmd[ind]);
+			ft_matrix_uni(cmd->cmd + ind, cmd->cmd + ind + 1);
+			len = ft_matlen(cmd->cmd);
+			holder = ft_matrix_in_matrix(cmd->cmd, ind, holder);
+			ind += ft_matlen(cmd->cmd) - len;
+			cmd->expanded = cmd->expanded + (holder != cmd->cmd);
+			if (flag)
+				free(cmd->cmd);
+			cmd->cmd = holder;
+			flag = 1;
+		}
+	}
+	return (cmd->cmd);
+}
+
 void	expand_args(t_cmds *cmd)
 {
 	char	**mat;
@@ -103,6 +137,7 @@ void	expand_args(t_cmds *cmd)
 	cmd->cmd = mat;
     expand_infiles(cmd->infiles);
     expand_outfiles(cmd->outfiles);
+	cmd->cmd = expand_matrix(cmd);
 	expand_args(cmd->next);
 }
 
@@ -131,7 +166,8 @@ void	take_quotes(char *str)
 
 void	expand_infiles(t_infile *infile)
 {
-	int	len;
+	int		len;
+	char	*temp;
 
 	if (!infile || !infile->file)
 		return ;
@@ -146,15 +182,28 @@ void	expand_infiles(t_infile *infile)
 	else
 	{
 		infile->file = quote(infile->file);
-		expand_infiles(infile->next);
+		if (ft_strchr(infile->file, '\n'))
+		{
+			temp = infile->file;
+			infile->file = ft_strsubs(temp, '\n', ' ');
+			free(temp);
+		}
 	}
 	expand_infiles(infile->next);
 }
 
 void	expand_outfiles(t_outfile *outfile)
 {
+	char	*temp;
+
 	if (!outfile || !outfile->file)
 		return ;
 	outfile->file = quote(outfile->file);
+	if (ft_strchr(outfile->file, '\n'))
+	{
+		temp = outfile->file;
+		outfile->file = ft_strsubs(temp, '\n', ' ');
+		free(temp);
+	}
 	expand_outfiles(outfile->next);
 }
