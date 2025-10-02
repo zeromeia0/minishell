@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 13:58:04 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/02 12:10:26 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	check_order(t_binary *tree, char **args, char **envp)
 {
 	// printf("CHECKING ORDEN\n");
 	if (handle_heredoc(tree->cmds) < 0)
-		return (btree()->cmds->flag_to_exec = 1, -1);
+		return (tree->cmds->flag_to_exec = 1, -1);
 	if (!check_infiles(tree->cmds))
 		return (0);
 	if (!check_outfiles(tree->cmds))
