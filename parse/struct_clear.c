@@ -7,18 +7,26 @@ void	binary_clear(t_binary *binary)
 	if (binary == NULL)
 		return ;
 	binary_clear(binary->left);
+	binary->left = NULL;
 	binary_clear(binary->right);
+	binary->right = NULL;
 	binary_clear(binary->subshell);
+	binary->subshell = NULL;
 	cmds_clear(binary->cmds);
-	// printf("%s %s\n", binary->logic, binary->print_cmd);
+	binary->cmds = NULL;
 	free (binary->logic);
+	binary->logic = NULL;
 	free (binary->print_cmd);
+	binary->print_cmd = NULL;
 	if (binary->up)
+	{
 		free(binary);
+		binary = NULL;
+	}
 	else
 	{
 		free(btree()->mat);
-		// printf("og matrix deleted\n");
+		btree()->mat = NULL;
 	}
 }
 
@@ -29,16 +37,18 @@ void	cmds_clear(t_cmds *cmds)
 	cmds_clear(cmds->next);
 	cmds->next = NULL;
 	outfile_clear(cmds->outfiles);
+	cmds->outfiles = NULL;
 	infile_clear(cmds->infiles);
-	// printf("%d = ", cmds->expanded);
-	// fflush(stdout);
-	// ft_print_matrix(cmds->cmd);
+	cmds->infiles = NULL;
 	if (cmds->expanded)
+	{
 		free_matrix(cmds->cmd);
+		cmds->cmd = NULL;
+	}
 	else
 		free_matrix_nodes(cmds->cmd);
-	// printf("cmds deleted\n");
 	free(cmds);
+	cmds = NULL;
 }
 
 void	infile_clear(t_infile *infile)
@@ -46,11 +56,13 @@ void	infile_clear(t_infile *infile)
 	if (infile == NULL)
 		return ;
 	infile_clear(infile->next);
-	// printf("%s %s\n", infile->token, infile->file);
+	infile->next = NULL;
 	free(infile->file);
+	infile->file = NULL;
 	free(infile->token);
-	// printf("infile deleted\n");
+	infile->token = NULL;
 	free(infile);
+	infile = NULL;
 }
 
 void	outfile_clear(t_outfile *outfile)
@@ -58,11 +70,13 @@ void	outfile_clear(t_outfile *outfile)
 	if (outfile == NULL)
 		return ;
 	outfile_clear(outfile->next);
-	// printf("%s %s\n", outfile->token, outfile->file);
+	outfile->next = NULL;
 	free(outfile->file);
+	outfile->file = NULL;
 	free(outfile->token);
-	// printf("outfile deleted\n");
+	outfile->token = NULL;
 	free(outfile);
+	outfile = NULL;
 }
 
 void	wild_clear(t_wild *node)
