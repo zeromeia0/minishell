@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 23:57:32 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 22:05:13 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/02 16:03:01 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,25 +93,27 @@ size_t	get_env_key_length(const char *str)
 		return (strlen(str));
 }
 
-int	builtin_export(char **args)
+int builtin_export(char **args)
 {
-	int		i;
-	size_t	len;
+    int i = 1;
 
-	i = 1;
-	if (!args[1])
-		return (export_print_env_list(), 0);
-	while (args[i])
-	{
-		len = get_env_key_length(args[i]);
-		if (make_update_env(args[i]) == 1)
-		{
-			if (!strchr(args[i], '='))
-				add_temp_var(args[i]);
-			else if (add_new_env_var(get_env_list(), args[i]) < 0)
-				return (perror("minishell: export"), 1);
-		}
-		i++;
-	}
-	return (0);
+    if (!args[1])
+        return (export_print_env_list(), 0);
+
+    while (args[i])
+    {
+        if (strchr(args[i], '='))  // Only update env if it contains '='
+        {
+            if (make_update_env(args[i]) != 0)
+                if (add_new_env_var(get_env_list(), args[i]) < 0)
+                    return (perror("minishell: export"), 1);
+        }
+        else
+        {
+            add_temp_var(args[i]); // No '=' → only temp var
+        }
+        i++;
+    }
+    return 0;
 }
+
