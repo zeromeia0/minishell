@@ -6,7 +6,7 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:01:02 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/03 00:40:24 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/03 02:00:28 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,13 @@ void	free_asterisc(char **mat)
 			free(mat[ind]);
 	}
 }
-
+/* 
+export o="o  o"
+$o
+echo $o
+ */
 char **expand_matrix(t_cmds *cmd)
 {
-	char	*temp;
 	char	**holder;
 	int		ind;
 	int		len;
@@ -100,11 +103,8 @@ char **expand_matrix(t_cmds *cmd)
 			holder = ft_split(cmd->cmd[ind], '\n');
 			if (holder == NULL)
 				return (btree()->type == ERROR, cmd->cmd);
-			free(cmd->cmd[ind]);
 			ft_matrix_uni(cmd->cmd + ind, cmd->cmd + ind + 1);
-			len = ft_matlen(cmd->cmd);
 			holder = ft_matrix_in_matrix(cmd->cmd, ind, holder);
-			ind += ft_matlen(cmd->cmd) - len;
 			cmd->expanded = cmd->expanded + (holder != cmd->cmd);
 			if (flag)
 				free(cmd->cmd);
