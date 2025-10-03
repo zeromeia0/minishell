@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:11:44 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/02 15:32:28 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/03 18:47:16 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	get_single_heredoc(char *eof, int fd[2])
 			delimiter);
 	free(str);
 	free(delimiter);
+	close(fd[1]);
 }
 
 void	process_heredoc_recursive_simple(t_infile *current, int fd[2])
