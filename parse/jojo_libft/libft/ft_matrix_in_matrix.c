@@ -26,5 +26,5 @@ char	**ft_matrix_in_matrix(char **mat, int ind, char **holder)
 		count++;
 		ind++;
 	}
-	return (free(holder), free(mat), ret);
+	return (free(holder), ret);
 }
