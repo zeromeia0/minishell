@@ -13,28 +13,18 @@ char	**ft_matrix_in_matrix(char **mat, int ind, char **holder)
 	ret[count] = NULL;
 	count = -1;
 	while (++count < ind)
-	{
-		ret[count] = ft_strdup(mat[count]);
-		// printf("before thing is %s\n", ret[count]);
-		// fflush(stdout);
-	}
+		ret[count] = mat[count];
 	ind2 = -1;
 	while (holder[++ind2])
 	{
 		ret[count] = holder[ind2];
-		// printf("before thing2 is %s\n", ret[count]);
-		// fflush(stdout);
 		count++;
 	}
 	while (mat[ind])
 	{
-		ret[count] = ft_strdup(mat[ind]);
-		// printf("after thing is %s\n", ret[count]);
-		// fflush(stdout);
+		ret[count] = mat[ind];
 		count++;
 		ind++;
 	}
-	// printf("end is %s\n", ret[count]);
-	// fflush(stdout);
-	return (free(holder), free_matrix_nodes(mat), ret);
+	return (free(holder), free(mat), ret);
 }

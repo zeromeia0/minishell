@@ -6,7 +6,7 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:01:02 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/03 02:00:28 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/03 02:04:39 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ char **expand_matrix(t_cmds *cmd)
 {
 	char	**holder;
 	int		ind;
-	int		len;
 	int		flag;
 
 	if (cmd->cmd == NULL)
