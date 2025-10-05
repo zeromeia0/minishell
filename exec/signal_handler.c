@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/03 18:45:47 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/05 18:56:04 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,15 @@ void	set_to_onethirty(int sig)
 	btree()->global_signal = 130;
 	rl_replace_line("", 0);
 }
+
+void	sig_handle_heredoc_main(int sig)
+{
+	(void)sig;
+	btree()->global_signal = 130;
+	btree()->exit_status = 130;
+	write(1, "\n", 1);
+}
+
 
 void	sig_handle_heredoc(int sig)
 {

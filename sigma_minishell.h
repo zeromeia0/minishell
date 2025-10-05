@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sigma_minishell.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/02 15:29:01 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/05 18:53:39 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,6 +211,8 @@ void					cmds_clear(t_cmds *cmds);
 void					outfile_clear(t_outfile *outfile);
 void					infile_clear(t_infile *infile);
 void					wild_clear(t_wild *node);
+void	sig_handle_heredoc_main(int sig);
+int manage_heredocs(t_cmds *cmd);
 
 // struct_new.c
 t_binary				*binary_new(int shlvl, t_type type, t_binary *up,

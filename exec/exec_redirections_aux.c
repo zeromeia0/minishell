@@ -3,37 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirections_aux.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 23:05:16 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/02 15:29:01 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/05 18:57:12 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../sigma_minishell.h"
 
-int	handle_heredoc(t_cmds *cmd)
+int handle_heredoc(t_cmds *cmd)
 {
-	t_cmds *cur = cmd;
-	t_infile *in;
+    t_cmds *cur = cmd;
+    t_infile *in;
 
-	signal(SIGINT, sig_handle_heredoc);
-	while (cur)
-	{
-		in = cur->infiles;
-		while (in)
-		{
-			if (ft_strcmp(in->token, "<<") == 0)
-			{
-				if (exec_double_left(in, cur) < 0)
-					return (-1);
-			}
-			in = in->next;
-		}
-		cur = cur->next;
-	}
-	return (0);
+    signal(SIGINT, sig_handle_heredoc);
+    while (cur)
+    {
+        in = cur->infiles;
+        while (in)
+        {
+            if (ft_strcmp(in->token, "<<") == 0)
+            {
+                if (manage_heredocs(cur) < 0)
+                    return (-1);
+            }
+            in = in->next;
+        }
+        cur = cur->next;
+    }
+    return (0);
 }
+
 
 
 int	handle_regular_redirections(t_cmds *cmd)

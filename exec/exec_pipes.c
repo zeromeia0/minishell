@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:19:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/02 15:29:01 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/05 18:57:51 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,40 +47,41 @@ int	process_command_heredocs(t_cmds *cmd)
 	return (0);
 }
 
-int	inside_first_while_loop(t_cmds *current)
+int inside_first_while_loop(t_cmds *current)
 {
-	if (has_heredocs(current))
-	{
-		if (process_command_heredocs(current) < 0)
-		{
-			btree()->exit_status = 130;
-			return (-1);
-		}
-	}
-	return (0);
+    if (has_heredocs(current))
+    {
+        if (manage_heredocs(current) < 0)
+        {
+            btree()->exit_status = 130;
+            return (-1);
+        }
+    }
+    return (0);
 }
 
-int	process_heredocs_and_checks(t_cmds *cmd)
-{
-	t_cmds	*current;
 
-	current = cmd;
-	while (current)
-	{
-		if (has_heredocs(current))
-		{
-			if (process_command_heredocs(current) < 0)
-			{
-				btree()->exit_status = 130;
-				return (btree()->exit_status);
-			}
-		}
-		current = current->next;
-	}
-	if (btree()->global_signal == 130)
-		return (130);
-	return (0);
+int process_heredocs_and_checks(t_cmds *cmd)
+{
+    t_cmds *current = cmd;
+
+    while (current)
+    {
+        if (has_heredocs(current))
+        {
+            if (manage_heredocs(current) < 0)
+            {
+                btree()->exit_status = 130;
+                return (btree()->exit_status);
+            }
+        }
+        current = current->next;
+    }
+    if (btree()->global_signal == 130)
+        return 130;
+    return 0;
 }
+
 
 int	exec_pipes(t_cmds *cmd, char **env)
 {
