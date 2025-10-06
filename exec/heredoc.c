@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:11:44 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/05 18:56:58 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/06 15:40:34 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,16 @@ void get_single_heredoc(char *eof, int fd[2])
     delimiter = remove_aspas(eof);
     len = ft_strlen(delimiter);
     if (btree()->global_signal == 130)
-        megalodon_giga_chad_exit(130);
+        exit(130);
+        // megalodon_giga_chad_exit(130);
     tty_fd = open("/dev/tty", O_RDONLY);
     if (tty_fd != -1)
     {
         dup2(tty_fd, STDIN_FILENO);
         close(tty_fd);
     }
-    signal(SIGINT, sig_handle_heredoc);
+    printf("get single heredoc\n");
+    signal(SIGINT, sig_handle_heredoc); //not the cuprit
     signal(SIGQUIT, SIG_IGN);
     str = readline("> ");
     while (str && ft_strncmp(str, delimiter, len + 1))
@@ -64,7 +66,8 @@ void get_single_heredoc(char *eof, int fd[2])
         }
         free(str);
         if (btree()->global_signal == 130)
-            megalodon_giga_chad_exit(130);
+            exit(130);
+            // megalodon_giga_chad_exit(130);
         str = readline("> ");
     }
     if (!str && btree()->global_signal != 130)
@@ -99,7 +102,8 @@ void process_all_heredocs(t_infile *in, int p[2])
             if (pipe(tmp_pipe) == -1)
             {
                 perror("pipe");
-                megalodon_giga_chad_exit(1);
+                exit (1);
+                // megalodon_giga_chad_exit(1);
             }
 
             get_single_heredoc(current->file, tmp_pipe);
@@ -131,29 +135,39 @@ int manage_heredocs(t_cmds *cmd)
                     return (perror("pipe"), -1);
 
                 pid = fork();
+                if (pid == -1)
+                    return (perror("fork"), -1);
+
                 if (pid == 0)
                 {
+                    // CHILD → reads heredoc
+                    printf("to aqui\n");
+                    signal(SIGINT, sig_handle_heredoc); //NOT THE CULPRIT
+                    signal(SIGQUIT, SIG_IGN);
                     close(p[0]);
-                    signal(SIGINT, sig_handle_heredoc);
-                    get_single_heredoc(in->file, p); // collect input
+
+                    get_single_heredoc(in->file, p);
+
                     close(p[1]);
-                    children_killer(0);
+                    _exit(0);
                 }
-                else if (pid > 0)
+                else
                 {
+                    // PARENT → waits for heredoc result
                     close(p[1]);
                     waitpid(pid, &status, 0);
-                    if (WIFSIGNALED(status) || 
+                    restart_signals(); // restore normal shell signal handlers
+
+                    if (WIFSIGNALED(status) ||
                         (WIFEXITED(status) && WEXITSTATUS(status) == 130))
                     {
                         close(p[0]);
                         btree()->global_signal = 130;
-                        return (-1); // abort ALL heredocs
+                        return (-1);
                     }
+
                     in->heredoc_fd = p[0];
                 }
-                else
-                    return (perror("fork"), -1);
             }
             in = in->next;
         }
@@ -161,3 +175,5 @@ int manage_heredocs(t_cmds *cmd)
     }
     return (0);
 }
+
+

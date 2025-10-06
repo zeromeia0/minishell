@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   super_duper_hiper_free.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:02 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 14:08:12 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/06 15:30:42 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void	close_all_non_standart_fds(void)
 
 void	megalodon_giga_chad_exit(int status)
 {
+	printf("INSIDE MEGALODON\n");
 	ft_free_matrix(btree()->env);
 	free_os_envs();
 	clear_env_list();

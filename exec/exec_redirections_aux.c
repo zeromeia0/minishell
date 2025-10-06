@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 23:05:16 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/05 18:57:12 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/06 15:41:26 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int handle_heredoc(t_cmds *cmd)
 {
     t_cmds *cur = cmd;
     t_infile *in;
-
-    signal(SIGINT, sig_handle_heredoc);
+	printf("HANDLE HEREDOC\n");
+    // signal(SIGINT, sig_handle_heredoc); <-- THIS FUCKER FUCKED MY WHOLE WEEKEND
     while (cur)
     {
         in = cur->infiles;
@@ -59,7 +59,8 @@ int	handle_regular_redirections(t_cmds *cmd)
 void	pid_equal_zero_double(t_cmds *cmd, int p[2])
 {
 	close(p[0]);
-	signal(SIGINT, sig_handle_heredoc);
+	printf("PID EQUALS ZERO\n");
+	signal(SIGINT, sig_handle_heredoc); //THIS IS DOING SOMETHING BAD
 	process_all_heredocs(cmd->infiles, p);
 	close(p[1]);
 	megalodon_giga_chad_exit(0);
