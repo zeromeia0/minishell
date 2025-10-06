@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/06 15:42:07 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/06 15:53:55 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,18 @@ void	sig_handle_heredoc_main(int sig)
 
 void	sig_handle_heredoc(int sig)
 {
-	// printf("sig single heredoc\n");
 	(void)sig;
 	signal(SIGTTOU, SIG_IGN);
 	signal(SIGTTIN, SIG_IGN);
 	btree()->global_signal = 130;
 	btree()->exit_status = 130;
-	write(1, "\n", 1);
-	// megalodon_giga_chad_exit(130);
-	exit(130);
+	write(STDOUT_FILENO, "\n", 1);
+	rl_on_new_line();       // tell readline the cursor is on a new line
+	rl_replace_line("", 0); // clear any leftover input
+	// rl_redisplay();         // refresh prompt (so ^C isn’t glued to prompt)
+	megalodon_giga_chad_exit(130);
 }
+
 
 void	handle_quit(int sig)
 {

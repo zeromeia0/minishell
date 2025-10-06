@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:11:44 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/06 15:40:34 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/06 15:49:44 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void get_single_heredoc(char *eof, int fd[2])
         dup2(tty_fd, STDIN_FILENO);
         close(tty_fd);
     }
-    printf("get single heredoc\n");
     signal(SIGINT, sig_handle_heredoc); //not the cuprit
     signal(SIGQUIT, SIG_IGN);
     str = readline("> ");
@@ -141,7 +140,6 @@ int manage_heredocs(t_cmds *cmd)
                 if (pid == 0)
                 {
                     // CHILD → reads heredoc
-                    printf("to aqui\n");
                     signal(SIGINT, sig_handle_heredoc); //NOT THE CULPRIT
                     signal(SIGQUIT, SIG_IGN);
                     close(p[0]);
