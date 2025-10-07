@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:11:44 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/06 15:49:44 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/07 07:11:04 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,12 +140,10 @@ int manage_heredocs(t_cmds *cmd)
                 if (pid == 0)
                 {
                     // CHILD → reads heredoc
-                    signal(SIGINT, sig_handle_heredoc); //NOT THE CULPRIT
+                    signal(SIGINT, sig_handle_heredoc);
                     signal(SIGQUIT, SIG_IGN);
                     close(p[0]);
-
                     get_single_heredoc(in->file, p);
-
                     close(p[1]);
                     _exit(0);
                 }
@@ -154,16 +152,19 @@ int manage_heredocs(t_cmds *cmd)
                     // PARENT → waits for heredoc result
                     close(p[1]);
                     waitpid(pid, &status, 0);
-                    restart_signals(); // restore normal shell signal handlers
 
                     if (WIFSIGNALED(status) ||
                         (WIFEXITED(status) && WEXITSTATUS(status) == 130))
                     {
                         close(p[0]);
                         btree()->global_signal = 130;
+                        btree()->exit_status = 130;
+                        // DO NOT restart signals here!
                         return (-1);
                     }
 
+                    // Success case → restore signals normally
+                    restart_signals();
                     in->heredoc_fd = p[0];
                 }
             }
@@ -173,5 +174,7 @@ int manage_heredocs(t_cmds *cmd)
     }
     return (0);
 }
+
+
 
 

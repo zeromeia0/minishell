@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:49:36 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/01 12:38:40 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/07 07:11:39 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,12 @@ int	main(int argc, char *argv[], char **envp)
 	initialize_stuff(argc, argv, envp);
 	while (1)
 	{
+		if (btree()->global_signal == 130)
+    		btree()->global_signal = 0;
+		restart_signals();
 		btree()->input = readline("minishell$ ");
 		if (!btree()->input)
-			break ;
-		restart_signals();
+			break;
 		add_history(btree()->input);
 		if (*btree()->input == '\0')
 		{
@@ -108,6 +110,9 @@ int	main(int argc, char *argv[], char **envp)
 		if (parsing(btree()->input) == 0)
 		{
 			btree()->main_exit = exec_tree(btree(), argv, btree()->env);
+			printf("lowkey\n");
+			if (btree()->global_signal == 130)
+    			btree()->global_signal = 0;
 			restart_signals();
 			free(btree()->input);
 			binary_clear(btree());

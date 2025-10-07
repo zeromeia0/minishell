@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:19:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/06 15:49:56 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/07 07:07:57 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	process_command_heredocs(t_cmds *cmd)
 		close(p[1]);
 		signal(SIGINT, SIG_IGN);
 		waitpid(pid, &status, 0);
-		restart_signals();
+		// printf("restarting signal 2\n"),restart_signals();
 		close(p[0]);
 		if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
 			return (btree()->exit_status = 130, -1);
