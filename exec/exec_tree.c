@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/07 08:22:07 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/07 22:06:52 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,45 +66,60 @@ int	exec_node(t_binary *node, char **args, char **envp)
 	return (0);
 }
 
-int	check_order(t_binary *tree, char **args, char **envp)
+int check_order(t_binary *tree, char **args, char **envp)
 {
-	// printf("CHECKING ORDEN\n");
-	if (handle_heredoc(tree->cmds) < 0)
-		return (btree()->cmds->flag_to_exec = 1, -1);
-	if (!check_infiles(tree->cmds))
-		return (0);
-	if (!check_outfiles(tree->cmds))
-		return (0);
-	if (!check_cmds(tree->cmds, args, envp))
-		return (0);
-	return (1);
+    if (!tree)
+        return (0);
+
+    if (handle_heredoc(tree->cmds) < 0)
+    {
+        if (tree->cmds)
+            tree->cmds->flag_to_exec = 1;
+        return (-1);
+    }
+    if (!check_infiles(tree->cmds))
+        return (0);
+    if (!check_outfiles(tree->cmds))
+        return (0);
+    if (!check_cmds(tree->cmds, args, envp))
+        return (0);
+    return (1);
 }
 
-int	exec_tree(t_binary *tree, char **args, char **envp)
-{
-	// printf("EXECUTING TREE\n");
-	int	ret_left;
 
-	if (tree->cmds && tree->cmds->flag_to_exec == 1)
-		return (1);
-	check_order(tree, args, envp);
-	if (btree()->global_signal == 130)
-		return (130);
-	if (!tree)
-		return (0);
-	if (tree->logic && ft_strcmp(tree->logic, "&&") == 0)
-	{
-		ret_left = exec_tree(tree->left, args, envp);
-		if (ret_left == 0)
-			return (exec_tree(tree->right, args, envp));
-		return (ret_left);
-	}
-	if (tree->logic && ft_strcmp(tree->logic, "||") == 0)
-	{
-		ret_left = exec_tree(tree->left, args, envp);
-		if (ret_left != 0)
-			return (exec_tree(tree->right, args, envp));
-		return (ret_left);
-	}
-	return (exec_node(tree, args, envp));
+int exec_tree(t_binary *tree, char **args, char **envp)
+{
+    int ret_left;
+    int co;
+
+    if (!tree)
+        return (0);
+    if (tree->cmds && tree->cmds->flag_to_exec == 1)
+        return (1);
+
+    co = check_order(tree, args, envp);
+    if (co < 0) /* heredoc aborted or signal -> don't proceed with this node */
+        return (btree()->global_signal == 130 ? 130 : 1);
+    if (co == 0)
+        return (1);
+
+    if (btree()->global_signal == 130)
+        return (130);
+
+    if (tree->logic && ft_strcmp(tree->logic, "&&") == 0)
+    {
+        ret_left = exec_tree(tree->left, args, envp);
+        if (ret_left == 0)
+            return (exec_tree(tree->right, args, envp));
+        return (ret_left);
+    }
+    if (tree->logic && ft_strcmp(tree->logic, "||") == 0)
+    {
+        ret_left = exec_tree(tree->left, args, envp);
+        if (ret_left != 0)
+            return (exec_tree(tree->right, args, envp));
+        return (ret_left);
+    }
+    return (exec_node(tree, args, envp));
 }
+
