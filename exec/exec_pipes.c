@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:19:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/07 07:07:57 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/07 07:48:30 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,19 +48,6 @@ int	process_command_heredocs(t_cmds *cmd)
 	return (0);
 }
 
-int inside_first_while_loop(t_cmds *current)
-{
-    if (has_heredocs(current))
-    {
-        if (manage_heredocs(current) < 0)
-        {
-            btree()->exit_status = 130;
-            return (-1);
-        }
-    }
-    return (0);
-}
-
 
 int process_heredocs_and_checks(t_cmds *cmd)
 {
@@ -90,18 +77,22 @@ int	exec_pipes(t_cmds *cmd, char **env)
 	int		status;
 	t_cmds	*current;
 
+	printf("===EXECUTING PIPES\n");
 	first_fd = -1;
 	if (!cmd || cmd->cmd[0] == NULL)
-		return (0);
+		return (printf("NO COMMAND\n"), 0);
 	current = cmd;
+	printf("%d\n", 0);
 	// if (process_heredocs_and_checks(cmd) < 0)
     // 	return (btree()->exit_status);
 	while (current)
 	{
+		printf("%d\n", 1);
 		if (process_command(current, &first_fd, env) == -1)
-			return (-1);
+			return (printf("COULDN'T PROCESS IT\n"), -1);
 		current = current->next;
 	}
+	printf("%d\n", 2);
 	while (wait(&status) > 0)
 		;
 	if (WIFEXITED(status))

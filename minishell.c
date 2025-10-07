@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:49:36 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/07 07:16:59 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/07 07:49:34 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int	main(int argc, char *argv[], char **envp)
 		}
 		if (parsing(btree()->input) == 0)
 		{
+			print_cmds(btree()->cmds);
 			btree()->main_exit = exec_tree(btree(), argv, btree()->env);
 			if (btree()->global_signal == 130)
     			btree()->global_signal = 0;

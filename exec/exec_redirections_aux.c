@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 23:05:16 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/06 15:49:52 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/07 07:42:29 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,17 @@
 
 int handle_heredoc(t_cmds *cmd)
 {
-    t_cmds *cur = cmd;
-    t_infile *in;
-	// printf("HANDLE HEREDOC\n");
-    signal(SIGINT, handle_sigint); //<-- THIS FUCKER FUCKED MY WHOLE WEEKEND
-    while (cur)
-    {
-        in = cur->infiles;
-        while (in)
-        {
-            if (ft_strcmp(in->token, "<<") == 0)
-            {
-                if (manage_heredocs(cur) < 0)
-                    return (-1);
-            }
-            in = in->next;
-        }
-        cur = cur->next;
-    }
+    if (!cmd)
+        return (0);
+
+    signal(SIGINT, handle_sigint);
+
+    if (manage_heredocs(cmd) < 0)
+        return (-1);
+
     return (0);
 }
+
 
 
 

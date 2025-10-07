@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:11:44 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/07 07:15:02 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/07 07:25:24 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,8 @@ int manage_heredocs(t_cmds *cmd)
     int         p[2];
     pid_t       pid;
     int         status;
-
+    signal(SIGTTOU, SIG_IGN);
+    signal(SIGTTIN, SIG_IGN);
     cur = cmd;
     while (cur)
     {
@@ -153,7 +154,6 @@ int manage_heredocs(t_cmds *cmd)
                 }
                 else
                 {
-                    // PARENT → waits for heredoc result
                     close(p[1]);
                     waitpid(pid, &status, 0);
 
@@ -163,12 +163,9 @@ int manage_heredocs(t_cmds *cmd)
                         close(p[0]);
                         btree()->global_signal = 130;
                         btree()->exit_status = 130;
-                        // Restore parent signal handlers
                         restart_signals();
                         return (-1);
                     }
-
-                    // Normal heredoc success → restore signals
                     restart_signals();
                     in->heredoc_fd = p[0];
                 }
