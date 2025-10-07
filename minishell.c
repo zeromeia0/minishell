@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:49:36 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/07 07:49:34 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/07 08:13:29 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@ void	print_outfiles(t_outfile *file)
 
 void	print_cmds(t_cmds *cmds)
 {
+	// if (!cmds)
+	// {	printf("TEM NADA AQUI PIRRA\n");
+	// 	return ;
+	// }
 	while (cmds)
 	{
 		printf("==================\n");
@@ -109,7 +113,7 @@ int	main(int argc, char *argv[], char **envp)
 		}
 		if (parsing(btree()->input) == 0)
 		{
-			print_cmds(btree()->cmds);
+			// print_cmds(btree()->cmds);
 			btree()->main_exit = exec_tree(btree(), argv, btree()->env);
 			if (btree()->global_signal == 130)
     			btree()->global_signal = 0;

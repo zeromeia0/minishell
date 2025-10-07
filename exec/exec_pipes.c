@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:19:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/07 08:03:02 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/07 08:08:55 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	exec_pipes(t_cmds *cmd, char **env)
 	int		status;
 	t_cmds	*current;
 
-	if (btree()->global_signal == 130 || btree()->cmds->flag_to_exec == 1)
+	if (btree()->global_signal == 130 || (btree()->cmds && btree()->cmds->flag_to_exec == 1))
 		return (btree()->exit_status);
 	printf("===EXECUTING PIPES\n");
 	first_fd = -1;
