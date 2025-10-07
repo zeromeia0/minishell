@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:11:44 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/07 07:11:04 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/07 07:15:02 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,10 @@ int manage_heredocs(t_cmds *cmd)
                 if (pipe(p) == -1)
                     return (perror("pipe"), -1);
 
+                // 👇 Ignore signals in parent while child runs
+                signal(SIGINT, SIG_IGN);
+                signal(SIGQUIT, SIG_IGN);
+
                 pid = fork();
                 if (pid == -1)
                     return (perror("fork"), -1);
@@ -159,11 +163,12 @@ int manage_heredocs(t_cmds *cmd)
                         close(p[0]);
                         btree()->global_signal = 130;
                         btree()->exit_status = 130;
-                        // DO NOT restart signals here!
+                        // Restore parent signal handlers
+                        restart_signals();
                         return (-1);
                     }
 
-                    // Success case → restore signals normally
+                    // Normal heredoc success → restore signals
                     restart_signals();
                     in->heredoc_fd = p[0];
                 }
@@ -174,6 +179,7 @@ int manage_heredocs(t_cmds *cmd)
     }
     return (0);
 }
+
 
 
 

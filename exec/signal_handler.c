@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/07 06:57:37 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/07 07:16:38 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 void	handle_sigint(int sig)
 {
-	printf("HANDLE SIGINT current global signal: %d\n", btree()->global_signal);
-	printf("handle 1\n");
+	// printf("HANDLE SIGINT current global signal: %d\n", btree()->global_signal);
+	// printf("handle 1\n");
 	(void)sig;
 	btree()->exit_status = 130;
 	btree()->global_signal = 130;
@@ -31,7 +31,7 @@ void	handle_sigint(int sig)
 
 void	set_to_onethirty(int sig)
 {
-	printf("handle 2\n");
+	// printf("handle 2\n");
 	(void)sig;
 	btree()->global_signal = 130;
 	rl_replace_line("", 0);
@@ -39,7 +39,7 @@ void	set_to_onethirty(int sig)
 
 void	sig_handle_heredoc_main(int sig)
 {
-	printf("handle 3\n");
+	// printf("handle 3\n");
 	(void)sig;
 	btree()->global_signal = 130;
 	btree()->exit_status = 130;
@@ -49,8 +49,8 @@ void	sig_handle_heredoc_main(int sig)
 
 void	sig_handle_heredoc(int sig)
 {
-	printf("SIG HANDLE HEREDOC current global signal: %d\n", btree()->global_signal);
-	printf("handle 4\n");
+	// printf("SIG HANDLE HEREDOC current global signal: %d\n", btree()->global_signal);
+	// printf("handle 4\n");
 	(void)sig;
 	signal(SIGTTOU, SIG_IGN);
 	signal(SIGTTIN, SIG_IGN);
@@ -66,15 +66,15 @@ void	sig_handle_heredoc(int sig)
 
 void	handle_quit(int sig)
 {
-	printf("handle 5\n");
+	// printf("handle 5\n");
 	(void)sig;
 	signal(SIGQUIT, SIG_IGN);
 }
 
 int	restart_signals(void)
 {
-	printf("handle 6\n");
-	printf("RESTART current global signal: %d\n", btree()->global_signal);
+	// printf("handle 6\n");
+	// printf("RESTART current global signal: %d\n", btree()->global_signal);
 	if (btree()->global_signal == 130)
 		btree()->global_signal = 0;
 	signal(SIGINT, handle_sigint);
