@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/08 09:07:22 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/08 09:11:29 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void	exec_child(t_cmds *cmd)
 int	exec_single_cmd(t_cmds *cmd)
 {
 	if (!cmd || !cmd->cmd)
-		return (printf("testing %d\n", 4),btree()->exit_status);
+		return (btree()->exit_status);
 	if (cmd->flag_to_exec == 1)
-		return (printf("testing %d\n", 5),btree()->exit_status);
+		return (btree()->exit_status);
 	if (has_builtin(cmd) && !has_redir(cmd))
 		return (exec_single_cmd_aux(cmd));
 	prepare_signals_and_fork(cmd);
@@ -55,7 +55,7 @@ int	exec_node(t_binary *node, char **args, char **envp)
 		return (0);
 	if (node->cmds != NULL)
 	{
-		expand_args(node->cmds);        
+		expand_args(node->cmds);  
 		if (node->cmds->next)
 			return (exec_pipes(node->cmds, btree()->env));
 		else

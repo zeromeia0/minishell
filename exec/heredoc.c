@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:11:44 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/08 08:58:09 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/08 09:10:12 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,9 +159,9 @@ int manage_heredocs(t_cmds *cmd)
                     {
                         close(p[0]);
                         btree()->global_signal = 130;
-                        printf("testing %d\n", 7),btree()->exit_status = 130;
+                        btree()->exit_status = 130;
                         restart_signals();
-                        return (printf("RETURNING %d\n", 12), -1);
+                        return (-1);
                     }
                     restart_signals();
                     in->heredoc_fd = p[0];

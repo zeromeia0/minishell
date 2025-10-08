@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:44:52 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/07 23:24:09 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/08 09:10:16 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ int	handle_slash_command(char *cmd, char **args, char **envp)
 			megalodon_giga_chad_exit(1);
 		}
 		perror(cmd);
-		printf("testing %d\n", 9);
 		megalodon_giga_chad_exit(btree()->exit_status);
 	}
 	else
