@@ -4,6 +4,7 @@
 		"sigma_minishell.h": "c",
 		"sstream": "c",
 		"wait.h": "c",
-		"termios.h": "c"
+		"termios.h": "c",
+		"libft.h": "c"
 	}
 }

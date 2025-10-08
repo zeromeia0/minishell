@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_matrix_unify.c                                  :+:      :+:    :+:   */
+/*   ft_strsubs.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/10 20:36:54 by jlima-so          #+#    #+#             */
-/*   Updated: 2025/10/03 01:34:55 by namejojo         ###   ########.fr       */
+/*   Created: 2025/10/02 21:28:12 by namejojo          #+#    #+#             */
+/*   Updated: 2025/10/02 21:29:46 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-void	ft_matrix_uni(char **dest, char **src)
+char	*ft_strsubs(char *str, char ch1, char ch2)
 {
-	int	ind;
-
-	if (src == NULL || dest == NULL)
-		return;
+	int		ind;
+	char	*ret;
+	
 	ind = -1;
-	while (src[++ind])
-		dest[ind] = src[ind];
-	dest[ind] = NULL;
+	ret = malloc(ft_strlen(str));
+	if (ret == NULL)
+		return (NULL);
+	while (str[++ind])
+		if (str[ind] == ch1)
+			ret[ind] = ch2;
+		else
+			ret[ind] = str[ind];
+	ret[ind] = '\0';
+	return (ret);
 }

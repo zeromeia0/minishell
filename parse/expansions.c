@@ -90,13 +90,13 @@ char	*quote(char *str)
 	return (str);
 }
 // echo $USER "'$USER'" "$USER" '$USER' '"$USER"'
-char	*find_os_env(t_os_envs *env, char *str, int count)
+char	*find_os_env(t_os_envs *ev, char *str, int count)
 {
-	while (env)
+	while (ev)
 	{
-		if (env->linux_envs && ft_strncmp(env->linux_envs, str, count) == 0)
-			return (env->linux_envs);
-		env = env->next;
+		if (ev->linux_envs && ft_strncmp(ev->linux_envs, str, count) == 0)
+			return (ft_strsubs(ft_strchr(ev->linux_envs, '=') + 1, ' ', '\n'));
+		ev = ev->next;
 	}
 	return (NULL);
 }
@@ -120,7 +120,7 @@ char	*expand_aux(char *str, int ind, int count, char *temp)
 	temp = ft_strdup(str + ind + count);
 	if (temp == NULL)
 		return (btree()->type = ERROR, free (str), NULL);
-	temp = ft_strjoin_free(env_var + count * (*env_var != '\0'), temp, 2);
+	temp = ft_strjoin_free(env_var, temp, 0);
 	if (temp == NULL)
 		return (btree()->type = ERROR, free (str), NULL);
 	str[ind] = '\0';
