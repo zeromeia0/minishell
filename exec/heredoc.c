@@ -1,98 +1,167 @@
-	/* ************************************************************************** */
-	/*                                                                            */
-	/*                                                        :::      ::::::::   */
-	/*   heredoc.c                                          :+:      :+:    :+:   */
-	/*                                                    +:+ +:+         +:+     */
-	/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
-	/*                                                +#+#+#+#+#+   +#+           */
-	/*   Created: 2025/10/01 13:11:44 by vivaz-ca          #+#    #+#             */
-	/*   Updated: 2025/10/01 16:46:35 by vivaz-ca         ###   ########.fr       */
-	/*                                                                            */
-	/* ************************************************************************** */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/01 13:11:44 by vivaz-ca          #+#    #+#             */
+/*   Updated: 2025/10/08 13:23:13 by vvazzs           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 
 
-	#include "../sigma_minishell.h"
+#include "../sigma_minishell.h"
 
-	int	count_heredocs(t_infile *in)
-	{
-		int	count;
+void get_single_heredoc(char *eof, int fd[2])
+{
+    char    *str;
+    char    *delimiter;
+    int     len;
+    int     tty_fd;
+    char    *expanded;
 
-		count = 0;
-		while (in)
-		{
-			if (ft_strcmp(in->token, "<<") == 0)
-				count++;
-			in = in->next;
-		}
-		return (count);
-	}
-
-	void	get_single_heredoc(char *eof, int fd[2])
-	{
-		char	*str;
-		char	*delimiter;
-		int		len;
-		int		tty_fd;
-		char	*expanded;
-		t_cmds *cmd;
-
-		delimiter = remove_aspas(eof);
-		len = ft_strlen(delimiter);
-		if (btree()->global_signal == 130)
-			megalodon_giga_chad_exit(130);
-		tty_fd = open("/dev/tty", O_RDONLY);
-		if (tty_fd != -1)
-		{
-			dup2(tty_fd, STDIN_FILENO);
-			close(tty_fd);
-		}
-		signal(SIGINT, sig_handle_hererdoc);
-		// signal(SIGQUIT, SIG_IGN);
-		str = readline("> ");
-		while (str && ft_strncmp(str, delimiter, len + 1))
-		{
-			if (fd)
-			{
-				if (cmd && cmd->infiles && cmd->infiles->flag == 0)
-					expanded = expand_hd(str);
-				else
-					expanded = str;
-				write(fd[1], expanded, ft_strlen(expanded));
-				write(fd[1], "\n", 1);
-				if (expanded != str)
-					free(expanded);
-			}
-			free(str);
-			if (btree()->global_signal == 130)
-				megalodon_giga_chad_exit(130);
-			str = readline("> ");
-		}
-		if (!str && btree()->global_signal != 130)
-			fprintf(stderr,
-				"warning: here-document delimited by end-of-file (wanted `%s')\n",
-				delimiter);
-		free(str);
-		free(delimiter);
-	}
-
-	void process_heredoc_recursive_simple(t_infile *current, int fd[2])
-	{
-		if (!current || btree()->global_signal == 130)
-			exit(130); // child stops immediately
-
-		if (ft_strcmp(current->token, "<<") == 0)
-			get_single_heredoc(current->file, fd);
-
-		if (btree()->global_signal == 130)
-			children_killer(130); // in case it was triggered during heredoc
-
-		process_heredoc_recursive_simple(current->next, fd);
-	}
+    delimiter = remove_aspas(eof);
+    len = ft_strlen(delimiter);
+    if (btree()->global_signal == 130)
+        exit(130);
+        // megalodon_giga_chad_exit(130);
+    tty_fd = open("/dev/tty", O_RDONLY);
+    if (tty_fd != -1)
+    {
+        dup2(tty_fd, STDIN_FILENO);
+        close(tty_fd);
+    }
+    signal(SIGINT, sig_handle_heredoc); //not the cuprit
+    signal(SIGQUIT, SIG_IGN);
+    str = readline("> ");
+    while (str && ft_strncmp(str, delimiter, len + 1))
+    {
+        if (fd) // only write if fd is provided
+        {
+            if (btree()->cmds && btree()->cmds->infiles && btree()->cmds->infiles->flag == 0)
+                expanded = expand_hd(str);
+            else
+                expanded = str;
+            write(fd[1], expanded, ft_strlen(expanded));
+            write(fd[1], "\n", 1);
+            if (expanded != str)
+                free(expanded);
+        }
+        free(str);
+        if (btree()->global_signal == 130)
+            exit(130);
+            // megalodon_giga_chad_exit(130);
+        str = readline("> ");
+    }
+    if (!str && btree()->global_signal != 130)
+        fprintf(stderr,
+            "warning: here-document delimited by end-of-file (wanted `%s')\n",
+            delimiter);
+    free(str);
+    free(delimiter);
+    if (fd)
+        close(fd[1]);
+}
 
 
+void	process_heredoc_recursive_simple(t_infile *current, int fd[2])
+{
+	if (!current)
+		return ;
+	if (ft_strcmp(current->token, "<<") == 0)
+		get_single_heredoc(current->file, fd);
+	process_heredoc_recursive_simple(current->next, fd);
+}
 
-	void	process_all_heredocs(t_infile *in, int fd[2])
-	{
-		process_heredoc_recursive_simple(in, fd);
-	}
+void process_all_heredocs(t_infile *in, int p[2])
+{
+    t_infile *current = in;
+    int       tmp_pipe[2];
+
+    while (current)
+    {
+        if (ft_strcmp(current->token, "<<") == 0)
+        {
+            if (pipe(tmp_pipe) == -1)
+            {
+                perror("pipe");
+                exit (1);
+                // megalodon_giga_chad_exit(1);
+            }
+
+            get_single_heredoc(current->file, tmp_pipe);
+
+            close(tmp_pipe[1]);           // close write end
+            current->heredoc_fd = tmp_pipe[0]; // store read end
+        }
+        current = current->next;
+    }
+}
+
+int manage_heredocs(t_cmds *cmd)
+{
+    t_cmds      *cur;
+    t_infile    *in;
+    int         p[2];
+    pid_t       pid;
+    int         status;
+    signal(SIGTTOU, SIG_IGN);
+    signal(SIGTTIN, SIG_IGN);
+    if (!cmd)
+        return (printf("== NO COMMAND\n"), -1);
+    cur = cmd;
+    while (cur)
+    {
+        in = cur->infiles;
+        while (in)
+        {
+            if (ft_strcmp(in->token, "<<") == 0)
+            {
+                if (pipe(p) == -1)
+                    return (perror("pipe"), -1);
+                signal(SIGINT, SIG_IGN);
+                signal(SIGQUIT, SIG_IGN);
+                pid = fork();
+                if (pid == -1)
+                    return (perror("fork"), -1);
+                if (pid == 0)
+                {
+                    signal(SIGINT, sig_handle_heredoc);
+                    signal(SIGQUIT, SIG_IGN);
+                    close(p[0]);
+                    get_single_heredoc(in->file, p);
+                    close(p[1]);
+                    _exit(0);
+                }
+                else
+                {
+                    close(p[1]);
+                    waitpid(pid, &status, 0);
+
+                    if (WIFSIGNALED(status) ||
+                        (WIFEXITED(status) && WEXITSTATUS(status) == 130))
+                    {
+                        close(p[0]);
+                        btree()->global_signal = 130;
+                        btree()->exit_status = 130;
+                        restart_signals();
+                        return (-1);
+                    }
+                    restart_signals();
+                    in->heredoc_fd = p[0];
+                }
+            }
+            in = in->next;
+        }
+        cur = cur->next;
+    }
+    // cmd->heredoc_done = 0;
+    return (0);
+}
+
+
+
+
+

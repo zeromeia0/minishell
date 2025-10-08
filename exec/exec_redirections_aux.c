@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirections_aux.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 23:05:16 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 17:05:58 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/08 13:22:06 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,15 @@
 
 int handle_heredoc(t_cmds *cmd)
 {
-    t_cmds *cur;
+    if (!cmd || cmd->heredoc_done)
+        return (0);
 
-    signal(SIGINT, sig_handle_hererdoc);
-    cur = cmd;
-    while (cur)
-    {
-        if (has_heredocs(cur))
-        {
-            if (process_command_heredocs(cur) < 0)
-                return (-1);
-        }
-        cur = cur->next;
-    }
+    signal(SIGINT, handle_sigint);
+
+    if (manage_heredocs(cmd) < 0)
+        return (-1);
+
+    cmd->heredoc_done = 1; // mark it as processed
     return (0);
 }
 
@@ -54,7 +50,8 @@ int	handle_regular_redirections(t_cmds *cmd)
 void	pid_equal_zero_double(t_cmds *cmd, int p[2])
 {
 	close(p[0]);
-	signal(SIGINT, sig_handle_hererdoc);
+	printf("PID EQUALS ZERO\n");
+	signal(SIGINT, sig_handle_heredoc); //THIS IS DOING SOMETHING BAD
 	process_all_heredocs(cmd->infiles, p);
 	close(p[1]);
 	megalodon_giga_chad_exit(0);

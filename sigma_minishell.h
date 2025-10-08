@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sigma_minishell.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 20:04:31 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/08 13:23:29 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_os_envs
 
 typedef struct s_cmds
 {
+	int heredoc_done;
 	int					expanded;
 	int					flag_to_exec;
 	char				**cmd;
@@ -100,6 +101,7 @@ typedef struct s_binary
 
 int						parsing(char *str);
 int						is_builtin(char *cmd);
+void	reset_heredoc_flags(t_binary *tree);
 int						builtin_cd(char **args);
 int						builtin_pwd(void);
 int						builtin_echo(char **args);
@@ -212,6 +214,8 @@ void					cmds_clear(t_cmds *cmds);
 void					outfile_clear(t_outfile *outfile);
 void					infile_clear(t_infile *infile);
 void					wild_clear(t_wild *node);
+void	sig_handle_heredoc_main(int sig);
+int manage_heredocs(t_cmds *cmd);
 
 // struct_new.c
 t_binary				*binary_new(int shlvl, t_type type, t_binary *up,
@@ -276,7 +280,7 @@ void					ft_matrix_uni(char **dest, char **src);
 void					get_here_doc(char *eof, int fd[2]);
 
 void					set_to_onethirty(int sig);
-void					sig_handle_hererdoc(int sig);
+void					sig_handle_heredoc(int sig);
 int						restart_signals(void);
 void					free_os_envs(void);
 

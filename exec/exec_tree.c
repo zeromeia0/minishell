@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/02 12:10:26 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/08 13:22:42 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	exec_child(t_cmds *cmd)
 	char	**cleaned;
 	char	**updated_envs;
 
-	if (cmd->flag_to_exec == 1)
+	if (cmd && cmd->flag_to_exec == 1)
 		return ;
 	signal(SIGINT, handle_sigint);
 	cleaned = array_to_exec(cmd);
@@ -29,13 +29,13 @@ void	exec_child(t_cmds *cmd)
 	if (has_redir(cmd))
 		exec_redirections(cmd);
 	if (has_builtin(cmd))
-		megalodon_giga_chad_exit(exec_builtin(cleaned[0], cleaned,
-				updated_envs));
+		exec_builtin(cleaned[0], cleaned, updated_envs);
 	else
 		exec_path(cleaned[0], cleaned, updated_envs);
 	free_matrix(cleaned);
 	free_matrix(updated_envs);
 }
+
 
 int	exec_single_cmd(t_cmds *cmd)
 {
@@ -46,7 +46,7 @@ int	exec_single_cmd(t_cmds *cmd)
 	if (has_builtin(cmd) && !has_redir(cmd))
 		return (exec_single_cmd_aux(cmd));
 	prepare_signals_and_fork(cmd);
-	return (btree()->exit_status);
+	return (btree()->exit_status); // GOTTA FIX THIS SHIT
 }
 
 int	exec_node(t_binary *node, char **args, char **envp)
@@ -55,7 +55,7 @@ int	exec_node(t_binary *node, char **args, char **envp)
 		return (0);
 	if (node->cmds != NULL)
 	{
-		expand_args(node->cmds);
+		expand_args(node->cmds);  
 		if (node->cmds->next)
 			return (exec_pipes(node->cmds, btree()->env));
 		else
@@ -66,44 +66,91 @@ int	exec_node(t_binary *node, char **args, char **envp)
 	return (0);
 }
 
-int	check_order(t_binary *tree, char **args, char **envp)
+int check_order(t_binary *tree, char **args, char **envp)
 {
-	// printf("CHECKING ORDEN\n");
-	if (handle_heredoc(tree->cmds) < 0)
-		return (tree->cmds->flag_to_exec = 1, -1);
-	if (!check_infiles(tree->cmds))
-		return (0);
-	if (!check_outfiles(tree->cmds))
-		return (0);
-	if (!check_cmds(tree->cmds, args, envp))
-		return (0);
-	return (1);
+    int r;
+
+    if (!tree)
+        return (0);
+
+    if (tree->cmds)
+    {
+        r = handle_heredoc(tree->cmds);
+        if (r < 0)
+        {
+            if (tree->cmds)
+                tree->cmds->flag_to_exec = 1;
+            return (-1);
+        }
+        if (!check_infiles(tree->cmds))
+            return (0);
+        if (!check_outfiles(tree->cmds))
+            return (0);
+        if (!check_cmds(tree->cmds, args, envp))
+            return (0);
+    }
+    if (tree->left)
+    {
+        if (check_order(tree->left, args, envp) <= 0)
+            return (0);
+    }
+    if (tree->right)
+    {
+        if (check_order(tree->right, args, envp) <= 0)
+            return (0);
+    }
+    return (1);
 }
 
-int	exec_tree(t_binary *tree, char **args, char **envp)
+void	reset_heredoc_flags(t_binary *tree)
 {
-	int	ret_left;
+	t_cmds	*cmd;
 
-	if (btree()->cmds && btree()->cmds->flag_to_exec == 1)
-		return (0);
-	check_order(tree, args, envp);
-	if (btree()->global_signal == 130)
-		return (130);
 	if (!tree)
-		return (0);
-	if (tree->logic && ft_strcmp(tree->logic, "&&") == 0)
+		return ;
+
+	cmd = tree->cmds;
+	while (cmd)
 	{
-		ret_left = exec_tree(tree->left, args, envp);
-		if (ret_left == 0)
-			return (exec_tree(tree->right, args, envp));
-		return (ret_left);
+		cmd->heredoc_done = 0;
+		cmd = cmd->next;
 	}
-	if (tree->logic && ft_strcmp(tree->logic, "||") == 0)
-	{
-		ret_left = exec_tree(tree->left, args, envp);
-		if (ret_left != 0)
-			return (exec_tree(tree->right, args, envp));
-		return (ret_left);
-	}
-	return (exec_node(tree, args, envp));
+	reset_heredoc_flags(tree->left);
+	reset_heredoc_flags(tree->right);
 }
+
+
+int exec_tree(t_binary *tree, char **args, char **envp)
+{
+    int ret_left;
+    int co;
+
+    if (!tree)
+        return ( 0);
+    if (tree->cmds && tree->cmds->flag_to_exec == 1)
+        return (1);
+    co = check_order(tree, args, envp);
+    if (co < 0)
+        return (btree()->global_signal == 130 ? 130 : 1);
+    if (co == 0)
+        return (1);
+    // tree->cmds->heredoc_done = 0;
+    if (btree()->global_signal == 130)
+        return (130);
+    if (tree->logic && ft_strcmp(tree->logic, "&&") == 0)
+    {
+        ret_left = exec_tree(tree->left, args, envp);
+        if (ret_left == 0)
+            return (exec_tree(tree->right, args, envp));
+        return (ret_left);
+    }
+    if (tree->logic && ft_strcmp(tree->logic, "||") == 0)
+    {
+        ret_left = exec_tree(tree->left, args, envp);
+        if (ret_left != 0)
+            return (exec_tree(tree->right, args, envp));
+        return (ret_left);
+    }
+    return (exec_node(tree, args, envp));
+}
+

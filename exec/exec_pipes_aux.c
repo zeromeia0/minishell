@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipes_aux.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 08:43:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 14:11:12 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/07 07:43:33 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	has_heredocs(t_cmds *cmd)
 	while (in)
 	{
 		if (ft_strcmp(in->token, "<<") == 0)
-			return (1);
+			return (printf("THIS HAS HEREDOCS\n"), 1);
 		in = in->next;
 	}
 	return (0);

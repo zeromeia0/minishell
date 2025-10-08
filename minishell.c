@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:49:36 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/02 15:41:53 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/08 13:23:26 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,13 @@ void	print_outfiles(t_outfile *file)
 
 void	print_cmds(t_cmds *cmds)
 {
+	if (!cmds)
+	{	printf("TEM NADA AQUI PIRRA\n");
+		return ;
+	}
 	while (cmds)
 	{
+		// cmds.
 		printf("==================\n");
 		printf("\t\tstarts infile\n");
 		print_infiles(cmds->infiles);
@@ -95,10 +100,12 @@ int	main(int argc, char *argv[], char **envp)
 	initialize_stuff(argc, argv, envp);
 	while (1)
 	{
+		if (btree()->global_signal == 130)
+    		btree()->global_signal = 0;
+		restart_signals();
 		btree()->input = readline("minishell$ ");
 		if (!btree()->input)
-			break ;
-		restart_signals();
+			break;
 		add_history(btree()->input);
 		if (*btree()->input == '\0')
 		{
@@ -107,7 +114,11 @@ int	main(int argc, char *argv[], char **envp)
 		}
 		if (parsing(btree()->input) == 0)
 		{
+			// print_tree(btree(), 0);
 			btree()->main_exit = exec_tree(btree(), argv, btree()->env);
+			reset_heredoc_flags(btree());
+			if (btree()->global_signal == 130)
+    			btree()->global_signal = 0;
 			restart_signals();
 			free(btree()->input);
 			binary_clear(btree());

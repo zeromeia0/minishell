@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   super_duper_hiper_free.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:02 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 14:08:12 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/07 07:08:11 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void	double_helper(int status, int p[2], pid_t pid)
 	close(p[1]);
 	signal(SIGINT, SIG_IGN);
 	waitpid(pid, &status, 0);
-	restart_signals();
+	// printf("restarting signal 4\n"), restart_signals();
 }
 
 int	check_cmds(t_cmds *cmds, char **args, char **envp)
