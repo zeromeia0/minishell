@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:21:23 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 11:39:10 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/08 09:00:38 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int	is_builtin(char *cmd)
 
 int	has_builtin(t_cmds *cmd)
 {
-	if (!cmd || !cmd->cmd || !cmd->cmd[0])
-		return (0);
+	if (!cmd || !cmd->cmd/*  || !cmd->cmd[0] */)
+		return ( 0);
 	return (is_builtin(cmd->cmd[0]));
 }
 
@@ -90,6 +90,8 @@ int	builtin_exit(char **args, char **envp)
 
 int	exec_builtin(char *cmd, char **args, char **envp)
 {
+	if (!cmd)
+		printf("TA TUDO FUDIDO\n");
 	if (ft_strcmp(cmd, "cd") == 0)
 		return (builtin_cd(args));
 	else if (ft_strcmp(cmd, "pwd") == 0)

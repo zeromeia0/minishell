@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 23:05:16 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/07 22:09:03 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/08 09:00:17 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,9 @@ int handle_heredoc(t_cmds *cmd)
         return (0);
 
     signal(SIGINT, handle_sigint);
-
+	
     if (manage_heredocs(cmd) < 0)
         return (printf("KAKASHI\n"), -1);
-
     return (0);
 }
 

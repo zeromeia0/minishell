@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:19:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/07 08:08:55 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/08 09:08:52 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int process_heredocs_and_checks(t_cmds *cmd)
         {
             if (manage_heredocs(current) < 0)
             {
-                btree()->exit_status = 130;
+                printf("testing %d\n", 1), btree()->exit_status = 130;
                 return (btree()->exit_status);
             }
         }
@@ -78,7 +78,7 @@ int	exec_pipes(t_cmds *cmd, char **env)
 	t_cmds	*current;
 
 	if (btree()->global_signal == 130 || (btree()->cmds && btree()->cmds->flag_to_exec == 1))
-		return (btree()->exit_status);
+		return (printf("testing %d\n", 3), btree()->exit_status);
 	printf("===EXECUTING PIPES\n");
 	first_fd = -1;
 	// if (!cmd || cmd->cmd[0] == NULL)
