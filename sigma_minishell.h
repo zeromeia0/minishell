@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/05 18:53:39 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/08 09:25:35 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_os_envs
 
 typedef struct s_cmds
 {
+	int heredoc_done;
 	int					expanded;
 	int					flag_to_exec;
 	char				**cmd;
@@ -100,6 +101,7 @@ typedef struct s_binary
 
 int						parsing(char *str);
 int						is_builtin(char *cmd);
+void	reset_heredoc_flags(t_binary *tree);
 int						builtin_cd(char **args);
 int						builtin_pwd(void);
 int						builtin_echo(char **args);

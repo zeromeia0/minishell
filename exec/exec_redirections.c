@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirections.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:08:05 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/02 15:41:34 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/08 09:41:20 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,9 +123,9 @@ int exec_redirections(t_cmds *cmd)
     in = cmd->infiles;
     while (in)
     {
-        if (ft_strcmp(in->token, "<<") == 0 && in->heredoc_fd > 0)
+        if (ft_strcmp(in->token, "<<") == 0 && in->heredoc_fd >= 0)
         {
-            if (last_heredoc_fd > 0)
+            if (last_heredoc_fd >= 0)
                 close(last_heredoc_fd); // close previous heredoc fd
 
             last_heredoc_fd = in->heredoc_fd; // keep only the last
@@ -138,7 +138,7 @@ int exec_redirections(t_cmds *cmd)
         in = in->next;
     }
 
-    if (last_heredoc_fd > 0)
+    if (last_heredoc_fd >= 0)
     {
         if (dup2(last_heredoc_fd, STDIN_FILENO) < 0)
             return (perror("dup2"), close(last_heredoc_fd), -1);

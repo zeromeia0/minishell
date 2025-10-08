@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:49:36 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/08 09:01:30 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/08 09:46:17 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ int	main(int argc, char *argv[], char **envp)
 		{
 			// print_tree(btree(), 0);
 			btree()->main_exit = exec_tree(btree(), argv, btree()->env);
+			reset_heredoc_flags(btree());
 			if (btree()->global_signal == 130)
     			btree()->global_signal = 0;
 			restart_signals();

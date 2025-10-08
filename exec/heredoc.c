@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:11:44 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/08 09:10:12 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/08 09:44:43 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ int manage_heredocs(t_cmds *cmd)
         }
         cur = cur->next;
     }
+    // cmd->heredoc_done = 0;
     return (0);
 }
 
