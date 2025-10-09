@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   sigma_minishell.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/08 13:23:29 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/09 14:43:59 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SIGMA_MINISHELL_H
 # define SIGMA_MINISHELL_H
 
-# include "exec/minishell.h"
 # include "parse/jojo_libft/libft.h"
 # include <dirent.h>
 # include <readline/history.h>
@@ -72,6 +71,15 @@ typedef struct s_cmds
 	t_outfile			*outfiles;
 	struct s_cmds		*next;
 }						t_cmds;
+
+typedef enum e_type
+{
+	CMD,
+	AND,
+	OR,
+	EMPTY,
+	ERROR
+}	t_type;
 
 typedef struct s_binary
 {
@@ -283,5 +291,8 @@ void					set_to_onethirty(int sig);
 void					sig_handle_heredoc(int sig);
 int						restart_signals(void);
 void					free_os_envs(void);
+
+
+# include "exec/minishell.h"
 
 #endif
