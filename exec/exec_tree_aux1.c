@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:12:18 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/09 13:01:09 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/09 14:31:39 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,11 +116,9 @@ int is_cmd_valid(t_cmds *cmd, char **args, char **envp)
 
     if (has_builtin(cmd))
         return (1);
-
     paths = buildup_path(cmd, args, envp);
     if (!paths)
         return (0);
-
     i = 0;
     while (paths[i])
     {
