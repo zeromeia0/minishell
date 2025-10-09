@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_giga_split.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 13:50:55 by jlima-so          #+#    #+#             */
-/*   Updated: 2025/09/02 16:35:17 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/10/09 09:46:45 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
 static char	**ft_giga_split_aux(char *str, int count, int i, char c);
-
 
 static void	ft_free_all_split(char **mat)
 {

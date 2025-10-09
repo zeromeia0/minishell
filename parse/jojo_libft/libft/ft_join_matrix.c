@@ -6,13 +6,13 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 17:26:26 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/09 09:42:33 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/09 09:44:50 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-char    *ft_join_matrix_aux(char **mat, char *ret)
+char	*ft_join_matrix_aux(char **mat, char *ret)
 {
 	int	ind;
 	int	indv;
@@ -38,7 +38,7 @@ char    *ft_join_matrix_aux(char **mat, char *ret)
 	return (ret);
 }
 
-char    *ft_join_matrix(char **mat, int total)
+char	*ft_join_matrix(char **mat, int total)
 {
 	char	*ret;
 	int		indh;
