@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jlima-so <jlima-so@student.42lisba.com>    +#+  +:+       +#+         #
+#    By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/12 13:07:24 by jlima-so          #+#    #+#              #
-#    Updated: 2025/08/12 16:21:21 by jlima-so         ###   ########.fr        #
+#    Updated: 2025/10/09 14:05:13 by namejojo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,8 +52,4 @@ fcleanlocal:
 re: fclean all
 	$(MAKE) -C $(LIBFT_DIR)
 
-.PHONY: re fclean clean all
-
-# so:
-#	$(CC) -nostartfiles -fPIC $(CFLAGS) $(SRC_FILES)
-#	gcc -nostartfiles -shared -o libft.so $(OBJ_FILES)
+.PHONY: re fclean clean all lib

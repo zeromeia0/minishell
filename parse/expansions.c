@@ -6,7 +6,7 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:35:14 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/09 11:36:15 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/09 14:17:34 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,5 +101,7 @@ char	*quote(char *str)
 		else
 			count++;
 	}
+	if (str2)
+		free(str2);
 	return (str);
 }
