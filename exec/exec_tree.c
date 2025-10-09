@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/09 16:58:22 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/09 17:00:20 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,7 @@ int check_order(t_binary *tree, char **args, char **envp)
         {
             if (!cmd->heredoc_done)
             {
-				// printf("==EXECUTING HEREDOC\n");
                 r = handle_heredoc(cmd);
-				// printf("R is equals to = %d\n", r);
                 if (r < 0)
                 {
                     cmd->flag_to_exec = 1; // prevent execution
@@ -98,6 +96,7 @@ int check_order(t_binary *tree, char **args, char **envp)
     check_order(tree->right, args, envp);
     return 1;
 }
+
 
 void	reset_heredoc_flags(t_binary *tree)
 {
@@ -147,4 +146,5 @@ int exec_tree(t_binary *tree, char **args, char **envp)
     }
     return exec_node(tree, args, envp);
 }
+
 

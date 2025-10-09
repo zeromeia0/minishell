@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:19:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/08 13:21:47 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/09 14:50:23 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	help_to_process(t_cmds *cmd, int p[2])
 	signal(SIGINT, sig_handle_heredoc);
 	process_all_heredocs(cmd->infiles, p);
 	close(p[1]);
-	children_killer(0);
+	// children_killer(0);
+	megalodon_giga_chad_exit(0);
 }
 
 int	process_command_heredocs(t_cmds *cmd)
@@ -79,22 +80,14 @@ int	exec_pipes(t_cmds *cmd, char **env)
 
 	if (btree()->global_signal == 130 || (btree()->cmds && btree()->cmds->flag_to_exec == 1))
 		return (btree()->exit_status);
-	printf("===EXECUTING PIPES\n");
 	first_fd = -1;
-	// if (!cmd || cmd->cmd[0] == NULL)
-	// 	return (printf("NO COMMAND\n"), 0);
 	current = cmd;
-	// printf("%d\n", 0);
-	// if (process_heredocs_and_checks(cmd) < 0)
-    // 	return (btree()->exit_status);
 	while (current)
 	{
-		// printf("%d\n", 1);
 		if (process_command(current, &first_fd, env) == -1)
 			return (printf("COULDN'T PROCESS IT\n"), -1);
 		current = current->next;
 	}
-	// printf("%d\n", 2);
 	while (wait(&status) > 0)
 		;
 	if (WIFEXITED(status))
