@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   super_duper_hiper_free.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:02 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/07 07:08:11 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/09 12:24:01 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,22 +63,28 @@ void	clear_env_list(void)
 	*env_list = NULL;
 }
 
-void free_os_envs(void)
+void	free_os_envs(void)
 {
-    t_os_envs **env_list = get_env_list();
-    t_os_envs *current = *env_list;
-    t_os_envs *next;
+	t_os_envs	**env_list;
+	t_os_envs	*current;
+	t_os_envs	*next;
 
-    while (current)
-    {
-        next = current->next;
-        free(current->linux_envs);
-        free(current->temp_vars);
-        free(current);
-        current = next;
-    }
-    *env_list = NULL;
+	env_list = get_env_list();
+	if (!env_list || !*env_list)
+		return;
+	current = *env_list;
+	while (current)
+	{
+		next = current->next;
+		free(current->linux_envs);
+		free(current->temp_vars);
+		free(current);
+		current = next;
+	}
+	*env_list = NULL;
 }
+
+
 
 void	ft_close(int fd)
 {

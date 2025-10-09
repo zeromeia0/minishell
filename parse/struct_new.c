@@ -23,6 +23,7 @@ t_infile	*infile_new(char *file, char *token)
 	if (new == NULL)
 		return (NULL);
 	new->file = file;
+	new->flag = 0;
 	new->token = token;
 	new->next = NULL;
 	return (new);

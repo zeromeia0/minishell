@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:11:44 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/08 13:23:13 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/09 12:30:27 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,13 @@ void get_single_heredoc(char *eof, int fd[2])
     int     tty_fd;
     char    *expanded;
 
+	
+	if (!eof)
+		return ;
     delimiter = remove_aspas(eof);
     len = ft_strlen(delimiter);
     if (btree()->global_signal == 130)
-        exit(130);
-        // megalodon_giga_chad_exit(130);
+        megalodon_giga_chad_exit(130);
     tty_fd = open("/dev/tty", O_RDONLY);
     if (tty_fd != -1)
     {
@@ -38,7 +40,7 @@ void get_single_heredoc(char *eof, int fd[2])
     str = readline("> ");
     while (str && ft_strncmp(str, delimiter, len + 1))
     {
-        if (fd) // only write if fd is provided
+        if (fd)
         {
             if (btree()->cmds && btree()->cmds->infiles && btree()->cmds->infiles->flag == 0)
                 expanded = expand_hd(str);
@@ -51,8 +53,7 @@ void get_single_heredoc(char *eof, int fd[2])
         }
         free(str);
         if (btree()->global_signal == 130)
-            exit(130);
-            // megalodon_giga_chad_exit(130);
+            megalodon_giga_chad_exit(130);
         str = readline("> ");
     }
     if (!str && btree()->global_signal != 130)
@@ -66,15 +67,6 @@ void get_single_heredoc(char *eof, int fd[2])
 }
 
 
-void	process_heredoc_recursive_simple(t_infile *current, int fd[2])
-{
-	if (!current)
-		return ;
-	if (ft_strcmp(current->token, "<<") == 0)
-		get_single_heredoc(current->file, fd);
-	process_heredoc_recursive_simple(current->next, fd);
-}
-
 void process_all_heredocs(t_infile *in, int p[2])
 {
     t_infile *current = in;
@@ -82,7 +74,7 @@ void process_all_heredocs(t_infile *in, int p[2])
 
     while (current)
     {
-        if (ft_strcmp(current->token, "<<") == 0)
+        if (ft_strcmp(current->token, "<<") == 0 && in->file)
         {
             if (pipe(tmp_pipe) == -1)
             {
@@ -157,7 +149,6 @@ int manage_heredocs(t_cmds *cmd)
         }
         cur = cur->next;
     }
-    // cmd->heredoc_done = 0;
     return (0);
 }
 
