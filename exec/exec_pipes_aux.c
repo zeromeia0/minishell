@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 08:43:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/07 07:43:33 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/09 23:09:29 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 void	setup_child_fds(int first_fd, int fd[2], t_cmds *cmd)
 {
+	printf("SETUP FDS\n");
 	if (first_fd != -1)
 		dup2(first_fd, STDIN_FILENO);
-	if (has_redir(cmd))
+	if (has_heredocs(cmd) || has_redir(cmd))
 		exec_redirections(cmd);
 	else if (cmd->next != NULL)
 		dup2(fd[1], STDOUT_FILENO);
@@ -45,7 +46,8 @@ void	execute_child(t_cmds *cmd, int first_fd, int fd[2], char **env)
 	{
 		status = exec_builtin(cleaned_cmd[0], cleaned_cmd, env);
 		ft_free_matrix(cleaned_cmd);
-		children_killer(status);
+		// children_killer(status);
+		megalodon_giga_chad_exit(status);
 	}
 	else
 	{
@@ -69,7 +71,7 @@ int	process_command(t_cmds *cmd, int *first_fd, char **env)
 {
 	int		fd[2];
 	pid_t	pid;
-
+	printf("POURRA\n");
 	if (cmd->cmd == NULL)
 		cmd->flag_to_exec = 1;
 	if (cmd->flag_to_exec == 0)
@@ -78,7 +80,7 @@ int	process_command(t_cmds *cmd, int *first_fd, char **env)
 			return (-1);
 		pid = fork();
 		if (pid == 0)
-			execute_child(cmd, *first_fd, fd, env);
+			printf("LANCA A CHILD\n"), execute_child(cmd, *first_fd, fd, env);
 		if (*first_fd != -1)
 			close(*first_fd);
 		if ((cmd)->next != NULL)

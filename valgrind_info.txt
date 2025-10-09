@@ -1,3 +1,6 @@
 AND AND OR OPERATIONS ARE BEING FUCKED UP WHEN COMBINIS WITH PIPES
 
 ls -l | grep a | echo oi && cat << a
+
+
+echo salve && cat << salve | cat | cat | ls -l && echo DIVISOR | << eof cat > out69

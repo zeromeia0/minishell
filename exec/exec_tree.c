@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/09 22:22:21 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/09 23:10:22 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,10 @@ int	exec_node(t_binary *node, char **args, char **envp)
 		return (0);
 	if (node->cmds != NULL)
 	{
+		printf("BEFORE?\n");
 		expand_args(node->cmds);  
 		if (node->cmds->next)
-			return (exec_pipes(node->cmds, btree()->env));
+			return (printf("LANCA PIPES\n"), exec_pipes(node->cmds, btree()->env));
 		else
 			return (exec_single_cmd(node->cmds));
 	} 	
@@ -92,6 +93,7 @@ int check_order(t_binary *tree, char **args, char **envp)
 
     if (!tree)
         return 1;
+
     if (tree->cmds)
     {
         t_cmds *cmd = tree->cmds;
@@ -105,6 +107,7 @@ int check_order(t_binary *tree, char **args, char **envp)
                     cmd->flag_to_exec = 1;
                     return -1;
                 }
+                cmd->heredoc_done = 1;
             }
             cmd = cmd->next;
         }
@@ -113,6 +116,7 @@ int check_order(t_binary *tree, char **args, char **envp)
     check_order(tree->right, args, envp);
     return 1;
 }
+
 
 
 void	reset_heredoc_flags(t_binary *tree)
@@ -140,6 +144,7 @@ int exec_tree(t_binary *tree, char **args, char **envp)
 
     if (!tree)
         return 0;
+	printf("COMO E LOGICO\n");
     co = check_order(tree, args, envp);
     if (co < 0)
         return (btree()->global_signal == 130 ? 130 : 1);
