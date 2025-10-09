@@ -51,6 +51,12 @@ r: fclean all
 	make clean
 	clear && ./minishell
 
+rr:
+	rm -fr ${OBJ_FILES} ${NAME}
+	rm -fr $(PROJ)
+	make
+	./minishell
+
 norm:
 	@norminette $(shell find . -type f \( -name "*.c" -o -name "*.h" \)) \
 	| awk '/c: Error/ { c++; if (c % 2 == 1) printf "\033[1;35m%s\033[0m\n", $$0; else printf "\033[1;36m%s\033[0m\n", $$0 }'
