@@ -1,22 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   binary_tree.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/09 11:14:57 by namejojo          #+#    #+#             */
+/*   Updated: 2025/10/09 11:15:48 by namejojo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../sigma_minishell.h"
 #include "jojo_libft/libft.h"
-
-/* void	print_thiscmds(t_cmds *cmds)
-{
-	while (cmds)
-	{
-		printf( "===============================================================\n");
-		printf( "starts commands\n\n");
-		ft_print_matrix(cmds->cmd);
-		printf( "end commands\n\n");
-		printf( "starts outfiles\n\n");
-		print_files((t_infile *)cmds->outfiles);
-		printf( "end outfiles\n");
-		printf( "===============================================================\n\n");
-		cmds = cmds->next;
-	}
-}*/
 
 int	separator_comp(char **mat, int flag, int ind, int pcount)
 {
@@ -34,7 +29,7 @@ int	separator_comp(char **mat, int flag, int ind, int pcount)
 			}
 		}
 		if (ind >= 0 && (ft_strncmp(mat[ind], "&&", 3) == 0
-			|| ft_strncmp(mat[ind], "||", 3) == 0))
+				|| ft_strncmp(mat[ind], "||", 3) == 0))
 			return (ind);
 		ind--;
 	}

@@ -40,10 +40,36 @@ char *expand_hd(char *str)
 	return (str);
 }
 
+void	quote_aux(char *str, int *count, char *str2)
+{
+	int		ind;
+	char	ch;
+
+	ind = 0;
+	ch = (str + *count)[ind];
+	ind++;
+	while ((str + *count)[ind] != ch)
+	{
+		if (ch == '\"')
+		{
+			str = single_expand(str, *count + ind, 0);
+			if (ft_strcmp(str, str2))
+			{
+				ind += get_diff(str, str2, 0);
+				free(str2);
+				str2 = ft_strdup(str);
+			}
+		}
+		ind++;
+	}
+	ft_memmove((str + *count) + ind, (str + *count) + ind + 1,
+		ft_strlen((str + *count) + ind));
+	ft_memmove((str + *count), (str + *count) + 1, ft_strlen((str + *count)));
+	*count += ind - 1;
+}
+
 char	*quote(char *str)
 {
-	char	ch;
-	int		ind;
 	char	*str2;
 	int		count;
 
@@ -59,34 +85,13 @@ char	*quote(char *str)
 			str2 = ft_strdup(str);
 		}
 		if (*(str + count) == '\"' || *(str + count) == '\'')
-		{
-			ind = 0;
-			ch = (str + count)[ind];
-			ind++;
-			while ((str + count)[ind] != ch)
-			{
-				if (ch == '\"')
-				{
-					str = single_expand(str, count + ind, 0);
-					if (ft_strcmp(str, str2))
-					{
-						ind += get_diff(str, str2, 0);
-						free(str2);
-						str2 = ft_strdup(str);
-					}
-				}
-				ind++;
-			}
-			ft_memmove((str + count) + ind, (str + count) + ind + 1, ft_strlen((str + count) + ind));
-			ft_memmove((str + count), (str + count) + 1, ft_strlen((str + count)));
-			count += ind - 1;
-		}
+			quote_aux(str, &count, str2);
 		else
 			count++;
 	}
 	return (str);
 }
-// echo $USER "'$USER'" "$USER" '$USER' '"$USER"'
+
 char	*find_os_env(t_os_envs *ev, char *str, int count)
 {
 	while (ev)
