@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/09 14:04:44 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/09 16:54:52 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,11 @@ void	exec_child(t_cmds *cmd)
 		exec_builtin(cleaned[0], cleaned, updated_envs);
 	if (is_system_path_command(cleaned[0], updated_envs))
 		exec_path(cleaned[0], cleaned, updated_envs);
+	if (!has_redir(cmd))
+		my_ffprintf(cleaned[0], "command not found\n");
 	ft_free_matrix(cleaned);
 	ft_free_matrix(updated_envs);
-	megalodon_giga_chad_exit(0);
+	megalodon_giga_chad_exit(127);
 }
 
 
