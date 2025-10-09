@@ -20,48 +20,27 @@
 
 int	separator_comp(char **mat, int flag, int ind, int pcount)
 {
-	if (flag == 1)
+	while (flag && ind >= 0)
 	{
-		while (ind >= 0)
+		if (ft_strncmp(mat[ind], ")", 2) == 0 && ++pcount && --ind >= 0)
 		{
-			if (ft_strncmp(mat[ind], ")", 2) == 0 && ++pcount && --ind >= 0)
-				while (ind >= 0 && pcount)
-				{
-					if (ft_strncmp(mat[ind], ")", 2) == 0)
-						pcount++;
-					if (ft_strncmp(mat[ind], "(", 2) == 0)
-						pcount--;
-					ind--;
-				}
-			if (ind >= 0 && (ft_strncmp(mat[ind], "&&", 3) == 0 \
-				|| ft_strncmp(mat[ind], "||", 3) == 0))
-				return (ind);
-			ind--;
+			while (ind >= 0 && pcount)
+			{
+				if (ft_strncmp(mat[ind], ")", 2) == 0)
+					pcount++;
+				if (ft_strncmp(mat[ind], "(", 2) == 0)
+					pcount--;
+				ind--;
+			}
 		}
+		if (ind >= 0 && (ft_strncmp(mat[ind], "&&", 3) == 0
+			|| ft_strncmp(mat[ind], "||", 3) == 0))
+			return (ind);
+		ind--;
 	}
-	else
-		while (ind-- > 0)
-			if (ft_strncmp(mat[ind], "&", 2) == 0)
-				return (ind);
-	return (0);
-}
-
-int	simple_syntax(char **mat)
-{
-	if (ft_strcmp(*mat, "(") == 0)
-	{
-		while (ft_strcmp(*mat, ")"))
-			mat++;
-		syntax_error_msg(*(mat + 1));
-		return (1);
-	}
-	while (*mat && ft_strcmp(*mat, "("))
-		mat++;
-	if (*mat)
-	{
-		syntax_error_msg(*(mat + 1));
-		return (1);
-	}
+	while (flag == 0 && ind-- > 0)
+		if (ft_strncmp(mat[ind], "&", 2) == 0)
+			return (ind);
 	return (0);
 }
 
@@ -72,8 +51,6 @@ t_cmds	*get_cmds(char **mat)
 
 	if (*mat == NULL)
 		return (NULL);
-	if (simple_syntax(mat))
-		return (free_matrix_nodes(mat), btree()->type = ERROR, NULL);
 	if (btree()->type == ERROR || mat == NULL || *mat == NULL)
 		return (NULL);
 	sep = find_pipe(mat);
@@ -83,7 +60,6 @@ t_cmds	*get_cmds(char **mat)
 		mat[sep] = NULL;
 	}
 	cmds = cmds_new(get_outfile(mat), get_infile(mat), mat);
-	// printf("struct cmds created\n");
 	if (cmds == NULL)
 		return (btree()->type = ERROR, NULL);
 	if (sep != -1)
@@ -91,7 +67,7 @@ t_cmds	*get_cmds(char **mat)
 	return (cmds);
 }
 
-void	create_binary_tree(char **mat, int	shlvl, t_binary *tree)
+void	create_binary_tree(char **mat, int shlvl, t_binary *tree)
 {
 	int	sub;
 
@@ -145,33 +121,31 @@ int	open_parethesis(char **mat)
 	return (0);
 }
 
-
-void    *create_binary_lvl(char **mat, int id, t_binary *tree)
+void	*create_binary_lvl(char **mat, int id, t_binary *tree)
 {
-    int         sep;    if (btree()->type == ERROR || mat == NULL || *mat == NULL)
-        return (NULL);
-    while (open_parethesis(mat))
-        mat += 1;
-    if (btree()->type == ERROR)
-        return (NULL);
-    sep = separator_comp(mat, 1, ft_matlen(mat) - 1, 0);
-    if (sep == 0)
-    {
-        tree->print_cmd = ft_join_matrix(mat, 0);
-        if (tree->print_cmd == NULL)
-            return (btree()->type = ERROR, free_matrix_nodes(mat), NULL);
-        // printf("printing this %s\n", tree->print_cmd);
-    }
-    if (sep == 0)
-        return (tree->cmds = get_cmds(mat), NULL);
-    tree->left = binary_new(id ,EMPTY, tree, NULL);
-    if (tree->left == NULL)
-        return (btree()->type = ERROR, NULL);
-    tree->right = binary_new(id ,EMPTY, tree, NULL);
-    if (tree->right == NULL)
-        return (btree()->type = ERROR, NULL);
-    tree->logic = mat[sep];
-    mat[sep] = NULL;
-    create_binary_lvl (mat, 1, tree->left);
-    return (create_binary_lvl (mat + sep + 1, 1, tree->right), NULL);
+	int	sep;
+
+	if (btree()->type == ERROR || mat == NULL || *mat == NULL)
+		return (NULL);
+	while (open_parethesis(mat))
+		mat += 1;
+	if (btree()->type == ERROR)
+		return (NULL);
+	sep = separator_comp(mat, 1, ft_matlen(mat) - 1, 0);
+	if (sep == 0)
+	{
+		tree->print_cmd = ft_join_matrix(mat, 0);
+		if (tree->print_cmd == NULL)
+			return (btree()->type = ERROR, free_matrix_nodes(mat), NULL);
+		return (tree->cmds = get_cmds(mat), NULL);
+	}
+	tree->left = binary_new(id, EMPTY, tree, NULL);
+	if (tree->left)
+		tree->right = binary_new(id, EMPTY, tree, NULL);
+	if (tree->right == NULL && tree->left == NULL)
+		return (btree()->type = ERROR, NULL);
+	tree->logic = mat[sep];
+	mat[sep] = NULL;
+	create_binary_lvl (mat, 1, tree->left);
+	return (create_binary_lvl (mat + sep + 1, 1, tree->right), NULL);
 }
