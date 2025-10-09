@@ -6,13 +6,13 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:21:30 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/09 10:38:22 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/09 10:40:34 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../sigma_minishell.h"
 
-char **tokenization(char *str, t_token tokens, char **sep, int wc)
+char	**tokenization(char *str, t_token tokens, char **sep, int wc)
 {
 	int		ind;
 	int		strcount;
@@ -37,10 +37,10 @@ char **tokenization(char *str, t_token tokens, char **sep, int wc)
 			return (ft_free_matrix(ret), NULL);
 		str += strcount;
 	}
- 	return (ret);
+	return (ret);
 }
 
-void init_tree(char	**mat)
+void	init_tree(char	**mat)
 {
 	btree()->sublvl = 0;
 	btree()->type = EMPTY;
