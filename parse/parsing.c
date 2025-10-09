@@ -6,18 +6,11 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:21:30 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/09 10:32:08 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/09 10:38:22 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../sigma_minishell.h"
-
-void	single_error_msg(char wc)
-{
-	ft_putstr_fd("syntax error near unexpected token: `", 2);
-	write(1, &wc, 1);
-	ft_putstr_fd("'\n", 2);
-}
 
 char **tokenization(char *str, t_token tokens, char **sep, int wc)
 {
@@ -72,7 +65,7 @@ int	sep_count(char **mat)
 	count = 0;
 	while (*mat)
 	{
-		if (ft_strncmp(*mat, "&", 2) == 0)	
+		if (ft_strncmp(*mat, "&", 2) == 0)
 			count++;
 		mat++;
 	}
@@ -84,7 +77,7 @@ void	init_tokens(t_token *tokens)
 	static char	*stokens[7];
 	static char	*dtokens[5];
 	static char	*sep[4];
-	
+
 	stokens[0] = "(";
 	stokens[1] = ")";
 	stokens[2] = "&";
@@ -97,10 +90,10 @@ void	init_tokens(t_token *tokens)
 	dtokens[2] = ">>";
 	dtokens[3] = "<<";
 	dtokens[4] = NULL;
-	sep[0] =  "'";
+	sep[0] = "'";
 	sep[0] = "\"";
-	sep[0] =  "`";
-	sep[0] =   NULL;
+	sep[0] = "`";
+	sep[0] = NULL;
 	tokens->dtokens = dtokens;
 	tokens->stokens = stokens;
 	tokens->sep = sep;
@@ -108,7 +101,7 @@ void	init_tokens(t_token *tokens)
 
 int	parsing(char *str)
 {
-	char 	**mat;
+	char			**mat;
 	static t_token	tokens;
 
 	if (str == NULL || *str == '\0')
@@ -117,7 +110,8 @@ int	parsing(char *str)
 		init_tokens(&tokens);
 	mat = NULL;
 	if (str != NULL && *str != '\0')
-		mat = tokenization(str, tokens, tokens.sep, word_count(str, tokens, tokens.sep));
+		mat = tokenization(str, tokens, tokens.sep,
+				word_count(str, tokens, tokens.sep));
 	if (mat == NULL)
 		return (1);
 	if (check_syntax(mat, tokens))

@@ -6,7 +6,7 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/09 10:30:41 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/09 10:36:27 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,7 @@ void		exec_child(t_cmds *cmd);
 void		children_killer(int status);
 int			process_command_heredocs(t_cmds *cmd);
 char   		*single_expand(char *str, int ind, int count);
+void		single_error_msg(char wc);
 
 // struct_clear.c
 void		binary_clear(t_binary *binary);
