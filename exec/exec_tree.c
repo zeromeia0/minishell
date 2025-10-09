@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/09 18:03:19 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/09 22:22:21 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 int super_checker_goated(t_cmds *cmd, char *command, char **args)
 {
-	if (!has_builtin(cmd) && !has_redir(cmd) && !is_system_path_command(cmd, args))
+	if (!has_builtin(cmd) && !has_redir(cmd) && !is_system_path_command(cmd->cmd[0], args))
 	{
 		if (strchr(cmd->cmd[0], '/'))
 			handle_absolute_path_cmd(cmd->cmd[0], args, args);
