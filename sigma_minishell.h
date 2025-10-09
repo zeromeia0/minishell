@@ -6,7 +6,7 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/09 09:30:16 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/09 10:30:41 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_token
 {
 	char	**stokens;
 	char	**dtokens;
+	char	**sep;
 }			t_token;
 
 typedef struct s_outfile
