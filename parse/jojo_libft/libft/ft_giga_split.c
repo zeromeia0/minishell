@@ -6,22 +6,13 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 13:50:55 by jlima-so          #+#    #+#             */
-/*   Updated: 2025/10/09 09:46:45 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/09 09:58:20 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
 static char	**ft_giga_split_aux(char *str, int count, int i, char c);
-
-static void	ft_free_all_split(char **mat)
-{
-	while (*mat != NULL)
-	{
-		free(*mat);
-		mat++;
-	}
-}
 
 static int	close_quotes(char *str, int i)
 {
@@ -50,13 +41,22 @@ char	*ft_strndup(char *str, int ind)
 static char	**end_loop(char *str, int i, int count, char c)
 {
 	char	**ret;
+	char	**mat;
 
 	ret = ft_giga_split_aux(str + i, count + 1, -1, c);
 	if (ret == NULL)
 		return (NULL);
 	ret[count] = ft_strndup(str, i);
 	if (ret[count] == NULL)
-		return (ft_free_all_split(ret + count + 1), free(ret), NULL);
+	{
+		mat = ret + count + 1;
+		while (*mat != NULL)
+		{
+			free(*mat);
+			mat++;
+		}
+		return (free(ret), NULL);
+	}
 	return (ret);
 }
 
@@ -90,5 +90,5 @@ char	**ft_giga_split(char *str, char c)
 {
 	if (str == NULL)
 		return (NULL);
-	return (ft_giga_split_aux(str, 0, -1 , c));
+	return (ft_giga_split_aux(str, 0, -1, c));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isminishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:44:33 by jlima-so          #+#    #+#             */
-/*   Updated: 2025/07/25 16:53:23 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/10/09 10:10:37 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	ft_isminishell(int c)
 {
-	if (ft_isalpha(c) || c == 33 || c == 35 || c == 37 || (c >= 42 && c <= 59) || c == 63 || c == 64) 
+	if (ft_isalpha(c) || c == 33 || c == 35 || c == 37
+		|| (c >= 42 && c <= 59) || c == 63 || c == 64) 
 		return (8);
 	return (0);
 }
