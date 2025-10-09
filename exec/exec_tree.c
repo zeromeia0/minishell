@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/09 13:59:01 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/09 14:04:44 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	exec_child(t_cmds *cmd)
 		exec_path(cleaned[0], cleaned, updated_envs);
 	ft_free_matrix(cleaned);
 	ft_free_matrix(updated_envs);
-	// exit(0);
+	megalodon_giga_chad_exit(0);
 }
 
 
