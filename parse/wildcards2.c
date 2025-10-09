@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wildcards2.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/09 10:42:50 by namejojo          #+#    #+#             */
+/*   Updated: 2025/10/09 10:42:51 by namejojo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../sigma_minishell.h"
 
 char	**bind_mat_lst_aux(char **mat, char **ret, int count, t_wild *head)
@@ -8,27 +20,19 @@ char	**bind_mat_lst_aux(char **mat, char **ret, int count, t_wild *head)
 	while (ind < count)
 	{
 		ret[ind] = ft_strdup(mat[ind]);
-		// printf( "ret[%d] = %s\n", ind, mat[ind]);
-		// fflush(stdout);
 		ind++;
 	}
 	while (head)
 	{
 		ret[ind] = head->file;
-		// printf( "ret[%d] = %s\n", ind, head->file);
-		// fflush(stdout);
 		head = head->next;
 		ind++;
 	}
 	while (mat[++count])
 	{
 		ret[ind] = ft_strdup(mat[count]);
-		// printf( "ret[%d] = %s\n", ind, mat[count]);
-		// fflush(stdout);
 		ind++;
 	}
-	// printf( "ret[%d] = %s\n", ind, ret[ind]);
-	// fflush(stdout);
 	return (ret);
 }
 
@@ -39,16 +43,9 @@ char	**bind_mat_lst(char **mat, int count, t_wild *head, int ind)
 	if (head == NULL)
 		return (mat);
 	ind = ft_matlen(mat) + wildsize(head) - 1;
-	// printf( "printing mat\n");
-	// ft_print_matrix(mat);
-	// printf( "printing head\n");
-	// print_wild(head);
-	// printf( "done printing\n\n");
-	// printf( "safe\n");
 	ret = malloc(sizeof(char *) * (ind + 1));
 	if (ret == NULL)
 		return (btree()->type = ERROR, NULL);
-	// printf( "%d\n", ind);
 	ret[ind] = NULL;
 	sort_wild(head);
 	ret = bind_mat_lst_aux(mat, ret, count, head);

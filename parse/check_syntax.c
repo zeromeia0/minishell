@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_syntax.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/09 10:49:48 by namejojo          #+#    #+#             */
+/*   Updated: 2025/10/09 10:49:49 by namejojo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../sigma_minishell.h"
 
 int	check_parethesis(char **mat, int count)
 {
 	if (ft_strcmp(*mat, "(") == 0)
 	{
-		if (*(mat + 1) && (!ft_strcmp(*(mat + 1), ")") || \
-			!ft_strcmp(*(mat + 1), "&&") || !ft_strcmp(*(mat + 1), "||") \
+		if (*(mat + 1) && (!ft_strcmp(*(mat + 1), ")")
+				|| !ft_strcmp(*(mat + 1), "&&") || !ft_strcmp(*(mat + 1), "||")
 				|| !ft_strcmp(*(mat + 1), "|") || !ft_strcmp(*(mat + 1), "&")))
 			return (write(1, "syntax error near unexpected token `('\n", 39));
 		return (1);
@@ -23,41 +35,38 @@ int	check_parethesis(char **mat, int count)
 
 int	check_first(char *str)
 {
-	if (!ft_strcmp(str, "&&") || !ft_strcmp(str, "||") || \
-		!ft_strcmp(str, "&") || !ft_strcmp(str, "|") || \
-			!ft_strcmp(str, ")"))
+	if (!ft_strcmp(str, "&&") || !ft_strcmp(str, "||")
+		|| !ft_strcmp(str, "&") || !ft_strcmp(str, "|")
+		|| !ft_strcmp(str, ")"))
 		return (syntax_error_msg(str), 1);
 	return (0);
 }
 
 int	check_last(char *str)
 {
-	if (!ft_strcmp(str, "&&") || !ft_strcmp(str, "||") || \
-		!ft_strcmp(str, "|") || !ft_strcmp(str, "(") || \
-			!ft_strcmp(str, ">") || !ft_strcmp(str, ">>") || \
-				!ft_strcmp(str, "<") || !ft_strcmp(str, "<<"))
-	{
-		syntax_error_msg("newline");
-		return (1);
-	}
+	if (!ft_strcmp(str, "&&") || !ft_strcmp(str, "||")
+		|| !ft_strcmp(str, "|") || !ft_strcmp(str, "(")
+		|| !ft_strcmp(str, ">") || !ft_strcmp(str, ">>")
+		|| !ft_strcmp(str, "<") || !ft_strcmp(str, "<<"))
+		return (syntax_error_msg("newline"), 1);
 	return (0);
 }
 
 int	check_tokens(char **mat, t_token tokens)
 {
-	if (!ft_strcmp(*mat, "&&") || !ft_strcmp(*mat, "||") || \
-		!ft_strcmp(*mat, "|") || !ft_strcmp(*mat, "&"))
-		if (!ft_strcmp(*(mat + 1), "&&") || !ft_strcmp(*(mat + 1), "||") || \
-			!ft_strcmp(*(mat + 1), "|") || !ft_strcmp(*(mat + 1), "&") || \
-				!ft_strcmp(*(mat + 1), ")"))
+	if (!ft_strcmp(*mat, "&&") || !ft_strcmp(*mat, "||")
+		|| !ft_strcmp(*mat, "|") || !ft_strcmp(*mat, "&"))
+		if (!ft_strcmp(*(mat + 1), "&&") || !ft_strcmp(*(mat + 1), "||")
+			|| !ft_strcmp(*(mat + 1), "|") || !ft_strcmp(*(mat + 1), "&")
+			|| !ft_strcmp(*(mat + 1), ")"))
 			return (syntax_error_msg(*(mat + 1)), 1);
-	if (!ft_strcmp(*mat, ">") || !ft_strcmp(*mat, ">>") || \
-		!ft_strcmp(*mat, "<") || !ft_strcmp(*mat, "<<"))
+	if (!ft_strcmp(*mat, ">") || !ft_strcmp(*mat, ">>")
+		|| !ft_strcmp(*mat, "<") || !ft_strcmp(*mat, "<<"))
 		if (find_tokens(*(mat + 1), tokens))
 			return (syntax_error_msg(*(mat + 1)), 1);
-	if (!ft_strcmp(*(mat + 1), "(")
-		&& (ft_strcmp(*mat, "(") && ft_strcmp(*mat, "&&") && ft_strcmp(*mat, "||")
-		&& ft_strcmp(*mat, "&") && ft_strcmp(*mat, "(")))
+	if (!ft_strcmp(*(mat + 1), "(") && (ft_strcmp(*mat, "(")
+			&& ft_strcmp(*mat, "&&") && ft_strcmp(*mat, "||")
+			&& ft_strcmp(*mat, "&") && ft_strcmp(*mat, "(")))
 		return (syntax_error_msg(*(mat + 2)), 1);
 	return (0);
 }
