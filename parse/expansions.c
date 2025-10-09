@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expansions.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/09 11:35:14 by namejojo          #+#    #+#             */
+/*   Updated: 2025/10/09 11:36:15 by namejojo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../sigma_minishell.h"
 
 int	get_diff(char *str1, char *str2, int start)
@@ -19,7 +31,7 @@ int	get_diff(char *str1, char *str2, int start)
 	return (ind2 - start);
 }
 
-char *expand_hd(char *str)
+char	*expand_hd(char *str)
 {
 	char	*str2;
 	int		count;
@@ -90,107 +102,4 @@ char	*quote(char *str)
 			count++;
 	}
 	return (str);
-}
-
-char	*find_os_env(t_os_envs *ev, char *str, int count)
-{
-	while (ev)
-	{
-		if (ev->linux_envs && ft_strncmp(ev->linux_envs, str, count) == 0)
-			return (ft_strsubs(ft_strchr(ev->linux_envs, '=') + 1, ' ', '\n'));
-		ev = ev->next;
-	}
-	return (NULL);
-}
-
-char	*expand_aux(char *str, int ind, int count, char *temp)
-{
-	char	*env_var;
-
-	temp = ft_strndup(str + ind + 1, count - 1);
-	if (temp == NULL)
-		return (btree()->type = ERROR, free (str), NULL);
-	temp = ft_strjoin_free(temp, "=", 1);
-	if (temp == NULL)
-		return (btree()->type = ERROR, free (str), NULL);
-	env_var = find_os_env(btree()->os_env, temp, count);
-	free(temp);
-	if (env_var == NULL)
-		env_var = ft_calloc(1, 1);
-	if (env_var == NULL)
-		return (btree()->type = ERROR, free (str), NULL);
-	temp = ft_strdup(str + ind + count);
-	if (temp == NULL)
-		return (btree()->type = ERROR, free (str), NULL);
-	temp = ft_strjoin_free(env_var, temp, 0);
-	if (temp == NULL)
-		return (btree()->type = ERROR, free (str), NULL);
-	str[ind] = '\0';
-	str = ft_strjoin_free(str, temp, 0);
-	return (str);
-}
-
-char	*expand_last_exit(char *str, int ind, char *temp)
-{
-	char	*env_var;
-
-	env_var = ft_itoa(btree()->exit_status);
-	if (env_var == NULL)
-		return (btree()->type = ERROR, free (str), NULL);
-	temp = ft_strdup(str + ind + 2);
-	if (temp == NULL)
-		return (btree()->type = ERROR, free (env_var), free (str), NULL);
-	temp = ft_strjoin_free(env_var, temp, 0);
-	if (temp == NULL)
-		return (btree()->type = ERROR, free (str), NULL);
-	str[ind] = '\0';
-	str = ft_strjoin_free(str, temp, 0);
-	return (expand(str, ind, 0, 1));
-}
-
-char    *single_expand(char *str, int ind, int count)
-{
-	if (str[ind] == '$' && (ft_isalnum(str[ind + 1]) || str[ind + 1] == '?'
-		|| str[ind + 1] == '_' || str[ind + 1] == '\"' || str[ind + 1] == '\''))
-	{
-		if (str[ind + 1] == '\"' || str[ind + 1] == '\'')
-			return (ft_memmove(str + ind, str + ind + 1
-			, ft_strlen(str + ind + 1) + 1), str);
-	    count++;
-	    if (str[ind + 1] == '?')
-	        return (expand_last_exit(str, ind, NULL));
-	    while (ft_isalnum((str + ind)[count]) || (str + ind)[count] == '_')
-	        count++;
-	    return (expand_aux(str, ind, count, NULL));
-	}
-    return (str);
-}
-
-char    *expand(char *str, int ind, int count, int flag)
-{
-    if (str == NULL)
-        return (btree()->type = ERROR, NULL);
-    while (str[ind])
-    {
-        if (flag == 1 && str[ind] == '\'' && ++ind)
-            while (str[ind] != '\'')
-                ind++;
-        if (str[ind] == '\"')
-            flag = -flag;
-        if (str[ind] == '$' && (ft_isalnum(str[ind + 1]) || str[ind + 1] == '?'
-			|| str[ind + 1] == '_' || str[ind + 1] == '\"' || str[ind + 1] == '\''))
-        {
-			if (str[ind + 1] == '\"' || str[ind + 1] == '\'')
-				return (ft_memmove(str + ind, str + ind + 1, ft_strlen(str + ind + 1) + 1)
-				, expand(str, ind, 0, 1));
-            count++;
-            if (str[ind + 1] == '?')
-                return (expand_last_exit(str, ind, NULL));
-            while (ft_isalnum((str + ind)[count]) || (str + ind)[count] == '_')
-                count++;
-            return (expand_aux(str, ind, count, NULL));
-        }
-        ind++;
-    }
-    return (str);
 }
