@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/09 14:04:44 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/09 14:11:21 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,18 +71,21 @@ int check_order(t_binary *tree, char **args, char **envp)
 {
     int r;
 
+	printf("==CHECKING ORDER\n");
     if (!tree)
         return (0);
-
     if (tree->cmds)
     {
+		printf("Olha la o tree commands\n");
         r = handle_heredoc(tree->cmds);
         if (r < 0)
         {
+			printf("VTNC\n");
             if (tree->cmds)
                 tree->cmds->flag_to_exec = 1;
             return (-1);
         }
+		printf("Tranquilo\n");
         if (!check_infiles(tree->cmds))
             return (0);
         if (!check_outfiles(tree->cmds))
@@ -135,7 +138,6 @@ int exec_tree(t_binary *tree, char **args, char **envp)
         return (btree()->global_signal == 130 ? 130 : 1);
     if (co != 0)
         return (1);
-    // tree->cmds->heredoc_done = 0;
     if (btree()->global_signal == 130)
         return (130);
     if (tree->logic && ft_strcmp(tree->logic, "&&") == 0)

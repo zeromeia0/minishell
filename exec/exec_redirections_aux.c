@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirections_aux.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 23:05:16 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/08 13:22:06 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/09 14:14:39 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,3 @@ int	handle_regular_redirections(t_cmds *cmd)
 	return (0);
 }
 
-void	pid_equal_zero_double(t_cmds *cmd, int p[2])
-{
-	close(p[0]);
-	printf("PID EQUALS ZERO\n");
-	signal(SIGINT, sig_handle_heredoc); //THIS IS DOING SOMETHING BAD
-	process_all_heredocs(cmd->infiles, p);
-	close(p[1]);
-	megalodon_giga_chad_exit(0);
-}
