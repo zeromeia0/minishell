@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:11:44 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/08 13:23:13 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/09 13:30:46 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,8 @@ int manage_heredocs(t_cmds *cmd)
                     close(p[0]);
                     get_single_heredoc(in->file, p);
                     close(p[1]);
-                    _exit(0);
+                    // _exit(0);
+					megalodon_giga_chad_exit(0);
                 }
                 else
                 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:44:52 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/08 09:10:16 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/09 13:33:34 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ int	handle_system_path_cmd(char *cmd, char **args, char **envp)
 
 int	exec_path(char *cmd, char **args, char **envp)
 {
+	if (!cmd)
+		return (megalodon_giga_chad_exit(127), 0);
 	if (am_i_truly_myself(args[0]) && access(cmd, F_OK) == 0 && access(cmd,
 			X_OK) == 0)
 		update_shell_level(1);

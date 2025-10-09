@@ -87,6 +87,8 @@ char	*quote(char *str)
 		else
 			count++;
 	}
+	if (str2)
+		free(str2);
 	return (str);
 }
 // echo $USER "'$USER'" "$USER" '$USER' '"$USER"'
