@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 23:22:49 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/09 17:51:08 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/09 18:00:54 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	buildup_new_args(char *cmd, char **envp)
 
 int	handle_absolute_path_cmd(char *cmd, char **args, char **envp)
 {
-	printf("ABSOLUTE\n");
 	if (am_i_truly_myself(args[0]) && access(cmd, F_OK) == 0 && access(cmd,
 			X_OK) == 0)
 		update_shell_level(1);

@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/09 17:49:17 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/09 18:03:19 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int check_order(t_binary *tree, char **args, char **envp)
                 r = handle_heredoc(cmd);
                 if (r < 0)
                 {
-                    cmd->flag_to_exec = 1; // prevent execution
+                    cmd->flag_to_exec = 1;
                     return -1;
                 }
             }

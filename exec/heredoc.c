@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:11:44 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/09 14:31:48 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/09 18:04:43 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void get_single_heredoc(char *eof, int fd[2])
         close(tty_fd);
     }
     signal(SIGINT, sig_handle_heredoc); //not the cuprit
+	// free(delimiter);
     signal(SIGQUIT, SIG_IGN);
     str = readline("> ");
     while (str && ft_strncmp(str, delimiter, len + 1))
@@ -102,7 +103,7 @@ int manage_heredocs(t_cmds *cmd)
     signal(SIGTTOU, SIG_IGN);
     signal(SIGTTIN, SIG_IGN);
     if (!cmd)
-        return (printf("== NO COMMAND\n"), -1);
+        return (-1);
     cur = cmd;
     while (cur)
     {
