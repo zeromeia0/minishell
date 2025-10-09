@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:39 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/09 14:43:42 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/09 17:32:53 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,6 @@ int						exec_subshell(t_binary *subshell, char **args,
 							char **envp);
 int						cmd_has_heredoc(t_cmds *cmd);
 int						is_cmd_valid(t_cmds *cmd, char **args, char **envp);
-void					exec_child(t_cmds *cmd);
 void					children_killer(int status);
 int						process_command_heredocs(t_cmds *cmd);
 

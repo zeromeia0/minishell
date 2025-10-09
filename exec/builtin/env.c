@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:02:43 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/20 00:10:56 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/09 17:55:38 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	get_current_shell_level(void)
 
 int	update_shell_level(int amount)
 {
+	// printf("UPDATING SHELL LEVEL\n");
 	int		level;
 	char	*num;
 	char	*final_str;
