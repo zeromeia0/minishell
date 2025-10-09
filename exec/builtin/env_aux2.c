@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_aux2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:01:02 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/08 13:25:04 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/09 12:59:01 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ char **expand_matrix(t_cmds *cmd)
 		{
 			holder = ft_split(cmd->cmd[ind], '\n');
 			if (holder == NULL)
-				return (btree()->type == ERROR, cmd->cmd);
+				return (btree()->type = ERROR, cmd->cmd);
 			ft_matrix_uni(cmd->cmd + ind, cmd->cmd + ind + 1);
 			holder = ft_matrix_in_matrix(cmd->cmd, ind, holder);
 			cmd->expanded = cmd->expanded + (holder != cmd->cmd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/08 13:22:42 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/09 13:06:04 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int check_order(t_binary *tree, char **args, char **envp)
             return (0);
         if (!check_outfiles(tree->cmds))
             return (0);
-        if (!check_cmds(tree->cmds, args, envp))
+        if (check_cmds(tree->cmds, args, envp) != 0)
             return (0);
     }
     if (tree->left)
@@ -132,7 +132,7 @@ int exec_tree(t_binary *tree, char **args, char **envp)
     co = check_order(tree, args, envp);
     if (co < 0)
         return (btree()->global_signal == 130 ? 130 : 1);
-    if (co == 0)
+    if (co != 0)
         return (1);
     // tree->cmds->heredoc_done = 0;
     if (btree()->global_signal == 130)

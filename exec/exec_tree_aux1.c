@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:12:18 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/01 16:17:56 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/09 13:01:09 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,21 +108,28 @@ int	check_infiles(t_cmds *cmds)
 	return (1);
 }
 
-int	is_cmd_valid(t_cmds *cmd, char **args, char **envp)
+int is_cmd_valid(t_cmds *cmd, char **args, char **envp)
 {
-	char	**paths;
-	int		i;
+    char **paths;
+    int i;
+    int found;
 
-	paths = buildup_path(cmd, args, envp);
-	if (!paths)
-		return (0);
-	i = 0;
-	while (paths[i])
-	{
-		if (access(paths[i], F_OK | X_OK) == 0)
-			break ;
-		i++;
-	}
-	ft_free_matrix(paths);
-	return (paths[i] != NULL);
+    if (has_builtin(cmd))
+        return (1);
+
+    paths = buildup_path(cmd, args, envp);
+    if (!paths)
+        return (0);
+
+    i = 0;
+    while (paths[i])
+    {
+        if (access(paths[i], F_OK | X_OK) == 0)
+            break;
+        i++;
+    }
+    found = (paths[i] != NULL);
+    ft_free_matrix(paths);
+    return (found);
 }
+
