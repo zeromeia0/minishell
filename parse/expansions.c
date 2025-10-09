@@ -1,8 +1,5 @@
 #include "../sigma_minishell.h"
 
-char    *single_expand(char *str, int ind, int count);
-
-
 int	get_diff(char *str1, char *str2, int start)
 {
 	int	ind1;

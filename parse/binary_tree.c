@@ -157,7 +157,7 @@ void    *create_binary_lvl(char **mat, int id, t_binary *tree)
     sep = separator_comp(mat, 1, ft_matlen(mat) - 1, 0);
     if (sep == 0)
     {
-        tree->print_cmd = ft_join_matrix(mat, 0, 0, 0);
+        tree->print_cmd = ft_join_matrix(mat, 0);
         if (tree->print_cmd == NULL)
             return (btree()->type = ERROR, free_matrix_nodes(mat), NULL);
         // printf("printing this %s\n", tree->print_cmd);
