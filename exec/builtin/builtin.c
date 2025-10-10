@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:21:23 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/09 22:24:20 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/10 18:27:40 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,11 @@ int	builtin_echo(char **args)
 int	builtin_exit(char **args, char **envp)
 {
 	long	status;
-
-	(void)envp;
+	
+	
 	if (!args[1])
 	{
+		ft_free_matrix(envp);
 		if (btree()->global_signal)
 			status = btree()->global_signal;
 		else
