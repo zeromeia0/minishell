@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:21:23 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/10 18:27:40 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/10 18:40:46 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	builtin_exit(char **args, char **envp)
 		return (ft_putstr_fd("minishell: exit: too many arguments", 2), 0);
 	status = ft_atol(args[1]);
 	update_shell_level(-1);
-	return (megalodon_giga_chad_exit((unsigned char)status), 0);
+	return (ft_free_matrix(envp), megalodon_giga_chad_exit((unsigned char)status), 0);
 }
 
 int	exec_builtin(char *cmd, char **args, char **envp)
