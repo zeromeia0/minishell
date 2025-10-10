@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   super_duper_hiper_free.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:02 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/09 14:47:27 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/10 18:55:19 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,14 +101,18 @@ void	close_all_non_standart_fds(void)
 		ft_close(fd);
 }
 
-void	megalodon_giga_chad_exit(int status)
+void	megalodon_giga_chad_exit(int status, int flag)
 {
-	ft_free_matrix(btree()->env);
-	free_os_envs();
-	clear_env_list();
-	close_all_non_standart_fds();
-	binary_clear(btree());
-	free(btree()->input);
+	if (btree())
+	{
+		if (flag == 1)
+			ft_free_matrix(btree()->env);
+		free_os_envs();
+		clear_env_list();
+		close_all_non_standart_fds();
+		binary_clear(btree());
+		free(btree()->input);
+	}
 	exit(status);
 }
 
@@ -121,11 +125,11 @@ void	children_killer(int status)
 void	check_commands(char *cmd)
 {
 	if (btree()->cmds->flag_to_exec == 1)
-		megalodon_giga_chad_exit(126);
+		megalodon_giga_chad_exit(126, 0);
 	if (access(cmd, F_OK) != 0)
 	{
 		my_ffprintf(cmd, "No such file or directory\n");
-		megalodon_giga_chad_exit(127);
+		megalodon_giga_chad_exit(127, 0);
 	}
 }
 

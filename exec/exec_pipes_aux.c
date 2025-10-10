@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 08:43:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/10 18:23:11 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/10 19:04:39 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ void execute_child(t_cmds *cmd, int first_fd, int fd[2], char **env)
     if (is_builtin(cleaned_cmd[0]))
     {
         if (ft_strcmp(cleaned_cmd[0], "exit") == 0)
-            status = builtin_exit(cleaned_cmd, env);
+            status = pipes_builtin_exit(cleaned_cmd, env);
         status = exec_builtin(cleaned_cmd[0], cleaned_cmd, env);
         ft_free_matrix(cleaned_cmd);
-        megalodon_giga_chad_exit(status);
+        megalodon_giga_chad_exit(status, 0);
     }
     else
     {

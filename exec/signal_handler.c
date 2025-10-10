@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/07 07:16:38 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/10 18:55:08 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	sig_handle_heredoc(int sig)
 	// rl_on_new_line();       // tell readline the cursor is on a new line
 	// rl_replace_line("", 0); // clear any leftover input
 	// rl_redisplay();         // refresh prompt (so ^C isn’t glued to prompt)
-	megalodon_giga_chad_exit(130);
+	megalodon_giga_chad_exit(130, 0);
 }
 
 

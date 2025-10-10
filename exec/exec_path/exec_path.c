@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:44:52 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/09 17:53:57 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/10 18:56:47 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ int	handle_non_slash_commands(char *cmd, char **args, char **envp)
 	if (cmd == NULL)
 		btree()->cmds->flag_to_exec = 1;
 	if (btree()->cmds->flag_to_exec == 1)
-		megalodon_giga_chad_exit(126);
+		megalodon_giga_chad_exit(126, 0);
 	if (access(cmd, F_OK) != 0)
 	{
 		my_ffprintf(cmd, "command not found\n");
-		megalodon_giga_chad_exit(127);
+		megalodon_giga_chad_exit(127, 0);
 	}
 	else
 	{
@@ -32,12 +32,12 @@ int	handle_non_slash_commands(char *cmd, char **args, char **envp)
 			prepare_for_exec();
 			execve(cmd, args, envp);
 			perror(cmd);
-			megalodon_giga_chad_exit(127);
+			megalodon_giga_chad_exit(127, 0);
 		}
 		else
 			my_ffprintf(cmd, "Permission denied\n");
 	}
-	return (megalodon_giga_chad_exit(126), 0);
+	return (megalodon_giga_chad_exit(126, 0), 0);
 }
 
 int	handle_slash_command(char *cmd, char **args, char **envp)
@@ -54,17 +54,17 @@ int	handle_slash_command(char *cmd, char **args, char **envp)
 		{
 			buildup_new_args(cmd, envp);
 			perror("/bin/bash");
-			megalodon_giga_chad_exit(1);
+			megalodon_giga_chad_exit(1, 0);
 		}
 		perror(cmd);
-		megalodon_giga_chad_exit(btree()->exit_status);
+		megalodon_giga_chad_exit(btree()->exit_status, 0);
 	}
 	else
 	{
 		my_ffprintf(cmd, "Permission denied\n");
-		megalodon_giga_chad_exit(126);
+		megalodon_giga_chad_exit(126, 0);
 	}
-	return (megalodon_giga_chad_exit(0), 0);
+	return (megalodon_giga_chad_exit(0, 0), 0);
 }
 
 int	handle_system_path_cmd_aux(char *cmd, char **args, char **envp)
@@ -80,15 +80,15 @@ int	handle_system_path_cmd_aux(char *cmd, char **args, char **envp)
 		{
 			buildup_new_args(cmd, envp);
 			perror("/bin/bash");
-			megalodon_giga_chad_exit(1);
+			megalodon_giga_chad_exit(1, 0);
 		}
 		perror(cmd);
-		megalodon_giga_chad_exit(1);
+		megalodon_giga_chad_exit(1, 0);
 	}
 	else
 	{
 		my_ffprintf(cmd, "Permission denied\n");
-		megalodon_giga_chad_exit(126);
+		megalodon_giga_chad_exit(126, 0);
 	}
 	return (0);
 }
@@ -111,11 +111,11 @@ int	handle_system_path_cmd(char *cmd, char **args, char **envp)
 int	exec_path(char *cmd, char **args, char **envp)
 {
 	if (!cmd)
-		return (megalodon_giga_chad_exit(127), 0);
+		return (megalodon_giga_chad_exit(127, 0), 0);
 	if (strchr(cmd, '/'))
 		return (handle_absolute_path_cmd(cmd, args, envp));
 	if (is_system_path_command(cmd, envp))
 		return (exec_system_path(cmd, args, envp));
 	my_ffprintf(cmd, "command not found\n");
-	return (megalodon_giga_chad_exit(127), 0);
+	return (megalodon_giga_chad_exit(127, 0), 0);
 }

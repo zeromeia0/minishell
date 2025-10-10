@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:11:44 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/09 18:04:43 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/10 18:54:46 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void get_single_heredoc(char *eof, int fd[2])
     delimiter = remove_aspas(eof);
     len = ft_strlen(delimiter);
     if (btree()->global_signal == 130)
-        megalodon_giga_chad_exit(130);
+        megalodon_giga_chad_exit(130, 0);
     tty_fd = open("/dev/tty", O_RDONLY);
     if (tty_fd != -1)
     {
@@ -54,7 +54,7 @@ void get_single_heredoc(char *eof, int fd[2])
         }
         free(str);
         if (btree()->global_signal == 130)
-            megalodon_giga_chad_exit(130);
+            megalodon_giga_chad_exit(130, 0);
         str = readline("> ");
     }
     if (!str && btree()->global_signal != 130)
@@ -127,7 +127,7 @@ int manage_heredocs(t_cmds *cmd)
                     get_single_heredoc(in->file, p);
                     close(p[1]);
                     // _exit(0);
-					megalodon_giga_chad_exit(0);
+					megalodon_giga_chad_exit(0, 0);
                 }
                 else
                 {

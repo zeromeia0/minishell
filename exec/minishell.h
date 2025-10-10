@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:39 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/09 17:32:53 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/10 19:04:09 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ void					get_single_heredoc(char *eof, int fd[2]);
 char					*expand_hd(char *str);
 void					expand_infiles(t_infile *infile);
 void					expand_outfiles(t_outfile *outfile);
-void					megalodon_giga_chad_exit(int status);
 void					check_commands(char *cmd);
 char					**buildup_path(t_cmds *cmd, char **args, char **envp);
 int						ensure_outfile(t_outfile *out);
@@ -141,6 +140,8 @@ int						cmd_has_heredoc(t_cmds *cmd);
 int						is_cmd_valid(t_cmds *cmd, char **args, char **envp);
 void					children_killer(int status);
 int						process_command_heredocs(t_cmds *cmd);
+void	megalodon_giga_chad_exit(int status, int flag);
+int	pipes_builtin_exit(char **args, char **envp);
 
 // struct_clear.c
 void					binary_clear(t_binary *binary);

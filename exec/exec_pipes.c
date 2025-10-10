@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:19:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/10 16:14:50 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/10 18:54:24 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	help_to_process(t_cmds *cmd, int p[2])
 	process_all_heredocs(cmd->infiles, p);
 	close(p[1]);
 	// children_killer(0);
-	megalodon_giga_chad_exit(0);
+	megalodon_giga_chad_exit(0, 0);
 }
 
 int	process_command_heredocs(t_cmds *cmd)

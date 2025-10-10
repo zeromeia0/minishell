@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/10 16:14:54 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/10 18:59:42 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	exec_child(t_cmds *cmd)
 	char	**updated_envs;
 
 	if (cmd && cmd->flag_to_exec == 1)
-		megalodon_giga_chad_exit((btree()->exit_status));
+		megalodon_giga_chad_exit(btree()->exit_status, 0);
 	signal(SIGINT, handle_sigint);
 	cleaned = array_to_exec(cmd);
 	updated_envs = list_to_char(*get_env_list());
@@ -53,7 +53,7 @@ void	exec_child(t_cmds *cmd)
 		ft_free_matrix(cleaned);
 	if (updated_envs)
 		ft_free_matrix(updated_envs);
-	megalodon_giga_chad_exit(127);
+	megalodon_giga_chad_exit(127, 0);
 }
 
 
