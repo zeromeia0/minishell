@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirections_aux.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 23:05:16 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/09 14:14:39 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/10 15:58:02 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ int handle_heredoc(t_cmds *cmd)
         return (0);
 
     signal(SIGINT, handle_sigint);
-
+	if (cmd->heredoc_done == 1)
+		return (0);
     if (manage_heredocs(cmd) < 0)
         return (-1);
-
     cmd->heredoc_done = 1; // mark it as processed
     return (0);
 }
