@@ -6,33 +6,49 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 08:43:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/10 19:04:39 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/10 20:11:36 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../sigma_minishell.h"
 
-void	setup_child_fds(int first_fd, int fd[2], t_cmds *cmd)
+int get_heredoc_fd(t_cmds *cmd)
 {
-	cmd->heredoc_done = 1;
-	if (first_fd != -1)
-	{
-		if (dup2(first_fd, STDIN_FILENO) == -1)
-			children_killer(1); /* or handle error properly */
-	}
-	if (cmd->next != NULL)
-	{
-		if (dup2(fd[1], STDOUT_FILENO) == -1)
-			children_killer(1); /* or handle error properly */
-	}
-	if (cmd->next != NULL)
-	{
-		close(fd[0]);
-		close(fd[1]);
-	}
-	if (first_fd != -1)
-		close(first_fd);
+    t_infile *in = cmd->infiles;
+    while (in)
+    {
+        if (in->token && ft_strcmp(in->token, "<<") == 0)
+            return in->heredoc_fd;
+        in = in->next;
+    }
+    return -1;
 }
+
+void setup_child_fds(int first_fd, int fd[2], t_cmds *cmd)
+{
+    int heredoc_fd = get_heredoc_fd(cmd);
+
+    if (heredoc_fd != -1)
+    {
+        dup2(heredoc_fd, STDIN_FILENO);
+        close(heredoc_fd);
+    }
+    else if (first_fd != -1)
+    {
+        dup2(first_fd, STDIN_FILENO);
+        close(first_fd);
+    }
+
+    if (cmd->next != NULL)
+        dup2(fd[1], STDOUT_FILENO);
+
+    close(fd[0]);
+    close(fd[1]);
+}
+
+
+
+
 
 
 void execute_child(t_cmds *cmd, int first_fd, int fd[2], char **env)

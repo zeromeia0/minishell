@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:19:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/10 18:54:24 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/10 20:11:49 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,29 +71,49 @@ int process_heredocs_and_checks(t_cmds *cmd)
     return 0;
 }
 
-
-int	exec_pipes(t_cmds *cmd, char **env)
+int prepare_all_heredocs(t_cmds *cmd)
 {
-	int		first_fd;
-	int		status;
-	t_cmds	*current;
+    t_cmds *current = cmd;
+    int r;
 
-	// printf("==EXECUITING PIPES\n");
-	if (btree()->global_signal == 130 || (btree()->cmds && btree()->cmds->flag_to_exec == 1))
-		return (btree()->exit_status);
-	first_fd = -1;
-	current = cmd;
-	while (current)
-	{
-		if (process_command(current, &first_fd, env) == -1)
-			return (printf("COULDN'T PROCESS IT\n"), -1);
-		current = current->next;
-	}
-	while (wait(&status) > 0)
-		;
-	if (WIFEXITED(status))
-		btree()->exit_status = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-		btree()->exit_status = 128 + WTERMSIG(status);
-	return (btree()->exit_status);
+    while (current)
+    {
+        if (!current->heredoc_done)
+        {
+            r = handle_heredoc(current);
+            if (r != 0)
+                return r;
+            current->heredoc_done = 1;
+        }
+        current = current->next;
+    }
+    return 0;
 }
+
+int exec_pipes(t_cmds *cmd, char **env)
+{
+    int first_fd = -1;
+    int status;
+    t_cmds *current;
+
+    if (manage_heredocs(cmd) != 0)
+        return (btree()->exit_status);
+
+    current = cmd;
+    while (current)
+    {
+        if (process_command(current, &first_fd, env) == -1)
+            return (printf("COULDN'T PROCESS IT\n"), -1);
+        current = current->next;
+    }
+
+    while (wait(&status) > 0)
+        ;
+    if (WIFEXITED(status))
+        btree()->exit_status = WEXITSTATUS(status);
+    else if (WIFSIGNALED(status))
+        btree()->exit_status = 128 + WTERMSIG(status);
+    return (btree()->exit_status);
+}
+
+

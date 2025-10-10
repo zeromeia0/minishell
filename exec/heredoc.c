@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:11:44 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/10 18:54:46 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/10 20:18:01 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ int manage_heredocs(t_cmds *cmd)
     cur = cmd;
     while (cur)
     {
+        if (cur->heredoc_done == 1)
+            return (0);
         in = cur->infiles;
         while (in)
         {
@@ -149,6 +151,7 @@ int manage_heredocs(t_cmds *cmd)
             }
             in = in->next;
         }
+        cur->heredoc_done = 1;
         cur = cur->next;
     }
     return (0);
