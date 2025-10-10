@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/10 16:02:02 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/10 16:14:54 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	exec_child(t_cmds *cmd)
 	char	**updated_envs;
 
 	if (cmd && cmd->flag_to_exec == 1)
-		return ;
+		megalodon_giga_chad_exit((btree()->exit_status));
 	signal(SIGINT, handle_sigint);
 	cleaned = array_to_exec(cmd);
 	updated_envs = list_to_char(*get_env_list());
@@ -138,42 +138,36 @@ void	reset_heredoc_flags(t_binary *tree)
 }
 
 
-static int exec_tree_internal(t_binary *tree, char **args, char **envp)
+int exec_tree(t_binary *tree, char **args, char **envp)
 {
     int ret_left;
+    int co;
+
+	// printf("===EXEC TREE\n");
     if (!tree)
         return 0;
+    co = check_order(tree, args, envp);
+    if (co < 0)
+        return (btree()->global_signal == 130 ? 130 : 1);
     if (tree->cmds && tree->cmds->flag_to_exec == 1)
         return 1;
     if (btree()->global_signal == 130)
         return 130;
     if (tree->logic && ft_strcmp(tree->logic, "&&") == 0)
     {
-        ret_left = exec_tree_internal(tree->left, args, envp);
+        ret_left = exec_tree(tree->left, args, envp);
         if (ret_left == 0)
-            return exec_tree_internal(tree->right, args, envp);
+            return exec_tree(tree->right, args, envp);
         return ret_left;
     }
     if (tree->logic && ft_strcmp(tree->logic, "||") == 0)
     {
-        ret_left = exec_tree_internal(tree->left, args, envp);
+        ret_left = exec_tree(tree->left, args, envp);
         if (ret_left != 0)
-            return exec_tree_internal(tree->right, args, envp);
+            return exec_tree(tree->right, args, envp);
         return ret_left;
     }
     return exec_node(tree, args, envp);
-}
-
-int exec_tree(t_binary *tree, char **args, char **envp)
-{
-    int co;
-
-    if (!tree)
-        return 0;
-    co = check_order(tree, args, envp);
-    if (co < 0)
-        return (btree()->global_signal == 130 ? 130 : 1);
-    return exec_tree_internal(tree, args, envp);
 }
 
 

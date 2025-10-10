@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:19:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/09 14:50:23 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/10 16:14:50 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	exec_pipes(t_cmds *cmd, char **env)
 	int		status;
 	t_cmds	*current;
 
+	// printf("==EXECUITING PIPES\n");
 	if (btree()->global_signal == 130 || (btree()->cmds && btree()->cmds->flag_to_exec == 1))
 		return (btree()->exit_status);
 	first_fd = -1;

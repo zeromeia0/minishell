@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 08:43:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/10 15:58:24 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/10 16:14:43 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,15 @@ void	setup_child_fds(int first_fd, int fd[2], t_cmds *cmd)
 {
 	cmd->heredoc_done = 1;
 	if (first_fd != -1)
-		dup2(first_fd, STDIN_FILENO);
-	else if (cmd->next != NULL)
-		dup2(fd[1], STDOUT_FILENO);
+	{
+		if (dup2(first_fd, STDIN_FILENO) == -1)
+			children_killer(1); /* or handle error properly */
+	}
+	if (cmd->next != NULL)
+	{
+		if (dup2(fd[1], STDOUT_FILENO) == -1)
+			children_killer(1); /* or handle error properly */
+	}
 	if (cmd->next != NULL)
 	{
 		close(fd[0]);
@@ -27,6 +33,7 @@ void	setup_child_fds(int first_fd, int fd[2], t_cmds *cmd)
 	if (first_fd != -1)
 		close(first_fd);
 }
+
 
 void	execute_child(t_cmds *cmd, int first_fd, int fd[2], char **env)
 {
@@ -66,6 +73,7 @@ int	setup_pipe(t_cmds *cmd, int *first_fd, int fd[2])
 
 int	process_command(t_cmds *cmd, int *first_fd, char **env)
 {
+	// printf("PROCESSING COMMAND");
 	int		fd[2];
 	pid_t	pid;
 	if (cmd->cmd == NULL)
