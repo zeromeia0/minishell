@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:21:23 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/10 19:07:58 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/11 22:06:54 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	builtin_echo(char **args)
 int	pipes_builtin_exit(char **args, char **envp)
 {
 	long	status;
-	
+	printf("INSIDE PIPES BUILTIN EXIT\n");
 	
 	if (!args[1])
 	{
