@@ -7,11 +7,12 @@ echo salve && cat << salve | cat | cat | ls -l && echo DIVISOR | << eof cat > ou
 
 FIX HEREDOC STUFF ON PIPES
 
+
 VALGRIND ISSUE
     pwd && ls -l | grep b
     exit | exit
     echo a | ls
-    
+
     << a
     cat << a
     << eof cat > out11

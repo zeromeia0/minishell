@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/10 19:58:44 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/11 21:30:54 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int check_order(t_binary *tree, char **args, char **envp)
             if (cmd->heredoc_done == 0 && please == 0)
             {
 				please = 1;
+				printf("HANDLING HEREDOC\n");
                 r = handle_heredoc(cmd);
                 if (r != 0)
                 {

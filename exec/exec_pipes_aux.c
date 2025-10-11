@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 08:43:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/10 20:11:36 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/11 21:42:02 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,13 @@ void setup_child_fds(int first_fd, int fd[2], t_cmds *cmd)
 }
 
 
-
-
-
-
 void execute_child(t_cmds *cmd, int first_fd, int fd[2], char **env)
 {
     char **cleaned_cmd;
     int status;
 
+    if (has_redir(cmd))
+        exec_redirections(cmd);
     setup_child_fds(first_fd, fd, cmd);
     cleaned_cmd = array_to_exec(cmd);
     if (!cleaned_cmd || !cleaned_cmd[0])
@@ -79,6 +77,8 @@ void execute_child(t_cmds *cmd, int first_fd, int fd[2], char **env)
         children_killer(127);
     }
 }
+
+
 
 
 int	setup_pipe(t_cmds *cmd, int *first_fd, int fd[2])
