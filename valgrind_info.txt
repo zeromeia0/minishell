@@ -4,3 +4,15 @@ ls -l | grep a | echo oi && cat << a
 
 
 echo salve && cat << salve | cat | cat | ls -l && echo DIVISOR | << eof cat > out69
+
+FIX HEREDOC STUFF ON PIPES
+
+VALGRIND ISSUE
+    pwd && ls -l | grep b
+    exit | exit
+    echo a | ls
+    
+    << a
+    cat << a
+    << eof cat > out11
+
