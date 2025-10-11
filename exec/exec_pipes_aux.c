@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 08:43:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/11 21:42:02 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/11 21:58:08 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	setup_pipe(t_cmds *cmd, int *first_fd, int fd[2])
 int	process_command(t_cmds *cmd, int *first_fd, char **env)
 {
 	// printf("PROCESSING COMMAND");
-	int		fd[2];
+	int		fd[2] = {-1, -1};
 	pid_t	pid;
 	if (cmd->cmd == NULL)
 		cmd->flag_to_exec = 1;

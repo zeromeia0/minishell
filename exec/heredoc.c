@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:11:44 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/11 21:32:44 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/11 21:53:23 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void get_single_heredoc(char *eof, int fd[2])
     char    *expanded;
 
 
-    printf("Get single heredppc\n");
 	if (!eof)
 		return ;
     delimiter = remove_aspas(eof);
@@ -96,7 +95,6 @@ void process_all_heredocs(t_infile *in, int p[2])
 
 int manage_heredocs(t_cmds *cmd)
 {
-    printf("Managing heredocs\n");
     t_cmds      *cur;
     t_infile    *in;
     int         p[2];
