@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:21:23 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/11 22:06:54 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/12 21:27:37 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int	is_builtin(char *cmd)
 
 int	has_builtin(t_cmds *cmd)
 {
-	if (!cmd || !cmd->cmd/*  || !cmd->cmd[0] */)
-		return ( 0);
+	if (!cmd || !cmd->cmd)
+		return (0);
 	return (is_builtin(cmd->cmd[0]));
 }
 
@@ -68,8 +68,8 @@ int	builtin_echo(char **args)
 int	pipes_builtin_exit(char **args, char **envp)
 {
 	long	status;
+
 	printf("INSIDE PIPES BUILTIN EXIT\n");
-	
 	if (!args[1])
 	{
 		ft_free_matrix(envp);
@@ -87,14 +87,14 @@ int	pipes_builtin_exit(char **args, char **envp)
 		return (ft_putstr_fd("minishell: exit: too many arguments", 2), 0);
 	status = ft_atol(args[1]);
 	update_shell_level(-1);
-	return (ft_free_matrix(envp), ft_free_matrix(args), megalodon_giga_chad_exit((unsigned char)status, 0), 0);
+	return (ft_free_matrix(envp), ft_free_matrix(args),
+		megalodon_giga_chad_exit((unsigned char)status, 0), 0);
 }
 
 int	builtin_exit(char **args, char **envp)
 {
 	long	status;
-	
-	
+
 	if (!args[1])
 	{
 		ft_free_matrix(envp);
@@ -111,7 +111,8 @@ int	builtin_exit(char **args, char **envp)
 		return (ft_putstr_fd("minishell: exit: too many arguments", 2), 0);
 	status = ft_atol(args[1]);
 	update_shell_level(-1);
-	return (ft_free_matrix(envp), megalodon_giga_chad_exit((unsigned char)status, 1), 0);
+	return (ft_free_matrix(envp),
+		megalodon_giga_chad_exit((unsigned char)status, 1), 0);
 }
 
 int	exec_builtin(char *cmd, char **args, char **envp)

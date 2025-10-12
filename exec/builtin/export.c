@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 23:57:32 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/02 16:03:01 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/12 21:28:49 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../sigma_minishell.h"
 
-int	update_existing_env_var(t_os_envs *current, const char *str,
-		size_t len)
+int	update_existing_env_var(t_os_envs *current, const char *str, size_t len)
 {
 	char	*new_var;
 
@@ -37,8 +36,7 @@ int	update_existing_env_var(t_os_envs *current, const char *str,
 	return (1);
 }
 
-int	convert_temp_to_env_var(t_os_envs *current, const char *str,
-		size_t len)
+int	convert_temp_to_env_var(t_os_envs *current, const char *str, size_t len)
 {
 	char	*new_var;
 
@@ -58,8 +56,7 @@ int	convert_temp_to_env_var(t_os_envs *current, const char *str,
 	return (1);
 }
 
-int	make_update_env_aux(t_os_envs **env_list, const char *str,
-		size_t len)
+int	make_update_env_aux(t_os_envs **env_list, const char *str, size_t len)
 {
 	t_os_envs	*current;
 	int			result;
@@ -93,27 +90,24 @@ size_t	get_env_key_length(const char *str)
 		return (strlen(str));
 }
 
-int builtin_export(char **args)
+int	builtin_export(char **args)
 {
-    int i = 1;
+	int	i;
 
-    if (!args[1])
-        return (export_print_env_list(), 0);
-
-    while (args[i])
-    {
-        if (strchr(args[i], '='))  // Only update env if it contains '='
-        {
-            if (make_update_env(args[i]) != 0)
-                if (add_new_env_var(get_env_list(), args[i]) < 0)
-                    return (perror("minishell: export"), 1);
-        }
-        else
-        {
-            add_temp_var(args[i]); // No '=' → only temp var
-        }
-        i++;
-    }
-    return 0;
+	i = 1;
+	if (!args[1])
+		return (export_print_env_list(), 0);
+	while (args[i])
+	{
+		if (strchr(args[i], '='))
+		{
+			if (make_update_env(args[i]) != 0)
+				if (add_new_env_var(get_env_list(), args[i]) < 0)
+					return (perror("minishell: export"), 1);
+		}
+		else
+			add_temp_var(args[i]);
+		i++;
+	}
+	return (0);
 }
-

@@ -80,12 +80,12 @@ void	free_asterisc(char **mat)
 			free(mat[ind]);
 	}
 }
-/* 
+/*
 export o="o  o"
 $o
 echo $o
  */
-char **expand_matrix(t_cmds *cmd)
+char	**expand_matrix(t_cmds *cmd)
 {
 	char	**holder;
 	int		ind;
@@ -134,8 +134,8 @@ void	expand_args(t_cmds *cmd)
 			mat[ind] = quote(mat[ind]);
 	}
 	cmd->cmd = mat;
-    expand_infiles(cmd->infiles);
-    expand_outfiles(cmd->outfiles);
+	expand_infiles(cmd->infiles);
+	expand_outfiles(cmd->outfiles);
 	cmd->cmd = expand_matrix(cmd);
 	expand_args(cmd->next);
 }

@@ -6,27 +6,24 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 23:05:16 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/10 15:58:02 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/12 21:27:07 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../sigma_minishell.h"
 
-int handle_heredoc(t_cmds *cmd)
+int	handle_heredoc(t_cmds *cmd)
 {
-    if (!cmd || cmd->heredoc_done)
-        return (0);
-
-    signal(SIGINT, handle_sigint);
+	if (!cmd || cmd->heredoc_done)
+		return (0);
+	signal(SIGINT, handle_sigint);
 	if (cmd->heredoc_done == 1)
 		return (0);
-    if (manage_heredocs(cmd) < 0)
-        return (-1);
-    cmd->heredoc_done = 1; // mark it as processed
-    return (0);
+	if (manage_heredocs(cmd) < 0)
+		return (-1);
+	cmd->heredoc_done = 1;
+	return (0);
 }
-
-
 
 int	handle_regular_redirections(t_cmds *cmd)
 {
@@ -46,4 +43,3 @@ int	handle_regular_redirections(t_cmds *cmd)
 		return (-1);
 	return (0);
 }
-

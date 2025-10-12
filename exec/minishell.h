@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:39 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/10 19:04:09 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/12 21:42:00 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,9 @@ void					children_killer(int status);
 int						process_command_heredocs(t_cmds *cmd);
 void	megalodon_giga_chad_exit(int status, int flag);
 int	pipes_builtin_exit(char **args, char **envp);
+void	child_services(char **cleaned_cmd, char **envp, int status);
+void	file_descriptor_closer(int fd[2]);
+int	get_heredoc_fd(t_cmds *cmd);
 
 // struct_clear.c
 void					binary_clear(t_binary *binary);

@@ -88,6 +88,7 @@ int	exec_single_cmd_aux(t_cmds *cmd)
 {
 	int		status;
 	char	**env_array;
+
 	if (deal_with_bad_exit(cmd) != 1)
 		return (btree()->exit_status);
 	if (ft_strncmp(cmd->cmd[0], "exit", 4) == 0)
