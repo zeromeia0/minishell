@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:39 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/12 22:19:42 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/12 22:51:42 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,11 @@ void	process_heredoc_lines(char *delimiter, int len, int fd[2]);
 void	setup_signals_for_parent(void);
 void	handle_heredoc_child(t_infile *in, int *p);
 int	super_checker_goated(t_cmds *cmd, char *command, char **args);
+int	exec_single_cmd(t_cmds *cmd);
+int	check_helper(t_cmds *cmd, int *please);
+void	reset_heredoc_flags(t_binary *tree);
+
+
 
 
 // struct_clear.c

@@ -23,6 +23,7 @@ VALGRIND ISSUE
 
 ls | echo a | << a
 
+<< a << b | << c && cat << d
 
 
 wrong
