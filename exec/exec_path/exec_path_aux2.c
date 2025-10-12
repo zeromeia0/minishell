@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_path_aux2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:39:31 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/09 17:55:21 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/12 23:12:08 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,6 @@ char	*get_env_var(char *name, char **envp)
 
 int	am_i_truly_myself(const char *cmd)
 {
-	// printf("AM I MYSELF?\n");
-	// if (stat(cmd, &btree()->cmd_stat) == -1)
-	// 	return (0);
-	// if (stat("/proc/self/exe", &btree()->self_stat) == -1)
-	// 	return (0);
 	return (btree()->cmd_stat.st_dev == btree()->self_stat.st_dev
 		&& btree()->cmd_stat.st_ino == btree()->self_stat.st_ino);
 }

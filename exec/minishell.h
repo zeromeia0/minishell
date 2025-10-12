@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:39 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/12 22:51:42 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/12 23:13:50 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ int	super_checker_goated(t_cmds *cmd, char *command, char **args);
 int	exec_single_cmd(t_cmds *cmd);
 int	check_helper(t_cmds *cmd, int *please);
 void	reset_heredoc_flags(t_binary *tree);
+void	help_to_process(t_cmds *cmd, int p[2]);
 
 
 

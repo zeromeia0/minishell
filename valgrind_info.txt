@@ -19,12 +19,7 @@ VALGRIND ISSUE
 
 
 
-    REMEMBER TO FREE ENVS THAT I GET FROM MAIN USE VALGRIN ISSUE TO FIGURE IT OUT
+<< a << b | << c && cat << d <-- LOGIC
 
-ls | echo a | << a
+ls | echo a | << a <-- VALGRIND
 
-<< a << b | << c && cat << d
-
-
-wrong
-<< a && echo salve <-- NO command fucks up
