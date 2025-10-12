@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:19:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/11 21:54:15 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/12 20:29:07 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,12 @@ int exec_pipes(t_cmds *cmd, char **env)
         btree()->exit_status = WEXITSTATUS(status);
     else if (WIFSIGNALED(status))
         btree()->exit_status = 128 + WTERMSIG(status);
+    if (btree()->env)
+    {
+        ft_free_matrix(btree()->env);
+        btree()->env = list_to_char(*get_env_list());
+    }
+    
     return (btree()->exit_status);
 }
 

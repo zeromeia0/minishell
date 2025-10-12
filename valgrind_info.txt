@@ -5,7 +5,6 @@ ls -l | grep a | echo oi && cat << a
 
 echo salve && cat << salve | cat | cat | ls -l && echo DIVISOR | << eof cat > out69
 
-FIX HEREDOC STUFF ON PIPES
 
 
 VALGRIND ISSUE

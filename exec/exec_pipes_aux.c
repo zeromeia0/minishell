@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 08:43:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/11 21:58:08 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/12 20:33:54 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,10 @@ void setup_child_fds(int first_fd, int fd[2], t_cmds *cmd)
 
     if (cmd->next != NULL)
         dup2(fd[1], STDOUT_FILENO);
-
-    close(fd[0]);
-    close(fd[1]);
+    if (fd[0] >= 0)
+        close(fd[0]);
+    if (fd[1] >= 0)
+        close(fd[1]);
 }
 
 
@@ -93,28 +94,43 @@ int	setup_pipe(t_cmds *cmd, int *first_fd, int fd[2])
 
 int	process_command(t_cmds *cmd, int *first_fd, char **env)
 {
-	// printf("PROCESSING COMMAND");
 	int		fd[2] = {-1, -1};
 	pid_t	pid;
+
 	if (cmd->cmd == NULL)
 		cmd->flag_to_exec = 1;
+
 	if (cmd->flag_to_exec == 0)
 	{
 		if (setup_pipe(cmd, first_fd, fd) == -1)
 			return (-1);
+
 		pid = fork();
 		if (pid == 0)
 			execute_child(cmd, *first_fd, fd, env);
-		if (*first_fd != -1)
+
+		// Parent process
+		if (*first_fd >= 0)
 			close(*first_fd);
-		if ((cmd)->next != NULL)
+
+		if (cmd->next != NULL)
 		{
-			close(fd[1]);
+			if (fd[1] >= 0)
+				close(fd[1]);
 			*first_fd = fd[0];
+		}
+		else
+		{
+			// Last command — close pipe ends we don't need
+			if (fd[0] >= 0)
+				close(fd[0]);
+			if (fd[1] >= 0)
+				close(fd[1]);
 		}
 	}
 	return (0);
 }
+
 
 int	has_heredocs(t_cmds *cmd)
 {
