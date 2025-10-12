@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:49:36 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/12 20:19:33 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/12 22:12:47 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,6 @@ int	main(int argc, char *argv[], char **envp)
 			binary_clear(btree());
 			restart_signals();
 		}
-
 	}
 	if (btree()->env)
 	{
