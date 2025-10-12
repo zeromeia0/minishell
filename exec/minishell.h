@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:39 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/12 21:42:00 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/12 22:00:47 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,13 @@ int	pipes_builtin_exit(char **args, char **envp);
 void	child_services(char **cleaned_cmd, char **envp, int status);
 void	file_descriptor_closer(int fd[2]);
 int	get_heredoc_fd(t_cmds *cmd);
+char	**expand_matrix(t_cmds *cmd);
+void	heredoc_setup(void);
+void	write_heredoc_line(char *str, int fd[2]);
+void	process_heredoc_lines(char *delimiter, int len, int fd[2]);
+void	setup_signals_for_parent(void);
+void	handle_heredoc_child(t_infile *in, int *p);
+
 
 // struct_clear.c
 void					binary_clear(t_binary *binary);

@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 08:43:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/12 21:43:48 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/12 21:49:05 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,46 +70,40 @@ int	setup_pipe(t_cmds *cmd, int *first_fd, int fd[2])
 	return (0);
 }
 
-int process_command(t_cmds *cmd, int *first_fd, char **env)
+int	process_command_helper(t_cmds *cmd, int prev_fd, char **env)
 {
-    int fd[2];
-    pid_t pid;
+	int		fd[2];
+	pid_t	pid;
 
-    fd[0] = -1;
-    fd[1] = -1;
-    if (cmd->cmd == NULL)
-        cmd->flag_to_exec = 1;
-    if (cmd->flag_to_exec == 0)
-    {
-        if (setup_pipe(cmd, first_fd, fd) == -1)
-            return (-1);
-        pid = fork();
-        if (pid == 0)
-            execute_child(cmd, *first_fd, fd, env);
-        if (*first_fd >= 0)
-            close(*first_fd);
-        if (cmd->next != NULL)
-        {
-            if (fd[1] >= 0)
-                close(fd[1]);
-            *first_fd = fd[0];
-        }
-        else
-            file_descriptor_closer(fd);
-    }
-    return (0);
+	fd[0] = -1;
+	fd[1] = -1;
+	if (setup_pipe(cmd, &prev_fd, fd) == -1)
+		return (-1);
+	pid = fork();
+	if (pid == 0)
+		execute_child(cmd, prev_fd, fd, env);
+	if (prev_fd >= 0)
+		close(prev_fd);
+	if (cmd->next != NULL)
+	{
+		if (fd[1] >= 0)
+			close(fd[1]);
+		return (fd[0]);
+	}
+	else
+		return (file_descriptor_closer(fd), -1);
 }
 
-int	has_heredocs(t_cmds *cmd)
+int	process_command(t_cmds *cmd, int *first_fd, char **env)
 {
-	t_infile	*in;
+	int	new_fd;
 
-	in = cmd->infiles;
-	while (in)
+	if (cmd->cmd == NULL)
+		return (cmd->flag_to_exec = 1, 0);
+	if (cmd->flag_to_exec == 0)
 	{
-		if (ft_strcmp(in->token, "<<") == 0)
-			return (1);
-		in = in->next;
+		new_fd = process_command_helper(cmd, *first_fd, env);
+		*first_fd = new_fd;
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:21:23 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/12 21:27:37 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/12 21:49:41 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,32 +63,6 @@ int	builtin_echo(char **args)
 	if (!suppress_newline)
 		write(1, "\n", 1);
 	return (0);
-}
-
-int	pipes_builtin_exit(char **args, char **envp)
-{
-	long	status;
-
-	printf("INSIDE PIPES BUILTIN EXIT\n");
-	if (!args[1])
-	{
-		ft_free_matrix(envp);
-		ft_free_matrix(args);
-		if (btree()->global_signal)
-			status = btree()->global_signal;
-		else
-			status = btree()->exit_status;
-		update_shell_level(-1);
-		megalodon_giga_chad_exit((unsigned char)status, 0);
-	}
-	if (!is_numeric(args[1]))
-		return (my_ffprintf(args[1], "numeric argument required"), 0);
-	if (args[0] && args[1] && args[2] != NULL)
-		return (ft_putstr_fd("minishell: exit: too many arguments", 2), 0);
-	status = ft_atol(args[1]);
-	update_shell_level(-1);
-	return (ft_free_matrix(envp), ft_free_matrix(args),
-		megalodon_giga_chad_exit((unsigned char)status, 0), 0);
 }
 
 int	builtin_exit(char **args, char **envp)

@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:08:05 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/09 23:19:07 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/12 22:07:57 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int	exec_single_left(t_infile *in)
 	return (0);
 }
 
-
 int	exec_out_redirections(t_outfile *out)
 {
 	int	fd;
@@ -80,40 +79,38 @@ int	exec_out_redirections(t_outfile *out)
 	return (0);
 }
 
-int exec_redirections(t_cmds *cmd)
+int	exec_redirections(t_cmds *cmd)
 {
-    t_infile *in;
-    int      last_heredoc_fd = -1;
+	t_infile	*in;
+	int			last_heredoc_fd;
 
-    in = cmd->infiles;
-    while (in)
-    {
-        if (ft_strcmp(in->token, "<<") == 0 && in->heredoc_fd >= 0)
-        {
-            if (last_heredoc_fd >= 0)
-                close(last_heredoc_fd); // close previous heredoc fd
-
-            last_heredoc_fd = in->heredoc_fd; // keep only the last
-        }
-        else if (ft_strcmp(in->token, "<") == 0)
-        {
-            if (exec_single_left(in) < 0)
-                return -1;
-        }
-        in = in->next;
-    }
-
-    if (last_heredoc_fd >= 0)
-    {
-        if (dup2(last_heredoc_fd, STDIN_FILENO) < 0)
-            return (perror("dup2"), close(last_heredoc_fd), -1);
-        close(last_heredoc_fd);
-    }
-    if (exec_out_redirections(cmd->outfiles) < 0)
-    {
-        btree()->cmds->flag_to_exec = 1;
-        return -1;
-    }
-    return 0;
+	last_heredoc_fd = -1;
+	in = cmd->infiles;
+	while (in)
+	{
+		if (ft_strcmp(in->token, "<<") == 0 && in->heredoc_fd >= 0)
+		{
+			if (last_heredoc_fd >= 0)
+				close(last_heredoc_fd);
+			last_heredoc_fd = in->heredoc_fd;
+		}
+		else if (ft_strcmp(in->token, "<") == 0)
+		{
+			if (exec_single_left(in) < 0)
+				return (-1);
+		}
+		in = in->next;
+	}
+	if (last_heredoc_fd >= 0)
+	{
+		if (dup2(last_heredoc_fd, STDIN_FILENO) < 0)
+			return (perror("dup2"), close(last_heredoc_fd), -1);
+		close(last_heredoc_fd);
+	}
+	if (exec_out_redirections(cmd->outfiles) < 0)
+	{
+		btree()->cmds->flag_to_exec = 1;
+		return (-1);
+	}
+	return (0);
 }
-
