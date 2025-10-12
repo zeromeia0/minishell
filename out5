@@ -1,0 +1,13 @@
+HOME=/home/vvazzs
+LOGNAME=vvazzs
+MAIL=/var/spool/mail/vvazzs
+OLDPWD=/home/vvazzs/42_Stuff
+PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/var/lib/flatpak/exports/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/vvazzs/.local/bin:/home/vvazzs/.local/bin
+PWD=/home/vvazzs/42_Stuff/minishell
+USER=vvazzs
+XDG_CACHE_HOME=/home/vvazzs/.cache
+XDG_CONFIG_HOME=/home/vvazzs/.config
+XDG_DATA_DIRS=/home/vvazzs/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share
+XDG_DATA_HOME=/home/vvazzs/.local/share
+XDG_GREETER_DATA_DIR=/var/lib/lightdm-data/vvazzs
+XDG_STATE_HOME=/home/vvazzs/.local/state

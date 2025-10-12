@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree_aux2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:12:18 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/09 17:31:29 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/12 22:39:18 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	exec_subshell(t_binary *subshell, char **args, char **envp)
 	pid_t	pid;
 	int		status;
 
+	printf("LANCANDO SUBSHELL\n");
 	pid = fork();
 	if (pid == 0)
 		children_killer(exec_tree(subshell, args, envp));

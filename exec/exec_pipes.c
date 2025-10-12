@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:19:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/12 21:10:28 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/12 22:30:10 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int exec_pipes(t_cmds *cmd, char **env)
     int status;
     t_cmds *current;
 
+    printf("PIPES\n");
     if (manage_heredocs(cmd) != 0)
         return (btree()->exit_status);
     current = cmd;

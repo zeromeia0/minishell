@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:21:23 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/12 21:49:41 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/12 22:39:49 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	is_builtin(char *cmd)
 {
 	if (!cmd)
-		return (0);
+		return (1);
 	if (ft_strcmp(cmd, "cd") == 0)
 		return (1);
 	else if (ft_strcmp(cmd, "pwd") == 0)
@@ -92,7 +92,7 @@ int	builtin_exit(char **args, char **envp)
 int	exec_builtin(char *cmd, char **args, char **envp)
 {
 	if (!cmd)
-		printf("TA TUDO FUDIDO\n");
+		printf("");
 	if (ft_strcmp(cmd, "cd") == 0)
 		return (builtin_cd(args));
 	else if (ft_strcmp(cmd, "pwd") == 0)

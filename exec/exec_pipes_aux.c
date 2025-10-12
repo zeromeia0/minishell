@@ -13,30 +13,28 @@
 #include "../sigma_minishell.h"
 #include "minishell.h"
 
-void setup_child_fds(int first_fd, int fd[2], t_cmds *cmd)
+void	setup_child_fds(int first_fd, int fd[2], t_cmds *cmd)
 {
-    int heredoc_fd;
+	int	heredoc_fd;
 
-    heredoc_fd = get_heredoc_fd(cmd);
-    if (heredoc_fd != -1)
-    {
-        dup2(heredoc_fd, STDIN_FILENO);
-        close(heredoc_fd);
-    }
-    else if (first_fd != -1)
-    {
-        dup2(first_fd, STDIN_FILENO);
-        close(first_fd);
-    }
-    if (cmd->next != NULL && cmd->outfiles == NULL)
-        dup2(fd[1], STDOUT_FILENO);
-
-    if (fd[0] >= 0)
-        close(fd[0]);
-    if (fd[1] >= 0)
-        close(fd[1]);
+	heredoc_fd = get_heredoc_fd(cmd);
+	if (heredoc_fd != -1)
+	{
+		dup2(heredoc_fd, STDIN_FILENO);
+		close(heredoc_fd);
+	}
+	else if (first_fd != -1)
+	{
+		dup2(first_fd, STDIN_FILENO);
+		close(first_fd);
+	}
+	if (cmd->next != NULL && cmd->outfiles == NULL)
+		dup2(fd[1], STDOUT_FILENO);
+	if (fd[0] >= 0)
+		close(fd[0]);
+	if (fd[1] >= 0)
+		close(fd[1]);
 }
-
 
 void	execute_child(t_cmds *cmd, int first_fd, int fd[2], char **env)
 {

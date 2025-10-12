@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 21:40:31 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/12 22:02:16 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/12 22:19:21 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,4 +224,17 @@ int	check_cmds(t_cmds *cmds, char **args, char **envp)
 		current = current->next;
 	}
 	return (1);
+}
+
+
+int	super_checker_goated(t_cmds *cmd, char *command, char **args)
+{
+	if (!has_builtin(cmd) && !has_redir(cmd)
+		&& !is_system_path_command(cmd->cmd[0], args))
+	{
+		if (strchr(cmd->cmd[0], '/'))
+			handle_absolute_path_cmd(cmd->cmd[0], args, args);
+		return (1);
+	}
+	return (0);
 }

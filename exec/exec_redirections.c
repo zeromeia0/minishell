@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:08:05 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/12 22:07:57 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/12 22:18:47 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,20 +79,15 @@ int	exec_out_redirections(t_outfile *out)
 	return (0);
 }
 
-int	exec_redirections(t_cmds *cmd)
+static int	exec_input_redirections(t_infile *in, int *last_heredoc_fd)
 {
-	t_infile	*in;
-	int			last_heredoc_fd;
-
-	last_heredoc_fd = -1;
-	in = cmd->infiles;
 	while (in)
 	{
 		if (ft_strcmp(in->token, "<<") == 0 && in->heredoc_fd >= 0)
 		{
-			if (last_heredoc_fd >= 0)
-				close(last_heredoc_fd);
-			last_heredoc_fd = in->heredoc_fd;
+			if (*last_heredoc_fd >= 0)
+				close(*last_heredoc_fd);
+			*last_heredoc_fd = in->heredoc_fd;
 		}
 		else if (ft_strcmp(in->token, "<") == 0)
 		{
@@ -101,6 +96,16 @@ int	exec_redirections(t_cmds *cmd)
 		}
 		in = in->next;
 	}
+	return (0);
+}
+
+int	exec_redirections(t_cmds *cmd)
+{
+	int	last_heredoc_fd;
+
+	last_heredoc_fd = -1;
+	if (exec_input_redirections(cmd->infiles, &last_heredoc_fd) < 0)
+		return (-1);
 	if (last_heredoc_fd >= 0)
 	{
 		if (dup2(last_heredoc_fd, STDIN_FILENO) < 0)
