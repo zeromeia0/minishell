@@ -108,26 +108,25 @@ int	check_infiles(t_cmds *cmds)
 	return (1);
 }
 
-int is_cmd_valid(t_cmds *cmd, char **args, char **envp)
+int	is_cmd_valid(t_cmds *cmd, char **args, char **envp)
 {
-    char **paths;
-    int i;
-    int found;
+	char	**paths;
+	int		i;
+	int		found;
 
-    if (has_builtin(cmd))
-        return (1);
-    paths = buildup_path(cmd, args, envp);
-    if (!paths)
-        return (0);
-    i = 0;
-    while (paths[i])
-    {
-        if (access(paths[i], F_OK | X_OK) == 0)
-            break;
-        i++;
-    }
-    found = (paths[i] != NULL);
-    ft_free_matrix(paths);
-    return (found);
+	if (has_builtin(cmd))
+		return (1);
+	paths = buildup_path(cmd, args, envp);
+	if (!paths)
+		return (0);
+	i = 0;
+	while (paths[i])
+	{
+		if (access(paths[i], F_OK | X_OK) == 0)
+			break ;
+		i++;
+	}
+	found = (paths[i] != NULL);
+	ft_free_matrix(paths);
+	return (found);
 }
-

@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:44:52 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/10 18:56:47 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/12 23:15:42 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	handle_non_slash_commands(char *cmd, char **args, char **envp)
 
 int	handle_slash_command(char *cmd, char **args, char **envp)
 {
-	// printf("HANDLING SLASH COMMANDS\n");
 	if (cmd == NULL)
 		btree()->cmds->flag_to_exec = 1;
 	check_commands(cmd);

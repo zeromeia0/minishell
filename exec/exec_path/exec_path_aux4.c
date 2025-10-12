@@ -28,7 +28,6 @@ int	handle_absolute_path_cmd(char *cmd, char **args, char **envp)
 	if (am_i_truly_myself(args[0]) && access(cmd, F_OK) == 0 && access(cmd,
 			X_OK) == 0)
 		update_shell_level(1);
-		
 	if (strchr(cmd, '/'))
 		return (handle_slash_command(cmd, args, envp));
 	else
