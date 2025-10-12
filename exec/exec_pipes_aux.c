@@ -6,11 +6,12 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 08:43:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/12 20:33:54 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/12 21:11:31 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../sigma_minishell.h"
+#include "minishell.h"
 
 int get_heredoc_fd(t_cmds *cmd)
 {
@@ -60,7 +61,7 @@ void execute_child(t_cmds *cmd, int first_fd, int fd[2], char **env)
     if (!cleaned_cmd || !cleaned_cmd[0])
     {
         ft_free_matrix(cleaned_cmd);
-        children_killer(127);
+        megalodon_giga_chad_exit(127, 0);
     }
 
     if (is_builtin(cleaned_cmd[0]))
@@ -68,19 +69,18 @@ void execute_child(t_cmds *cmd, int first_fd, int fd[2], char **env)
         if (ft_strcmp(cleaned_cmd[0], "exit") == 0)
             status = pipes_builtin_exit(cleaned_cmd, env);
         status = exec_builtin(cleaned_cmd[0], cleaned_cmd, env);
+        printf("FREING IT NOW\n");
         ft_free_matrix(cleaned_cmd);
+        ft_free_matrix(env);
         megalodon_giga_chad_exit(status, 0);
     }
     else
     {
         exec_path(cleaned_cmd[0], cleaned_cmd, env);
         ft_free_matrix(cleaned_cmd);
-        children_killer(127);
+        megalodon_giga_chad_exit(127, 0);
     }
 }
-
-
-
 
 int	setup_pipe(t_cmds *cmd, int *first_fd, int fd[2])
 {

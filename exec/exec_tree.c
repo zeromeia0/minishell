@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/11 21:53:17 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/12 20:34:42 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int super_checker_goated(t_cmds *cmd, char *command, char **args)
 	}
 	return (0);
 }
+
 void	exec_child(t_cmds *cmd)	
 {
 	char	**cleaned;

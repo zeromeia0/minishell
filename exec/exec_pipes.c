@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:19:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/12 20:29:07 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/12 21:10:28 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,15 +98,13 @@ int exec_pipes(t_cmds *cmd, char **env)
 
     if (manage_heredocs(cmd) != 0)
         return (btree()->exit_status);
-
     current = cmd;
     while (current)
     {
         if (process_command(current, &first_fd, env) == -1)
-            return (printf("COULDN'T PROCESS IT\n"), -1);
+            return (-1);
         current = current->next;
     }
-
     while (wait(&status) > 0)
         ;
     if (WIFEXITED(status))
@@ -118,7 +116,6 @@ int exec_pipes(t_cmds *cmd, char **env)
         ft_free_matrix(btree()->env);
         btree()->env = list_to_char(*get_env_list());
     }
-    
     return (btree()->exit_status);
 }
 
