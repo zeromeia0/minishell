@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:39 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/13 09:49:21 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/13 15:46:25 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void		free_matrix(char **table);
 void		builtin_env(char **env);
 void		initialize_pwd(char **envp);
 void		handle_sigint(int sig);
+void	execute_child_helper(char **cleaned_cmd, char **env, t_cmds *cmd);
 void		update_env_var(const char *key, const char *value);
 void		discard_heredoc(t_infile *infiles);
 void		init_shell_meta(void);

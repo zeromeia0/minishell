@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 08:43:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/13 15:41:41 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/13 15:53:55 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,35 +38,13 @@ void	setup_child_fds(int first_fd, int fd[2], t_cmds *cmd)
 
 void	execute_child(t_cmds *cmd, int first_fd, int fd[2], char **env)
 {
-	char		**cleaned_cmd;
-	int			status;
-	t_infile	*in;
+	char	**cleaned_cmd;
 
 	if (has_redir(cmd))
 		exec_redirections(cmd);
 	setup_child_fds(first_fd, fd, cmd);
 	cleaned_cmd = array_to_exec(cmd);
-	if (!cleaned_cmd || !cleaned_cmd[0])
-	{
-		ft_free_matrix(cleaned_cmd);
-		in = cmd->infiles;
-		while (in)
-		{
-			if (ft_strcmp(in->token, "<<") == 0 && cmd->heredoc_done == 0)
-				if (exec_empty_heredoc_node(cmd) != 0)
-					megalodon_giga_chad_exit(1, 1);
-			in = in->next;
-		}
-		megalodon_giga_chad_exit(0, 1);
-	}
-	if (is_builtin(cleaned_cmd[0]))
-		child_services(cleaned_cmd, env, status);
-	else
-	{
-		exec_path(cleaned_cmd[0], cleaned_cmd, env);
-		ft_free_matrix(cleaned_cmd);
-		megalodon_giga_chad_exit(127, 0);
-	}
+	execute_child_helper(cleaned_cmd, env, cmd);
 }
 
 int	setup_pipe(t_cmds *cmd, int *first_fd, int fd[2])

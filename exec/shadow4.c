@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 23:20:04 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/13 15:38:00 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/13 15:57:09 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,32 @@ void	help_to_process(t_cmds *cmd, int p[2])
 	megalodon_giga_chad_exit(0, 0);
 }
 
+int	handle_single_heredoc_stuff(t_infile *in)
+{
+	int		fd[2];
+	pid_t	pid;
+
+	if (pipe(fd) == -1)
+		return (perror("pipe"), -1);
+	pid = fork();
+	if (pid == -1)
+		return (perror("fork"), -1);
+	if (pid == 0)
+	{
+		get_single_heredoc(in->file, fd);
+		_exit(0);
+	}
+	else
+	{
+		close(fd[1]);
+		in->heredoc_fd = fd[0];
+		waitpid(pid, NULL, 0);
+	}
+	return (0);
+}
+
 int	exec_empty_heredoc_node(t_cmds *cmd)
 {
-	int			fd[2];
-	pid_t		pid;
 	t_infile	*in;
 
 	in = cmd->infiles;
@@ -49,24 +71,40 @@ int	exec_empty_heredoc_node(t_cmds *cmd)
 	{
 		if (ft_strcmp(in->token, "<<") == 0)
 		{
-			if (pipe(fd) == -1)
-				return (perror("pipe"), -1);
-			pid = fork();
-			if (pid == 0)
-			{
-				get_single_heredoc(in->file, fd);
-				_exit(0);
-			}
-			else
-			{
-				close(fd[1]);
-				in->heredoc_fd = fd[0];
-				waitpid(pid, NULL, 0);
-			}
+			if (handle_single_heredoc_stuff(in) == -1)
+				return (-1);
 		}
 		in = in->next;
 	}
 	if (btree()->env)
 		ft_free_matrix(btree()->env);
 	return (0);
+}
+
+void	execute_child_helper(char **cleaned_cmd, char **env, t_cmds *cmd)
+{
+	int			status;
+	t_infile	*in;
+
+	if (!cleaned_cmd || !cleaned_cmd[0])
+	{
+		ft_free_matrix(cleaned_cmd);
+		in = cmd->infiles;
+		while (in)
+		{
+			if (ft_strcmp(in->token, "<<") == 0 && cmd->heredoc_done == 0)
+				if (exec_empty_heredoc_node(cmd) != 0)
+					megalodon_giga_chad_exit(1, 1);
+			in = in->next;
+		}
+		megalodon_giga_chad_exit(0, 1);
+	}
+	if (is_builtin(cleaned_cmd[0]))
+		child_services(cleaned_cmd, env, status);
+	else
+	{
+		exec_path(cleaned_cmd[0], cleaned_cmd, env);
+		ft_free_matrix(cleaned_cmd);
+		megalodon_giga_chad_exit(127, 0);
+	}
 }
