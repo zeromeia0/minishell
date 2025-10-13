@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:11:44 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/13 09:04:32 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/13 10:03:05 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,6 @@ int	process_heredoc_for_infile(t_infile *in)
 {
 	int		p[2];
 	pid_t	pid;
-	
-	printf("heredoc for infile\n");
 	if (ft_strcmp(in->token, "<<") != 0)
 		return (0);
 	if (pipe(p) == -1)

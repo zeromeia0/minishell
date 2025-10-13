@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:39 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/12 23:13:50 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/13 09:49:21 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ int			exec_single_cmd(t_cmds *cmd);
 int			check_helper(t_cmds *cmd, int *please);
 void		reset_heredoc_flags(t_binary *tree);
 void		help_to_process(t_cmds *cmd, int p[2]);
-
+int exec_empty_heredoc_node(t_cmds *cmd);
 // struct_clear.c
 void		binary_clear(t_binary *binary);
 void		cmds_clear(t_cmds *cmds);
