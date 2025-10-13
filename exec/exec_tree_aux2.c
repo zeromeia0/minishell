@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:12:18 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/12 23:16:59 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/13 09:08:58 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	prepare_signals_and_fork(t_cmds *cmd) // COMEBACK HERE VINI
 {
 	int		shell_should_ignore;
 	pid_t	pid;
-
+	printf("PREPARE SIGNALS AND FORK\n");
 	shell_should_ignore = 0;
 	signal(SIGTTOU, SIG_IGN);
 	signal(SIGTTIN, SIG_IGN);

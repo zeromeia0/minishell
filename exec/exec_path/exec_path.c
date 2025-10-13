@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:44:52 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/12 23:15:42 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/13 09:07:59 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int	handle_system_path_cmd(char *cmd, char **args, char **envp)
 
 int	exec_path(char *cmd, char **args, char **envp)
 {
+	printf("executing path\n");
 	if (!cmd)
 		return (megalodon_giga_chad_exit(127, 0), 0);
 	if (strchr(cmd, '/'))

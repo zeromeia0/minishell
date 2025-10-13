@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 23:05:16 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/12 21:27:07 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/13 09:03:37 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	handle_heredoc(t_cmds *cmd)
 {
+	printf("handling heredoc\n");
 	if (!cmd || cmd->heredoc_done)
 		return (0);
 	signal(SIGINT, handle_sigint);

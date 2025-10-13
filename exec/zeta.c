@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 21:40:31 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/12 23:19:26 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/13 09:06:04 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	super_checker_goated(t_cmds *cmd, char *command, char **args)
 
 int	exec_single_cmd(t_cmds *cmd)
 {
+	printf("exec single cmd\n");
 	if (!cmd || !cmd->cmd)
 		return (btree()->exit_status);
 	if (cmd->flag_to_exec == 1)
@@ -62,7 +63,7 @@ int	exec_single_cmd(t_cmds *cmd)
 int	check_helper(t_cmds *cmd, int *please)
 {
 	int	r;
-
+	printf("check helper\n");
 	while (cmd)
 	{
 		if (cmd->heredoc_done == 0 && *please == 0)

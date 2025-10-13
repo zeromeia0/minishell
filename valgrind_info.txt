@@ -18,3 +18,11 @@ ls | echo a | << a <-- VALGRIND
 ls -l | grep a | echo oi && cat << a
 
 
+ls -l | grep a | echo cat | cat << a && cat << b <-- check again
+
+
+<< a << b | << c && cat << d <-- def not working
+
+cat << a && ls -l | grep b <-- check again
+
+ls -l | grep b && cat <-- check again

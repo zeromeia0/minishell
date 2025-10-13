@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:08:05 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/12 22:18:47 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/13 09:07:37 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ static int	exec_input_redirections(t_infile *in, int *last_heredoc_fd)
 int	exec_redirections(t_cmds *cmd)
 {
 	int	last_heredoc_fd;
-
+	printf("lancando redir\n");
 	last_heredoc_fd = -1;
 	if (exec_input_redirections(cmd->infiles, &last_heredoc_fd) < 0)
 		return (-1);
