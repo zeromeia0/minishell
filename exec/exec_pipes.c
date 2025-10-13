@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:19:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/13 09:05:51 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/13 10:04:29 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ int	exec_pipes_helper(t_cmds *cmd, char **env, int *first_fd)
 
 int	exec_pipes(t_cmds *cmd, char **env)
 {
-	printf("exec pipes\n");
 	int	first_fd;
 	int	status;
 

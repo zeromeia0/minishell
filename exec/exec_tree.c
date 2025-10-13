@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/13 09:07:06 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/13 10:05:14 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	exec_child(t_cmds *cmd)
 {
 	char	**cleaned;
 	char	**updated_envs;
-	printf("executing child\n");
 	if (cmd && cmd->flag_to_exec == 1)
 		megalodon_giga_chad_exit(btree()->exit_status, 0);
 	signal(SIGINT, handle_sigint);
@@ -42,7 +41,6 @@ void	exec_child(t_cmds *cmd)
 
 int	exec_node(t_binary *node, char **args, char **envp)
 {
-	printf("exec node\n");
 	if (!node)
 		return (0);
 	if (node->cmds != NULL)
@@ -61,7 +59,6 @@ int	exec_node(t_binary *node, char **args, char **envp)
 int	check_order(t_binary *tree, char **args, char **envp)
 {
 	static int	please = 0;
-	printf("checking order\n");
 	if (!tree)
 		return (1);
 	if (tree->cmds)
@@ -78,7 +75,6 @@ int	check_order(t_binary *tree, char **args, char **envp)
 int	handle_logic_operations(t_binary *tree, char **args, char **envp)
 {
 	int	ret_left;
-	printf("hand logical osps\n");
 	if (tree->logic && ft_strcmp(tree->logic, "&&") == 0)
 	{
 		ret_left = exec_tree(tree->left, args, envp);
@@ -101,7 +97,6 @@ int	exec_tree(t_binary *tree, char **args, char **envp)
 	int	co;
 	int	signal_status;
 	
-	printf("executing tree\n");
 	if (!tree)
 		return (0);
 	co = check_order(tree, args, envp);

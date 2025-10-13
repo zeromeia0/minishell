@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:11:44 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/13 10:03:05 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/13 10:03:59 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ int	manage_heredocs(t_cmds *cmd)
 {
 	t_cmds		*cur;
 	t_infile	*in;
-	printf("managng heredoc\n");
 	if (!cmd)
 		return (-1);
 	setup_signals_for_parent();

@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:22:16 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/13 09:06:31 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/13 10:04:53 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ int	exec_single_cmd_aux(t_cmds *cmd)
 {
 	int		status;
 	char	**env_array;
-	printf("single cmd aux\n");
 	if (deal_with_bad_exit(cmd) != 1)
 		return (btree()->exit_status);
 	if (ft_strncmp(cmd->cmd[0], "exit", 4) == 0)

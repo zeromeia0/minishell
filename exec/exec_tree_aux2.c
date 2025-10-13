@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:12:18 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/13 09:08:58 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/13 10:05:52 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	prepare_signals_and_fork(t_cmds *cmd) // COMEBACK HERE VINI
 {
 	int		shell_should_ignore;
 	pid_t	pid;
-	printf("PREPARE SIGNALS AND FORK\n");
 	shell_should_ignore = 0;
 	signal(SIGTTOU, SIG_IGN);
 	signal(SIGTTIN, SIG_IGN);
@@ -57,7 +56,6 @@ int	exec_subshell(t_binary *subshell, char **args, char **envp)
 	pid_t	pid;
 	int		status;
 
-	printf("LANCANDO SUBSHELL\n");
 	pid = fork();
 	if (pid == 0)
 		children_killer(exec_tree(subshell, args, envp));
