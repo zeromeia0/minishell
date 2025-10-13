@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:39:31 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/25 08:31:38 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/12 23:12:08 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,6 @@ char	*get_env_var(char *name, char **envp)
 
 int	am_i_truly_myself(const char *cmd)
 {
-	if (stat(cmd, &btree()->cmd_stat) == -1)
-		return (0);
-	if (stat("/proc/self/exe", &btree()->self_stat) == -1)
-		return (0);
 	return (btree()->cmd_stat.st_dev == btree()->self_stat.st_dev
 		&& btree()->cmd_stat.st_ino == btree()->self_stat.st_ino);
 }

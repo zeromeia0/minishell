@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:12:18 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/09 17:31:29 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/13 16:39:30 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 void	handle_parent(pid_t pid, int shell_should_ignore)
 {
 	int	status;
+	int	sig;
 
 	if (!shell_should_ignore)
 		signal(SIGINT, set_to_onethirty);
 	waitpid(pid, &status, 0);
-
 	if (WIFEXITED(status))
 		btree()->exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 	{
-		int sig = WTERMSIG(status);
+		sig = WTERMSIG(status);
 		if (sig == SIGINT || sig == SIGQUIT)
 			btree()->exit_status = 128 + sig;
 		else
@@ -32,13 +32,11 @@ void	handle_parent(pid_t pid, int shell_should_ignore)
 	}
 }
 
-
-
 void	prepare_signals_and_fork(t_cmds *cmd) // COMEBACK HERE VINI
 {
-	pid_t	pid;
 	int		shell_should_ignore;
-	
+	pid_t	pid;
+
 	shell_should_ignore = 0;
 	signal(SIGTTOU, SIG_IGN);
 	signal(SIGTTIN, SIG_IGN);

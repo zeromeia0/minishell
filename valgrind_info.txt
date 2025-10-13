@@ -1,3 +1,21 @@
-AND AND OR OPERATIONS ARE BEING FUCKED UP WHEN COMBINIS WITH PIPES
 
-ls -l | grep a | echo oi && cat << a
+VALGRIND ISSUE
+    pwd && ls -l | grep b
+    exit | exit
+    echo a | ls
+
+    << a
+    cat << a
+    << eof cat > out11
+
+
+
+ls | echo a | << a <-- VALGRIND
+
+<< a << b | << c && cat << a <---- control c is fucked up 
+
+
+
+
+
+

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:49:36 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/09 14:32:04 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/12 22:12:47 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,13 +119,17 @@ int	main(int argc, char *argv[], char **envp)
 		if (parsing(btree()->input) == 0)
 		{
 			// print_tree(btree(), 0);
+			if (btree()->env)
+				ft_free_matrix(btree()->env);
+			btree()->env = list_to_char(*get_env_list());
+
 			btree()->main_exit = exec_tree(btree(), argv, btree()->env);
 			reset_heredoc_flags(btree());
 			if (btree()->global_signal == 130)
-    			btree()->global_signal = 0;
-			restart_signals();
+				btree()->global_signal = 0;
 			free(btree()->input);
 			binary_clear(btree());
+			restart_signals();
 		}
 	}
 	if (btree()->env)

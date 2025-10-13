@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:22:16 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/07 23:25:35 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/13 15:33:47 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int	exec_single_cmd_aux(t_cmds *cmd)
 {
 	int		status;
 	char	**env_array;
+
 	if (deal_with_bad_exit(cmd) != 1)
 		return (btree()->exit_status);
 	if (ft_strncmp(cmd->cmd[0], "exit", 4) == 0)
