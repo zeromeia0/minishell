@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 21:40:31 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/13 10:04:49 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/13 22:00:39 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,14 @@ int	super_checker_goated(t_cmds *cmd, char *command, char **args)
 
 int	exec_single_cmd(t_cmds *cmd)
 {
+	if ((!cmd->cmd || !cmd->cmd[0])
+		&& cmd->infiles && cmd->infiles->token
+		&& ft_strcmp(cmd->infiles->token, "<<") == 0)
+	{
+		if (handle_heredoc(cmd) == -1)
+			return (btree()->exit_status);
+		return (btree()->exit_status);
+	}
 	if (!cmd || !cmd->cmd)
 		return (btree()->exit_status);
 	if (cmd->flag_to_exec == 1)
