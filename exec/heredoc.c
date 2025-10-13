@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:11:44 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/13 14:10:26 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/13 15:36:00 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int	process_heredoc_for_infile(t_infile *in)
 {
 	int		p[2];
 	pid_t	pid;
+
 	if (ft_strcmp(in->token, "<<") != 0)
 		return (0);
 	if (pipe(p) == -1)
@@ -97,6 +98,7 @@ int	manage_heredocs(t_cmds *cmd)
 {
 	t_cmds		*cur;
 	t_infile	*in;
+
 	if (!cmd)
 		return (-1);
 	setup_signals_for_parent();

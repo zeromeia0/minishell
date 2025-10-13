@@ -62,6 +62,7 @@ int	exec_single_cmd(t_cmds *cmd)
 int	check_helper(t_cmds *cmd, int *please)
 {
 	int	r;
+
 	while (cmd)
 	{
 		if (cmd->heredoc_done == 0 && *please == 0)

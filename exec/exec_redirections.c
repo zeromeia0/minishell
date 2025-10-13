@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirections.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:08:05 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/13 10:05:47 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/13 15:39:01 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ static int	exec_input_redirections(t_infile *in, int *last_heredoc_fd)
 int	exec_redirections(t_cmds *cmd)
 {
 	int	last_heredoc_fd;
+
 	last_heredoc_fd = -1;
 	if (exec_input_redirections(cmd->infiles, &last_heredoc_fd) < 0)
 		return (-1);

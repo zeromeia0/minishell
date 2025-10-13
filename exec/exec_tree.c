@@ -19,6 +19,7 @@ void	exec_child(t_cmds *cmd)
 {
 	char	**cleaned;
 	char	**updated_envs;
+
 	if (cmd && cmd->flag_to_exec == 1)
 		megalodon_giga_chad_exit(btree()->exit_status, 0);
 	signal(SIGINT, handle_sigint);
@@ -59,6 +60,7 @@ int	exec_node(t_binary *node, char **args, char **envp)
 int	check_order(t_binary *tree, char **args, char **envp)
 {
 	static int	please = 0;
+
 	if (!tree)
 		return (1);
 	if (tree->cmds)
@@ -75,6 +77,7 @@ int	check_order(t_binary *tree, char **args, char **envp)
 int	handle_logic_operations(t_binary *tree, char **args, char **envp)
 {
 	int	ret_left;
+
 	if (tree->logic && ft_strcmp(tree->logic, "&&") == 0)
 	{
 		ret_left = exec_tree(tree->left, args, envp);
@@ -96,7 +99,7 @@ int	exec_tree(t_binary *tree, char **args, char **envp)
 {
 	int	co;
 	int	signal_status;
-	
+
 	if (!tree)
 		return (0);
 	co = check_order(tree, args, envp);

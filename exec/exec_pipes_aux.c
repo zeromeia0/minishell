@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 08:43:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/13 15:32:05 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/13 15:41:41 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,19 @@ void	setup_child_fds(int first_fd, int fd[2], t_cmds *cmd)
 		dup2(first_fd, STDIN_FILENO);
 		close(first_fd);
 	}
-
 	if (cmd->next != NULL && cmd->outfiles == NULL)
 		dup2(fd[1], STDOUT_FILENO);
-
 	if (fd[0] >= 0)
 		close(fd[0]);
 	if (fd[1] >= 0)
 		close(fd[1]);
 }
 
-
-
 void	execute_child(t_cmds *cmd, int first_fd, int fd[2], char **env)
 {
-	char	**cleaned_cmd;
-	int		status;
+	char		**cleaned_cmd;
+	int			status;
+	t_infile	*in;
 
 	if (has_redir(cmd))
 		exec_redirections(cmd);
@@ -52,14 +49,12 @@ void	execute_child(t_cmds *cmd, int first_fd, int fd[2], char **env)
 	if (!cleaned_cmd || !cleaned_cmd[0])
 	{
 		ft_free_matrix(cleaned_cmd);
-		t_infile *in = cmd->infiles;
+		in = cmd->infiles;
 		while (in)
 		{
 			if (ft_strcmp(in->token, "<<") == 0 && cmd->heredoc_done == 0)
-			{
 				if (exec_empty_heredoc_node(cmd) != 0)
 					megalodon_giga_chad_exit(1, 1);
-			}
 			in = in->next;
 		}
 		megalodon_giga_chad_exit(0, 1);
