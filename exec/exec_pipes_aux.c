@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 08:43:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/13 14:12:35 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/13 15:32:05 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,22 @@ void	setup_child_fds(int first_fd, int fd[2], t_cmds *cmd)
 		dup2(heredoc_fd, STDIN_FILENO);
 		close(heredoc_fd);
 	}
-	else if (first_fd != -1)
+	else if (first_fd != -1 && cmd->infiles == NULL && heredoc_fd == -1)
 	{
 		dup2(first_fd, STDIN_FILENO);
 		close(first_fd);
 	}
+
 	if (cmd->next != NULL && cmd->outfiles == NULL)
 		dup2(fd[1], STDOUT_FILENO);
+
 	if (fd[0] >= 0)
 		close(fd[0]);
 	if (fd[1] >= 0)
 		close(fd[1]);
 }
+
+
 
 void	execute_child(t_cmds *cmd, int first_fd, int fd[2], char **env)
 {
