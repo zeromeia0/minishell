@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:11:44 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/13 10:03:59 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/13 14:05:52 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	get_single_heredoc(char *eof, int fd[2])
 	heredoc_setup();
 	process_heredoc_lines(delimiter, len, fd);
 	free(delimiter);
+	if (btree()->env)
+		ft_free_matrix(btree()->env);
 	if (fd)
 		close(fd[1]);
 }

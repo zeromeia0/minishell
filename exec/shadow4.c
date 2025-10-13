@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shadow4.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 23:20:04 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/13 09:52:04 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/13 14:02:15 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ int exec_empty_heredoc_node(t_cmds *cmd)
         }
         in = in->next;
     }
-
+	if (btree()->env)
+		ft_free_matrix(btree()->env);
     return 0; // success
 }
 

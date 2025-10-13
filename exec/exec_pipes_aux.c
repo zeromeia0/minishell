@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipes_aux.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 08:43:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/13 09:53:50 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/13 14:04:35 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	execute_child(t_cmds *cmd, int first_fd, int fd[2], char **env)
 			if (ft_strcmp(in->token, "<<") == 0 && cmd->heredoc_done == 0)
 			{
 				if (exec_empty_heredoc_node(cmd) != 0)
-					megalodon_giga_chad_exit(1, 0);
+					megalodon_giga_chad_exit(1, 1);
 			}
 			in = in->next;
 		}

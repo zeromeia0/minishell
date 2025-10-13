@@ -12,8 +12,6 @@ VALGRIND ISSUE
 
 ls | echo a | << a <-- VALGRIND
 
-ls -l | grep a | echo cat | cat << a && cat << b <-- NOT WORKING
-
 << a << b | << c && cat << a <---- control c is fucked up 
 
 
