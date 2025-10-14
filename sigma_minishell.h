@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sigma_minishell.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/13 16:40:59 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/14 10:54:20 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,6 @@ char					*expand_hd(char *str);
 void					expand_infiles(t_infile *infile);
 void					expand_outfiles(t_outfile *outfile);
 void					check_commands(char *cmd);
-char					**buildup_path(t_cmds *cmd, char **args, char **envp);
 int						ensure_outfile(t_outfile *out);
 int						check_infiles(t_cmds *cmds);
 int						check_cmds(t_cmds *cmds, char **args, char **envp);

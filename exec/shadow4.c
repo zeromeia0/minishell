@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shadow4.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 23:20:04 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/13 15:57:09 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/14 10:56:53 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	execute_child_helper(char **cleaned_cmd, char **env, t_cmds *cmd)
 	int			status;
 	t_infile	*in;
 
+	status = 0;
 	if (!cleaned_cmd || !cleaned_cmd[0])
 	{
 		ft_free_matrix(cleaned_cmd);

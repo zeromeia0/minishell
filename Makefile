@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+         #
+#    By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/13 15:40:32 by vivaz-ca          #+#    #+#              #
-#    Updated: 2025/10/13 15:40:33 by vivaz-ca         ###   ########.fr        #
+#    Updated: 2025/10/14 10:52:15 by vvazzs           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,7 @@ EXEC=			$(wildcard ${EXEC_DIR}/*.c) \
 
 CC=			cc
 AR=			ar rcs
-# CFLAGS=		-Wall -Wextra -Werror -g -finstrument-functions
-CFLAGS=		-g -finstrument-functions
+CFLAGS=		-Wall -Wextra -Werror -g -finstrument-functions
 PIPEX       = pipex
 PIPEX_BONUS = pipex_bonus
 PIPEX_DIR   = pipex

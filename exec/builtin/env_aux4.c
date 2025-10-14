@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:11:32 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/21 15:32:25 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/14 11:01:00 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ int	add_new_temp_var(t_os_envs **env_list, const char *str)
 int	add_temp_var(const char *str)
 {
 	t_os_envs	**env_list;
-	t_os_envs	*current;
 
 	env_list = get_env_list();
 	if (temp_var_exists(*env_list, str))

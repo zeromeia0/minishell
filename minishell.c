@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:49:36 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/12 22:12:47 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/14 10:52:56 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ t_binary	*btree(void)
 
 static void	initialize_stuff(int argc, char *argv[], char **envp)
 {
+	(void)argc;
 	if (isatty(STDIN_FILENO))
 		tcgetattr(STDIN_FILENO, &btree()->orig_termios);
 	signal(SIGINT, handle_sigint);

@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 21:50:26 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/12 21:52:35 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/14 11:01:56 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	expand_infiles(t_infile *infile)
 		len = ft_strlen(infile->file);
 		infile->flag = 0;
 		take_quotes(infile->file);
-		if (len != ft_strlen(infile->file))
+		if (len != (int)ft_strlen(infile->file))
 			infile->flag = 1;
 	}
 	else
