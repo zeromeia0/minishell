@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 21:40:31 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/14 14:33:12 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/14 14:40:58 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int	check_cmds(t_cmds *cmds, char **args, char **envp)
 	return (1);
 }
 
-int	super_checker_goated(t_cmds *cmd, char *command, char **args)
+int	super_checker_goated(t_cmds *cmd, char **command, char **args)
 {
-	(void)command;
+	ft_free_matrix(command);
 	if (!has_builtin(cmd) && !has_redir(cmd)
 		&& !is_system_path_command(cmd->cmd[0], args))
 	{
