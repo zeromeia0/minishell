@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wildcards_aux1.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/09 10:59:07 by namejojo          #+#    #+#             */
+/*   Updated: 2025/10/09 10:59:08 by namejojo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../sigma_minishell.h"
 
 void	add_wild_back(t_wild **lst, t_wild *new)
@@ -41,7 +53,7 @@ void	quote_matrix(char **mat)
 
 void	sort_wild(t_wild *wild1)
 {
-	t_wild *wild2;
+	t_wild	*wild2;
 
 	while (wild1)
 	{

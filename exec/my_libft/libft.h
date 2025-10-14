@@ -3,30 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:02:51 by jlima-so          #+#    #+#             */
-/*   Updated: 2025/09/20 00:27:08 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/09 11:37:52 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
-# define LIBFT_H
+#define LIBFT_H
 
-# include "get_next_line/get_next_line_bonus.h"
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <limits.h>
-# include <ctype.h>
-# include <string.h>
+#include "get_next_line/get_next_line_bonus.h"
+#include <stdlib.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <limits.h>
+#include <ctype.h>
+#include <string.h>
 // # include <bsd/string.h>
-# include <errno.h>
-# include <fcntl.h>
-# include <sys/wait.h>
-# include <sys/types.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <sys/wait.h>
+#include <sys/types.h>
 
-typedef struct s_exec
+typedef struct	s_exec
 {
 	char	*path;
 	char	**cmd;
@@ -34,9 +34,9 @@ typedef struct s_exec
 	int		ind;
 	int		check;
 	char	**mat;
-}				t_exec;
+}	t_exec;
 
-typedef struct s_main
+typedef struct	s_main
 {
 	int	fd;
 	int	fd2[2];
@@ -44,7 +44,7 @@ typedef struct s_main
 	int	ind;
 }	t_main;
 
-typedef struct s_pipex
+typedef struct	s_pipex
 {
 	int	fd[3];
 	int	id;
@@ -75,7 +75,7 @@ void	*ft_calloc(size_t nmemb, size_t size);
 size_t	ft_strlen(const char *s);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
-void	ft_striteri(char const *s, void (*f)(unsigned int, char*));
+void	ft_striteri(char const *s, void (*f)(unsigned int, char *));
 int		ft_memcmp(const void *str1, const void *str2, size_t n);
 int		ft_isprint(int c);
 int		ft_isdigit(int c);
@@ -106,22 +106,20 @@ char	*ft_wrdchr(const char *s, int c);
 int		ft_emptystr(const char *str);
 int		ft_strcmp(char *s1, char *s2);
 
-typedef struct s_list
+typedef struct	s_list
 {
-	void			*content;
-	struct s_list	*next;
-}				t_list;
+	void *content;
+	struct s_list *next;
+}	t_list;
 
 void	ft_lstadd_front(t_list **lst, t_list *new);
 void	ft_lstadd_back(t_list **lst, t_list *new);
-void	ft_lstclear(t_list **lst, void (*del)(void*));
+void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstnew(void *content);
-t_list	*ft_lstmap(t_list *lst, void *(*f)(void *),
-			void (*del)(void *));
 t_list	*ft_lstlast(t_list *lst);
 int		ft_lstsize(t_list *lst);
-void	ft_lstdelone(t_list *lst, void (*del)(void*));
+void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	adeus(void *content);
 
 #endif

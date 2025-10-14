@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipes_aux.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 08:43:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/13 15:53:55 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/14 10:53:22 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	execute_child(t_cmds *cmd, int first_fd, int fd[2], char **env)
 
 int	setup_pipe(t_cmds *cmd, int *first_fd, int fd[2])
 {
+	(void)first_fd;
 	if (cmd->next != NULL)
 	{
 		if (pipe(fd) == -1)

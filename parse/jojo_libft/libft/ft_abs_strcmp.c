@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_abs_strcmp.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 14:38:38 by jlima-so          #+#    #+#             */
-/*   Updated: 2025/09/04 14:38:39 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/10/09 09:59:49 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_abs_strcmp(char *str1, char *str2)
 {
-	char ch1;
-	char ch2;
+	char	ch1;
+	char	ch2;
 
 	if (!str1 || !str2)
 		return (str1 - str2);

@@ -16,6 +16,6 @@ ls | echo a | << a <-- VALGRIND
 
 
 
-
+cat "a"
 
 

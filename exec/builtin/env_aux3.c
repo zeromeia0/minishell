@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_aux3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:11:26 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/09 12:34:52 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/14 11:00:49 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ char	**list_to_char(t_os_envs *envs)
 {
 	size_t	count;
 	char	**final_char;
-	size_t	i;
 
 	count = count_env_nodes(envs);
 	final_char = malloc(sizeof(char *) * (count + 1));
@@ -83,7 +82,6 @@ void	add_node_to_list(t_os_envs **env_list, t_os_envs *new_node)
 void	rebuild_env_list(t_os_envs **env_list, char **env_vars)
 {
 	t_os_envs	*new_node;
-	t_os_envs	*last;
 
 	clear_env_list();
 	while (*env_vars)
