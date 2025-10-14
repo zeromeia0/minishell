@@ -6,7 +6,7 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:02:51 by jlima-so          #+#    #+#             */
-/*   Updated: 2025/10/09 09:46:23 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/14 11:14:25 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,19 @@ typedef struct s_pipex
 	int	ind;
 }	t_pipex;
 
+char	*ft_join_matrix(char **mat, int total);
+char	*ft_rmrep(char *str, char rep);
+char	**ft_matrix_in_matrix(char **mat, int ind, char **holder);
+int		ft_emptystr(const char *str);
+int		ft_str_count(char *str, char c);
+int		ft_strcmp(const char *s1, const char *s2);
+char	**ft_giga_split(char *str, char c);
+void	ft_ult_swap(char **p1, char **p2);
+void	ft_swap(char *p1, char *p2);
+int		ft_abs_strcmp(char *str1, char *str2);
+void	free_matrix_nodes(char **mat);
+long	ft_atol(const char *str);
+char	*ft_strsubs(char *str, char ch1, char ch2);
 void	ft_matrix_uni(char **dest, char **src);
 char	*ft_itoa(int n);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
@@ -104,19 +117,6 @@ int		check_input(int *ac, char ***av, char **env);
 int		check_one_cmd(char *str, char **env, char **cmd, int value);
 void	rdwr_frm_int_fd(char *cmd_path_inc, char **env, int rd, int wr);
 char	*ft_wrdchr(const char *s, int c);
-int		ft_emptystr(const char *str);
-int		ft_str_count(char *str, char c);
-int		ft_strcmp(const char *s1, const char *s2);
-char	**ft_giga_split(char *str, char c);
-void	ft_ult_swap(char **p1, char **p2);
-void	ft_swap(char *p1, char *p2);
-int		ft_abs_strcmp(char *str1, char *str2);
-void	free_matrix_nodes(char **mat);
-char    *ft_join_matrix(char **mat, int total);
-long	ft_atol(const char *str);
-char	*ft_strsubs(char *str, char ch1, char ch2);
-char    *ft_rmrep(char *str, char rep);
-char    **ft_matrix_in_matrix(char **mat, int ind, char **holder);
 
 typedef struct s_list
 {
