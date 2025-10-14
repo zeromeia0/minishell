@@ -7,6 +7,7 @@
 		"termios.h": "c",
 		"libft.h": "c",
 		"string.h": "c",
-		"signal.h": "c"
+		"signal.h": "c",
+		"minishell.h": "c"
 	}
 }
