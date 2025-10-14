@@ -34,7 +34,9 @@ t_infile	*infile_new(char *file, char *token)
 	if (new == NULL)
 		return (NULL);
 	new->file = file;
+	new->flag = 0;
 	new->token = token;
+	new->flag = 0;
 	new->next = NULL;
 	return (new);
 }
@@ -48,6 +50,7 @@ t_cmds	*cmds_new(t_outfile *outfile, t_infile *infile, char **cmd)
 		return (NULL);
 	new->cmd = cmd;
 	new->outfiles = outfile;
+	new->heredoc_done = 0;
 	new->infiles = infile;
 	new->next = NULL;
 	new->expanded = 0;

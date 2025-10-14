@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:21:23 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 11:39:10 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/14 11:00:13 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	is_builtin(char *cmd)
 {
 	if (!cmd)
-		return (0);
+		return (1);
 	if (ft_strcmp(cmd, "cd") == 0)
 		return (1);
 	else if (ft_strcmp(cmd, "pwd") == 0)
@@ -36,7 +36,7 @@ int	is_builtin(char *cmd)
 
 int	has_builtin(t_cmds *cmd)
 {
-	if (!cmd || !cmd->cmd || !cmd->cmd[0])
+	if (!cmd || !cmd->cmd)
 		return (0);
 	return (is_builtin(cmd->cmd[0]));
 }
@@ -69,15 +69,15 @@ int	builtin_exit(char **args, char **envp)
 {
 	long	status;
 
-	(void)envp;
 	if (!args[1])
 	{
+		ft_free_matrix(envp);
 		if (btree()->global_signal)
 			status = btree()->global_signal;
 		else
 			status = btree()->exit_status;
 		update_shell_level(-1);
-		megalodon_giga_chad_exit((unsigned char)status);
+		megalodon_giga_chad_exit((unsigned char)status, 1);
 	}
 	if (!is_numeric(args[1]))
 		return (my_ffprintf(args[1], "numeric argument required"), 0);
@@ -85,11 +85,16 @@ int	builtin_exit(char **args, char **envp)
 		return (ft_putstr_fd("minishell: exit: too many arguments", 2), 0);
 	status = ft_atol(args[1]);
 	update_shell_level(-1);
-	return (megalodon_giga_chad_exit((unsigned char)status), 0);
+	return (ft_free_matrix(envp),
+		megalodon_giga_chad_exit((unsigned char)status, 1), 0);
 }
 
 int	exec_builtin(char *cmd, char **args, char **envp)
 {
+	if (!cmd)
+	{
+		;
+	}
 	if (ft_strcmp(cmd, "cd") == 0)
 		return (builtin_cd(args));
 	else if (ft_strcmp(cmd, "pwd") == 0)

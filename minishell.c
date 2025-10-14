@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:49:36 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/02 15:41:53 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/14 10:52:56 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,13 @@ void	print_outfiles(t_outfile *file)
 
 void	print_cmds(t_cmds *cmds)
 {
+	if (!cmds)
+	{	printf("TEM NADA AQUI PIRRA\n");
+		return ;
+	}
 	while (cmds)
 	{
+		// cmds.
 		printf("==================\n");
 		printf("\t\tstarts infile\n");
 		print_infiles(cmds->infiles);
@@ -78,6 +83,7 @@ t_binary	*btree(void)
 
 static void	initialize_stuff(int argc, char *argv[], char **envp)
 {
+	(void)argc;
 	if (isatty(STDIN_FILENO))
 		tcgetattr(STDIN_FILENO, &btree()->orig_termios);
 	signal(SIGINT, handle_sigint);
@@ -85,20 +91,26 @@ static void	initialize_stuff(int argc, char *argv[], char **envp)
 	builtin_env(envp);
 	if (am_i_truly_myself(argv[0]))
 		update_shell_level(1);
+	if (btree()->env)
+		ft_free_matrix(btree()->env);
 	btree()->env = list_to_char(*get_env_list());
 	btree()->os_env = *get_env_list();
+
 	enhanced_sorting_stoled_from_jlima(btree()->os_env);
 }
+
 
 int	main(int argc, char *argv[], char **envp)
 {
 	initialize_stuff(argc, argv, envp);
 	while (1)
 	{
+		if (btree()->global_signal == 130)
+    		btree()->global_signal = 0;
+		restart_signals();
 		btree()->input = readline("minishell$ ");
 		if (!btree()->input)
-			break ;
-		restart_signals();
+			break;
 		add_history(btree()->input);
 		if (*btree()->input == '\0')
 		{
@@ -107,14 +119,27 @@ int	main(int argc, char *argv[], char **envp)
 		}
 		if (parsing(btree()->input) == 0)
 		{
+			// print_tree(btree(), 0);
+			if (btree()->env)
+				ft_free_matrix(btree()->env);
+			btree()->env = list_to_char(*get_env_list());
+
 			btree()->main_exit = exec_tree(btree(), argv, btree()->env);
-			restart_signals();
+			reset_heredoc_flags(btree());
+			if (btree()->global_signal == 130)
+				btree()->global_signal = 0;
 			free(btree()->input);
 			binary_clear(btree());
+			restart_signals();
 		}
 	}
-	ft_free_matrix(btree()->env);
+	if (btree()->env)
+	{
+	    ft_free_matrix(btree()->env);
+	    btree()->env = NULL;
+	}
 	free_os_envs();
 	return (clear_env_list(), printf("Closing Minishell\n"),
 		btree()->exit_status);
 }
+	

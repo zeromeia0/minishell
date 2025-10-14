@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree_aux1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:12:18 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/01 16:17:56 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/14 10:55:03 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	**build_system_paths(char *cmd_name, char **paths)
 	return (final_str);
 }
 
-char	**buildup_path(t_cmds *cmd, char **args, char **envp)
+char	**buildup_path(t_cmds *cmd, char **envp)
 {
 	char	**final_str;
 	char	**paths_to_search;
@@ -112,8 +112,12 @@ int	is_cmd_valid(t_cmds *cmd, char **args, char **envp)
 {
 	char	**paths;
 	int		i;
+	int		found;
 
-	paths = buildup_path(cmd, args, envp);
+	(void)args;
+	if (has_builtin(cmd))
+		return (1);
+	paths = buildup_path(cmd, envp);
 	if (!paths)
 		return (0);
 	i = 0;
@@ -123,6 +127,7 @@ int	is_cmd_valid(t_cmds *cmd, char **args, char **envp)
 			break ;
 		i++;
 	}
+	found = (paths[i] != NULL);
 	ft_free_matrix(paths);
-	return (paths[i] != NULL);
+	return (found);
 }

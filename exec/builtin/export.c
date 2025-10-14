@@ -6,14 +6,13 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 23:57:32 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/24 22:05:13 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/12 21:28:49 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../sigma_minishell.h"
 
-int	update_existing_env_var(t_os_envs *current, const char *str,
-		size_t len)
+int	update_existing_env_var(t_os_envs *current, const char *str, size_t len)
 {
 	char	*new_var;
 
@@ -37,8 +36,7 @@ int	update_existing_env_var(t_os_envs *current, const char *str,
 	return (1);
 }
 
-int	convert_temp_to_env_var(t_os_envs *current, const char *str,
-		size_t len)
+int	convert_temp_to_env_var(t_os_envs *current, const char *str, size_t len)
 {
 	char	*new_var;
 
@@ -58,8 +56,7 @@ int	convert_temp_to_env_var(t_os_envs *current, const char *str,
 	return (1);
 }
 
-int	make_update_env_aux(t_os_envs **env_list, const char *str,
-		size_t len)
+int	make_update_env_aux(t_os_envs **env_list, const char *str, size_t len)
 {
 	t_os_envs	*current;
 	int			result;
@@ -95,22 +92,21 @@ size_t	get_env_key_length(const char *str)
 
 int	builtin_export(char **args)
 {
-	int		i;
-	size_t	len;
+	int	i;
 
 	i = 1;
 	if (!args[1])
 		return (export_print_env_list(), 0);
 	while (args[i])
 	{
-		len = get_env_key_length(args[i]);
-		if (make_update_env(args[i]) == 1)
+		if (strchr(args[i], '='))
 		{
-			if (!strchr(args[i], '='))
-				add_temp_var(args[i]);
-			else if (add_new_env_var(get_env_list(), args[i]) < 0)
-				return (perror("minishell: export"), 1);
+			if (make_update_env(args[i]) != 0)
+				if (add_new_env_var(get_env_list(), args[i]) < 0)
+					return (perror("minishell: export"), 1);
 		}
+		else
+			add_temp_var(args[i]);
 		i++;
 	}
 	return (0);

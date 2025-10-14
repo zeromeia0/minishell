@@ -6,14 +6,13 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/09 10:36:27 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/14 11:09:59 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SIGMA_MINISHELL_H
 # define SIGMA_MINISHELL_H
 
-# include "exec/minishell.h"
 # include "parse/jojo_libft/libft.h"
 # include <dirent.h>
 # include <readline/history.h>
@@ -65,13 +64,23 @@ typedef struct s_os_envs
 
 typedef struct s_cmds
 {
-	int				expanded;
-	int				flag_to_exec;
-	char			**cmd;
-	t_infile		*infiles;
-	t_outfile		*outfiles;
-	struct s_cmds	*next;
-}					t_cmds;
+	int					heredoc_done;
+	int					expanded;
+	int					flag_to_exec;
+	char				**cmd;
+	t_infile			*infiles;
+	t_outfile			*outfiles;
+	struct s_cmds		*next;
+}						t_cmds;
+
+typedef enum e_type
+{
+	CMD,
+	AND,
+	OR,
+	EMPTY,
+	ERROR
+}	t_type;
 
 typedef struct s_binary
 {
@@ -99,116 +108,123 @@ typedef struct s_binary
 	struct termios	orig_termios; //<-- VINI TESTEANDO UMA CRAZY THING
 }					t_binary;
 
-int			parsing(char *str);
-int			is_builtin(char *cmd);
-int			builtin_cd(char **args);
-int			builtin_pwd(void);
-int			builtin_echo(char **args);
-int			builtin_exit(char **args, char **envp);
-int			builtin_unset(char **args);
-int			exec_builtin(char *cmd, char **args, char **envp);
-int			builtin_export(char **args);
-int			exec_path(char *cmd, char **args, char **envp);
-int			exec_tree(t_binary *tree, char **args, char **envp);
-int			exec_pipes(t_cmds *cmd, char **env);
-int			exec_redirections(t_cmds *cmd);
-int			has_redir(t_cmds *cmd);
-int			print_linux_env_list(void);
-int			add_temp_var(const char *str);
-int			update_shell_level(int amount);
-int			make_update_env(const char *str);
-int			am_i_truly_myself(const char *cmd);
-int			has_builtin(t_cmds *cmd);
-int			is_redir_token(const char *s);
-int			count_tokens(t_cmds *cmd);
-int			check_path_access(char *path, char *cmd);
-int			is_system_path_command(char *cmd, char **envp);
-int			exec_system_path(char *cmd, char **args, char **envp);
-int			count_it(char *str, int c);
-int			add_new_env_var(t_os_envs **env_list, const char *str);
-int			exec_single_cmd_aux(t_cmds *cmd);
-bool		is_n_flag(const char *arg);
-void		init_tree(char **mat);
-void		export_print_env_list(void);
-void		free_matrix(char **table);
-void		builtin_env(char **env);
-void		initialize_pwd(char **envp);
-void		handle_sigint(int sig);
-void		update_env_var(const char *key, const char *value);
-void		discard_heredoc(t_infile *infiles);
-void		init_shell_meta(void);
-void		enhanced_sorting_stoled_from_jlima(t_os_envs *envs);
-void		my_ffprintf(char *cmd, char *which_message);
-void		expand_args(t_cmds *cmd);
-void		prepare_for_exec(void);
-void		clear_env_list(void);
-void		rebuild_env_list(t_os_envs **env_list, char **env_vars);
-void		free_env_list(t_os_envs *head);
-char		*aspas(char *str, int c);
-char		*remove_it(char *str, int c);
-char		*remove_aspas(char *str);
-char		*find_path(char **envp, char *which_env);
-char		*find_path_in_list(t_os_envs *env_list, const char *key);
-char		*get_env_var(char *name, char **envp);
-char		*logical_pwd_update(const char *oldpwd, const char *target);
-char		**array_to_exec(t_cmds *cmd);
-char		**list_to_char(t_os_envs *envs);
-char		**get_paths_to_search(char **envp);
-char		**split_path(char **envp);
-t_binary	*btree(void);
-t_os_envs	**get_env_list(void);
-t_os_envs	*create_env_node(char *path);
-void		handle_quit(int sig);
-void		process_all_heredocs(t_infile *in, int fd[2]);
-int			is_numeric(const char *s);
-int			add_new_env_var(t_os_envs **env_list, const char *str);
-int			make_update_env(const char *str);
-size_t		get_env_key_length(const char *str);
-int			make_update_env_aux(t_os_envs **env_list,
-const char *str, size_t len);
-int			handle_heredoc(t_cmds *cmd);
-int			handle_regular_redirections(t_cmds *cmd);
-void		pid_equal_zero_double(t_cmds *cmd, int p[2]);
-int			exec_single_left(t_infile *in);
-int			exec_out_redirections(t_outfile *out);
-int			exec_double_left(t_infile *in, t_cmds *cmd);
-void		buildup_new_args(char *cmd, char **envp);
-int			handle_absolute_path_cmd(char *cmd, char **args, char **envp);
-int			handle_slash_command(char *cmd, char **args, char **envp);
-int			handle_non_slash_commands(char *cmd, char **args, char **envp);
-int			has_heredocs(t_cmds *cmd);
-int			process_command(t_cmds *cmd, int *first_fd, char **env);
-void		print_cmds(t_cmds *cmds);
-int			process_heredocs_and_checks(t_cmds *cmd);
-void		get_single_heredoc(char *eof, int fd[2]);
-char		*expand_hd(char *str);
-void		expand_infiles(t_infile *infile);
-void		expand_outfiles(t_outfile *outfile);
-void		megalodon_giga_chad_exit(int status);
-void		check_commands(char *cmd);
-char		**buildup_path(t_cmds *cmd, char **args, char **envp);
-int			ensure_outfile(t_outfile *out);
-int			check_infiles(t_cmds *cmds);
-int			check_cmds(t_cmds *cmds, char **args, char **envp);
-int			check_outfiles(t_cmds *cmds);
-void		double_helper(int status, int p[2], pid_t pid);
-void		handle_parent(pid_t pid, int shell_should_ignore);
-void		prepare_signals_and_fork(t_cmds *cmd);
-int			exec_subshell(t_binary *subshell, char **args, char **envp);
-int			cmd_has_heredoc(t_cmds *cmd);
-int			is_cmd_valid(t_cmds *cmd, char **args, char **envp);
-void		exec_child(t_cmds *cmd);
-void		children_killer(int status);
-int			process_command_heredocs(t_cmds *cmd);
-char   		*single_expand(char *str, int ind, int count);
-void		single_error_msg(char wc);
+int						parsing(char *str);
+int						is_builtin(char *cmd);
+void	reset_heredoc_flags(t_binary *tree);
+int						builtin_cd(char **args);
+int						builtin_pwd(void);
+int						builtin_echo(char **args);
+int						builtin_exit(char **args, char **envp);
+int						builtin_unset(char **args);
+int						exec_builtin(char *cmd, char **args, char **envp);
+int						builtin_export(char **args);
+int						exec_path(char *cmd, char **args, char **envp);
+int						exec_tree(t_binary *tree, char **args, char **envp);
+int						exec_pipes(t_cmds *cmd, char **env);
+int						exec_redirections(t_cmds *cmd);
+int						has_redir(t_cmds *cmd);
+int						print_linux_env_list(void);
+int						add_temp_var(const char *str);
+int						update_shell_level(int amount);
+int						make_update_env(const char *str);
+int						am_i_truly_myself(const char *cmd);
+int						has_builtin(t_cmds *cmd);
+int						is_redir_token(const char *s);
+int						count_tokens(t_cmds *cmd);
+int						check_path_access(char *path, char *cmd);
+int						is_system_path_command(char *cmd, char **envp);
+int						exec_system_path(char *cmd, char **args, char **envp);
+int						count_it(char *str, int c);
+int						add_new_env_var(t_os_envs **env_list, const char *str);
+int						exec_single_cmd_aux(t_cmds *cmd);
+bool					is_n_flag(const char *arg);
+void					init_tree(char **mat);
+void					export_print_env_list(void);
+void					free_matrix(char **table);
+void					builtin_env(char **env);
+void					initialize_pwd(char **envp);
+void					handle_sigint(int sig);
+void					update_env_var(const char *key, const char *value);
+void					discard_heredoc(t_infile *infiles);
+void					init_shell_meta(void);
+void					enhanced_sorting_stoled_from_jlima(t_os_envs *envs);
+void					my_ffprintf(char *cmd, char *which_message);
+void					expand_args(t_cmds *cmd);
+void					prepare_for_exec(void);
+void					clear_env_list(void);
+void					rebuild_env_list(t_os_envs **env_list, char **env_vars);
+void					free_env_list(t_os_envs *head);
+char					*aspas(char *str, int c);
+char					*remove_it(char *str, int c);
+char					*remove_aspas(char *str);
+char					*find_path(char **envp, char *which_env);
+char					*find_path_in_list(t_os_envs *env_list,
+							const char *key);
+char					*get_env_var(char *name, char **envp);
+char					*logical_pwd_update(const char *oldpwd,
+							const char *target);
+char					**array_to_exec(t_cmds *cmd);
+char					**list_to_char(t_os_envs *envs);
+char					**get_paths_to_search(char **envp);
+char					**split_path(char **envp);
+t_binary				*btree(void);
+t_os_envs				**get_env_list(void);
+t_os_envs				*create_env_node(char *path);
+void					handle_quit(int sig);
+void					process_all_heredocs(t_infile *in, int fd[2]);
+int						is_numeric(const char *s);
+int						add_new_env_var(t_os_envs **env_list, const char *str);
+int						make_update_env(const char *str);
+size_t					get_env_key_length(const char *str);
+int						make_update_env_aux(t_os_envs **env_list,
+							const char *str, size_t len);
+int						handle_heredoc(t_cmds *cmd);
+int						handle_regular_redirections(t_cmds *cmd);
+void					pid_equal_zero_double(t_cmds *cmd, int p[2]);
+int						exec_single_left(t_infile *in);
+int						exec_out_redirections(t_outfile *out);
+int						exec_double_left(t_infile *in, t_cmds *cmd);
+void					buildup_new_args(char *cmd, char **envp);
+int						handle_absolute_path_cmd(char *cmd, char **args,
+							char **envp);
+int						handle_slash_command(char *cmd, char **args,
+							char **envp);
+int						handle_non_slash_commands(char *cmd, char **args,
+							char **envp);
+int						has_heredocs(t_cmds *cmd);
+int						process_command(t_cmds *cmd, int *first_fd, char **env);
+void					print_cmds(t_cmds *cmds);
+int						process_heredocs_and_checks(t_cmds *cmd);
+void					get_single_heredoc(char *eof, int fd[2]);
+char					*expand_hd(char *str);
+void					expand_infiles(t_infile *infile);
+void					expand_outfiles(t_outfile *outfile);
+void					check_commands(char *cmd);
+int						ensure_outfile(t_outfile *out);
+int						check_infiles(t_cmds *cmds);
+int						check_cmds(t_cmds *cmds, char **args, char **envp);
+int						check_outfiles(t_cmds *cmds);
+void					double_helper(int status, int p[2], pid_t pid);
+void					handle_parent(pid_t pid, int shell_should_ignore);
+void					prepare_signals_and_fork(t_cmds *cmd);
+int						exec_subshell(t_binary *subshell, char **args,
+							char **envp);
+int						cmd_has_heredoc(t_cmds *cmd);
+int						is_cmd_valid(t_cmds *cmd, char **args, char **envp);
+void					exec_child(t_cmds *cmd);
+void					children_killer(int status);
+int						process_command_heredocs(t_cmds *cmd);
 
 // struct_clear.c
-void		binary_clear(t_binary *binary);
-void		cmds_clear(t_cmds *cmds);
-void		outfile_clear(t_outfile *outfile);
-void		infile_clear(t_infile *infile);
-void		wild_clear(t_wild *node);
+void					binary_clear(t_binary *binary);
+void					cmds_clear(t_cmds *cmds);
+void					outfile_clear(t_outfile *outfile);
+void					infile_clear(t_infile *infile);
+void					wild_clear(t_wild *node);
+void	sig_handle_heredoc_main(int sig);
+int manage_heredocs(t_cmds *cmd);
+char	*single_expand(char *s, int i, int count);
+void	single_error_msg(char wc);
 
 // struct_new.c
 t_binary	*binary_new(int shlvl, t_type type, t_binary *up, t_cmds *table);
@@ -264,9 +280,12 @@ void		ft_matrix_uni(char **dest, char **src);
 
 void		get_here_doc(char *eof, int fd[2]);
 
-void		set_to_onethirty(int sig);
-void		sig_handle_hererdoc(int sig);
-int			restart_signals(void);
-void		free_os_envs(void);
+void					set_to_onethirty(int sig);
+void					sig_handle_heredoc(int sig);
+int						restart_signals(void);
+void					free_os_envs(void);
+
+
+# include "exec/minishell.h"
 
 #endif

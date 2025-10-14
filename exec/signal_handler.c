@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 12:35:12 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/12 23:11:14 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,23 @@ void	set_to_onethirty(int sig)
 	rl_replace_line("", 0);
 }
 
-void	sig_handle_hererdoc(int sig)
+void	sig_handle_heredoc_main(int sig)
+{
+	(void)sig;
+	btree()->global_signal = 130;
+	btree()->exit_status = 130;
+	write(1, "\n", 1);
+}
+
+void	sig_handle_heredoc(int sig)
 {
 	(void)sig;
 	signal(SIGTTOU, SIG_IGN);
 	signal(SIGTTIN, SIG_IGN);
 	btree()->global_signal = 130;
 	btree()->exit_status = 130;
-	write(1, "\n", 1);
-	megalodon_giga_chad_exit(130);
-}
-
-void	handle_quit(int sig)
-{
-	(void)sig;
-	signal(SIGQUIT, SIG_IGN);
+	write(STDOUT_FILENO, "\n", 1);
+	megalodon_giga_chad_exit(130, 0);
 }
 
 int	restart_signals(void)

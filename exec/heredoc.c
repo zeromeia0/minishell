@@ -1,98 +1,122 @@
-	/* ************************************************************************** */
-	/*                                                                            */
-	/*                                                        :::      ::::::::   */
-	/*   heredoc.c                                          :+:      :+:    :+:   */
-	/*                                                    +:+ +:+         +:+     */
-	/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
-	/*                                                +#+#+#+#+#+   +#+           */
-	/*   Created: 2025/10/01 13:11:44 by vivaz-ca          #+#    #+#             */
-	/*   Updated: 2025/10/01 16:46:35 by vivaz-ca         ###   ########.fr       */
-	/*                                                                            */
-	/* ************************************************************************** */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/01 13:11:44 by vivaz-ca          #+#    #+#             */
+/*   Updated: 2025/10/14 10:55:28 by vvazzs           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "../sigma_minishell.h"
 
+void	get_single_heredoc(char *eof, int fd[2])
+{
+	char	*delimiter;
+	int		len;
 
-	#include "../sigma_minishell.h"
+	if (!eof)
+		return ;
+	if (btree()->global_signal == 130)
+		megalodon_giga_chad_exit(130, 0);
+	delimiter = remove_aspas(eof);
+	len = ft_strlen(delimiter);
+	heredoc_setup();
+	process_heredoc_lines(delimiter, len, fd);
+	free(delimiter);
+	if (btree()->env)
+		ft_free_matrix(btree()->env);
+	if (fd)
+		close(fd[1]);
+}
 
-	int	count_heredocs(t_infile *in)
+void	process_all_heredocs(t_infile *in, int p[2])
+{
+	t_infile	*current;
+	int			tmp_pipe[2];
+	
+	(void)p;
+	current = in;
+	while (current)
 	{
-		int	count;
+		if (ft_strcmp(current->token, "<<") == 0 && in->file)
+		{
+			if (pipe(tmp_pipe) == -1)
+			{
+				perror("pipe");
+				exit(1);
+			}
+			get_single_heredoc(current->file, tmp_pipe);
+			close(tmp_pipe[1]);
+			current->heredoc_fd = tmp_pipe[0];
+		}
+		current = current->next;
+	}
+}
 
-		count = 0;
+int	handle_heredoc_parent(t_infile *in, pid_t pid, int *p)
+{
+	int	status;
+
+	close(p[1]);
+	waitpid(pid, &status, 0);
+	if (WIFSIGNALED(status) || (WIFEXITED(status)
+			&& WEXITSTATUS(status) == 130))
+	{
+		close(p[0]);
+		btree()->global_signal = 130;
+		btree()->exit_status = 130;
+		restart_signals();
+		return (-1);
+	}
+	restart_signals();
+	in->heredoc_fd = p[0];
+	return (0);
+}
+
+int	process_heredoc_for_infile(t_infile *in)
+{
+	int		p[2];
+	pid_t	pid;
+
+	if (ft_strcmp(in->token, "<<") != 0)
+		return (0);
+	if (pipe(p) == -1)
+		return (perror("pipe"), -1);
+	pid = fork();
+	if (pid == -1)
+		return (perror("fork"), -1);
+	if (pid == 0)
+		handle_heredoc_child(in, p);
+	else
+		return (handle_heredoc_parent(in, pid, p));
+	return (0);
+}
+
+int	manage_heredocs(t_cmds *cmd)
+{
+	t_cmds		*cur;
+	t_infile	*in;
+
+	if (!cmd)
+		return (-1);
+	setup_signals_for_parent();
+	cur = cmd;
+	while (cur)
+	{
+		if (cur->heredoc_done == 1)
+			return (0);
+		in = cur->infiles;
 		while (in)
 		{
-			if (ft_strcmp(in->token, "<<") == 0)
-				count++;
+			if (process_heredoc_for_infile(in) == -1)
+				return (-1);
 			in = in->next;
 		}
-		return (count);
+		cur->heredoc_done = 1;
+		cur = cur->next;
 	}
-
-	void	get_single_heredoc(char *eof, int fd[2])
-	{
-		char	*str;
-		char	*delimiter;
-		int		len;
-		int		tty_fd;
-		char	*expanded;
-		t_cmds *cmd;
-
-		delimiter = remove_aspas(eof);
-		len = ft_strlen(delimiter);
-		if (btree()->global_signal == 130)
-			megalodon_giga_chad_exit(130);
-		tty_fd = open("/dev/tty", O_RDONLY);
-		if (tty_fd != -1)
-		{
-			dup2(tty_fd, STDIN_FILENO);
-			close(tty_fd);
-		}
-		signal(SIGINT, sig_handle_hererdoc);
-		// signal(SIGQUIT, SIG_IGN);
-		str = readline("> ");
-		while (str && ft_strncmp(str, delimiter, len + 1))
-		{
-			if (fd)
-			{
-				if (cmd && cmd->infiles && cmd->infiles->flag == 0)
-					expanded = expand_hd(str);
-				else
-					expanded = str;
-				write(fd[1], expanded, ft_strlen(expanded));
-				write(fd[1], "\n", 1);
-				if (expanded != str)
-					free(expanded);
-			}
-			free(str);
-			if (btree()->global_signal == 130)
-				megalodon_giga_chad_exit(130);
-			str = readline("> ");
-		}
-		if (!str && btree()->global_signal != 130)
-			fprintf(stderr,
-				"warning: here-document delimited by end-of-file (wanted `%s')\n",
-				delimiter);
-		free(str);
-		free(delimiter);
-	}
-
-	void process_heredoc_recursive_simple(t_infile *current, int fd[2])
-	{
-		if (!current || btree()->global_signal == 130)
-			exit(130); // child stops immediately
-
-		if (ft_strcmp(current->token, "<<") == 0)
-			get_single_heredoc(current->file, fd);
-
-		if (btree()->global_signal == 130)
-			children_killer(130); // in case it was triggered during heredoc
-
-		process_heredoc_recursive_simple(current->next, fd);
-	}
-
-
-
-	void	process_all_heredocs(t_infile *in, int fd[2])
-	{
-		process_heredoc_recursive_simple(in, fd);
-	}
+	return (0);
+}

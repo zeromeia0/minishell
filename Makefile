@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/10/13 15:40:32 by vivaz-ca          #+#    #+#              #
+#    Updated: 2025/10/14 10:52:15 by vvazzs           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 PROJ=		minishell
 NAME=		${PROJ}.a
 PARSER_DIR=	parse
@@ -11,8 +23,7 @@ EXEC=			$(wildcard ${EXEC_DIR}/*.c) \
 
 CC=			cc
 AR=			ar rcs
-# CFLAGS=		-Wall -Wextra -Werror -g -finstrument-functions
-CFLAGS=		-g -finstrument-functions
+CFLAGS=		-Wall -Wextra -Werror -g -finstrument-functions
 PIPEX       = pipex
 PIPEX_BONUS = pipex_bonus
 PIPEX_DIR   = pipex
@@ -62,11 +73,11 @@ norm:
 	| awk '/c: Error/ { c++; if (c % 2 == 1) printf "\033[1;35m%s\033[0m\n", $$0; else printf "\033[1;36m%s\033[0m\n", $$0 }'
 	@echo "Amount of errors: " && norminette $(shell find . -type f \( -name "*.c" -o -name "*.h" \)) | grep "Error" | wc -l
 
-make val: re
+val: re
 	clear
 	valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
 
-make cal:
+cal:
 	clear
 	valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
 

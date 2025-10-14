@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:08:05 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 16:45:54 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/13 15:39:01 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,35 +53,6 @@ int	exec_single_left(t_infile *in)
 	return (0);
 }
 
-int	exec_double_left(t_infile *in, t_cmds *cmd)
-{
-	int		p[2];
-	pid_t	pid;
-	int		status;
-	// printf("DOUBLE LEFT\n");
-	signal(SIGTTOU, SIG_IGN);
-	signal(SIGTTIN, SIG_IGN);
-	signal(SIGINT, sig_handle_hererdoc);
-	if (pipe(p) == -1)
-		return (perror("pipe"), -1);
-	pid = fork();
-	if (pid == 0)
-	{
-		close(p[0]);
-		get_single_heredoc(in->file, p);
-		close(p[1]);
-		children_killer(0);
-	}
-	else
-	{
-		double_helper(status, p, pid);
-		if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
-			return (close(p[0]), btree()->global_signal = 130, -1);
-		in->heredoc_fd = p[0];
-	}
-	return (0);
-}
-
 int	exec_out_redirections(t_outfile *out)
 {
 	int	fd;
@@ -108,20 +79,15 @@ int	exec_out_redirections(t_outfile *out)
 	return (0);
 }
 
-int	exec_redirections(t_cmds *cmd)
+static int	exec_input_redirections(t_infile *in, int *last_heredoc_fd)
 {
-	t_infile	*in;
-
-	in = cmd->infiles;
-	if (cmd->cmd == NULL)
-		cmd->flag_to_exec = 1;
 	while (in)
 	{
-		if (ft_strcmp(in->token, "<<") == 0 && in->heredoc_fd > 0)
+		if (ft_strcmp(in->token, "<<") == 0 && in->heredoc_fd >= 0)
 		{
-			if (dup2(in->heredoc_fd, STDIN_FILENO) < 0)
-				return (perror("dup2"), close(in->heredoc_fd), -1);
-			close(in->heredoc_fd);
+			if (*last_heredoc_fd >= 0)
+				close(*last_heredoc_fd);
+			*last_heredoc_fd = in->heredoc_fd;
 		}
 		else if (ft_strcmp(in->token, "<") == 0)
 		{
@@ -130,7 +96,26 @@ int	exec_redirections(t_cmds *cmd)
 		}
 		in = in->next;
 	}
+	return (0);
+}
+
+int	exec_redirections(t_cmds *cmd)
+{
+	int	last_heredoc_fd;
+
+	last_heredoc_fd = -1;
+	if (exec_input_redirections(cmd->infiles, &last_heredoc_fd) < 0)
+		return (-1);
+	if (last_heredoc_fd >= 0)
+	{
+		if (dup2(last_heredoc_fd, STDIN_FILENO) < 0)
+			return (perror("dup2"), close(last_heredoc_fd), -1);
+		close(last_heredoc_fd);
+	}
 	if (exec_out_redirections(cmd->outfiles) < 0)
-		return (btree()->cmds->flag_to_exec = 1, -1);
+	{
+		btree()->cmds->flag_to_exec = 1;
+		return (-1);
+	}
 	return (0);
 }
