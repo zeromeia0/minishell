@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_path_aux3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:41:23 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/10 18:55:42 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/14 14:22:24 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	exec_system_path(char *cmd, char **args, char **envp)
 	int		result;
 	char	**paths_to_search;
 
+	paths_to_search = NULL;
 	if (ft_strchr(cmd, '/') == NULL)
 	{
 		if (exec_system_path_aux1(envp, &paths_to_search) != 0)
