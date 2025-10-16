@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/14 14:41:09 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/16 21:09:58 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ void	exec_child(t_cmds *cmd)
 	if (is_system_path_command(cleaned[0], updated_envs))
 		exec_path(cleaned[0], cleaned, updated_envs);
 	if (super_checker_goated(cmd, cleaned, updated_envs) != 0)
-		my_ffprintf(cmd->cmd[0], "command not found\n");
-	if (cleaned)
-		ft_free_matrix(cleaned);
+		my_ffprintf(cmd->cmd[0], "command not found 1\n");
 	if (updated_envs)
 		ft_free_matrix(updated_envs);
 	megalodon_giga_chad_exit(127, 1);

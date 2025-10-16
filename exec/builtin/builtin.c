@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:21:23 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/14 14:43:50 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/16 21:06:31 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	builtin_exit(char **args, char **envp)
 int	exec_builtin(char *cmd, char **args, char **envp)
 {
 	if (!cmd)
-		;
+		return (1);
 	if (ft_strcmp(cmd, "cd") == 0)
 		return (builtin_cd(args));
 	else if (ft_strcmp(cmd, "pwd") == 0)
