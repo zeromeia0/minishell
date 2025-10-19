@@ -6,7 +6,7 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:21:30 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/09 10:40:34 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/19 20:13:32 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ void	init_tokens(t_token *tokens)
 	dtokens[3] = "<<";
 	dtokens[4] = NULL;
 	sep[0] = "'";
-	sep[0] = "\"";
-	sep[0] = "`";
-	sep[0] = NULL;
+	sep[1] = "\"";
+	sep[2] = "`";
+	sep[3] = NULL;
 	tokens->dtokens = dtokens;
 	tokens->stokens = stokens;
 	tokens->sep = sep;
