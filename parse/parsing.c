@@ -6,7 +6,7 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:21:30 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/19 20:13:32 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/19 20:46:09 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ char	**tokenization(char *str, t_token tokens, char **sep, int wc)
 			break ;
 		strcount = parsing_strlen(str, tokens, sep);
 		ret[ind] = ft_strndup(str, strcount);
+		printf("|%s|%s|%d|\n",ret[ind] ,str, strcount);
 		if (ret[ind] == NULL)
 			return (ft_free_matrix(ret), NULL);
 		str += strcount;
@@ -91,9 +92,9 @@ void	init_tokens(t_token *tokens)
 	dtokens[3] = "<<";
 	dtokens[4] = NULL;
 	sep[0] = "'";
-	sep[1] = "\"";
-	sep[2] = "`";
-	sep[3] = NULL;
+	sep[0] = "\"";
+	sep[0] = "`";
+	sep[0] = NULL;
 	tokens->dtokens = dtokens;
 	tokens->stokens = stokens;
 	tokens->sep = sep;

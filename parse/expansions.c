@@ -6,7 +6,7 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:35:14 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/09 14:17:34 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/19 23:14:38 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	get_diff(char *str1, char *str2, int start)
 	int	ind1;
 	int	ind2;
 
-	while (str1[start] == str2[start])
+	while (str1[start] && str1[start] == str2[start])
 		start++;
 	ind1 = ft_strlen(str1);
 	ind2 = ft_strlen(str2);
@@ -60,7 +60,7 @@ void	quote_aux(char *str, int *count, char *str2)
 	ind = 0;
 	ch = (str + *count)[ind];
 	ind++;
-	while ((str + *count)[ind] != ch)
+	while ((str + *count)[ind] != '\0' && (str + *count)[ind] != ch)
 	{
 		if (ch == '\"')
 		{
@@ -72,10 +72,9 @@ void	quote_aux(char *str, int *count, char *str2)
 				str2 = ft_strdup(str);
 			}
 		}
-		ind++;
+		ind += ((str + *count)[ind] != '\0');
 	}
-	ft_memmove((str + *count) + ind, (str + *count) + ind + 1,
-		ft_strlen((str + *count) + ind));
+	ft_memmove((str + *count) + ind, (str + *count) + ind + 1, ft_strlen((str + *count) + ind));
 	ft_memmove((str + *count), (str + *count) + 1, ft_strlen((str + *count)));
 	*count += ind - 1;
 }
@@ -92,14 +91,14 @@ char	*quote(char *str)
 		str = single_expand(str, count, 0);
 		if (ft_strcmp(str, str2))
 		{
-			count += get_diff(str, str2, 0);
+			count += get_diff(str + count, str2 + count + 1, 0);
 			free(str2);
-			str2 = ft_strdup(str);
+			str2 = ft_strdup(str + count);
 		}
 		if (*(str + count) == '\"' || *(str + count) == '\'')
 			quote_aux(str, &count, str2);
 		else
-			count++;
+			count += (str[count] != '\0');
 	}
 	if (str2)
 		free(str2);

@@ -6,7 +6,7 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:49:36 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/14 11:28:34 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/19 20:20:00 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <termios.h>
 #include <unistd.h>
 
-/*void	print_infiles(t_infile *file)
+void	print_infiles(t_infile *file)
 {
 	while (file)
 	{
@@ -72,7 +72,7 @@ void	print_tree(t_binary *tree, int sub)
 			print_cmds(tree->cmds);
 	if (sub)
 		printf("\n^exiting shubshell^\n");
-}*/
+}
 t_binary	*btree(void)
 {
 	static t_binary	tree;
@@ -129,7 +129,10 @@ int	main(int argc, char *argv[], char **envp)
 			continue ;
 		}
 		if (parsing(btree()->input) == 0)
+		{
+			// print_tree(btree(), 0);
 			execute_core(argv);
+		}
 	}
 	if (btree()->env)
 		ft_free_matrix(btree()->env);
