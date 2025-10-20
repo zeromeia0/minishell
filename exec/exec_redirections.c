@@ -67,9 +67,8 @@ int	exec_out_redirections(t_outfile *out)
 			flags |= O_APPEND;
 		else
 			return (ft_putstr_fd("Unknown redirection: ", STDERR_FILENO),
-			ft_putstr_fd(out->token, STDERR_FILENO),
-			ft_putstr_fd("\n", STDERR_FILENO),
-				-1);
+				ft_putstr_fd(out->token, STDERR_FILENO), ft_putstr_fd("\n",
+					STDERR_FILENO), -1);
 		fd = open(out->file, flags, 0644);
 		if (fd < 0)
 			return (perror(out->file), -1);

@@ -14,8 +14,8 @@
 
 int	is_redir_token(const char *s)
 {
-	return (ft_strcmp(s, ">") == 0 || ft_strcmp(s, ">>") == 0 || ft_strcmp(s, "<") == 0
-		|| ft_strcmp(s, "<<") == 0);
+	return (ft_strcmp(s, ">") == 0 || ft_strcmp(s, ">>") == 0 || ft_strcmp(s,
+			"<") == 0 || ft_strcmp(s, "<<") == 0);
 }
 
 int	has_redir(t_cmds *cmd)

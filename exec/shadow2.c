@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 23:17:50 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/20 13:42:06 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/20 13:49:09 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,14 @@ void	process_heredoc_lines(char *delimiter, int len, int fd[2])
 	}
 	if (!str && btree()->global_signal != 130)
 	{
-		ft_putstr_fd("warning: here-document delimited by end-of-file (wanted `", STDERR_FILENO);
+		ft_putstr_fd("warning: here-document \
+			delimited by end-of-file (wanted `",
+			STDERR_FILENO);
 		ft_putstr_fd(delimiter, STDERR_FILENO);
 		ft_putstr_fd("')\n", STDERR_FILENO);
 	}
 	free(str);
 }
-
 
 void	setup_signals_for_parent(void)
 {
