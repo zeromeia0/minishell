@@ -6,7 +6,7 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 21:28:12 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/19 23:37:15 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/20 13:40:45 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,5 @@ char	*ft_strsubs(char *str, char ch1, char ch2)
 		else
 			ret[ind] = str[ind];
 	}
-	// ret[ind] = '\0';
 	return (ret);
 }
