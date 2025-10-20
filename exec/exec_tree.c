@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/20 11:20:37 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/20 11:24:48 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	exec_child(t_cmds *cmd)
 		my_ffprintf(cmd->cmd[0], "command not found 1\n");
 	if (updated_envs)
 		ft_free_matrix(updated_envs);
+	if (cleaned)
+		ft_free_matrix(cleaned);
 	megalodon_giga_chad_exit(127, 1);
 }
 
