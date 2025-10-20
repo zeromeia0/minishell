@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:21:23 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/16 21:06:31 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/20 11:01:03 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	builtin_exit(char **args, char **envp)
 		megalodon_giga_chad_exit((unsigned char)status, 1);
 	}
 	if (!is_numeric(args[1]))
-		return (my_ffprintf(args[1], "numeric argument required"), 0);
+		return (write(2, "exit\n", 6), my_ffprintf(args[0], "numeric argument required\n"), ft_free_matrix(envp), megalodon_giga_chad_exit(2, 1), 0);
 	if (args[0] && args[1] && args[2] != NULL)
 		return (ft_putstr_fd("minishell: exit: too many arguments", 2), 0);
 	status = ft_atol(args[1]);
