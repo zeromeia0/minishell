@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:02:43 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/12 21:29:17 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/20 13:31:33 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	get_current_shell_level(void)
 	level = 0;
 	while (current)
 	{
-		if (current->linux_envs && strncmp(current->linux_envs, "SHLVL=",
+		if (current->linux_envs && ft_strncmp(current->linux_envs, "SHLVL=",
 				6) == 0)
 		{
 			level = ft_atoi(current->linux_envs + 6);

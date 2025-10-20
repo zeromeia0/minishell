@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:49:36 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/19 20:20:00 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/20 13:33:14 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ t_binary	*btree(void)
 	return (&tree);
 }
 
-static void	initialize_stuff(int argc, char *argv[], char **envp)
+void	initialize_stuff(int argc, char *argv[], char **envp)
 {
 	(void)argc;
 	if (isatty(STDIN_FILENO))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   overall_builtin_aux.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 23:53:03 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/19 23:53:04 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/20 13:33:03 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	update_env_var(const char *key, const char *value)
 	free(arg);
 }
 
-static char	*join_paths(const char *oldpwd, const char *target)
+char	*join_paths(const char *oldpwd, const char *target)
 {
 	char	*newpwd;
 	size_t	len;
@@ -38,9 +38,12 @@ static char	*join_paths(const char *oldpwd, const char *target)
 	newpwd = malloc(len);
 	if (!newpwd)
 		return (NULL);
-	sprintf(newpwd, "%s/%s", oldpwd, target);
+	ft_strcpy(newpwd, oldpwd);
+	ft_strcat(newpwd, "/");
+	ft_strcat(newpwd, target);
 	return (newpwd);
 }
+
 
 char	*logical_pwd_update(const char *oldpwd, const char *target)
 {
@@ -49,22 +52,22 @@ char	*logical_pwd_update(const char *oldpwd, const char *target)
 
 	if (!oldpwd)
 		return (NULL);
-	if (strcmp(target, "..") == 0)
+	if (ft_strcmp(target, "..") == 0)
 	{
-		newpwd = strdup(oldpwd);
+		newpwd = ft_strdup(oldpwd);
 		if (!newpwd)
 			return (NULL);
-		slash = strrchr(newpwd, '/');
+		slash = ft_strrchr(newpwd, '/');
 		if (slash && slash != newpwd)
 			*slash = '\0';
 		else
 			*(slash + 1) = '\0';
 		return (newpwd);
 	}
-	else if (strcmp(target, ".") == 0)
-		return (strdup(oldpwd));
+	else if (ft_strcmp(target, ".") == 0)
+		return (ft_strdup(oldpwd));
 	else if (target[0] == '/')
-		return (strdup(target));
+		return (ft_strdup(target));
 	else
 		return (join_paths(oldpwd, target));
 }

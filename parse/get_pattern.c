@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_pattern.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:57:09 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/09 10:57:10 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/20 13:31:33 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ int	find_pipe(char **mat)
 
 static int	input_comp(char *str)
 {
-	if (strncmp(str, "<<", 3) && strncmp(str, "<", 2))
+	if (ft_strncmp(str, "<<", 3) && ft_strncmp(str, "<", 2))
 		return (1);
 	return (0);
 }
 
 static int	output_comp(char *str)
 {
-	if (strncmp(str, ">>", 3) && strncmp(str, ">", 2))
+	if (ft_strncmp(str, ">>", 3) && ft_strncmp(str, ">", 2))
 		return (1);
 	return (0);
 }
