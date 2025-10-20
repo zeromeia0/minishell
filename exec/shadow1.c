@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shadow1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 23:17:50 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/12 23:18:25 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/20 10:48:54 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int	pipes_builtin_exit(char **args, char **envp)
 {
 	long	status;
 
-	printf("INSIDE PIPES BUILTIN EXIT\n");
 	if (!args[1])
 	{
 		ft_free_matrix(envp);
