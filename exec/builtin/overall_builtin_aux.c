@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 23:53:03 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/20 13:46:48 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/20 13:50:34 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ char	*join_paths(const char *oldpwd, const char *target)
 	newpwd = malloc(len);
 	if (!newpwd)
 		return (NULL);
-	ft_strcpy(newpwd, oldpwd);
+	ft_strcpy(newpwd, (char *)oldpwd);
 	ft_strcat(newpwd, "/");
-	ft_strcat(newpwd, target);
+	ft_strcat(newpwd, (char *)target);
 	return (newpwd);
 }
 
