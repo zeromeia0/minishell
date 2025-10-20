@@ -6,7 +6,7 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:35:14 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/19 23:14:38 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/20 13:40:29 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ void	quote_aux(char *str, int *count, char *str2)
 		}
 		ind += ((str + *count)[ind] != '\0');
 	}
-	ft_memmove((str + *count) + ind, (str + *count) + ind + 1, ft_strlen((str + *count) + ind));
+	ft_memmove((str + *count) + ind, (str + *count) + ind + 1,
+		ft_strlen((str + *count) + ind));
 	ft_memmove((str + *count), (str + *count) + 1, ft_strlen((str + *count)));
 	*count += ind - 1;
 }
