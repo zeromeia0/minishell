@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 23:17:50 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/20 13:49:09 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/20 16:21:41 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	process_heredoc_lines(char *delimiter, int len, int fd[2])
 	while (str && ft_strncmp(str, delimiter, len + 1))
 	{
 		write_heredoc_line(str, fd);
-		free(str);
 		if (btree()->global_signal == 130)
 			megalodon_giga_chad_exit(130, 0);
 		str = readline("> ");
