@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:36:54 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/01 11:49:51 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/21 15:39:52 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	is_system_path_command(char *cmd, char **envp)
 			free_matrix(paths_to_search);
 			return (-1);
 		}
-		if (access_result == 1)
+		if (access_result == 0)
 			return (free_matrix(paths_to_search), 1);
 		i++;
 	}
