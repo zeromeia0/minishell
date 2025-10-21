@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:49:36 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/20 13:45:58 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/21 15:44:11 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,8 @@ int	main(int argc, char *argv[], char **envp)
 		btree()->input = readline("minishell$ ");
 		if (!btree()->input)
 			break ;
-		add_history(btree()->input);
+		if (btree()->input[0] != '\0')
+			add_history(btree()->input);
 		if (*btree()->input == '\0')
 		{
 			free(btree()->input);
