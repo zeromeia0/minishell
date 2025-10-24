@@ -6,7 +6,7 @@
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:35:14 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/24 14:20:05 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/10/24 14:50:14 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	quote_aux(char **s, int *count, char **str2)
 		if (ch == '\"')
 		{
 			*s = single_expand(*s, *count + ind, 0);
-			if (*s == NULL || *(*s + 2) == '\0')
+			if (*(*s + 2) == '\0')
 				break ;
 			if (ft_strcmp(*s, *str2))
 			{
@@ -80,7 +80,7 @@ void	quote_aux(char **s, int *count, char **str2)
 	ft_memmove((*s + *count) + ind, (*s + *count) + ind + 1,
 		ft_strlen((*s + *count) + ind));
 	ft_memmove((*s + *count), (*s + *count) + 1, ft_strlen((*s + *count)));
-	*count += ind - 2;
+	*count += (ft_strcmp(*s, *str2) == 0) * (ind - 2);
 }
 
 char	*quote(char *str)
