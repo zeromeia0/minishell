@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:35:14 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/20 13:40:29 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/23 12:49:15 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ char	*expand_hd(char *str)
 	while (str[++count])
 	{
 		str = single_expand(str, count, 0);
+		if (str == NULL || *str == '\0')
+			return (free(str2), str);
 		if (ft_strcmp(str, str2))
 		{
 			count += get_diff(str, str2, 0);
@@ -52,32 +54,33 @@ char	*expand_hd(char *str)
 	return (str);
 }
 
-void	quote_aux(char *str, int *count, char *str2)
+void	quote_aux(char **s, int *count, char **str2)
 {
 	int		ind;
 	char	ch;
 
-	ind = 0;
-	ch = (str + *count)[ind];
-	ind++;
-	while ((str + *count)[ind] != '\0' && (str + *count)[ind] != ch)
+	ch = (*s + *count)[0];
+	ind = 1;
+	while ((*s + *count)[ind] != '\0' && (*s + *count)[ind] != ch)
 	{
 		if (ch == '\"')
 		{
-			str = single_expand(str, *count + ind, 0);
-			if (ft_strcmp(str, str2))
+			*s = single_expand(*s, *count + ind, 0);
+			if (*s == NULL || *(*s + 2) == '\0')
+				break ;
+			if (ft_strcmp(*s, *str2))
 			{
-				ind += get_diff(str, str2, 0);
-				free(str2);
-				str2 = ft_strdup(str);
+				ind += get_diff(*s, *str2, 0);
+				free(*str2);
+				*str2 = ft_strdup(*s);
 			}
 		}
-		ind += ((str + *count)[ind] != '\0');
+		ind += ((*s + *count)[ind] != '\0');
 	}
-	ft_memmove((str + *count) + ind, (str + *count) + ind + 1,
-		ft_strlen((str + *count) + ind));
-	ft_memmove((str + *count), (str + *count) + 1, ft_strlen((str + *count)));
-	*count += ind - 1;
+	ft_memmove((*s + *count) + ind, (*s + *count) + ind + 1,
+		ft_strlen((*s + *count) + ind));
+	ft_memmove((*s + *count), (*s + *count) + 1, ft_strlen((*s + *count)));
+	*count += ind - 2;
 }
 
 char	*quote(char *str)
@@ -90,14 +93,16 @@ char	*quote(char *str)
 	while (str[count])
 	{
 		str = single_expand(str, count, 0);
+		if (str == NULL || *str == '\0')
+			return (free(str2), str);
 		if (ft_strcmp(str, str2))
 		{
 			count += get_diff(str + count, str2 + count + 1, 0);
 			free(str2);
-			str2 = ft_strdup(str + count);
+			str2 = ft_strdup(str);
 		}
 		if (*(str + count) == '\"' || *(str + count) == '\'')
-			quote_aux(str, &count, str2);
+			quote_aux(&str, &count, &str2);
 		else
 			count += (str[count] != '\0');
 	}

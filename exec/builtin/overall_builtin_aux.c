@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 23:53:03 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/20 13:50:34 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/23 13:11:02 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,12 @@ char	*logical_pwd_update(const char *oldpwd, const char *target)
 		return (ft_strdup(target));
 	else
 		return (join_paths(oldpwd, target));
+}
+
+void	valgrind_destroyer(char **updated_envs, char **cleaned)
+{
+	if (updated_envs)
+		ft_free_matrix(updated_envs);
+	if (cleaned)
+		ft_free_matrix(cleaned);
 }

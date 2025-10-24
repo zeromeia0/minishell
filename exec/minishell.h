@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:39 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/14 14:41:05 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/23 13:10:36 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ void		infile_clear(t_infile *infile);
 void		wild_clear(t_wild *node);
 void		sig_handle_heredoc_main(int sig);
 int			manage_heredocs(t_cmds *cmd);
-
+void		valgrind_destroyer(char **updated_envs, char **cleaned);
 // struct_new.c
 t_binary	*binary_new(int shlvl, t_type type, t_binary *up, t_cmds *table);
 t_cmds		*cmds_new(t_outfile *outfile, t_infile *infile, char **cmd);

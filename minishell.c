@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:49:36 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/21 15:44:11 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/23 13:06:58 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 #include <stdlib.h>
 #include <termios.h>
 #include <unistd.h>
-
-/*void	print_infiles(t_infile *file)
+/* 
+void	print_infiles(t_infile *file)
 {
 	while (file)
 	{
@@ -73,7 +73,7 @@ void	print_tree(t_binary *tree, int sub)
 	if (sub)
 		printf("\n^exiting shubshell^\n");
 }
-*/
+ */
 t_binary	*btree(void)
 {
 	static t_binary	tree;
@@ -137,7 +137,6 @@ int	main(int argc, char *argv[], char **envp)
 		ft_free_matrix(btree()->env);
 	if (btree()->env)
 		btree()->env = NULL;
-	free_os_envs();
-	return (clear_env_list(), printf("Closing Minishell\n"),
+	return (free_os_envs(), clear_env_list(), printf("Closing Minishell\n"),
 		btree()->exit_status);
 }
