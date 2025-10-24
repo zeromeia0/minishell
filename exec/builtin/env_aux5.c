@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_aux5.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 21:50:26 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/14 11:01:56 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/24 15:49:20 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,25 @@ void	expand_outfiles(t_outfile *outfile)
 		free(temp);
 	}
 	expand_outfiles(outfile->next);
+}
+
+char	*helper_add_quotes_export(char *new_str, char *str)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	i = 0;
+	while (str[i] && str[i] != '=')
+		new_str[j++] = str[i++];
+	if (str[i] == '=')
+	{
+		new_str[j++] = str[i++];
+		new_str[j++] = '"';
+	}
+	while (str[i])
+		new_str[j++] = str[i++];
+	new_str[j++] = '"';
+	new_str[j] = '\0';
+	return (new_str);
 }
