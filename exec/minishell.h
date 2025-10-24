@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:39 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/23 13:10:36 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/24 15:49:05 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ size_t		get_env_key_length(const char *str);
 int			make_update_env_aux(t_os_envs **env_list, const char *str,
 				size_t len);
 int			handle_heredoc(t_cmds *cmd);
+char		*helper_add_quotes_export(char *new_str, char *str);
 int			handle_regular_redirections(t_cmds *cmd);
 void		pid_equal_zero_double(t_cmds *cmd, int p[2]);
 int			exec_single_left(t_infile *in);

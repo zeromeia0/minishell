@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:00:59 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/24 14:47:50 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/24 15:49:11 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,20 @@ char	*add_quotes_export(char *str)
 
 	i = 0;
 	j = 0;
+	while (str[i] && str[i] != '=')
+		i++;
+	if (!str[i])
+	{
+		new_str = malloc(sizeof(char) * (ft_strlen(str) + 1));
+		if (!new_str)
+			return (NULL);
+		ft_strcpy(new_str, str);
+		return (new_str);
+	}
 	new_str = malloc(sizeof(char) * (ft_strlen(str) + 3));
 	if (!new_str)
 		return (NULL);
-	while (str[i] && str[i] != '=')
-		new_str[j++] = str[i++];
-	if (str[i] == '=')
-	{
-		new_str[j++] = str[i++];
-		new_str[j++] = '"';
-	}
-	while (str[i])
-		new_str[j++] = str[i++];
-	new_str[j++] = '"';
-	new_str[j] = '\0';
+	new_str = helper_add_quotes_export(new_str, str);
 	return (new_str);
 }
 
@@ -92,7 +92,7 @@ void	export_print_env_list(void)
 		}
 		if (current->temp_vars)
 		{
-			print_it = add_quotes_export(current->linux_envs);
+			print_it = add_quotes_export(current->temp_vars);
 			printf("declare -x %s\n", print_it);
 			free(print_it);
 		}
