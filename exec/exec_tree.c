@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/23 13:09:33 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/24 13:46:22 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	exec_child(t_cmds *cmd)
 	else if (super_checker_goated(cmd, cleaned, updated_envs) != 0)
 		my_ffprintf(cmd->cmd[0], "command not found\n");
 	checker = 1;
-	if (checker == 1)
+	if (checker == 1 && !has_redir(cmd))
 		my_ffprintf(cmd->cmd[0], "command not found\n");
 	valgrind_destroyer(updated_envs, cleaned);
 	checker = 0;
