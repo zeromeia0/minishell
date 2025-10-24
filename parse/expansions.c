@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlima-so <jlima-so@student.42lisba.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:35:14 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/24 14:50:14 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/10/24 16:44:15 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	quote_aux(char **s, int *count, char **str2)
 
 	ch = (*s + *count)[0];
 	ind = 1;
+	printf("%s %d %d\n", *s, *count, ind);
 	while ((*s + *count)[ind] != '\0' && (*s + *count)[ind] != ch)
 	{
 		if (ch == '\"')
@@ -68,19 +69,24 @@ void	quote_aux(char **s, int *count, char **str2)
 			*s = single_expand(*s, *count + ind, 0);
 			if (*(*s + 2) == '\0')
 				break ;
-			if (ft_strcmp(*s, *str2))
-			{
-				ind += get_diff(*s, *str2, 0);
-				free(*str2);
-				*str2 = ft_strdup(*s);
-			}
+			printf("str=%s\nstr2=%s\n", *s + *count, *str2 + *count);
+			printf("%d\n", ind);
+			ind += get_diff(*s, *str2, 0);
+			printf("%d\n", ind);
 		}
 		ind += ((*s + *count)[ind] != '\0');
 	}
+	printf("%s\n", (*s + *count));
+	printf("%s\n", (*s + *count) + 1);
+	printf("%s\n", (*s + *count) + ind);
+	printf("%s\n", (*s + *count) + ind + 1);
+	printf("IND IS=%d\n", ind);
 	ft_memmove((*s + *count) + ind, (*s + *count) + ind + 1,
 		ft_strlen((*s + *count) + ind));
 	ft_memmove((*s + *count), (*s + *count) + 1, ft_strlen((*s + *count)));
-	*count += (ft_strcmp(*s, *str2) == 0) * (ind - 2);
+	free(*str2);
+	*str2 = ft_strdup(*s);
+	*count += (ft_strcmp(*s, *str2) == 0) * (ind - 1);
 }
 
 char	*quote(char *str)
@@ -97,7 +103,8 @@ char	*quote(char *str)
 			return (free(str2), str);
 		if (ft_strcmp(str, str2))
 		{
-			count += get_diff(str + count, str2 + count + 2, 0);
+			printf("dif\n%s\n%s\n", str, str2);
+			count += get_diff(str + count, str2 + count + 1, 0);
 			free(str2);
 			str2 = ft_strdup(str);
 		}
