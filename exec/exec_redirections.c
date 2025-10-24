@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:08:05 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/13 15:39:01 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/20 14:03:58 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	**array_to_exec(t_cmds *cmd)
 		if (is_redir_token(cmd->cmd[i]) && cmd->cmd[i + 1])
 			i += 2;
 		else
-			new_argv[j++] = strdup(cmd->cmd[i++]);
+			new_argv[j++] = ft_strdup(cmd->cmd[i++]);
 	}
 	new_argv[j] = NULL;
 	return (new_argv);
@@ -43,7 +43,7 @@ int	exec_single_left(t_infile *in)
 	int	fd;
 
 	if (access(in->file, F_OK) != 0)
-		return (printf("BRUVA\n"), 1);
+		return (1);
 	fd = open(in->file, O_RDONLY);
 	if (fd < 0)
 		return (perror(in->file), -1);
@@ -66,8 +66,9 @@ int	exec_out_redirections(t_outfile *out)
 		else if (ft_strcmp(out->token, ">>") == 0)
 			flags |= O_APPEND;
 		else
-			return (fprintf(stderr, "Unknown redirection: %s\n", out->token),
-				-1);
+			return (ft_putstr_fd("Unknown redirection: ", STDERR_FILENO),
+				ft_putstr_fd(out->token, STDERR_FILENO), ft_putstr_fd("\n",
+					STDERR_FILENO), -1);
 		fd = open(out->file, flags, 0644);
 		if (fd < 0)
 			return (perror(out->file), -1);
@@ -79,7 +80,7 @@ int	exec_out_redirections(t_outfile *out)
 	return (0);
 }
 
-static int	exec_input_redirections(t_infile *in, int *last_heredoc_fd)
+int	exec_input_redirections(t_infile *in, int *last_heredoc_fd)
 {
 	while (in)
 	{

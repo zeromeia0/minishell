@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/20 11:24:48 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/24 13:46:22 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ void	exec_child(t_cmds *cmd)
 {
 	char	**cleaned;
 	char	**updated_envs;
+	int		checker;
 
+	checker = 0;
 	if (cmd && cmd->flag_to_exec == 1)
 		megalodon_giga_chad_exit(btree()->exit_status, 0);
 	signal(SIGINT, handle_sigint);
@@ -32,11 +34,12 @@ void	exec_child(t_cmds *cmd)
 	else if (is_system_path_command(cleaned[0], updated_envs))
 		exec_path(cleaned[0], cleaned, updated_envs);
 	else if (super_checker_goated(cmd, cleaned, updated_envs) != 0)
-		my_ffprintf(cmd->cmd[0], "command not found 1\n");
-	if (updated_envs)
-		ft_free_matrix(updated_envs);
-	if (cleaned)
-		ft_free_matrix(cleaned);
+		my_ffprintf(cmd->cmd[0], "command not found\n");
+	checker = 1;
+	if (checker == 1 && !has_redir(cmd))
+		my_ffprintf(cmd->cmd[0], "command not found\n");
+	valgrind_destroyer(updated_envs, cleaned);
+	checker = 0;
 	megalodon_giga_chad_exit(127, 1);
 }
 

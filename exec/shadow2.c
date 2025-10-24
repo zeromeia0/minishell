@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shadow2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 23:17:50 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/13 10:03:09 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/20 16:21:41 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,18 @@ void	process_heredoc_lines(char *delimiter, int len, int fd[2])
 	while (str && ft_strncmp(str, delimiter, len + 1))
 	{
 		write_heredoc_line(str, fd);
-		free(str);
 		if (btree()->global_signal == 130)
 			megalodon_giga_chad_exit(130, 0);
 		str = readline("> ");
 	}
 	if (!str && btree()->global_signal != 130)
-		fprintf(stderr,
-			"warning: here-document delimited by end-of-file (wanted `%s')\n",
-			delimiter);
+	{
+		ft_putstr_fd("warning: here-document \
+			delimited by end-of-file (wanted `",
+			STDERR_FILENO);
+		ft_putstr_fd(delimiter, STDERR_FILENO);
+		ft_putstr_fd("')\n", STDERR_FILENO);
+	}
 	free(str);
 }
 

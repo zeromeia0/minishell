@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:17:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/20 10:49:22 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/20 13:33:31 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*builtin_cd_aux(char **args)
 	return (target);
 }
 
-static char	*pwd_updater(char *oldpwd, char *target)
+char	*pwd_updater(char *oldpwd, char *target)
 {
 	char	*newpwd;
 

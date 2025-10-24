@@ -80,7 +80,9 @@ int	builtin_exit(char **args, char **envp)
 		megalodon_giga_chad_exit((unsigned char)status, 1);
 	}
 	if (!is_numeric(args[1]))
-		return (write(2, "exit\n", 6), my_ffprintf(args[0], "numeric argument required\n"), ft_free_matrix(envp), megalodon_giga_chad_exit(2, 1), 0);
+		return (write(2, "exit\n", 6), my_ffprintf(args[0],
+				"numeric argument required\n"), ft_free_matrix(envp),
+			megalodon_giga_chad_exit(2, 1), 0);
 	if (args[0] && args[1] && args[2] != NULL)
 		return (ft_putstr_fd("minishell: exit: too many arguments", 2), 0);
 	status = ft_atol(args[1]);
