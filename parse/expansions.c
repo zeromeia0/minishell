@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:35:14 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/20 13:40:29 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/24 14:18:49 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char	*quote(char *str)
 		str = single_expand(str, count, 0);
 		if (ft_strcmp(str, str2))
 		{
-			count += get_diff(str + count, str2 + count + 1, 0);
+			count += get_diff(str + count, str2 + count + 2, 0);
 			free(str2);
 			str2 = ft_strdup(str + count);
 		}
