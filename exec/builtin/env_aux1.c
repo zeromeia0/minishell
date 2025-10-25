@@ -6,7 +6,7 @@
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:00:59 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/25 12:19:50 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/10/25 12:44:21 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ void	enhanced_sorting_stoled_from_jlima(t_os_envs *envs)
 char	*add_quotes_export(char *str)
 {
 	int		i;
-	// int		j;
+	int		j;
 	char	*new_str;
 
 	i = 0;
-	// j = 0;
+	j = 0;
 	while (str[i] && str[i] != '=')
 		i++;
 	if (!str[i])
