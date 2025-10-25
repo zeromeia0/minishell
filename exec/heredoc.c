@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:11:44 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/14 14:43:09 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/25 15:39:33 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	handle_heredoc_parent(t_infile *in, pid_t pid, int *p)
 	close(p[1]);
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status) || (WIFEXITED(status)
-			&& WEXITSTATUS(status) == 130))
+			&& WEXITSTATUS(status) == 0))
 	{
 		close(p[0]);
 		btree()->global_signal = 130;

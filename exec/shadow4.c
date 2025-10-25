@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shadow4.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 23:20:04 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/14 10:56:53 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/25 15:42:39 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	handle_single_heredoc_stuff(t_infile *in)
 	if (pid == 0)
 	{
 		get_single_heredoc(in->file, fd);
-		_exit(0);
+		megalodon_giga_chad_exit(0, 1);
 	}
 	else
 	{
@@ -65,8 +65,8 @@ int	handle_single_heredoc_stuff(t_infile *in)
 int	exec_empty_heredoc_node(t_cmds *cmd)
 {
 	t_infile	*in;
-
 	in = cmd->infiles;
+
 	while (in)
 	{
 		if (ft_strcmp(in->token, "<<") == 0)

@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:12:18 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/13 16:39:30 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/25 15:40:53 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	handle_parent(pid_t pid, int shell_should_ignore)
 	else if (WIFSIGNALED(status))
 	{
 		sig = WTERMSIG(status);
+		printf("olha so %d\n", status);
 		if (sig == SIGINT || sig == SIGQUIT)
 			btree()->exit_status = 128 + sig;
 		else
