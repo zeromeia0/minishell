@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:49:36 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/24 15:22:29 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/25 13:39:22 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	execute_core(char **argv)
 	if (btree()->env)
 		ft_free_matrix(btree()->env);
 	btree()->env = list_to_char(*get_env_list());
-	btree()->main_exit = exec_tree(btree(), argv, btree()->env);
+	btree()->exit_status = exec_tree(btree(), argv, btree()->env);
 	reset_heredoc_flags(btree());
 	if (btree()->global_signal == 130)
 		btree()->global_signal = 0;
