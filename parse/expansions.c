@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlima-so <jlima-so@student.42lisba.com>    +#+  +:+       +#+        */
+/*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:35:14 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/24 16:58:03 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/10/25 12:43:07 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,7 @@ int	get_diff(char *str1, char *str2, int start)
 		ind1--;
 		ind2--;
 	}
-	if (ind1 > ind2)
-		return (ind1 - start);
-	return (ind2 - start);
+	return (ind1 - start);
 }
 
 char	*expand_hd(char *str)
@@ -69,14 +67,13 @@ void	quote_aux(char **s, int *count, char **str2, int value)
 			if (*(*s + 2) == '\0')
 				break ;
 			value = get_diff(*s + ind + *count, *str2 + ind + *count, 0);
-			ind += value - 1 * (value != 0);
+			ind += value - (value != 0);
 			free(*str2);
 			*str2 = ft_strdup(*s);
 		}
 		ind += ((*s + *count)[ind] != '\0');
 	}
-	ft_memmove((*s + *count) + ind, (*s + *count) + ind + 1,
-		ft_strlen((*s + *count) + ind));
+	ft_memmove((*s + *count) + ind, (*s + *count) + ind + 1, ft_strlen((*s + *count) + ind));
 	ft_memmove((*s + *count), (*s + *count) + 1, ft_strlen((*s + *count)));
 	free(*str2);
 	*str2 = ft_strdup(*s);
