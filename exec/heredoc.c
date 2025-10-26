@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:11:44 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/26 15:27:07 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/26 21:01:56 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,10 @@ void	get_single_heredoc(char *eof, int fd[2])
 		return ;
 	if (btree()->global_signal == 130)
 		megalodon_giga_chad_exit(130, 0);
-	remove_aspas(delimiter, eof);
+	rm_quote(delimiter, eof);
 	len = ft_strlen(delimiter);
 	heredoc_setup();
 	process_heredoc_lines(delimiter, len, fd);
-	// free(delimiter);
 	if (btree()->env)
 		ft_free_matrix(btree()->env);
 	if (fd)

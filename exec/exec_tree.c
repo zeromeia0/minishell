@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/26 15:24:02 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/26 21:03:14 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,9 @@ int	exec_node(t_binary *node, char **args, char **envp)
 
 int	check_order(t_binary *tree, char **args, char **envp)
 {
-	int	please = 0;
+	int	please;
 
+	please = 0;
 	if (!tree)
 		return (1);
 	if (tree->cmds)
