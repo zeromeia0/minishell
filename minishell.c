@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:49:36 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/14 11:28:34 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/25 13:39:22 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 #include <stdlib.h>
 #include <termios.h>
 #include <unistd.h>
-
-/*void	print_infiles(t_infile *file)
+/* 
+void	print_infiles(t_infile *file)
 {
 	while (file)
 	{
@@ -72,7 +72,8 @@ void	print_tree(t_binary *tree, int sub)
 			print_cmds(tree->cmds);
 	if (sub)
 		printf("\n^exiting shubshell^\n");
-}*/
+}
+ */
 t_binary	*btree(void)
 {
 	static t_binary	tree;
@@ -80,9 +81,11 @@ t_binary	*btree(void)
 	return (&tree);
 }
 
-static void	initialize_stuff(int argc, char *argv[], char **envp)
+void	initialize_stuff(int argc, char *argv[], char **envp)
 {
 	(void)argc;
+	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO))
+		exit (0);
 	if (isatty(STDIN_FILENO))
 		tcgetattr(STDIN_FILENO, &btree()->orig_termios);
 	signal(SIGINT, handle_sigint);
@@ -102,7 +105,7 @@ void	execute_core(char **argv)
 	if (btree()->env)
 		ft_free_matrix(btree()->env);
 	btree()->env = list_to_char(*get_env_list());
-	btree()->main_exit = exec_tree(btree(), argv, btree()->env);
+	btree()->exit_status = exec_tree(btree(), argv, btree()->env);
 	reset_heredoc_flags(btree());
 	if (btree()->global_signal == 130)
 		btree()->global_signal = 0;
@@ -122,7 +125,8 @@ int	main(int argc, char *argv[], char **envp)
 		btree()->input = readline("minishell$ ");
 		if (!btree()->input)
 			break ;
-		add_history(btree()->input);
+		if (btree()->input[0] != '\0')
+			add_history(btree()->input);
 		if (*btree()->input == '\0')
 		{
 			free(btree()->input);
@@ -135,7 +139,6 @@ int	main(int argc, char *argv[], char **envp)
 		ft_free_matrix(btree()->env);
 	if (btree()->env)
 		btree()->env = NULL;
-	free_os_envs();
-	return (clear_env_list(), printf("Closing Minishell\n"),
+	return (free_os_envs(), clear_env_list(), printf("Closing Minishell\n"),
 		btree()->exit_status);
 }

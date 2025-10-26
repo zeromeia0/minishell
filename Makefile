@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+         #
+#    By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/13 15:40:32 by vivaz-ca          #+#    #+#              #
-#    Updated: 2025/10/14 10:52:15 by vvazzs           ###   ########.fr        #
+#    Updated: 2025/10/19 20:31:45 by namejojo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,6 @@ rr:
 	rm -fr ${OBJ_FILES} ${NAME}
 	rm -fr $(PROJ)
 	make
-	./minishell
 
 norm:
 	@norminette $(shell find . -type f \( -name "*.c" -o -name "*.h" \)) \

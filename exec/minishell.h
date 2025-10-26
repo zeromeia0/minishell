@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:39 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/14 11:33:46 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/26 14:36:37 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int			exec_tree(t_binary *tree, char **args, char **envp);
 int			exec_pipes(t_cmds *cmd, char **env);
 int			exec_redirections(t_cmds *cmd);
 int			has_redir(t_cmds *cmd);
+void	sig_handle_heredoc_more(int sig);
 int			print_linux_env_list(void);
 int			add_temp_var(const char *str);
 int			update_shell_level(int amount);
@@ -65,7 +66,7 @@ void		free_matrix(char **table);
 void		builtin_env(char **env);
 void		initialize_pwd(char **envp);
 void		handle_sigint(int sig);
-void	execute_child_helper(char **cleaned_cmd, char **env, t_cmds *cmd);
+void		execute_child_helper(char **cleaned_cmd, char **env, t_cmds *cmd);
 void		update_env_var(const char *key, const char *value);
 void		discard_heredoc(t_infile *infiles);
 void		init_shell_meta(void);
@@ -78,7 +79,6 @@ void		rebuild_env_list(t_os_envs **env_list, char **env_vars);
 void		free_env_list(t_os_envs *head);
 char		*aspas(char *str, int c);
 char		*remove_it(char *str, int c);
-char		*remove_aspas(char *str);
 char		*find_path(char **envp, char *which_env);
 char		*find_path_in_list(t_os_envs *env_list, const char *key);
 char		*get_env_var(char *name, char **envp);
@@ -99,6 +99,7 @@ size_t		get_env_key_length(const char *str);
 int			make_update_env_aux(t_os_envs **env_list, const char *str,
 				size_t len);
 int			handle_heredoc(t_cmds *cmd);
+char		*helper_add_quotes_export(char *new_str, char *str);
 int			handle_regular_redirections(t_cmds *cmd);
 void		pid_equal_zero_double(t_cmds *cmd, int p[2]);
 int			exec_single_left(t_infile *in);
@@ -117,7 +118,7 @@ char		*expand_hd(char *str);
 void		expand_infiles(t_infile *infile);
 void		expand_outfiles(t_outfile *outfile);
 void		check_commands(char *cmd);
-char	**buildup_path(t_cmds *cmd, char **envp);
+char		**buildup_path(t_cmds *cmd, char **envp);
 int			ensure_outfile(t_outfile *out);
 int			check_infiles(t_cmds *cmds);
 int			check_cmds(t_cmds *cmds, char **args, char **envp);
@@ -141,12 +142,12 @@ void		write_heredoc_line(char *str, int fd[2]);
 void		process_heredoc_lines(char *delimiter, int len, int fd[2]);
 void		setup_signals_for_parent(void);
 void		handle_heredoc_child(t_infile *in, int *p);
-int			super_checker_goated(t_cmds *cmd, char *command, char **args);
+int			super_checker_goated(t_cmds *cmd, char **command, char **args);
 int			exec_single_cmd(t_cmds *cmd);
 int			check_helper(t_cmds *cmd, int *please);
 void		reset_heredoc_flags(t_binary *tree);
 void		help_to_process(t_cmds *cmd, int p[2]);
-int exec_empty_heredoc_node(t_cmds *cmd);
+int			exec_empty_heredoc_node(t_cmds *cmd);
 // struct_clear.c
 void		binary_clear(t_binary *binary);
 void		cmds_clear(t_cmds *cmds);
@@ -155,7 +156,7 @@ void		infile_clear(t_infile *infile);
 void		wild_clear(t_wild *node);
 void		sig_handle_heredoc_main(int sig);
 int			manage_heredocs(t_cmds *cmd);
-
+void		valgrind_destroyer(char **updated_envs, char **cleaned);
 // struct_new.c
 t_binary	*binary_new(int shlvl, t_type type, t_binary *up, t_cmds *table);
 t_cmds		*cmds_new(t_outfile *outfile, t_infile *infile, char **cmd);

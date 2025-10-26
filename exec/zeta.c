@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   zeta.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 21:40:31 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/14 14:05:12 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/26 15:15:17 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	check_cmds(t_cmds *cmds, char **args, char **envp)
 	return (1);
 }
 
-int	super_checker_goated(t_cmds *cmd, char *command, char **args)
+int	super_checker_goated(t_cmds *cmd, char **command, char **args)
 {
 	(void)command;
 	if (!has_builtin(cmd) && !has_redir(cmd)

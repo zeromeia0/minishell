@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirections_tokenization.c                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:06:00 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/19 16:08:41 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/20 13:31:48 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	is_redir_token(const char *s)
 {
-	return (strcmp(s, ">") == 0 || strcmp(s, ">>") == 0 || strcmp(s, "<") == 0
-		|| strcmp(s, "<<") == 0);
+	return (ft_strcmp(s, ">") == 0 || ft_strcmp(s, ">>") == 0 || ft_strcmp(s,
+			"<") == 0 || ft_strcmp(s, "<<") == 0);
 }
 
 int	has_redir(t_cmds *cmd)

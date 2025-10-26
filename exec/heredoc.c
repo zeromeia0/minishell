@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:11:44 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/14 10:55:28 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/26 14:21:04 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,17 @@
 
 void	get_single_heredoc(char *eof, int fd[2])
 {
-	char	*delimiter;
+	char	delimiter[4096];
 	int		len;
 
 	if (!eof)
 		return ;
 	if (btree()->global_signal == 130)
 		megalodon_giga_chad_exit(130, 0);
-	delimiter = remove_aspas(eof);
+	remove_aspas(delimiter, eof);
 	len = ft_strlen(delimiter);
 	heredoc_setup();
 	process_heredoc_lines(delimiter, len, fd);
-	free(delimiter);
 	if (btree()->env)
 		ft_free_matrix(btree()->env);
 	if (fd)
@@ -36,7 +35,7 @@ void	process_all_heredocs(t_infile *in, int p[2])
 {
 	t_infile	*current;
 	int			tmp_pipe[2];
-	
+
 	(void)p;
 	current = in;
 	while (current)
@@ -63,7 +62,7 @@ int	handle_heredoc_parent(t_infile *in, pid_t pid, int *p)
 	close(p[1]);
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status) || (WIFEXITED(status)
-			&& WEXITSTATUS(status) == 130))
+			&& WEXITSTATUS(status) == 0))
 	{
 		close(p[0]);
 		btree()->global_signal = 130;

@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 23:17:50 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/13 10:03:09 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/26 14:38:58 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	heredoc_setup(void)
 		dup2(tty_fd, STDIN_FILENO);
 		close(tty_fd);
 	}
-	signal(SIGINT, sig_handle_heredoc);
+	signal(SIGINT, sig_handle_heredoc_more);
 	signal(SIGQUIT, SIG_IGN);
 }
 
@@ -51,15 +51,18 @@ void	process_heredoc_lines(char *delimiter, int len, int fd[2])
 	while (str && ft_strncmp(str, delimiter, len + 1))
 	{
 		write_heredoc_line(str, fd);
-		free(str);
 		if (btree()->global_signal == 130)
-			megalodon_giga_chad_exit(130, 0);
+			megalodon_giga_chad_exit(130, 1);
 		str = readline("> ");
 	}
 	if (!str && btree()->global_signal != 130)
-		fprintf(stderr,
-			"warning: here-document delimited by end-of-file (wanted `%s')\n",
-			delimiter);
+	{
+		ft_putstr_fd("warning: here-document \
+			delimited by end-of-file (wanted `",
+			STDERR_FILENO);
+		ft_putstr_fd(delimiter, STDERR_FILENO);
+		ft_putstr_fd("')\n", STDERR_FILENO);
+	}
 	free(str);
 }
 
@@ -73,7 +76,7 @@ void	setup_signals_for_parent(void)
 
 void	handle_heredoc_child(t_infile *in, int *p)
 {
-	signal(SIGINT, sig_handle_heredoc);
+	signal(SIGINT, sig_handle_heredoc_more);
 	signal(SIGQUIT, SIG_IGN);
 	close(p[0]);
 	get_single_heredoc(in->file, p);

@@ -6,7 +6,7 @@
 /*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:58:49 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/14 10:43:15 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/14 14:20:11 by namejojo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	**wildcards_aux(char **mat, int count, int flag)
 				free_matrix(mat);
 			return (wildcards(new, count + 1, flag + (new != mat)));
 		}
-		ind += (mat[count][ind]);
+		ind += (mat[count][ind] != '\0');
 	}
 	return (wildcards(mat, count + 1, flag));
 }

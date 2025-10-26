@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:44:52 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/13 16:38:48 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/21 15:38:05 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,15 @@ int	handle_slash_command(char *cmd, char **args, char **envp)
 			perror("/bin/bash");
 			megalodon_giga_chad_exit(1, 0);
 		}
+		ft_free_matrix(envp);
 		perror(cmd);
 		megalodon_giga_chad_exit(btree()->exit_status, 0);
 	}
 	else
 	{
 		my_ffprintf(cmd, "Permission denied\n");
-		megalodon_giga_chad_exit(126, 0);
+		ft_free_matrix(envp);
+		megalodon_giga_chad_exit(126, 1);
 	}
 	return (megalodon_giga_chad_exit(0, 0), 0);
 }

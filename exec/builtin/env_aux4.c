@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_aux4.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:11:32 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/14 11:01:00 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/20 13:31:48 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*find_path_in_list(t_os_envs *env_list, const char *key)
 	key_len = strlen(key);
 	while (env_list)
 	{
-		if (strncmp(env_list->linux_envs, key, key_len) == 0)
+		if (ft_strncmp(env_list->linux_envs, key, key_len) == 0)
 			return (env_list->linux_envs + key_len);
 		env_list = env_list->next;
 	}
@@ -44,7 +44,7 @@ int	temp_var_exists(t_os_envs *env_list, const char *str)
 	current = env_list;
 	while (current)
 	{
-		if (current->temp_vars && strcmp(current->temp_vars, str) == 0)
+		if (current->temp_vars && ft_strcmp(current->temp_vars, str) == 0)
 			return (1);
 		current = current->next;
 	}
