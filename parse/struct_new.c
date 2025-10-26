@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_new.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:58:02 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/09 10:58:06 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/26 15:22:14 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ t_infile	*infile_new(char *file, char *token)
 	new->flag = 0;
 	new->token = token;
 	new->flag = 0;
+	new->heredoc_fd = -1;
 	new->next = NULL;
 	return (new);
 }

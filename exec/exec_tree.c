@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/24 14:49:55 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/26 15:24:02 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	exec_node(t_binary *node, char **args, char **envp)
 
 int	check_order(t_binary *tree, char **args, char **envp)
 {
-	static int	please = 0;
+	int	please = 0;
 
 	if (!tree)
 		return (1);

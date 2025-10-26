@@ -6,7 +6,7 @@
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:21:30 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/26 16:51:52 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/10/26 16:53:39 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,6 @@ int	parsing(char *str)
 {
 	char			**mat;
 	static t_token	tokens;
-	char			str1[4096];
 
 	if (str == NULL || *str == '\0')
 		return (1);
