@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shadow3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 23:17:50 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/14 14:27:29 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/26 21:53:13 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,15 @@ void	children_killer(int status)
 	exit(status);
 }
 
-void	check_commands(char *cmd)
+void	check_commands(char **cmd, char **envp)
 {
 	if (btree()->cmds->flag_to_exec == 1)
 		megalodon_giga_chad_exit(126, 0);
-	if (access(cmd, F_OK) != 0)
+	if (access(cmd[0], F_OK) != 0)
 	{
-		my_ffprintf(cmd, "No such file or directory\n");
-		megalodon_giga_chad_exit(127, 0);
+		my_ffprintf(cmd[0], "No such file or directory 2\n");
+		ft_free_matrix(cmd);
+		ft_free_matrix(envp);
+		megalodon_giga_chad_exit(127, 1);
 	}
 }

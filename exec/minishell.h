@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:39 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/26 15:25:50 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/26 21:53:21 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void		get_single_heredoc(char *eof, int fd[2]);
 char		*expand_hd(char *str);
 void		expand_infiles(t_infile *infile);
 void		expand_outfiles(t_outfile *outfile);
-void		check_commands(char *cmd);
+void		check_commands(char **cmd, char **envp);
 char		**buildup_path(t_cmds *cmd, char **envp);
 int			ensure_outfile(t_outfile *out);
 int			check_infiles(t_cmds *cmds);

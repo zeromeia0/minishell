@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:44:52 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/26 21:41:03 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/26 21:53:32 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	handle_slash_command(char *cmd, char **args, char **envp)
 {
 	if (cmd == NULL)
 		btree()->cmds->flag_to_exec = 1;
-	check_commands(cmd);
+	check_commands(args, envp);
 	if (access(cmd, X_OK) == 0)
 	{
 		prepare_for_exec();
@@ -73,7 +73,7 @@ int	handle_system_path_cmd_aux(char *cmd, char **args, char **envp)
 {
 	if (cmd == NULL)
 		btree()->cmds->flag_to_exec = 1;
-	check_commands(cmd);
+	check_commands(args, envp);
 	if (access(cmd, X_OK) == 0)
 	{
 		prepare_for_exec();
