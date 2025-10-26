@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:44:52 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/21 15:38:05 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/26 21:41:03 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,9 @@ int	handle_slash_command(char *cmd, char **args, char **envp)
 	}
 	else
 	{
-		my_ffprintf(cmd, "Permission denied\n");
+		my_ffprintf(cmd, "Permission denied 4\n");
 		ft_free_matrix(envp);
+		ft_free_matrix(args);
 		megalodon_giga_chad_exit(126, 1);
 	}
 	return (megalodon_giga_chad_exit(0, 0), 0);

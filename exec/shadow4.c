@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 23:20:04 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/14 10:56:53 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/26 21:42:55 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,6 @@ void	execute_child_helper(char **cleaned_cmd, char **env, t_cmds *cmd)
 	{
 		exec_path(cleaned_cmd[0], cleaned_cmd, env);
 		ft_free_matrix(cleaned_cmd);
-		megalodon_giga_chad_exit(127, 0);
+		megalodon_giga_chad_exit(127, 1);
 	}
 }
