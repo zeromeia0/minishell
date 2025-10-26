@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sigma_minishell.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/14 11:37:04 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/26 12:29:51 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void		rebuild_env_list(t_os_envs **env_list, char **env_vars);
 void		free_env_list(t_os_envs *head);
 char		*aspas(char *str, int c);
 char		*remove_it(char *str, int c);
-char		*remove_aspas(char *str);
+void remove_aspas(char *dest, const char *src);
 char		*find_path(char **envp, char *which_env);
 char		*find_path_in_list(t_os_envs *env_list, const char *key);
 char		*get_env_var(char *name, char **envp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shadow2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 23:17:50 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/25 15:46:17 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/26 14:27:20 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	process_heredoc_lines(char *delimiter, int len, int fd[2])
 	{
 		write_heredoc_line(str, fd);
 		if (btree()->global_signal == 130)
-			megalodon_giga_chad_exit(130, 0);
+			megalodon_giga_chad_exit(130, 1);
 		str = readline("> ");
 	}
 	if (!str && btree()->global_signal != 130)

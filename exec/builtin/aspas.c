@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   aspas.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:24:06 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/09/30 19:28:08 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/26 12:46:31 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,27 +26,19 @@ int	has_quotes(char *str)
 	return (0);
 }
 
-char	*remove_aspas(char *str)
+void remove_aspas(char *dest, const char *src)
 {
-	int		i;
-	int		j;
-	int		len;
-	char	*removed;
-
-	i = 0;
-	j = 0;
-	len = ft_strlen(str) - count_it(str, '"') - count_it(str, '\'');
-	removed = malloc(len + 1);
-	if (!removed)
-		return (NULL);
-	while (str[i])
-	{
-		if (str[i] != '"' && str[i] != '\'')
-			removed[j++] = str[i];
-		i++;
-	}
-	removed[j] = '\0';
-	return (removed);
+    int start = 0;
+    int end = ft_strlen(src) - 1;
+    if ((src[start] == '"' && src[end] == '"') || (src[start] == '\'' && src[end] == '\''))
+    {
+        start++;
+        end--;
+    }
+    int j = 0;
+    for (int i = start; i <= end; i++)
+        dest[j++] = src[i];
+    dest[j] = '\0';
 }
 
 char	*remove_it(char *str, int c)

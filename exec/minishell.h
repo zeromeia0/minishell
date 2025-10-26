@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:39 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/24 15:49:05 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/26 12:29:57 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ void		rebuild_env_list(t_os_envs **env_list, char **env_vars);
 void		free_env_list(t_os_envs *head);
 char		*aspas(char *str, int c);
 char		*remove_it(char *str, int c);
-char		*remove_aspas(char *str);
 char		*find_path(char **envp, char *which_env);
 char		*find_path_in_list(t_os_envs *env_list, const char *key);
 char		*get_env_var(char *name, char **envp);

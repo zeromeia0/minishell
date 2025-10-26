@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shadow4.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 23:20:04 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/25 15:42:39 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/26 14:28:52 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ int	exec_empty_heredoc_node(t_cmds *cmd)
 {
 	t_infile	*in;
 	in = cmd->infiles;
-
 	while (in)
 	{
 		if (ft_strcmp(in->token, "<<") == 0)

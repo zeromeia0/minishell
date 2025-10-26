@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:11:44 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/25 15:39:33 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/26 14:21:04 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,17 @@
 
 void	get_single_heredoc(char *eof, int fd[2])
 {
-	char	*delimiter;
+	char	delimiter[4096];
 	int		len;
 
 	if (!eof)
 		return ;
 	if (btree()->global_signal == 130)
 		megalodon_giga_chad_exit(130, 0);
-	delimiter = remove_aspas(eof);
+	remove_aspas(delimiter, eof);
 	len = ft_strlen(delimiter);
 	heredoc_setup();
 	process_heredoc_lines(delimiter, len, fd);
-	free(delimiter);
 	if (btree()->env)
 		ft_free_matrix(btree()->env);
 	if (fd)
