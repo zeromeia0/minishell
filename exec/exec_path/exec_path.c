@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:44:52 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/26 21:53:32 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/26 22:09:59 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	handle_slash_command(char *cmd, char **args, char **envp)
 	}
 	else
 	{
-		my_ffprintf(cmd, "Permission denied 4\n");
+		my_ffprintf(cmd, "Permission denied\n");
 		ft_free_matrix(envp);
 		ft_free_matrix(args);
 		megalodon_giga_chad_exit(126, 1);

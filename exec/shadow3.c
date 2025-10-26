@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 23:17:50 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/26 21:53:13 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/26 21:55:13 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	check_commands(char **cmd, char **envp)
 		megalodon_giga_chad_exit(126, 0);
 	if (access(cmd[0], F_OK) != 0)
 	{
-		my_ffprintf(cmd[0], "No such file or directory 2\n");
+		my_ffprintf(cmd[0], "No such file or directory\n");
 		ft_free_matrix(cmd);
 		ft_free_matrix(envp);
 		megalodon_giga_chad_exit(127, 1);

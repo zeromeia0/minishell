@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:12:18 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/26 21:47:46 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/26 21:55:09 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	check_infiles(t_cmds *cmds)
 			{
 				cmds->flag_to_exec = 1;
 				my_ffprintf(current_infile->file,
-					"No such file or directory 1\n");
+					"No such file or directory\n");
 				return (0);
 			}
 			if (access(current_infile->file, R_OK) != 0)
