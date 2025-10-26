@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/12 23:11:14 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/26 14:39:33 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,17 @@ void	sig_handle_heredoc(int sig)
 	btree()->exit_status = 130;
 	write(STDOUT_FILENO, "\n", 1);
 	megalodon_giga_chad_exit(130, 0);
+}
+
+void	sig_handle_heredoc_more(int sig)
+{
+	(void)sig;
+	signal(SIGTTOU, SIG_IGN);
+	signal(SIGTTIN, SIG_IGN);
+	btree()->global_signal = 130;
+	btree()->exit_status = 130;
+	write(STDOUT_FILENO, "\n", 1);
+	megalodon_giga_chad_exit(130, 1);
 }
 
 int	restart_signals(void)

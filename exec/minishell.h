@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:39 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/26 12:29:57 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/26 14:36:37 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int			exec_tree(t_binary *tree, char **args, char **envp);
 int			exec_pipes(t_cmds *cmd, char **env);
 int			exec_redirections(t_cmds *cmd);
 int			has_redir(t_cmds *cmd);
+void	sig_handle_heredoc_more(int sig);
 int			print_linux_env_list(void);
 int			add_temp_var(const char *str);
 int			update_shell_level(int amount);
