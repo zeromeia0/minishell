@@ -6,11 +6,14 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/26 14:41:33 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/26 15:24:02 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../sigma_minishell.h"
+#include <stdlib.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
 void	exec_child(t_cmds *cmd)
 {

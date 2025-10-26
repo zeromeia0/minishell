@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 23:20:04 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/26 14:28:52 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/14 10:56:53 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	handle_single_heredoc_stuff(t_infile *in)
 	if (pid == 0)
 	{
 		get_single_heredoc(in->file, fd);
-		megalodon_giga_chad_exit(0, 1);
+		_exit(0);
 	}
 	else
 	{
@@ -65,6 +65,7 @@ int	handle_single_heredoc_stuff(t_infile *in)
 int	exec_empty_heredoc_node(t_cmds *cmd)
 {
 	t_infile	*in;
+
 	in = cmd->infiles;
 	while (in)
 	{

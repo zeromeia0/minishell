@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 23:17:50 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/26 14:38:58 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/26 15:26:27 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	process_heredoc_lines(char *delimiter, int len, int fd[2])
 	{
 		write_heredoc_line(str, fd);
 		if (btree()->global_signal == 130)
-			megalodon_giga_chad_exit(130, 1);
+			megalodon_giga_chad_exit(130, 0);
 		str = readline("> ");
 	}
 	if (!str && btree()->global_signal != 130)
@@ -76,7 +76,7 @@ void	setup_signals_for_parent(void)
 
 void	handle_heredoc_child(t_infile *in, int *p)
 {
-	signal(SIGINT, sig_handle_heredoc_more);
+	signal(SIGINT, sig_handle_heredoc);
 	signal(SIGQUIT, SIG_IGN);
 	close(p[0]);
 	get_single_heredoc(in->file, p);
