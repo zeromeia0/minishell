@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   typedef.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 11:35:39 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/14 11:36:39 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/26 14:42:18 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # include <termios.h>
 # include <sys/wait.h>
 # include <signal.h>
-# include "typedef.h"
 
 typedef struct s_wild
 {

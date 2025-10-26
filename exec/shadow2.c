@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shadow2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 23:17:50 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/20 16:21:41 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/26 15:26:27 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	heredoc_setup(void)
 		dup2(tty_fd, STDIN_FILENO);
 		close(tty_fd);
 	}
-	signal(SIGINT, sig_handle_heredoc);
+	signal(SIGINT, sig_handle_heredoc_more);
 	signal(SIGQUIT, SIG_IGN);
 }
 
