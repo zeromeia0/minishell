@@ -6,11 +6,12 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/26 22:11:14 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/26 22:29:42 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../sigma_minishell.h"
+#include "minishell.h"
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -22,6 +23,8 @@ void	exec_child(t_cmds *cmd)
 	int		checker;
 
 	checker = 0;
+	if (!cmd || !cmd->cmd[0])
+		megalodon_giga_chad_exit(0, 1);
 	if (cmd && cmd->flag_to_exec == 1)
 		megalodon_giga_chad_exit(btree()->exit_status, 0);
 	signal(SIGINT, handle_sigint);
