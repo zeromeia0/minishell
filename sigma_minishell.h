@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/26 12:29:51 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/26 14:42:00 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # include <sys/wait.h>
 # include <signal.h>
 # include "typedef.h"
-# include "exec/minishell.h"
 
 int			parsing(char *str);
 int			is_builtin(char *cmd);
@@ -196,5 +195,7 @@ void		set_to_onethirty(int sig);
 void		sig_handle_heredoc(int sig);
 int			restart_signals(void);
 void		free_os_envs(void);
+
+# include "exec/minishell.h"
 
 #endif
