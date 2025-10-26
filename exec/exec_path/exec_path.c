@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:44:52 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/26 22:09:59 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/26 23:12:06 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,5 +119,6 @@ int	exec_path(char *cmd, char **args, char **envp)
 	if (is_system_path_command(cmd, envp))
 		return (exec_system_path(cmd, args, envp));
 	my_ffprintf(cmd, "command not found\n");
-	return (megalodon_giga_chad_exit(127, 0), 0);
+	ft_free_matrix(args);
+	return (megalodon_giga_chad_exit(127, 1), 0);
 }
