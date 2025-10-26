@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sigma_minishell.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/14 11:37:04 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/26 16:52:03 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,5 +196,6 @@ void		set_to_onethirty(int sig);
 void		sig_handle_heredoc(int sig);
 int			restart_signals(void);
 void		free_os_envs(void);
+void		rm_quote(char *dest, char *src);
 
 #endif
