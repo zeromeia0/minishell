@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jlima-so <jlima-so@student.42lisba.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:35:14 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/26 20:59:31 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/27 14:03:16 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,10 @@ void	quote_aux(char **s, int *count, char **str2, int value)
 			free(*str2);
 			*str2 = ft_strdup(*s);
 		}
-		ind += ((*s + *count)[ind] != '\0');
+		ind += ((*s + *count)[ind] != '\0' && (*s + *count)[ind] != '$');
 	}
-	ft_memmove((*s + *count) + ind, (*s + *count) + ind + 1, ft_strlen((*s
-				+ *count) + ind));
+	ft_memmove((*s + *count) + ind, (*s + *count) + ind + 1,
+		ft_strlen((*s + *count) + ind));
 	ft_memmove((*s + *count), (*s + *count) + 1, ft_strlen((*s + *count)));
 	free(*str2);
 	*str2 = ft_strdup(*s);
@@ -128,7 +128,7 @@ char	*quote(char *str)
 		if (*(str + count) == '\"' || *(str + count) == '\'')
 			quote_aux(&str, &count, &str2, 0);
 		else
-			count += (str[count] != '\0');
+			count += (str[count] != '\0' && str[count] != '$');
 	}
 	if (str2)
 		free(str2);
