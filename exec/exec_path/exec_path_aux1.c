@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:36:54 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/26 23:10:24 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/26 23:59:17 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,24 +61,6 @@ int	check_path_access(char *path, char *cmd)
 	result = (access(full_path, X_OK) == 0);
 	free(full_path);
 	return (result);
-}
-
-static int	check_paths(char **paths, char *cmd, int expected_access)
-{
-	int	i;
-	int	access_result;
-
-	if (!paths || !cmd)
-		return (0);
-	for (i = 0; paths[i]; i++)
-	{
-		access_result = check_path_access(paths[i], cmd);
-		if (access_result == -1)
-			return (-1);
-		if (access_result == expected_access)
-			return (1);
-	}
-	return (0);
 }
 
 int	is_system_path_command(char *cmd, char **envp)

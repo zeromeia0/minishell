@@ -43,6 +43,7 @@ int	handle_single_heredoc_stuff(t_infile *in)
 {
 	int		fd[2];
 	pid_t	pid;
+
 	printf("heredoc stuff\n");
 	if (pipe(fd) == -1)
 		return (perror("pipe"), -1);
