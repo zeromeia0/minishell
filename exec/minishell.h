@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:39 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/27 15:36:23 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/27 16:41:35 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,8 +142,8 @@ void		file_descriptor_closer(int fd[2]);
 int			get_heredoc_fd(t_cmds *cmd);
 char		**expand_matrix(t_cmds *cmd);
 void		heredoc_setup(void);
-void		write_heredoc_line(char *str, int fd[2]);
-void		process_heredoc_lines(char *delimiter, int len, int fd[2]);
+void		write_heredoc_line(char *str, int fd[2], int flag_to_expand);
+void	process_heredoc_lines(char *delimiter, int len, int fd[2], int flag_to_expand);
 void		setup_signals_for_parent(void);
 void		handle_heredoc_child(t_infile *in, int *p);
 int			super_checker_goated(t_cmds *cmd, char **command, char **args);

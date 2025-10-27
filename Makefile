@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+         #
+#    By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/13 15:40:32 by vivaz-ca          #+#    #+#              #
-#    Updated: 2025/10/19 20:31:45 by namejojo         ###   ########.fr        #
+#    Updated: 2025/10/27 16:18:45 by vivaz-ca         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,9 +76,13 @@ val: re
 	clear
 	valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
 
-cal:
+cal1:
 	clear
 	valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
+
+cal2:
+	clear
+	valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes --suppressions=readline.supp ./minishell
 
 .PHONY: re fclean clean all exec_rule parse_rule
 
