@@ -6,7 +6,7 @@
 /*   By: jlima-so <jlima-so@student.42lisba.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:35:14 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/27 15:16:23 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/10/27 15:19:17 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,12 @@ void	rm_quote(char *dest, char *src)
 	}
 }
 
-void	quote_aux(char **s, int *count, char **str2, int value)
+void	quote_aux(char **s, int *count, char **str2, int ind)
 {
-	int		ind;
 	char	ch;
+	int		value;
 
 	ch = (*s + *count)[0];
-	ind = 1;
 	while ((*s + *count)[ind] != '\0' && (*s + *count)[ind] != ch)
 	{
 		if (ch == '\"')
@@ -97,7 +96,8 @@ void	quote_aux(char **s, int *count, char **str2, int value)
 			free(*str2);
 			*str2 = ft_strdup(*s);
 		}
-		ind += (((*s + *count)[ind] != '\0' && (*s + *count)[ind] != '$') || ch == '\'');
+		ind += (((*s + *count)[ind] != '\0' && (*s + *count)[ind] != '$')
+				|| ch == '\'');
 	}
 	ft_memmove((*s + *count) + ind, (*s + *count) + ind + 1,
 		ft_strlen((*s + *count) + ind));
@@ -126,7 +126,7 @@ char	*quote(char *str)
 			str2 = ft_strdup(str);
 		}
 		if (*(str + count) == '\"' || *(str + count) == '\'')
-			quote_aux(&str, &count, &str2, 0);
+			quote_aux(&str, &count, &str2, 1);
 		else
 			count += (str[count] != '\0' && str[count] != '$');
 	}
