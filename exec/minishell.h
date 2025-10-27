@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:39 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/26 23:59:40 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/27 15:36:23 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int			exec_single_cmd_aux(t_cmds *cmd);
 bool		is_n_flag(const char *arg);
 void		init_tree(char **mat);
 void		exec_child_helper(t_cmds *cmd, char **cleaned, char **updated_envs);
+void		handle_wait_status(int status, int *exit_status);
 int			check_paths(char **paths, char *cmd, int expected_access);
 void		export_print_env_list(void);
 void		free_matrix(char **table);

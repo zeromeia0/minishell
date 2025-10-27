@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shadow5.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 23:56:47 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/26 23:59:21 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/27 15:36:14 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,22 @@ int	check_paths(char **paths, char *cmd, int expected_access)
 		i++;
 	}
 	return (0);
+}
+
+void	handle_wait_status(int status, int *exit_status)
+{
+	int	sig;
+
+	if (WIFSIGNALED(status))
+	{
+		sig = WTERMSIG(status);
+		if (sig == SIGINT)
+		{
+			btree()->global_signal = 130;
+			btree()->exit_status = 130;
+			*exit_status = 130;
+		}
+	}
+	else if (WIFEXITED(status))
+		*exit_status = WEXITSTATUS(status);
 }
