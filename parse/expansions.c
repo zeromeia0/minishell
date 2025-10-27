@@ -6,7 +6,7 @@
 /*   By: jlima-so <jlima-so@student.42lisba.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:35:14 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/27 14:03:16 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/10/27 15:16:23 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,35 +52,6 @@ char	*expand_hd(char *str)
 	return (str);
 }
 
-void	quote_aux(char **s, int *count, char **str2, int value)
-{
-	int		ind;
-	char	ch;
-
-	ch = (*s + *count)[0];
-	ind = 1;
-	while ((*s + *count)[ind] != '\0' && (*s + *count)[ind] != ch)
-	{
-		if (ch == '\"')
-		{
-			*s = single_expand(*s, *count + ind, 0);
-			if (*(*s + 2) == '\0')
-				break ;
-			value = get_diff(*s + ind + *count, *str2 + ind + *count, 0);
-			ind += value - (value != 0);
-			free(*str2);
-			*str2 = ft_strdup(*s);
-		}
-		ind += ((*s + *count)[ind] != '\0' && (*s + *count)[ind] != '$');
-	}
-	ft_memmove((*s + *count) + ind, (*s + *count) + ind + 1,
-		ft_strlen((*s + *count) + ind));
-	ft_memmove((*s + *count), (*s + *count) + 1, ft_strlen((*s + *count)));
-	free(*str2);
-	*str2 = ft_strdup(*s);
-	*count += (ft_strcmp(*s, *str2) == 0) * (ind - 1);
-}
-
 void	rm_quote(char *dest, char *src)
 {
 	char	ch;
@@ -105,6 +76,35 @@ void	rm_quote(char *dest, char *src)
 		else
 			beg++;
 	}
+}
+
+void	quote_aux(char **s, int *count, char **str2, int value)
+{
+	int		ind;
+	char	ch;
+
+	ch = (*s + *count)[0];
+	ind = 1;
+	while ((*s + *count)[ind] != '\0' && (*s + *count)[ind] != ch)
+	{
+		if (ch == '\"')
+		{
+			*s = single_expand(*s, *count + ind, 0);
+			if (*(*s + 2) == '\0')
+				break ;
+			value = get_diff(*s + ind + *count, *str2 + ind + *count, 0);
+			ind += value - (value != 0);
+			free(*str2);
+			*str2 = ft_strdup(*s);
+		}
+		ind += (((*s + *count)[ind] != '\0' && (*s + *count)[ind] != '$') || ch == '\'');
+	}
+	ft_memmove((*s + *count) + ind, (*s + *count) + ind + 1,
+		ft_strlen((*s + *count) + ind));
+	ft_memmove((*s + *count), (*s + *count) + 1, ft_strlen((*s + *count)));
+	free(*str2);
+	*str2 = ft_strdup(*s);
+	*count += (ft_strcmp(*s, *str2) == 0) * (ind - 1);
 }
 
 char	*quote(char *str)
