@@ -6,7 +6,7 @@
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:01:02 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/28 01:23:16 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 12:04:48 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,6 @@ void	free_asterisc(char **mat)
 char	**expand_matrix(t_cmds *cmd, int flag, int ind)
 {
 	char	**holder;
-	int		ind;
-	int		flag;
 
 	if (cmd->cmd == NULL)
 		return (NULL);
