@@ -6,11 +6,13 @@
 #    By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/12 13:07:24 by jlima-so          #+#    #+#              #
-#    Updated: 2025/10/28 01:20:19 by jlima-so         ###   ########.fr        #
+#    Updated: 2025/10/28 16:06:55 by jlima-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC_FILES=	$(wildcard *.c)
+SRC_FILES=	binary_tree.c check_syntax.c expansions_aux.c expansions.c get_pattern.c \
+			here_doc_aux.c parsing.c struct_clear.c struct_new.c syntax_error_msg.c \
+			tokenization.c wildcards1.c wildcards2.c wildcards_aux1.c wildcards_aux2.c
 
 OBJ_FILES=	${SRC_FILES:.c=.o}
 
