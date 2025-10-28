@@ -1,11 +1,36 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/10/28 15:37:14 by vivaz-ca          #+#    #+#              #
+#    Updated: 2025/10/28 15:39:44 by vivaz-ca         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME        = minishell
 PIPEX       = pipex
 PIPEX_BONUS = pipex_bonus
-
 PIPEX_DIR   = pipex
 LIBFT_DIR   = my_libft
 BULTIN_DIR  = builtin
-BULTIN_SRCS = $(wildcard $(BULTIN_DIR)/*.c)
+BULTIN_SRCS = $(BULTIN_DIR)/aspas_aux.c \
+			  $(BULTIN_DIR)/aspas.c \
+			  $(BULTIN_DIR)/builtin.c \
+			  $(BULTIN_DIR)/builtin_cd.c \
+			  $(BULTIN_DIR)/builtin_pwd.c \
+			  $(BULTIN_DIR)/env_aux1.c \
+			  $(BULTIN_DIR)/env_aux2.c \
+			  $(BULTIN_DIR)/env_aux3.c \
+			  $(BULTIN_DIR)/env_aux4.c \
+			  $(BULTIN_DIR)/env_aux5.c \
+			  $(BULTIN_DIR)/env.c \
+			  $(BULTIN_DIR)/export.c \
+			  $(BULTIN_DIR)/export_aux.c \
+			  $(BULTIN_DIR)/overall_builtin_aux.c \
+			  $(BULTIN_DIR)/unset.c
 
 CC          = cc
 CFLAGS      = -Wall -Wextra -Werror -g -fsanitize=address
