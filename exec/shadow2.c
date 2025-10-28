@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 23:17:50 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/27 16:53:46 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/28 14:11:35 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	write_heredoc_line(char *str, int fd[2], int flag_to_expand)
 		free(expanded);
 }
 
-void	process_heredoc_lines(char *delimiter, int len, int fd[2], int flag_to_expand)
+void	process_heredoc_lines(char *delimiter, int len, int fd[2],
+		int flag_to_expand)
 {
 	char	*str;
 

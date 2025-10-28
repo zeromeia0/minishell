@@ -16,9 +16,9 @@ void	get_single_heredoc(char *eof, int fd[2])
 {
 	char	delimiter[4096];
 	int		len;
-	int prev_len;
-	int result;
-	
+	int		prev_len;
+	int		result;
+
 	if (!eof)
 		return ;
 	result = 0;

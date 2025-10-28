@@ -143,7 +143,8 @@ int			get_heredoc_fd(t_cmds *cmd);
 char		**expand_matrix(t_cmds *cmd, int flag, int ind);
 void		heredoc_setup(void);
 void		write_heredoc_line(char *str, int fd[2], int flag_to_expand);
-void	process_heredoc_lines(char *delimiter, int len, int fd[2], int flag_to_expand);
+void		process_heredoc_lines(char *delimiter, int len, int fd[2],
+				int flag_to_expand);
 void		setup_signals_for_parent(void);
 void		handle_heredoc_child(t_infile *in, int *p);
 int			super_checker_goated(t_cmds *cmd, char **command, char **args);
