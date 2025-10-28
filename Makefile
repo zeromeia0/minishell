@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+         #
+#    By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/13 15:40:32 by vivaz-ca          #+#    #+#              #
-#    Updated: 2025/10/28 17:10:37 by jlima-so         ###   ########.fr        #
+#    Updated: 2025/10/28 17:20:06 by vivaz-ca         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,23 +81,25 @@ $(PROJ): $(PROJ).c
 parse_rule:
 	$(MAKE) -C $(PARSER_DIR)
 
+exec_rule:
+	$(MAKE) -C $(EXEC_DIR)
 clean:
 	rm -f ${OBJ_FILES} ${NAME}
 	$(MAKE) -C $(PARSER_DIR) clean
-# 	$(MAKE) -C $(EXEC_DIR) clean
+	$(MAKE) -C $(EXEC_DIR) clean
 
 fclean: clean
 	rm -f $(PROJ)
 	$(MAKE) -C $(PARSER_DIR) fcleanlocal
-# 	$(MAKE) -C $(EXEC_DIR) fclean
+	$(MAKE) -C $(EXEC_DIR) fclean
 
 re: fclean all
 	$(MAKE) -C $(PARSER_DIR)
-# 	$(MAKE) -C $(EXEC_DIR)
+	$(MAKE) -C $(EXEC_DIR)
 
 r: fclean all
 	$(MAKE) -C $(PARSER_DIR)
-# 	$(MAKE) -C $(EXEC_DIR)
+	$(MAKE) -C $(EXEC_DIR)
 	make clean
 	clear && ./minishell
 
