@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 23:56:47 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/27 15:36:14 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/28 17:49:23 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,19 @@ void	handle_wait_status(int status, int *exit_status)
 	}
 	else if (WIFEXITED(status))
 		*exit_status = WEXITSTATUS(status);
+}
+
+void	init_pwd_helper(void)
+{
+	char	*new_path;
+
+	new_path = malloc(ft_strlen("PATH=/usr/local/sbin:/usr/local/bin:\
+		/usr/sbin:/usr/bin:/sbin:/bin") + 1);
+	if (!new_path)
+		return ;
+	ft_strcpy(new_path, "PATH=");
+	ft_strcat(new_path,
+		"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin");
+	add_new_env_var(get_env_list(), new_path);
+	free(new_path);
 }

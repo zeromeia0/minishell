@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_aux2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:01:02 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/28 12:04:48 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 17:49:49 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,13 @@ void	initialize_pwd(char **envp)
 	char	buf[1024];
 	char	*pwd_value;
 	char	*full;
+	char	*path_value;
 
 	pwd_value = find_path(envp, "PWD=");
 	if (!pwd_value)
 	{
 		if (getcwd(buf, sizeof(buf)) == NULL)
-		{
-			perror("getcwd");
-			return ;
-		}
+			return (perror("getcwd"));
 		full = malloc(strlen("PWD=") + strlen(buf) + 1);
 		if (!full)
 			return ;
@@ -48,8 +46,12 @@ void	initialize_pwd(char **envp)
 		add_new_env_var(get_env_list(), full);
 		free(full);
 	}
+	path_value = find_path(envp, "PATH=");
+	if (!path_value)
+		init_pwd_helper();
 	else
 		free(pwd_value);
+	free(path_value);
 }
 
 char	*find_temp_var(const char *key)
@@ -94,7 +96,7 @@ char	**expand_matrix(t_cmds *cmd, int flag, int ind)
 			holder = ft_split_sep(cmd->cmd[ind], ' ', '\n');
 			if (holder == NULL)
 				return (btree()->type = ERROR, cmd->cmd);
-			free (cmd->cmd[ind]);
+			free(cmd->cmd[ind]);
 			ft_matrix_uni(cmd->cmd + ind, cmd->cmd + ind + 1);
 			holder = ft_matrix_in_matrix(cmd->cmd, ind, holder);
 			cmd->expanded = cmd->expanded + (holder != cmd->cmd);

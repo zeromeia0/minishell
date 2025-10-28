@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:39 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/28 01:23:34 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 17:41:24 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void		export_print_env_list(void);
 void		free_matrix(char **table);
 void		builtin_env(char **env);
 void		initialize_pwd(char **envp);
+void		init_pwd_helper(void);
 void		handle_sigint(int sig);
 void		execute_child_helper(char **cleaned_cmd, char **env, t_cmds *cmd);
 void		update_env_var(const char *key, const char *value);
