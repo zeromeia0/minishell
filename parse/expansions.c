@@ -6,7 +6,7 @@
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:35:14 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/25 12:43:07 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 15:10:45 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,38 @@ char	*expand_hd(char *str)
 	return (str);
 }
 
-void	quote_aux(char **s, int *count, char **str2, int value)
+void	rm_quote(char *dest, char *src)
 {
-	int		ind;
+	char	ch;
+	int		beg;
+	int		end;
+
+	dest = ft_strcpy(dest, src);
+	beg = 0;
+	ch = 0;
+	while (dest[beg] && beg < 4095)
+	{
+		if (dest[beg] == '\'' || dest[beg] == '\"')
+		{
+			ch = dest[beg];
+			end = beg + 1;
+			while (dest[end] != '\0' && dest[end] != ch && end < 4094)
+				end++;
+			ft_memmove(dest + end, dest + end + 1, ft_strlen(dest + end));
+			ft_memmove(dest + beg, dest + beg + 1, ft_strlen(dest));
+			beg = end - 1;
+		}
+		else
+			beg++;
+	}
+}
+
+void	quote_aux(char **s, int *count, char **str2, int ind)
+{
+	int		value;
 	char	ch;
 
 	ch = (*s + *count)[0];
-	ind = 1;
 	while ((*s + *count)[ind] != '\0' && (*s + *count)[ind] != ch)
 	{
 		if (ch == '\"')
@@ -71,13 +96,16 @@ void	quote_aux(char **s, int *count, char **str2, int value)
 			free(*str2);
 			*str2 = ft_strdup(*s);
 		}
-		ind += ((*s + *count)[ind] != '\0');
+		ind += ((*s + *count)[ind] != '\0' && ((*s + *count)[ind] != '$'))
+			|| (ch == '\'' && (*s + *count)[ind] == '$')
+			|| ((*s + *count)[ind] == '$' &&!ft_isalnum((*s + *count)[ind + 1])
+			&& (*s + *count)[ind + 1] != '?' && (*s + *count)[ind + 1] != '_');
 	}
-	ft_memmove((*s + *count) + ind, (*s + *count) + ind + 1, ft_strlen((*s + *count) + ind));
-	ft_memmove((*s + *count), (*s + *count) + 1, ft_strlen((*s + *count)));
+	*(*s + *count + ind) = '\n';
+	*(*s + *count) = '\n';
 	free(*str2);
 	*str2 = ft_strdup(*s);
-	*count += (ft_strcmp(*s, *str2) == 0) * (ind - 1);
+	*count += (ft_strcmp(*s, *str2) == 0) * (ind);
 }
 
 char	*quote(char *str)
@@ -99,11 +127,12 @@ char	*quote(char *str)
 			str2 = ft_strdup(str);
 		}
 		if (*(str + count) == '\"' || *(str + count) == '\'')
-			quote_aux(&str, &count, &str2, 0);
+			quote_aux(&str, &count, &str2, 1);
 		else
-			count += (str[count] != '\0');
+			count += (str[count] != '\0' && str[count] != '$')
+				|| (str[count] == '$' && !ft_isalnum(str[count + 1])
+				&& str[count + 1] != '?' && str[count + 1] != '_');
 	}
-	if (str2)
-		free(str2);
+	free(str2);
 	return (str);
 }

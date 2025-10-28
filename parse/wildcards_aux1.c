@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcards_aux1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:59:07 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/09 10:59:08 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/28 00:30:14 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,17 @@ int	wildsize(t_wild *head)
 
 void	quote_matrix(char **mat)
 {
+	char	*str;
+
 	while (mat && *mat)
 	{
 		*mat = quote(*mat);
+		str = ft_strchr(*mat, '\n');
+		while (str)
+		{
+			ft_memmove(str, str + 1, ft_strlen(str));
+			str = ft_strchr(*mat, '\n');
+		}
 		mat++;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:47:26 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/20 13:32:53 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/26 22:05:53 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,15 @@ int	builtin_unset(char **args)
 		i++;
 	}
 	return (0);
+}
+
+void	sig_handle_heredoc_more(int sig)
+{
+	(void)sig;
+	signal(SIGTTOU, SIG_IGN);
+	signal(SIGTTIN, SIG_IGN);
+	btree()->global_signal = 130;
+	btree()->exit_status = 130;
+	write(STDOUT_FILENO, "\n", 1);
+	megalodon_giga_chad_exit(130, 1);
 }

@@ -6,11 +6,12 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 23:20:04 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/26 14:28:52 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/26 22:17:46 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../sigma_minishell.h"
+#include "minishell.h"
 
 void	reset_heredoc_flags(t_binary *tree)
 {
@@ -43,6 +44,7 @@ int	handle_single_heredoc_stuff(t_infile *in)
 	int		fd[2];
 	pid_t	pid;
 
+	printf("heredoc stuff\n");
 	if (pipe(fd) == -1)
 		return (perror("pipe"), -1);
 	pid = fork();
@@ -51,7 +53,7 @@ int	handle_single_heredoc_stuff(t_infile *in)
 	if (pid == 0)
 	{
 		get_single_heredoc(in->file, fd);
-		megalodon_giga_chad_exit(0, 1);
+		megalodon_giga_chad_exit(0, 0);
 	}
 	else
 	{
@@ -65,6 +67,7 @@ int	handle_single_heredoc_stuff(t_infile *in)
 int	exec_empty_heredoc_node(t_cmds *cmd)
 {
 	t_infile	*in;
+
 	in = cmd->infiles;
 	while (in)
 	{
@@ -105,6 +108,6 @@ void	execute_child_helper(char **cleaned_cmd, char **env, t_cmds *cmd)
 	{
 		exec_path(cleaned_cmd[0], cleaned_cmd, env);
 		ft_free_matrix(cleaned_cmd);
-		megalodon_giga_chad_exit(127, 0);
+		megalodon_giga_chad_exit(127, 1);
 	}
 }

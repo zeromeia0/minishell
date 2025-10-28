@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansions_aux.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:36:30 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/19 23:38:07 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/28 00:58:51 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*find_os_env(t_os_envs *ev, char *str, int count)
 	while (ev)
 	{
 		if (ev->linux_envs && ft_strncmp(ev->linux_envs, str, count) == 0)
-			return (ft_strsubs(ft_strchr(ev->linux_envs, '=') + 1, ' ', '\n'));
+			return (ft_strchr(ev->linux_envs, '=') + 1);
 		ev = ev->next;
 	}
 	return (NULL);
@@ -36,13 +36,13 @@ char	*expand_aux(char *str, int ind, int count, char *temp)
 	env_var = find_os_env(btree()->os_env, temp, count);
 	free(temp);
 	if (env_var == NULL)
-		env_var = ft_calloc(1, 1);
+		env_var = "\0";
 	if (env_var == NULL)
 		return (btree()->type = ERROR, free (str), NULL);
 	temp = ft_strdup(str + ind + count);
 	if (temp == NULL)
 		return (btree()->type = ERROR, free (str), NULL);
-	temp = ft_strjoin_free(env_var, temp, 0);
+	temp = ft_strjoin_free(env_var, temp, 2);
 	if (temp == NULL)
 		return (btree()->type = ERROR, free (str), NULL);
 	str[ind] = '\0';

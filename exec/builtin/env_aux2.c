@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_aux2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:01:02 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/12 21:51:54 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/28 12:04:48 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,23 +81,20 @@ void	free_asterisc(char **mat)
 	}
 }
 
-char	**expand_matrix(t_cmds *cmd)
+char	**expand_matrix(t_cmds *cmd, int flag, int ind)
 {
 	char	**holder;
-	int		ind;
-	int		flag;
 
 	if (cmd->cmd == NULL)
 		return (NULL);
-	flag = 0;
-	ind = -1;
 	while (cmd->cmd[++ind])
 	{
-		if (ft_strchr(cmd->cmd[ind], '\n'))
+		if (ft_strchr(cmd->cmd[ind], ' ') || ft_strchr(cmd->cmd[ind], '\n'))
 		{
-			holder = ft_split(cmd->cmd[ind], '\n');
+			holder = ft_split_sep(cmd->cmd[ind], ' ', '\n');
 			if (holder == NULL)
 				return (btree()->type = ERROR, cmd->cmd);
+			free (cmd->cmd[ind]);
 			ft_matrix_uni(cmd->cmd + ind, cmd->cmd + ind + 1);
 			holder = ft_matrix_in_matrix(cmd->cmd, ind, holder);
 			cmd->expanded = cmd->expanded + (holder != cmd->cmd);

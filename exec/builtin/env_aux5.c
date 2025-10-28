@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_aux5.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 21:50:26 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/24 15:49:20 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/28 01:23:52 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	expand_args(t_cmds *cmd)
 	cmd->cmd = mat;
 	expand_infiles(cmd->infiles);
 	expand_outfiles(cmd->outfiles);
-	cmd->cmd = expand_matrix(cmd);
+	cmd->cmd = expand_matrix(cmd, 0, -1);
 	expand_args(cmd->next);
 }
 
@@ -79,11 +79,11 @@ void	expand_infiles(t_infile *infile)
 	else
 	{
 		infile->file = quote(infile->file);
-		if (ft_strchr(infile->file, '\n'))
+		temp = ft_strchr(infile->file, '\n');
+		while (temp)
 		{
-			temp = infile->file;
-			infile->file = ft_strsubs(temp, '\n', ' ');
-			free(temp);
+			ft_memmove(temp, temp + 1, ft_strlen(temp));
+			temp = ft_strchr(infile->file, '\n');
 		}
 	}
 	expand_infiles(infile->next);
@@ -96,11 +96,11 @@ void	expand_outfiles(t_outfile *outfile)
 	if (!outfile || !outfile->file)
 		return ;
 	outfile->file = quote(outfile->file);
-	if (ft_strchr(outfile->file, '\n'))
+	temp = ft_strchr(outfile->file, '\n');
+	while (temp)
 	{
-		temp = outfile->file;
-		outfile->file = ft_strsubs(temp, '\n', ' ');
-		free(temp);
+		ft_memmove(temp, temp + 1, ft_strlen(temp));
+		temp = ft_strchr(outfile->file, '\n');
 	}
 	expand_outfiles(outfile->next);
 }

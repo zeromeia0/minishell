@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shadow2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 23:17:50 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/26 14:38:58 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/28 14:11:35 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ void	heredoc_setup(void)
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void	write_heredoc_line(char *str, int fd[2])
+void	write_heredoc_line(char *str, int fd[2], int flag_to_expand)
 {
 	char	*expanded;
 
 	if (!fd || !str)
 		return ;
 	if (btree()->cmds && btree()->cmds->infiles
-		&& btree()->cmds->infiles->flag == 0)
+		&& btree()->cmds->infiles->flag == 0 && flag_to_expand == 0)
 		expanded = expand_hd(str);
 	else
 		expanded = str;
@@ -43,16 +43,17 @@ void	write_heredoc_line(char *str, int fd[2])
 		free(expanded);
 }
 
-void	process_heredoc_lines(char *delimiter, int len, int fd[2])
+void	process_heredoc_lines(char *delimiter, int len, int fd[2],
+		int flag_to_expand)
 {
 	char	*str;
 
 	str = readline("> ");
 	while (str && ft_strncmp(str, delimiter, len + 1))
 	{
-		write_heredoc_line(str, fd);
+		write_heredoc_line(str, fd, flag_to_expand);
 		if (btree()->global_signal == 130)
-			megalodon_giga_chad_exit(130, 1);
+			megalodon_giga_chad_exit(130, 0);
 		str = readline("> ");
 	}
 	if (!str && btree()->global_signal != 130)
@@ -76,7 +77,7 @@ void	setup_signals_for_parent(void)
 
 void	handle_heredoc_child(t_infile *in, int *p)
 {
-	signal(SIGINT, sig_handle_heredoc_more);
+	signal(SIGINT, sig_handle_heredoc);
 	signal(SIGQUIT, SIG_IGN);
 	close(p[0]);
 	get_single_heredoc(in->file, p);

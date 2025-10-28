@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_path_aux1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:36:54 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/21 15:39:52 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/26 23:59:17 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,27 +65,18 @@ int	check_path_access(char *path, char *cmd)
 
 int	is_system_path_command(char *cmd, char **envp)
 {
-	int		i;
-	int		access_result;
 	char	**paths_to_search;
+	int		result;
 
 	if (!cmd)
 		return (0);
 	paths_to_search = get_paths_to_search(envp);
 	if (!paths_to_search)
 		return (-1);
-	i = 0;
-	while (paths_to_search[i])
-	{
-		access_result = check_path_access(paths_to_search[i], cmd);
-		if (access_result == -1)
-		{
-			free_matrix(paths_to_search);
-			return (-1);
-		}
-		if (access_result == 0)
-			return (free_matrix(paths_to_search), 1);
-		i++;
-	}
-	return (free_matrix(paths_to_search), 0);
+	if (ft_strchr(cmd, '/'))
+		result = check_paths(paths_to_search, cmd, 0);
+	else
+		result = check_paths(paths_to_search, cmd, 1);
+	ft_free_matrix(paths_to_search);
+	return (result);
 }

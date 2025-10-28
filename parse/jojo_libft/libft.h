@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:02:51 by jlima-so          #+#    #+#             */
-/*   Updated: 2025/10/14 11:14:25 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/10/27 19:49:44 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ int		check_input(int *ac, char ***av, char **env);
 int		check_one_cmd(char *str, char **env, char **cmd, int value);
 void	rdwr_frm_int_fd(char *cmd_path_inc, char **env, int rd, int wr);
 char	*ft_wrdchr(const char *s, int c);
+char	**ft_split_sep(char *str, char c, char sep);
 
 typedef struct s_list
 {

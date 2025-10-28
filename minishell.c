@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:49:36 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/25 13:39:22 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/28 01:21:44 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <termios.h>
 #include <unistd.h>
+
 /* 
 void	print_infiles(t_infile *file)
 {
