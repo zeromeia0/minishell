@@ -6,7 +6,7 @@
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:49:36 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/27 19:53:50 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 01:21:44 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <termios.h>
 #include <unistd.h>
 
+/* 
 void	print_infiles(t_infile *file)
 {
 	while (file)
@@ -58,7 +59,6 @@ void	print_cmds(t_cmds *cmds)
 	}
 }
 
-/* 
 void	print_tree(t_binary *tree, int sub)
 {
 	// if (sub)

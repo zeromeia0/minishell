@@ -6,7 +6,7 @@
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 21:50:26 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/28 00:39:09 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 01:23:52 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	expand_args(t_cmds *cmd)
 	cmd->cmd = mat;
 	expand_infiles(cmd->infiles);
 	expand_outfiles(cmd->outfiles);
-	cmd->cmd = expand_matrix(cmd);
+	cmd->cmd = expand_matrix(cmd, 0, -1);
 	expand_args(cmd->next);
 }
 

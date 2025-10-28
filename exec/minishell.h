@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:39 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/27 16:41:35 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/28 01:23:34 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int			pipes_builtin_exit(char **args, char **envp);
 void		child_services(char **cleaned_cmd, char **envp, int status);
 void		file_descriptor_closer(int fd[2]);
 int			get_heredoc_fd(t_cmds *cmd);
-char		**expand_matrix(t_cmds *cmd);
+char		**expand_matrix(t_cmds *cmd, int flag, int ind);
 void		heredoc_setup(void);
 void		write_heredoc_line(char *str, int fd[2], int flag_to_expand);
 void	process_heredoc_lines(char *delimiter, int len, int fd[2], int flag_to_expand);
