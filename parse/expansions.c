@@ -6,7 +6,7 @@
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:35:14 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/28 15:10:45 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 15:13:31 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,14 @@ void	rm_quote(char *dest, char *src)
 	}
 }
 
+int	truth_value(char **s, int * count, int ind, char ch)
+{
+	return ((*s + *count)[ind] != '\0' && ((*s + *count)[ind] != '$'))
+			|| (ch == '\'' && (*s + *count)[ind] == '$')
+			|| ((*s + *count)[ind] == '$' &&!ft_isalnum((*s + *count)[ind + 1])
+			&& (*s + *count)[ind + 1] != '?' && (*s + *count)[ind + 1] != '_');
+}
+
 void	quote_aux(char **s, int *count, char **str2, int ind)
 {
 	int		value;
@@ -96,10 +104,7 @@ void	quote_aux(char **s, int *count, char **str2, int ind)
 			free(*str2);
 			*str2 = ft_strdup(*s);
 		}
-		ind += ((*s + *count)[ind] != '\0' && ((*s + *count)[ind] != '$'))
-			|| (ch == '\'' && (*s + *count)[ind] == '$')
-			|| ((*s + *count)[ind] == '$' &&!ft_isalnum((*s + *count)[ind + 1])
-			&& (*s + *count)[ind + 1] != '?' && (*s + *count)[ind + 1] != '_');
+		ind += truth_value(s, count, ind, ch);
 	}
 	*(*s + *count + ind) = '\n';
 	*(*s + *count) = '\n';
