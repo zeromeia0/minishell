@@ -6,7 +6,7 @@
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:35:14 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/28 17:55:13 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 18:01:29 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	quote_aux(char **s, int *count, char **str2, int ind)
 	*(*s + *count) = '\n';
 	free(*str2);
 	*str2 = ft_strdup(*s);
-	*count += ind - 1;
+	*count += ind;
 }
 
 char	*quote(char *str)
