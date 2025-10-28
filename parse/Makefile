@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+         #
+#    By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/12 13:07:24 by jlima-so          #+#    #+#              #
-#    Updated: 2025/10/09 14:05:13 by namejojo         ###   ########.fr        #
+#    Updated: 2025/10/28 01:20:19 by jlima-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ CC=			cc
 
 AR=			ar rcs
 
-CFLAGS=		-Wall -Wextra -Werror
+CFLAGS=		-Wall -Wextra -Werror -g
 
 all: lib ${NAME}
 

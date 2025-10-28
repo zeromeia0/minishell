@@ -6,7 +6,7 @@
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:01:02 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/28 00:17:53 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 01:10:45 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ char	**expand_matrix(t_cmds *cmd)
 			holder = ft_split_sep(cmd->cmd[ind], ' ', '\n');
 			if (holder == NULL)
 				return (btree()->type = ERROR, cmd->cmd);
+			free (cmd->cmd[ind]);
 			ft_matrix_uni(cmd->cmd + ind, cmd->cmd + ind + 1);
 			holder = ft_matrix_in_matrix(cmd->cmd, ind, holder);
 			cmd->expanded = cmd->expanded + (holder != cmd->cmd);

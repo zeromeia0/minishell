@@ -6,7 +6,7 @@
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:36:30 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/28 00:13:56 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 00:58:51 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*expand_aux(char *str, int ind, int count, char *temp)
 	env_var = find_os_env(btree()->os_env, temp, count);
 	free(temp);
 	if (env_var == NULL)
-		env_var = ft_calloc(1, 1);
+		env_var = "\0";
 	if (env_var == NULL)
 		return (btree()->type = ERROR, free (str), NULL);
 	temp = ft_strdup(str + ind + count);

@@ -6,7 +6,7 @@
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 13:50:55 by jlima-so          #+#    #+#             */
-/*   Updated: 2025/10/28 00:01:01 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 01:04:27 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ft_split_sep_aux(char *str, char c, char sep)
 		if (str[ind] == sep)
 		{
 			ft_memmove(str + ind, str + ind + 1, ft_strlen(str + ind));
-			ind += ft_strchr(str + ind + 1, sep) - (str + ind);
+			ind += ft_strchr(str + ind, sep) - (str + ind);
 			ft_memmove(str + ind, str + ind + 1, ft_strlen(str + ind));
 		}
 		while (str[ind] && str[ind] != sep && str[ind] != c)
