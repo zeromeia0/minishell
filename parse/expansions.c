@@ -6,7 +6,7 @@
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:35:14 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/28 15:10:45 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 15:30:08 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,30 +52,12 @@ char	*expand_hd(char *str)
 	return (str);
 }
 
-void	rm_quote(char *dest, char *src)
+int	truth_value(char **s, int * count, int ind, char ch)
 {
-	char	ch;
-	int		beg;
-	int		end;
-
-	dest = ft_strcpy(dest, src);
-	beg = 0;
-	ch = 0;
-	while (dest[beg] && beg < 4095)
-	{
-		if (dest[beg] == '\'' || dest[beg] == '\"')
-		{
-			ch = dest[beg];
-			end = beg + 1;
-			while (dest[end] != '\0' && dest[end] != ch && end < 4094)
-				end++;
-			ft_memmove(dest + end, dest + end + 1, ft_strlen(dest + end));
-			ft_memmove(dest + beg, dest + beg + 1, ft_strlen(dest));
-			beg = end - 1;
-		}
-		else
-			beg++;
-	}
+	return ((*s + *count)[ind] != '\0' && ((*s + *count)[ind] != '$'))
+			|| (ch == '\'' && (*s + *count)[ind] == '$')
+			|| ((*s + *count)[ind] == '$' &&!ft_isalnum((*s + *count)[ind + 1])
+			&& (*s + *count)[ind + 1] != '?' && (*s + *count)[ind + 1] != '_');
 }
 
 void	quote_aux(char **s, int *count, char **str2, int ind)
@@ -96,10 +78,7 @@ void	quote_aux(char **s, int *count, char **str2, int ind)
 			free(*str2);
 			*str2 = ft_strdup(*s);
 		}
-		ind += ((*s + *count)[ind] != '\0' && ((*s + *count)[ind] != '$'))
-			|| (ch == '\'' && (*s + *count)[ind] == '$')
-			|| ((*s + *count)[ind] == '$' &&!ft_isalnum((*s + *count)[ind + 1])
-			&& (*s + *count)[ind + 1] != '?' && (*s + *count)[ind + 1] != '_');
+		ind += truth_value(s, count, ind, ch);
 	}
 	*(*s + *count + ind) = '\n';
 	*(*s + *count) = '\n';

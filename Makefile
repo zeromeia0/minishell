@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+         #
+#    By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/13 15:40:32 by vivaz-ca          #+#    #+#              #
-#    Updated: 2025/10/27 16:18:45 by vivaz-ca         ###   ########.fr        #
+#    Updated: 2025/10/28 16:18:59 by jlima-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,6 @@ PIPEX_BONUS = pipex_bonus
 PIPEX_DIR   = pipex
 LIBFT_DIR   = my_libft
 BULTIN_DIR  = builtin
-BULTIN_SRCS = $(wildcard $(BULTIN_DIR)/*.c)
 
 all: exec_rule parse_rule $(PROJ)
 
