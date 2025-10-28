@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:24:06 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/26 15:27:38 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/26 21:02:33 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,6 @@ int	has_quotes(char *str)
 		i++;
 	}
 	return (0);
-}
-
-void remove_aspas(char *dest, const char *src)
-{
-    int start = 0;
-    int end = ft_strlen(src) - 1;
-    if ((src[start] == '"' && src[end] == '"') || (src[start] == '\'' && src[end] == '\''))
-    {
-        start++;
-        end--;
-    }
-    int j = 0;
-    for (int i = start; i <= end; i++)
-        dest[j++] = src[i];
-    dest[j] = '\0';
 }
 
 char	*remove_it(char *str, int c)

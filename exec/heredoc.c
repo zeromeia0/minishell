@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:11:44 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/26 15:27:07 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/27 16:53:14 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,21 @@ void	get_single_heredoc(char *eof, int fd[2])
 {
 	char	delimiter[4096];
 	int		len;
-
+	int prev_len;
+	int result;
+	
 	if (!eof)
 		return ;
+	result = 0;
 	if (btree()->global_signal == 130)
 		megalodon_giga_chad_exit(130, 0);
-	remove_aspas(delimiter, eof);
+	rm_quote(delimiter, eof);
 	len = ft_strlen(delimiter);
+	prev_len = ft_strlen(eof);
+	if (len != prev_len)
+		result = 1;
 	heredoc_setup();
-	process_heredoc_lines(delimiter, len, fd);
-	// free(delimiter);
+	process_heredoc_lines(delimiter, len, fd, result);
 	if (btree()->env)
 		ft_free_matrix(btree()->env);
 	if (fd)
@@ -46,7 +51,7 @@ void	process_all_heredocs(t_infile *in, int p[2])
 			if (pipe(tmp_pipe) == -1)
 			{
 				perror("pipe");
-				exit(1);
+				megalodon_giga_chad_exit(1, 0);
 			}
 			get_single_heredoc(current->file, tmp_pipe);
 			close(tmp_pipe[1]);

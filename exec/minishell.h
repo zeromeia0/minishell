@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:39 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/26 15:25:50 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/27 16:41:35 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,9 @@ int			add_new_env_var(t_os_envs **env_list, const char *str);
 int			exec_single_cmd_aux(t_cmds *cmd);
 bool		is_n_flag(const char *arg);
 void		init_tree(char **mat);
+void		exec_child_helper(t_cmds *cmd, char **cleaned, char **updated_envs);
+void		handle_wait_status(int status, int *exit_status);
+int			check_paths(char **paths, char *cmd, int expected_access);
 void		export_print_env_list(void);
 void		free_matrix(char **table);
 void		builtin_env(char **env);
@@ -78,8 +81,8 @@ void		rebuild_env_list(t_os_envs **env_list, char **env_vars);
 void		free_env_list(t_os_envs *head);
 char		*aspas(char *str, int c);
 char		*remove_it(char *str, int c);
-void remove_aspas(char *dest, const char *src);
-void	sig_handle_heredoc_more(int sig);
+void		remove_aspas(char *dest, const char *src);
+void		sig_handle_heredoc_more(int sig);
 char		*find_path(char **envp, char *which_env);
 char		*find_path_in_list(t_os_envs *env_list, const char *key);
 char		*get_env_var(char *name, char **envp);
@@ -118,7 +121,7 @@ void		get_single_heredoc(char *eof, int fd[2]);
 char		*expand_hd(char *str);
 void		expand_infiles(t_infile *infile);
 void		expand_outfiles(t_outfile *outfile);
-void		check_commands(char *cmd);
+void		check_commands(char **cmd, char **envp);
 char		**buildup_path(t_cmds *cmd, char **envp);
 int			ensure_outfile(t_outfile *out);
 int			check_infiles(t_cmds *cmds);
@@ -139,8 +142,8 @@ void		file_descriptor_closer(int fd[2]);
 int			get_heredoc_fd(t_cmds *cmd);
 char		**expand_matrix(t_cmds *cmd);
 void		heredoc_setup(void);
-void		write_heredoc_line(char *str, int fd[2]);
-void		process_heredoc_lines(char *delimiter, int len, int fd[2]);
+void		write_heredoc_line(char *str, int fd[2], int flag_to_expand);
+void	process_heredoc_lines(char *delimiter, int len, int fd[2], int flag_to_expand);
 void		setup_signals_for_parent(void);
 void		handle_heredoc_child(t_infile *in, int *p);
 int			super_checker_goated(t_cmds *cmd, char **command, char **args);

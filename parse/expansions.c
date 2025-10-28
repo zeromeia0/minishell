@@ -6,7 +6,7 @@
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:35:14 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/28 00:01:39 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 00:19:43 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,35 @@ void	rm_quote(char *dest, char *src)
 	}
 }
 
+void	quote_aux(char **s, int *c, char **str2, int i)
+{
+	char	ch;
+	int		value;
+
+	ch = (*s + *c)[0];
+	while ((*s + *c)[i] != '\0' && (*s + *c)[i] != ch)
+	{
+		if (ch == '\"')
+		{
+			*s = single_expand(*s, *c + i, 0);
+			if (*(*s + 2) == '\0')
+				break ;
+			value = get_diff(*s + i + *c, *str2 + i + *c, 0);
+			i += value - (value != 0);
+			free(*str2);
+			*str2 = ft_strdup(*s);
+		}
+		i += (((*s + *c)[i] != '\0' && ((*s + *c)[i] != '$' || ch == '\'')))
+			|| ((*s + *c)[i] == '$' && ft_isalnum((*s + *c)[i + 1]) == 0);
+	}
+	ft_memmove((*s + *c) + i, (*s + *c) + i + 1,
+		ft_strlen((*s + *c) + i));
+	ft_memmove((*s + *c), (*s + *c) + 1, ft_strlen((*s + *c)));
+	free(*str2);
+	*str2 = ft_strdup(*s);
+	*c += (ft_strcmp(*s, *str2) == 0) * (i - 1);
+}
+
 char	*quote(char *str)
 {
 	char	*str2;
@@ -125,9 +154,10 @@ char	*quote(char *str)
 			str2 = ft_strdup(str);
 		}
 		if (*(str + count) == '\"' || *(str + count) == '\'')
-			quote_aux(&str, &count, &str2, 0);
+			quote_aux(&str, &count, &str2, 1);
 		else
-			count += (str[count] != '\0');
+			count += (str[count] != '\0' && str[count] != '$')
+				|| (str[count] == '$' && ft_isalnum(str[count + 1]) == 0);
 	}
 	if (str2)
 		free(str2);

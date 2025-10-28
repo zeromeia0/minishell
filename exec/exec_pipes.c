@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:19:21 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/24 14:15:07 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/27 15:41:11 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,24 +95,29 @@ int	exec_pipes_helper(t_cmds *cmd, char **env, int *first_fd)
 
 int	exec_pipes(t_cmds *cmd, char **env)
 {
-	int	first_fd;
-	int	status;
+	int		first_fd;
+	int		status;
+	pid_t	pid;
+	int		exit_status;
 
 	first_fd = -1;
+	exit_status = 0;
 	if (manage_heredocs(cmd) != 0)
 		return (btree()->exit_status);
 	if (exec_pipes_helper(cmd, env, &first_fd) == -1)
 		return (-1);
-	while (wait(&status) > 0)
-		;
-	if (WIFEXITED(status))
-		btree()->exit_status = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-		btree()->exit_status = 0;
+	pid = wait(&status);
+	while (pid > 0)
+	{
+		handle_wait_status(status, &exit_status);
+		pid = wait(&status);
+	}
+	if (exit_status == 130)
+		write(1, "\n", 1);
 	if (btree()->env)
 	{
 		ft_free_matrix(btree()->env);
 		btree()->env = list_to_char(*get_env_list());
 	}
-	return (btree()->exit_status);
+	return (exit_status);
 }

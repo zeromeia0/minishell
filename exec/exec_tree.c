@@ -6,11 +6,12 @@
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:55:08 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/28 00:09:34 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 00:18:56 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../sigma_minishell.h"
+#include "minishell.h"
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -19,28 +20,15 @@ void	exec_child(t_cmds *cmd)
 {
 	char	**cleaned;
 	char	**updated_envs;
-	int		checker;
 
-	checker = 0;
+	if (!cmd || !cmd->cmd[0])
+		megalodon_giga_chad_exit(0, 1);
 	if (cmd && cmd->flag_to_exec == 1)
 		megalodon_giga_chad_exit(btree()->exit_status, 0);
 	signal(SIGINT, handle_sigint);
 	cleaned = array_to_exec(cmd);
 	updated_envs = list_to_char(*get_env_list());
-	if (has_redir(cmd))
-		exec_redirections(cmd);
-	if (has_builtin(cmd))
-		exec_builtin(cleaned[0], cleaned, updated_envs);
-	else if (is_system_path_command(cleaned[0], updated_envs))
-		exec_path(cleaned[0], cleaned, updated_envs);
-	else if (super_checker_goated(cmd, cleaned, updated_envs) != 0)
-		checker = 1;
-	checker = 1;
-	if (checker == 1 && !has_redir(cmd))
-		my_ffprintf(cmd->cmd[0], "command not found\n");
-	valgrind_destroyer(updated_envs, cleaned);
-	checker = 0;
-	megalodon_giga_chad_exit(127, 1);
+	exec_child_helper(cmd, cleaned, updated_envs);
 }
 
 int	exec_node(t_binary *node, char **args, char **envp)
@@ -62,8 +50,9 @@ int	exec_node(t_binary *node, char **args, char **envp)
 
 int	check_order(t_binary *tree, char **args, char **envp)
 {
-	int	please = 0;
+	int	please;
 
+	please = 0;
 	if (!tree)
 		return (1);
 	if (tree->cmds)
