@@ -5,78 +5,85 @@
 #                                                     +:+ +:+         +:+      #
 #    By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/10/28 15:37:14 by vivaz-ca          #+#    #+#              #
-#    Updated: 2025/10/28 15:38:58 by vivaz-ca         ###   ########.fr        #
+#    Created: 2025/10/13 15:40:32 by vivaz-ca          #+#    #+#              #
+#    Updated: 2025/10/28 15:40:06 by vivaz-ca         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME        = minishell
+PROJ=		minishell
+NAME=		${PROJ}.a
+PARSER_DIR=	parse
+PARSER=		$(PARSER_DIR)/$(PARSER_DIR).a
+EXEC_DIR=	exec
+BIN_DIR=	$(EXEC_DIR)/builtin
+EXEC_PATH_DIR=	$(EXEC_DIR)/exec_path
+EXEC=			$(wildcard ${EXEC_DIR}/*.c) \
+				$(wildcard ${BIN_DIR}/*.c) \
+				$(wildcard ${EXEC_PATH_DIR}/*.c)
+
+CC=			cc
+AR=			ar rcs
+CFLAGS=		-Wall -Wextra -Werror -g -finstrument-functions
 PIPEX       = pipex
 PIPEX_BONUS = pipex_bonus
 PIPEX_DIR   = pipex
 LIBFT_DIR   = my_libft
 BULTIN_DIR  = builtin
-BULTIN_SRCS = $(BULTIN_DIR)/aspas_aux.c \
-			  $(BULTIN_DIR)/aspas.c \
-			  $(BULTIN_DIR)/builtin.c \
-			  $(BULTIN_DIR)/builtin_cd.c \
-			  $(BULTIN_DIR)/builtin_pwd.c \
-			  $(BULTIN_DIR)/env_aux1.c \
-			  $(BULTIN_DIR)/env_aux2.c \
-			  $(BULTIN_DIR)/env_aux3.c \
-			  $(BULTIN_DIR)/env_aux4.c \
-			  $(BULTIN_DIR)/env_aux5.c \
-			  $(BULTIN_DIR)/env.c \
-			  $(BULTIN_DIR)/export.c \
-			  $(BULTIN_DIR)/export_aux.c \
-			  $(BULTIN_DIR)/overall_builtin_aux.c \
-			  $(BULTIN_DIR)/unset.c
+BULTIN_SRCS = $(wildcard $(BULTIN_DIR)/*.c)
 
-CC          = cc
-CFLAGS      = -Wall -Wextra -Werror -g -fsanitize=address
-LDFLAGS     = -L/usr/local/opt/readline/lib -lreadline -g
-RM          = rm -f
+all: exec_rule parse_rule $(PROJ)
 
-GREEN       = \033[0;32m
-BLUE        = \033[0;34m
-RESET       = \033[0m
+$(PROJ): $(PROJ).c
+	$(CC) $(CFLAGS) -lreadline -lncurses $(PROJ).c ${EXEC} $(PARSER) $(PARSER_DIR)/jojo_libft.a $(EXEC_DIR)/$(PIPEX_DIR)/$(PIPEX).a $(EXEC_DIR)/$(LIBFT_DIR)/libft.a -o $(PROJ) -lncurses -lreadline
 
-all: $(NAME)
+parse_rule:
+	$(MAKE) -C $(PARSER_DIR)
 
-$(NAME):
-	@echo -e "$(BLUE)Building libft...$(RESET)"
-	@$(MAKE) --no-print-directory -C $(LIBFT_DIR)
-	@echo -e "$(BLUE)Building pipex...$(RESET)"
-	@$(MAKE) --no-print-directory -C $(PIPEX_DIR)
-	@echo -e "$(BLUE)Building minishell...$(RESET)"
-#	@$(CC) $(CFLAGS) $(BULTIN_SRCS) ../minishell.c signal_handler.c \
-#		$(PIPEX_DIR)/$(PIPEX).a $(LIBFT_DIR)/libft.a -o $(NAME) $(LDFLAGS)
-	@echo -e "$(GREEN)Minishell built successfully!$(RESET)"
-
-bonus:
-	@echo -e "$(BLUE)Building libft...$(RESET)"
-	@$(MAKE) --no-print-directory -C $(LIBFT_DIR)
-	@echo -e "$(BLUE)Building pipex (bonus)...$(RESET)"
-	@$(MAKE) --no-print-directory -C $(PIPEX_DIR) bonus
-	@echo -e "$(BLUE)Building minishell with bonus...$(RESET)"
-	@$(CC) $(CFLAGS) $(BULTIN_SRCS) executor.c path_cmd.c \
-		$(PIPEX_DIR)/$(PIPEX_BONUS).a $(LIBFT_DIR)/libft.a -o $(NAME) $(LDFLAGS)
-	@echo -e "$(GREEN)Minishell with bonus built successfully!$(RESET)"
+exec_rule: 
+	$(MAKE) -C $(EXEC_DIR)
 
 clean:
-	@echo -e "$(BLUE)Cleaning libft...$(RESET)"
-	@$(MAKE) --no-print-directory -C $(LIBFT_DIR) clean
-	@echo -e "$(BLUE)Cleaning pipex...$(RESET)"
-	@$(MAKE) --no-print-directory -C $(PIPEX_DIR) clean
+	rm -f ${OBJ_FILES} ${NAME}
+	$(MAKE) -C $(PARSER_DIR) clean
+	$(MAKE) -C $(EXEC_DIR) clean
 
 fclean: clean
-	@echo -e "$(BLUE)Full cleaning libft...$(RESET)"
-	@$(MAKE) --no-print-directory -C $(LIBFT_DIR) fclean
-	@echo -e "$(BLUE)Full cleaning pipex...$(RESET)"
-	@$(MAKE) --no-print-directory -C $(PIPEX_DIR) fclean
-	@$(RM) $(NAME)
-	@echo -e "$(GREEN)Everything cleaned!$(RESET)"
+	rm -f $(PROJ)
+	$(MAKE) -C $(PARSER_DIR) fcleanlocal
+	$(MAKE) -C $(EXEC_DIR) fclean
 
 re: fclean all
+	$(MAKE) -C $(PARSER_DIR)
+	$(MAKE) -C $(EXEC_DIR)
 
-.PHONY: all bonus clean fclean re
+r: fclean all
+	$(MAKE) -C $(PARSER_DIR)
+	$(MAKE) -C $(EXEC_DIR)
+	make clean
+	clear && ./minishell
+
+rr:
+	rm -fr ${OBJ_FILES} ${NAME}
+	rm -fr $(PROJ)
+	make
+
+norm:
+	@norminette $(shell find . -type f \( -name "*.c" -o -name "*.h" \)) \
+	| awk '/c: Error/ { c++; if (c % 2 == 1) printf "\033[1;35m%s\033[0m\n", $$0; else printf "\033[1;36m%s\033[0m\n", $$0 }'
+	@echo "Amount of errors: " && norminette $(shell find . -type f \( -name "*.c" -o -name "*.h" \)) | grep "Error" | wc -l
+
+val: re
+	clear
+	valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
+
+cal1:
+	clear
+	valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
+
+cal2:
+	clear
+	valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes --suppressions=readline.supp ./minishell
+
+.PHONY: re fclean clean all exec_rule parse_rule
+
+# so:
