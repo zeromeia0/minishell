@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+         #
+#    By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/13 15:40:32 by vivaz-ca          #+#    #+#              #
-#    Updated: 2025/10/28 16:18:59 by jlima-so         ###   ########.fr        #
+#    Updated: 2025/10/28 16:25:31 by vivaz-ca         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,9 +17,9 @@ PARSER=		$(PARSER_DIR)/$(PARSER_DIR).a
 EXEC_DIR=	exec
 BIN_DIR=	$(EXEC_DIR)/builtin
 EXEC_PATH_DIR=	$(EXEC_DIR)/exec_path
-EXEC=			$(wildcard ${EXEC_DIR}/*.c) \
-				$(wildcard ${BIN_DIR}/*.c) \
-				$(wildcard ${EXEC_PATH_DIR}/*.c)
+# EXEC=			$(wildcard ${EXEC_DIR}/*.c) \
+# 				$(wildcard ${BIN_DIR}/*.c) \
+# 				$(wildcard ${EXEC_PATH_DIR}/*.c)
 
 CC=			cc
 AR=			ar rcs
@@ -33,7 +33,7 @@ BULTIN_DIR  = builtin
 all: exec_rule parse_rule $(PROJ)
 
 $(PROJ): $(PROJ).c
-	$(CC) $(CFLAGS) -lreadline -lncurses $(PROJ).c ${EXEC} $(PARSER) $(PARSER_DIR)/jojo_libft.a $(EXEC_DIR)/$(PIPEX_DIR)/$(PIPEX).a $(EXEC_DIR)/$(LIBFT_DIR)/libft.a -o $(PROJ) -lncurses -lreadline
+	$(CC) $(CFLAGS) -lreadline -lncurses $(PROJ).c ${DELETE} $(PARSER) $(PARSER_DIR)/jojo_libft.a $(EXEC_DIR)/$(PIPEX_DIR)/$(PIPEX).a $(EXEC_DIR)/$(LIBFT_DIR)/libft.a -o $(PROJ) -lncurses -lreadline
 
 parse_rule:
 	$(MAKE) -C $(PARSER_DIR)
