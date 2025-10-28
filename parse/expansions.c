@@ -6,7 +6,7 @@
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:35:14 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/26 16:57:37 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 00:01:39 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ void	quote_aux(char **s, int *count, char **str2, int value)
 		}
 		ind += ((*s + *count)[ind] != '\0');
 	}
-	ft_memmove((*s + *count) + ind, (*s + *count) + ind + 1, ft_strlen((*s + *count) + ind));
-	ft_memmove((*s + *count), (*s + *count) + 1, ft_strlen((*s + *count)));
+	*(*s + *count + ind) = '\n';
+	*(*s + *count) = '\n';
 	free(*str2);
 	*str2 = ft_strdup(*s);
 	*count += (ft_strcmp(*s, *str2) == 0) * (ind - 1);
@@ -97,8 +97,6 @@ void	rm_quote(char *dest, char *src)
 			end = beg + 1;
 			while (dest[end] != '\0' && dest[end] != ch && end < 4094)
 				end++;
-			printf("from->%s\nto->%s\n", dest + beg, dest + beg + 1);
-			printf("from->%s\nto->%s\n\n", dest + end, dest + end + 1);
 			ft_memmove(dest + end, dest + end + 1, ft_strlen(dest + end));
 			ft_memmove(dest + beg, dest + beg + 1, ft_strlen(dest));
 			beg = end - 1;

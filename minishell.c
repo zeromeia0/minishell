@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:49:36 by vivaz-ca          #+#    #+#             */
-/*   Updated: 2025/10/25 13:39:22 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/27 19:53:50 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <termios.h>
 #include <unistd.h>
-/* 
+
 void	print_infiles(t_infile *file)
 {
 	while (file)
@@ -58,6 +58,7 @@ void	print_cmds(t_cmds *cmds)
 	}
 }
 
+/* 
 void	print_tree(t_binary *tree, int sub)
 {
 	// if (sub)
