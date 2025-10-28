@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:35:14 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/28 17:47:14 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/28 17:55:13 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	quote_aux(char **s, int *count, char **str2, int ind)
 	*(*s + *count) = '\n';
 	free(*str2);
 	*str2 = ft_strdup(*s);
-	*count += (ft_strcmp(*s, *str2) == 0) * (ind);
+	*count += ind - 1;
 }
 
 char	*quote(char *str)
