@@ -6,7 +6,7 @@
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:35:14 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/28 14:58:05 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 15:09:31 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,14 +97,15 @@ void	quote_aux(char **s, int *count, char **str2, int ind)
 			*str2 = ft_strdup(*s);
 		}
 		ind += ((*s + *count)[ind] != '\0' && ((*s + *count)[ind] != '$'))
-		|| ((*s + *count)[ind] == '$' && !ft_isalnum((*s + *count)[ind + 1])
-		&& (*s + *count)[ind + 1] != '?' && (*s + *count)[ind + 1] != '_');
+			|| (ch == '\'' && (*s + *count)[ind] == '$')
+			|| ((*s + *count)[ind] == '$' &&!ft_isalnum((*s + *count)[ind + 1])
+			&& (*s + *count)[ind + 1] != '?' && (*s + *count)[ind + 1] != '_');
 	}
 	*(*s + *count + ind) = '\n';
 	*(*s + *count) = '\n';
 	free(*str2);
 	*str2 = ft_strdup(*s);
-	*count += (ft_strcmp(*s, *str2) == 0) * (ind - 1);
+	*count += (ft_strcmp(*s, *str2) == 0) * (ind);
 }
 
 char	*quote(char *str)
