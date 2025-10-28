@@ -6,7 +6,7 @@
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:35:14 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/28 18:31:44 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 19:18:06 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,5 @@ char	*quote(char *str)
 					&& str[count + 1] != '?' && str[count + 1] != '_');
 	}
 	free(str2);
-	fflush(stdout);
 	return (str);
 }
