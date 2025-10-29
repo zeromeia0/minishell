@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipes_aux.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 08:43:18 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/14 10:53:22 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/29 16:38:18 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ void	execute_child(t_cmds *cmd, int first_fd, int fd[2], char **env)
 {
 	char	**cleaned_cmd;
 
-	if (has_redir(cmd))
-		exec_redirections(cmd);
-	setup_child_fds(first_fd, fd, cmd);
 	cleaned_cmd = array_to_exec(cmd);
+	if (has_redir(cmd))
+		exec_redirections(cmd, env, cleaned_cmd, 0);
+	setup_child_fds(first_fd, fd, cmd);
 	execute_child_helper(cleaned_cmd, env, cmd);
 }
 

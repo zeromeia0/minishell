@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 23:56:47 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/28 17:49:23 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/29 16:32:23 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	exec_child_helper(t_cmds *cmd, char **cleaned, char **updated_envs)
 
 	checker = 0;
 	if (has_redir(cmd))
-		exec_redirections(cmd);
+		exec_redirections(cmd, cleaned, updated_envs, 1);
 	if (has_builtin(cmd))
 		exec_builtin(cleaned[0], cleaned, updated_envs);
 	else if (is_system_path_command(cleaned[0], updated_envs))

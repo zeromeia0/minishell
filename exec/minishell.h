@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:39 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/28 17:41:24 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/29 16:36:10 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int			builtin_export(char **args);
 int			exec_path(char *cmd, char **args, char **envp);
 int			exec_tree(t_binary *tree, char **args, char **envp);
 int			exec_pipes(t_cmds *cmd, char **env);
-int			exec_redirections(t_cmds *cmd);
+int	exec_redirections(t_cmds *cmd, char **envp, char **cleaned, int flag);
 int			has_redir(t_cmds *cmd);
 int			print_linux_env_list(void);
 int			add_temp_var(const char *str);
@@ -107,7 +107,8 @@ int			handle_heredoc(t_cmds *cmd);
 char		*helper_add_quotes_export(char *new_str, char *str);
 int			handle_regular_redirections(t_cmds *cmd);
 void		pid_equal_zero_double(t_cmds *cmd, int p[2]);
-int			exec_single_left(t_infile *in);
+int	exec_single_left(t_infile *in, int flag, char **envp, char **cleaned);
+
 int			exec_out_redirections(t_outfile *out);
 int			exec_double_left(t_infile *in, t_cmds *cmd);
 void		buildup_new_args(char *cmd, char **envp);

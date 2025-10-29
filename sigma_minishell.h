@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sigma_minishell.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/26 21:50:03 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/29 16:25:12 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int			builtin_export(char **args);
 int			exec_path(char *cmd, char **args, char **envp);
 int			exec_tree(t_binary *tree, char **args, char **envp);
 int			exec_pipes(t_cmds *cmd, char **env);
-int			exec_redirections(t_cmds *cmd);
 int			has_redir(t_cmds *cmd);
 int			print_linux_env_list(void);
 int			add_temp_var(const char *str);
@@ -97,7 +96,6 @@ int			make_update_env_aux(t_os_envs **env_list, const char *str,
 int			handle_heredoc(t_cmds *cmd);
 int			handle_regular_redirections(t_cmds *cmd);
 void		pid_equal_zero_double(t_cmds *cmd, int p[2]);
-int			exec_single_left(t_infile *in);
 int			exec_out_redirections(t_outfile *out);
 int			exec_double_left(t_infile *in, t_cmds *cmd);
 void		buildup_new_args(char *cmd, char **envp);
