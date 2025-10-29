@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:22:16 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/20 11:01:12 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/29 16:49:42 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	deal_with_bad_exit(t_cmds *cmd)
 	if ((ft_strcmp(cmd->cmd[0], "exit") == 0) && cmd->cmd[1] && cmd->cmd[2])
 	{
 		btree()->exit_status = 2;
-		ft_putstr_fd("exit\nexit: too many arguments\n", 2);
+		ft_putstr_fd("exit\nexit: too many arguments 2\n", 2);
 		return (0);
 	}
 	if (ft_strncmp(cmd->cmd[0], "exit", 4) == 0 && cmd->cmd[1]

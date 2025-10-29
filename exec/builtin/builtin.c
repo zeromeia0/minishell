@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:21:23 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/20 11:01:03 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/29 16:48:54 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ int	builtin_exit(char **args, char **envp)
 	if (!is_numeric(args[1]))
 		return (write(2, "exit\n", 6), my_ffprintf(args[0],
 				"numeric argument required\n"), ft_free_matrix(envp),
-			megalodon_giga_chad_exit(2, 1), 0);
-	if (args[0] && args[1] && args[2] != NULL)
-		return (ft_putstr_fd("minishell: exit: too many arguments", 2), 0);
+			megalodon_giga_chad_exit(2, 1), exit(2), 0);
+	if (is_numeric(args[1]) && args[0] && args[1] && args[2] != NULL)
+		return (ft_putstr_fd("minishell: exit: too many arguments 3", 2), 0);
 	status = ft_atol(args[1]);
 	update_shell_level(-1);
 	return (ft_free_matrix(envp),

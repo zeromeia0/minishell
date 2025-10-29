@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 23:17:50 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/20 10:48:54 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/29 16:48:49 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	pipes_builtin_exit(char **args, char **envp)
 	if (!is_numeric(args[1]))
 		return (my_ffprintf(args[1], "numeric argument required"), 0);
 	if (args[0] && args[1] && args[2] != NULL)
-		return (ft_putstr_fd("minishell: exit: too many arguments", 2), 0);
+		return (ft_putstr_fd("minishell: exit: too many arguments 1", 2), 0);
 	status = ft_atol(args[1]);
 	update_shell_level(-1);
 	return (ft_free_matrix(envp), ft_free_matrix(args),
