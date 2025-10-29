@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:22:16 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/29 16:49:42 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/29 22:45:03 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,18 @@ int	is_numeric(const char *s)
 
 int	deal_with_bad_exit(t_cmds *cmd)
 {
+	if (ft_strncmp(cmd->cmd[0], "exit", 4) == 0 && cmd->cmd[1]
+		&& !is_numeric(cmd->cmd[1]))
+	{
+		btree()->exit_status = 2;
+		return (/* write(2, "exit\n", 6), my_ffprintf(cmd->cmd[1],
+				"numeric argument required\n"),  */1);						//test the behaviour on schools computer
+	}
 	if ((ft_strcmp(cmd->cmd[0], "exit") == 0) && cmd->cmd[1] && cmd->cmd[2])
 	{
 		btree()->exit_status = 2;
 		ft_putstr_fd("exit\nexit: too many arguments 2\n", 2);
 		return (0);
-	}
-	if (ft_strncmp(cmd->cmd[0], "exit", 4) == 0 && cmd->cmd[1]
-		&& !is_numeric(cmd->cmd[1]))
-	{
-		btree()->exit_status = 2;
-		return (1);
 	}
 	return (1);
 }

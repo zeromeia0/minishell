@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 23:57:32 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/29 16:10:50 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/29 22:39:55 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,14 +98,14 @@ t_os_envs	*find_env_var(t_os_envs *env_list, const char *arg)
 	int		env_len;
 
 	symbol = ft_strchr(arg, '=');
-	len = (symbol) ? (symbol - arg) : ft_strlen(arg);
+	len = (symbol) ? (symbol - arg) : (int)ft_strlen(arg);
 	while (env_list)
 	{
 		if (env_list->linux_envs)
 		{
 			env_eq = ft_strchr(env_list->linux_envs, '=');
 			env_len = (env_eq) ? (env_eq
-					- env_list->linux_envs) : ft_strlen(env_list->linux_envs);
+					- env_list->linux_envs) : (int)ft_strlen(env_list->linux_envs);
 			if (env_len == len && ft_strncmp(env_list->linux_envs, arg,
 					len) == 0)
 				return (env_list);
