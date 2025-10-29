@@ -6,7 +6,7 @@
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:35:14 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/28 18:01:29 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 19:18:06 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	truth_value(char **s, int *count, int ind, char ch)
 {
 	return (((*s + *count)[ind] != '\0' && ((*s + *count)[ind] != '$'))
 		|| (ch == '\'' && (*s + *count)[ind] == '$')
-			|| ((*s + *count)[ind] == '$' &&!ft_isalnum((*s + *count)[ind + 1])
+			|| ((*s + *count)[ind] == '$' && !ft_isalnum((*s + *count)[ind + 1])
 			&& (*s + *count)[ind + 1] != '?' && (*s + *count)[ind + 1] != '_'));
 }
 

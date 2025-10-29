@@ -6,7 +6,7 @@
 /*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:36:30 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/28 00:58:51 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 18:29:30 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*expand_last_exit(char *str, int ind, char *temp)
 		return (btree()->type = ERROR, free (str), NULL);
 	str[ind] = '\0';
 	str = ft_strjoin_free(str, temp, 0);
-	return (expand(str, ind, 0, 1));
+	return (str);
 }
 
 char	*single_expand(char *s, int i, int count)
