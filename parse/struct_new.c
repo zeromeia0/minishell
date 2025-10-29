@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:58:02 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/26 15:22:14 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/29 23:00:28 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ t_cmds	*cmds_new(t_outfile *outfile, t_infile *infile, char **cmd)
 	new->infiles = infile;
 	new->next = NULL;
 	new->expanded = 0;
+	new->export_flag = -1;
 	new->flag_to_exec = 0;
 	return (new);
 }

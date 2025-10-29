@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 11:35:39 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/26 14:42:18 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/29 23:00:04 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_cmds
 	int					heredoc_done;
 	int					expanded;
 	int					flag_to_exec;
+	int					export_flag;
 	char				**cmd;
 	t_infile			*infiles;
 	t_outfile			*outfiles;

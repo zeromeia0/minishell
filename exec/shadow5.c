@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shadow5.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 23:56:47 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/29 16:32:23 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/29 23:09:35 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,28 @@ void	init_pwd_helper(void)
 		"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin");
 	add_new_env_var(get_env_list(), new_path);
 	free(new_path);
+}
+
+int	find_helper(const char *env_entry, const char *arg)
+{
+	char	*symbol;
+	char	*env_symbol;
+	int		len;
+	int		env_len;
+
+	if (!env_entry)
+		return (0);
+	symbol = ft_strchr(arg, '=');
+	if (symbol)
+		len = symbol - arg;
+	else
+		len = (int)ft_strlen(arg);
+	env_symbol = ft_strchr(env_entry, '=');
+	if (env_symbol)
+		env_len = env_symbol - env_entry;
+	else
+		env_len = (int)ft_strlen(env_entry);
+	if (env_len == len && ft_strncmp(env_entry, arg, len) == 0)
+		return (1);
+	return (0);
 }

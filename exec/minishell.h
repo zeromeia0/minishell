@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 15:51:39 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/29 16:36:10 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/29 23:09:01 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,12 @@ size_t		get_env_key_length(const char *str);
 int			make_update_env_aux(t_os_envs **env_list, const char *str,
 				size_t len);
 int			handle_heredoc(t_cmds *cmd);
+int			find_helper(const char *env_entry, const char *arg);
+int			process_export_arg(char **args, int i);
 char		*helper_add_quotes_export(char *new_str, char *str);
 int			handle_regular_redirections(t_cmds *cmd);
 void		pid_equal_zero_double(t_cmds *cmd, int p[2]);
-int	exec_single_left(t_infile *in, int flag, char **envp, char **cleaned);
+int	exec_single_left(t_infile *in, char **envp, char **cleaned);
 
 int			exec_out_redirections(t_outfile *out);
 int			exec_double_left(t_infile *in, t_cmds *cmd);

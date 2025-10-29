@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:22:16 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/29 22:45:03 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/29 22:47:32 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,14 @@ int	deal_with_bad_exit(t_cmds *cmd)
 		&& !is_numeric(cmd->cmd[1]))
 	{
 		btree()->exit_status = 2;
-		return (/* write(2, "exit\n", 6), my_ffprintf(cmd->cmd[1],
-				"numeric argument required\n"),  */1);						//test the behaviour on schools computer
+		return (    /* write(2, "exit\n", 6), my_ffprintf(cmd->cmd[1],
+					"numeric argument required\n"),  */
+				1); // test the behaviour on schools computer
 	}
 	if ((ft_strcmp(cmd->cmd[0], "exit") == 0) && cmd->cmd[1] && cmd->cmd[2])
 	{
 		btree()->exit_status = 2;
-		ft_putstr_fd("exit\nexit: too many arguments 2\n", 2);
+		ft_putstr_fd("exit\nexit: too many arguments\n", 2);
 		return (0);
 	}
 	return (1);

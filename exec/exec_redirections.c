@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirections.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:08:05 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/29 16:37:41 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/10/29 23:02:26 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,20 @@ char	**array_to_exec(t_cmds *cmd)
 	return (new_argv);
 }
 
-int	exec_single_left(t_infile *in, int flag, char **envp, char **cleaned)
+int	exec_single_left(t_infile *in, char **envp, char **cleaned)
 {
 	int	fd;
 
-    if (access(in->file, F_OK) != 0)
-    {
-        perror(in->file);
-		if (flag == 1)  // <-- prints "a: No such file or directory"
-        	return (ft_free_matrix(cleaned), ft_free_matrix(envp), megalodon_giga_chad_exit(0, 1), -1);
+	if (access(in->file, F_OK) != 0)
+	{
+		perror(in->file);
+		if (btree()->cmds->export_flag == 1)
+			return (ft_free_matrix(cleaned), ft_free_matrix(envp),
+				megalodon_giga_chad_exit(0, 1), -1);
 		else
-			return (ft_free_matrix(cleaned), ft_free_matrix(envp), megalodon_giga_chad_exit(0, 0), -1);
-    }
+			return (ft_free_matrix(cleaned), ft_free_matrix(envp),
+				megalodon_giga_chad_exit(0, 0), -1);
+	}
 	fd = open(in->file, O_RDONLY);
 	if (fd < 0)
 		return (perror(in->file), -1);
@@ -86,7 +88,8 @@ int	exec_out_redirections(t_outfile *out)
 	return (0);
 }
 
-int	exec_input_redirections(t_infile *in, int *last_heredoc_fd, int flag, char **envp, char **cleaned)
+int	exec_input_redirections(t_infile *in, int *last_heredoc_fd,
+		char **envp, char **cleaned)
 {
 	while (in)
 	{
@@ -98,7 +101,7 @@ int	exec_input_redirections(t_infile *in, int *last_heredoc_fd, int flag, char *
 		}
 		else if (ft_strcmp(in->token, "<") == 0)
 		{
-			if (exec_single_left(in, flag, envp, cleaned) < 0)
+			if (exec_single_left(in, envp, cleaned) < 0)
 				return (-1);
 		}
 		in = in->next;
@@ -111,7 +114,9 @@ int	exec_redirections(t_cmds *cmd, char **envp, char **cleaned, int flag)
 	int	last_heredoc_fd;
 
 	last_heredoc_fd = -1;
-	if (exec_input_redirections(cmd->infiles, &last_heredoc_fd, flag, envp, cleaned) < 0)
+	cmd->export_flag = flag;
+	if (exec_input_redirections(cmd->infiles, &last_heredoc_fd, envp,
+			cleaned) < 0)
 		return (-1);
 	if (last_heredoc_fd >= 0)
 	{

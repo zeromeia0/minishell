@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+         #
+#    By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/13 15:40:32 by vivaz-ca          #+#    #+#              #
-#    Updated: 2025/10/28 17:20:06 by vivaz-ca         ###   ########.fr        #
+#    Updated: 2025/10/29 23:06:51 by vvazzs           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ OTHER_SRCS  =	exec/exec_pipes_aux.c \
             	exec/shadow3.c \
             	exec/shadow4.c \
             	exec/shadow5.c \
+				exec/shadow6.c \
             	exec/signal_handler.c \
             	exec/super_duper_hiper_free.c \
             	exec/zeta.c
