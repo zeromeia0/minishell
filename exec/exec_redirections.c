@@ -6,12 +6,11 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 16:08:05 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/29 23:02:26 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/10/29 23:14:09 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../sigma_minishell.h"
-#include <signal.h>
 #include <stdio.h>
 
 char	**array_to_exec(t_cmds *cmd)
