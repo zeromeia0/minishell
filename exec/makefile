@@ -72,12 +72,14 @@ $(PROJ): $(OBJS)
 
 clean:
 	@echo -e "$(BLUE)Cleaning object files...$(RESET)"
+	${MAKE} -C my_libft clean
 	@$(RM) $(OBJS)
 
 fclean: clean
 	@echo -e "$(BLUE)Cleaning execution.a...$(RESET)"
 	@$(RM) $(PROJ)
 	@echo -e "$(GREEN)Archive removed!$(RESET)"
+	${MAKE} -C my_libft fclean
 
 re: fclean all
 
