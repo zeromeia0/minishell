@@ -42,7 +42,8 @@ int			builtin_export(char **args);
 int			exec_path(char *cmd, char **args, char **envp);
 int			exec_tree(t_binary *tree, char **args, char **envp);
 int			exec_pipes(t_cmds *cmd, char **env);
-int	exec_redirections(t_cmds *cmd, char **envp, char **cleaned, int flag);
+int			exec_redirections(t_cmds *cmd, char **envp, char **cleaned,
+				int flag);
 int			has_redir(t_cmds *cmd);
 int			print_linux_env_list(void);
 int			add_temp_var(const char *str);
@@ -109,7 +110,7 @@ int			process_export_arg(char **args, int i);
 char		*helper_add_quotes_export(char *new_str, char *str);
 int			handle_regular_redirections(t_cmds *cmd);
 void		pid_equal_zero_double(t_cmds *cmd, int p[2]);
-int	exec_single_left(t_infile *in, char **envp, char **cleaned);
+int			exec_single_left(t_infile *in, char **envp, char **cleaned);
 
 int			exec_out_redirections(t_outfile *out);
 int			exec_double_left(t_infile *in, t_cmds *cmd);
