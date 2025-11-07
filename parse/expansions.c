@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlima-so <jlima-so@student.42lisba.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:35:14 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/28 19:18:06 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/11/07 20:58:18 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ char	*quote(char *str)
 {
 	char	*str2;
 	int		count;
+	int		value;
 
 	str2 = ft_strdup(str);
 	count = 0;
@@ -101,7 +102,8 @@ char	*quote(char *str)
 			return (free(str2), str);
 		if (ft_strcmp(str, str2))
 		{
-			count += get_diff(str + count, str2 + count + 1, 0);
+			value = get_diff(str + count, str2 + count, 0);
+			count += value + (value != 0);
 			free(str2);
 			str2 = ft_strdup(str);
 		}

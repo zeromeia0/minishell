@@ -6,7 +6,7 @@
 #    By: jlima-so <jlima-so@student.42lisba.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/13 15:40:32 by vivaz-ca          #+#    #+#              #
-#    Updated: 2025/11/07 20:55:38 by jlima-so         ###   ########.fr        #
+#    Updated: 2025/11/07 20:58:23 by jlima-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -114,7 +114,7 @@ norm:
 	| awk '/c: Error/ { c++; if (c % 2 == 1) printf "\033[1;35m%s\033[0m\n", $$0; else printf "\033[1;36m%s\033[0m\n", $$0 }'
 	@echo "Amount of errors: " && norminette $(shell find . -type f \( -name "*.c" -o -name "*.h" \)) | grep "Error" | wc -l
 
-val: rf
+val: rr
 	clear
 	valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
 
