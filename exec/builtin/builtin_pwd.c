@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:22:16 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/11/03 14:38:02 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/11/07 19:50:41 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	deal_with_bad_exit(t_cmds *cmd)
 	{
 		btree()->exit_status = 2;
 		return (write(2, "exit\n", 6), my_ffprintf(cmd->cmd[1],
-				"numeric argument required\n"), megalodon_giga_chad_exit(2, 0),
+				"numeric argument required\n"), megalodon_giga_chad_exit(2, 1),
 			1);
 	}
 	if ((ft_strcmp(cmd->cmd[0], "exit") == 0) && cmd->cmd[1] && cmd->cmd[2])

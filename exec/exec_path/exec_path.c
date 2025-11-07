@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:44:52 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/26 23:12:06 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/11/07 19:49:50 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,23 @@ int	handle_non_slash_commands(char *cmd, char **args, char **envp)
 	return (megalodon_giga_chad_exit(126, 0), 0);
 }
 
+void write_dolar_home(char **envp)
+{
+	char *home = NULL;
+	int i = 0;
+	if (!envp || !*envp)
+		write(2, "NO environment variables\n", 26);
+	while (envp[i])
+	{
+		if (ft_strncmp("HOME=", envp[i], 5) == 0)
+		{
+			home = ft_strdup(envp[i] + 5);
+			my_ffprintf(home, "Is a directory\n");
+			free(home);
+		}
+		i++;
+	}
+}
 int	handle_slash_command(char *cmd, char **args, char **envp)
 {
 	if (cmd == NULL)
@@ -55,9 +72,10 @@ int	handle_slash_command(char *cmd, char **args, char **envp)
 			perror("/bin/bash");
 			megalodon_giga_chad_exit(1, 0);
 		}
+		write_dolar_home(envp);
 		ft_free_matrix(envp);
-		perror(cmd);
-		megalodon_giga_chad_exit(btree()->exit_status, 0);
+		free_matrix(args);
+		megalodon_giga_chad_exit(btree()->exit_status, 1);
 	}
 	else
 	{
