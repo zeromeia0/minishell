@@ -6,7 +6,7 @@
 /*   By: jlima-so <jlima-so@student.42lisba.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:35:14 by namejojo          #+#    #+#             */
-/*   Updated: 2025/11/07 20:58:18 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/11/07 21:03:08 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,13 @@ void	quote_aux(char **s, int *count, char **str2, int ind)
 	*count += ind;
 }
 
+int	verify_value(char *str, int count)
+{
+	return ((str[count] != '\0' && str[count] != '$')
+				|| (str[count] == '$' && !ft_isalnum(str[count + 1])
+					&& str[count + 1] != '?' && str[count + 1] != '_'));
+}
+
 char	*quote(char *str)
 {
 	char	*str2;
@@ -110,10 +117,7 @@ char	*quote(char *str)
 		if (*(str + count) == '\"' || *(str + count) == '\'')
 			quote_aux(&str, &count, &str2, 1);
 		else
-			count += (str[count] != '\0' && str[count] != '$')
-				|| (str[count] == '$' && !ft_isalnum(str[count + 1])
-					&& str[count + 1] != '?' && str[count + 1] != '_');
+			count += verify_value(str, count);
 	}
-	free(str2);
-	return (str);
+	return (free(str2), str);
 }
