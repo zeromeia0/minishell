@@ -6,9 +6,11 @@
 /*   By: jlima-so <jlima-so@student.42lisba.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 21:04:31 by jlima-so          #+#    #+#             */
-/*   Updated: 2025/11/07 21:04:37 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/11/07 21:06:44 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../sigma_minishell.h"
 
 int	truth_value(char **s, int *count, int ind, char ch)
 {
