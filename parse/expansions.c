@@ -6,7 +6,7 @@
 /*   By: jlima-so <jlima-so@student.42lisba.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:35:14 by namejojo          #+#    #+#             */
-/*   Updated: 2025/11/07 21:03:08 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/11/07 21:04:28 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,6 @@ char	*expand_hd(char *str)
 	return (str);
 }
 
-int	truth_value(char **s, int *count, int ind, char ch)
-{
-	return (((*s + *count)[ind] != '\0' && ((*s + *count)[ind] != '$'))
-		|| (ch == '\'' && (*s + *count)[ind] == '$')
-			|| ((*s + *count)[ind] == '$' && !ft_isalnum((*s + *count)[ind + 1])
-			&& (*s + *count)[ind + 1] != '?' && (*s + *count)[ind + 1] != '_'));
-}
-
 void	quote_aux(char **s, int *count, char **str2, int ind)
 {
 	int		value;
@@ -85,13 +77,6 @@ void	quote_aux(char **s, int *count, char **str2, int ind)
 	free(*str2);
 	*str2 = ft_strdup(*s);
 	*count += ind;
-}
-
-int	verify_value(char *str, int count)
-{
-	return ((str[count] != '\0' && str[count] != '$')
-				|| (str[count] == '$' && !ft_isalnum(str[count + 1])
-					&& str[count + 1] != '?' && str[count + 1] != '_'));
 }
 
 char	*quote(char *str)
