@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+         #
+#    By: jlima-so <jlima-so@student.42lisba.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/13 15:40:32 by vivaz-ca          #+#    #+#              #
-#    Updated: 2025/11/03 14:49:08 by vivaz-ca         ###   ########.fr        #
+#    Updated: 2025/11/07 20:55:38 by jlima-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -114,15 +114,15 @@ norm:
 	| awk '/c: Error/ { c++; if (c % 2 == 1) printf "\033[1;35m%s\033[0m\n", $$0; else printf "\033[1;36m%s\033[0m\n", $$0 }'
 	@echo "Amount of errors: " && norminette $(shell find . -type f \( -name "*.c" -o -name "*.h" \)) | grep "Error" | wc -l
 
-val: re
+val: rf
 	clear
 	valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
 
-cal1:
+cal1: rr
 	clear
 	valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
 
-cal2:
+cal2: rr
 	clear
 	valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes --suppressions=readline.supp ./minishell
 
