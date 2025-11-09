@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sigma_minishell.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/11/03 14:48:21 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/11/09 01:44:56 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int			builtin_pwd(void);
 int			builtin_echo(char **args);
 int			builtin_exit(char **args, char **envp);
 int			builtin_unset(char **args);
+void		write_dolar_home(char **envp);
 int			exec_builtin(char *cmd, char **args, char **envp);
 int			builtin_export(char **args);
 int			exec_path(char *cmd, char **args, char **envp);
