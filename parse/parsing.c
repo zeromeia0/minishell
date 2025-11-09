@@ -6,7 +6,7 @@
 /*   By: jlima-so <jlima-so@student.42lisba.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:21:30 by namejojo          #+#    #+#             */
-/*   Updated: 2025/11/09 14:43:49 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/11/09 14:44:29 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,16 +74,16 @@ int	sep_count(char **mat)
 
 void	init_tokens(t_token *tokens)
 {
-	static char	*stokens[7];
+	static char	*stokens[6];
 	static char	*dtokens[5];
 	static char	*sep[4];
 
 	stokens[0] = "(";
 	stokens[1] = ")";
-	stokens[3] = "|";
-	stokens[4] = ">";
-	stokens[5] = "<";
-	stokens[6] = NULL;
+	stokens[2] = "|";
+	stokens[3] = ">";
+	stokens[4] = "<";
+	stokens[5] = NULL;
 	dtokens[0] = "||";
 	dtokens[1] = "&&";
 	dtokens[2] = ">>";
