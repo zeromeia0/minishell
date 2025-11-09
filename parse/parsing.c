@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlima-so <jlima-so@student.42lisba.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:21:30 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/27 23:58:29 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/11/09 14:43:49 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void	init_tokens(t_token *tokens)
 
 	stokens[0] = "(";
 	stokens[1] = ")";
-	stokens[2] = "&";
 	stokens[3] = "|";
 	stokens[4] = ">";
 	stokens[5] = "<";
