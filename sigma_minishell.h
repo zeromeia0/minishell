@@ -3,10 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   sigma_minishell.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
 /*   Updated: 2025/11/09 01:44:56 by vvazzs           ###   ########.fr       */
+=======
+/*   By: jlima-so <jlima-so@student.42lisba.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
+/*   Updated: 2025/11/07 21:05:19 by jlima-so         ###   ########.fr       */
+>>>>>>> 1d4c47bcbd7daf28f18afeea61701059be311958
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,5 +202,7 @@ void		sig_handle_heredoc(int sig);
 int			restart_signals(void);
 void		free_os_envs(void);
 void		rm_quote(char *dest, char *src);
+int			verify_value(char *str, int count);
+int			truth_value(char **s, int *count, int ind, char ch);
 
 #endif

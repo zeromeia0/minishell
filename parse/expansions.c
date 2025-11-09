@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlima-so <jlima-so@student.42lisba.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 11:35:14 by namejojo          #+#    #+#             */
-/*   Updated: 2025/10/28 19:18:06 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/11/07 21:06:41 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,6 @@ char	*expand_hd(char *str)
 	return (str);
 }
 
-int	truth_value(char **s, int *count, int ind, char ch)
-{
-	return (((*s + *count)[ind] != '\0' && ((*s + *count)[ind] != '$'))
-		|| (ch == '\'' && (*s + *count)[ind] == '$')
-			|| ((*s + *count)[ind] == '$' && !ft_isalnum((*s + *count)[ind + 1])
-			&& (*s + *count)[ind + 1] != '?' && (*s + *count)[ind + 1] != '_'));
-}
-
 void	quote_aux(char **s, int *count, char **str2, int ind)
 {
 	int		value;
@@ -91,6 +83,7 @@ char	*quote(char *str)
 {
 	char	*str2;
 	int		count;
+	int		value;
 
 	str2 = ft_strdup(str);
 	count = 0;
@@ -101,17 +94,15 @@ char	*quote(char *str)
 			return (free(str2), str);
 		if (ft_strcmp(str, str2))
 		{
-			count += get_diff(str + count, str2 + count + 1, 0);
+			value = get_diff(str + count, str2 + count, 0);
+			count += value + (value != 0);
 			free(str2);
 			str2 = ft_strdup(str);
 		}
 		if (*(str + count) == '\"' || *(str + count) == '\'')
 			quote_aux(&str, &count, &str2, 1);
 		else
-			count += (str[count] != '\0' && str[count] != '$')
-				|| (str[count] == '$' && !ft_isalnum(str[count + 1])
-					&& str[count + 1] != '?' && str[count + 1] != '_');
+			count += verify_value(str, count);
 	}
-	free(str2);
-	return (str);
+	return (free(str2), str);
 }
