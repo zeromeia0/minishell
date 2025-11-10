@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shadow6.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 23:05:04 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/11/03 14:45:21 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/11/10 23:17:54 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@ int	export_args_checker(char **args, int i)
 		return (print_invalid_export(args[i + 1]), 1);
 	if (ft_strchr(arg, '=') && arg[ft_strlen(arg) - 1] == '=' && args[i + 1])
 		return (print_invalid_export(args[i + 1]), 2);
+	if (!ft_strpbrk(arg, "abcdefghijklmnopqrstuvwxyz\
+		ABCDEFGHIJKLMNOPQRSTUVWXYZ"))
+		return (print_invalid_export(arg), -1);
 	return (0);
 }
 

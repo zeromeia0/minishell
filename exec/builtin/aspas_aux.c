@@ -6,7 +6,7 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:24:11 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/11/09 15:46:20 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/11/10 23:16:22 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,22 @@ void	write_dolar_home(char **envp)
 		i++;
 	}
 	free_matrix(envp);
+}
+
+char	*ft_strpbrk(const char *s, const char *accept)
+{
+	int	i;
+
+	while (*s)
+	{
+		i = 0;
+		while (accept[i])
+		{
+			if (*s == accept[i])
+				return ((char *)s);
+			i++;
+		}
+		s++;
+	}
+	return (NULL);
 }
