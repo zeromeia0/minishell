@@ -6,11 +6,13 @@
 /*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 23:05:04 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/11/10 23:17:54 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/11/10 23:34:16 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../sigma_minishell.h"
+#include "minishell.h"
+#include "my_libft/libft.h"
 
 t_os_envs	*find_env_var(t_os_envs *env_list, const char *arg)
 {
@@ -36,7 +38,7 @@ int	export_args_checker(char **args, int i)
 	arg = args[i];
 	if (!arg)
 		return (-1);
-	if (arg[0] == '=')
+	if (arg[0] == '=' || ft_isdigit(arg[0]))
 		return (print_invalid_export(arg), -1);
 	if (args[i + 1] && args[i + 1][0] == '=')
 		return (print_invalid_export(args[i + 1]), 1);
@@ -44,6 +46,8 @@ int	export_args_checker(char **args, int i)
 		return (print_invalid_export(args[i + 1]), 2);
 	if (!ft_strpbrk(arg, "abcdefghijklmnopqrstuvwxyz\
 		ABCDEFGHIJKLMNOPQRSTUVWXYZ"))
+		return (print_invalid_export(arg), -1);
+	if (ft_str_isalnum(arg) != 0)
 		return (print_invalid_export(arg), -1);
 	return (0);
 }

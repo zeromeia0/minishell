@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namejojo <namejojo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:02:51 by jlima-so          #+#    #+#             */
-/*   Updated: 2025/10/09 11:37:52 by namejojo         ###   ########.fr       */
+/*   Updated: 2025/11/10 23:30:48 by vvazzs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int					ft_toupper(int c);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 int					ft_isalnum(int c);
 int					ft_atoi(const char *str);
+int ft_str_isalnum(char *str);
 void				ft_print_matrix(char **matrix);
 void				ft_free_matrix(char **matrix);
 void				ft_free_matrix_count(char **mat, int count);

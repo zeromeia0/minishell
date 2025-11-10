@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+         #
+#    By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/28 15:47:43 by vivaz-ca          #+#    #+#              #
-#    Updated: 2025/10/28 16:22:44 by vivaz-ca         ###   ########.fr        #
+#    Updated: 2025/11/10 23:30:12 by vvazzs           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRC_FILES = $(SRC_DIR)/ft_atoi.c \
 			$(SRC_DIR)/ft_isalpha.c \
 			$(SRC_DIR)/ft_isascii.c \
 			$(SRC_DIR)/ft_isdigit.c \
+			$(SRC_DIR)/ft_str_is_alnum.c \
 			$(SRC_DIR)/ft_isprint.c \
 			$(SRC_DIR)/ft_itoa.c \
 			$(SRC_DIR)/ft_lstadd_back.c \
