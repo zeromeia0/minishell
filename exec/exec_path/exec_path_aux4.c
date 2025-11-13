@@ -6,7 +6,7 @@
 /*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 23:22:49 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/14 14:37:07 by vivaz-ca         ###   ########.fr       */
+/*   Updated: 2025/11/13 09:52:26 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	handle_absolute_path_cmd(char *cmd, char **args, char **envp)
 	if (am_i_truly_myself(args[0]) && access(cmd, F_OK) == 0 && access(cmd,
 			X_OK) == 0)
 		update_shell_level(1);
-	if (strchr(cmd, '/'))
+	if (ft_strchr(cmd, '/'))
 		return (handle_slash_command(cmd, args, envp));
 	else
 		handle_non_slash_commands(cmd, args, envp);

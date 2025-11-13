@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:44:52 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/11/09 15:43:08 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/11/13 09:52:26 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	exec_path(char *cmd, char **args, char **envp)
 {
 	if (!cmd)
 		return (megalodon_giga_chad_exit(127, 0), 0);
-	if (strchr(cmd, '/'))
+	if (ft_strchr(cmd, '/'))
 		return (handle_absolute_path_cmd(cmd, args, envp));
 	if (is_system_path_command(cmd, envp))
 		return (exec_system_path(cmd, args, envp));

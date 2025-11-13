@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   zeta.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 21:40:31 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/10/26 21:39:07 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/11/13 09:52:26 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	super_checker_goated(t_cmds *cmd, char **command, char **args)
 	if (!has_builtin(cmd) && !has_redir(cmd)
 		&& !is_system_path_command(cmd->cmd[0], args))
 	{
-		if (strchr(cmd->cmd[0], '/'))
+		if (ft_strchr(cmd->cmd[0], '/'))
 			handle_absolute_path_cmd(cmd->cmd[0], args, args);
 		return (1);
 	}

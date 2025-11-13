@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shadow6.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vivaz-ca <vivaz-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 23:05:04 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/11/10 23:34:16 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/11/13 09:55:18 by vivaz-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	export_args_checker(char **args, int i)
 {
 	char	*arg;
 
+	
 	arg = args[i];
 	if (!arg)
 		return (-1);
@@ -47,7 +48,7 @@ int	export_args_checker(char **args, int i)
 	if (!ft_strpbrk(arg, "abcdefghijklmnopqrstuvwxyz\
 		ABCDEFGHIJKLMNOPQRSTUVWXYZ"))
 		return (print_invalid_export(arg), -1);
-	if (ft_str_isalnum(arg) != 0)
+	if (ft_str_isalnum(arg) != 0 && !ft_strchr(arg, '='))
 		return (print_invalid_export(arg), -1);
 	return (0);
 }
