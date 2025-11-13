@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sigma_minishell.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvazzs <vvazzs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:59:13 by vvazzs            #+#    #+#             */
-/*   Updated: 2025/11/10 23:16:56 by vvazzs           ###   ########.fr       */
+/*   Updated: 2025/11/13 01:02:14 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int			exec_out_redirections(t_outfile *out);
 int			exec_double_left(t_infile *in, t_cmds *cmd);
 void		buildup_new_args(char *cmd, char **envp);
 int			handle_absolute_path_cmd(char *cmd, char **args, char **envp);
-char	*ft_strpbrk(const char *s, const char *accept);
+char		*ft_strpbrk(const char *s, const char *accept);
 int			handle_slash_command(char *cmd, char **args, char **envp);
 int			handle_non_slash_commands(char *cmd, char **args, char **envp);
 int			has_heredocs(t_cmds *cmd);

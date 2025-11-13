@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   return_expre.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlima-so <jlima-so@student.42lisba.com>    +#+  +:+       +#+        */
+/*   By: jlima-so <jlima-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 21:04:31 by jlima-so          #+#    #+#             */
-/*   Updated: 2025/11/07 21:06:44 by jlima-so         ###   ########.fr       */
+/*   Updated: 2025/11/13 01:03:49 by jlima-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@ int	truth_value(char **s, int *count, int ind, char ch)
 int	verify_value(char *str, int count)
 {
 	return ((str[count] != '\0' && str[count] != '$')
-				|| (str[count] == '$' && !ft_isalnum(str[count + 1])
-					&& str[count + 1] != '?' && str[count + 1] != '_'));
+		|| (str[count] == '$' && !ft_isalnum(str[count + 1])
+			&& str[count + 1] != '?' && str[count + 1] != '_'));
 }
